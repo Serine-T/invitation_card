@@ -5,16 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
 import { Box, Link, Button, Drawer, Typography, Stack } from '@mui/material';
 
-// mock
-// import account from '../../../_mock/account';
-// hooks
-// import useResponsive from '../../../hooks/useResponsive';
-// components
-// import Logo from '../../../components/logo';
-// import Scrollbar from '../../../components/scrollbar';
-// import NavSection from '../../../components/nav-section';
-
-// ----------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 const NAV_WIDTH = 280;
 
@@ -27,7 +18,6 @@ const StyledAccount = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-
 export default function Nav({ openNav, onCloseNav }: any) {
   const { pathname } = useLocation();
 
