@@ -141,8 +141,8 @@ class RequestService {
         break;
       }
 
-      default:
-        null;
+      // default:
+      //   null;
     }
 
     return Promise.reject(error);
