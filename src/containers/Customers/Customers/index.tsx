@@ -6,8 +6,7 @@ const Customers = () => {
       fgtg
       hgjg
 
-
-
+      
 
 
       
