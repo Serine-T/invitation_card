@@ -6,10 +6,6 @@ const Customers = () => {
       fgtg
       hgjg
 
-      
-
-
-      
       Customers
     </>
   );
