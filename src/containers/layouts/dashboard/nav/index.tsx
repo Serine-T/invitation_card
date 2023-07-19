@@ -17,8 +17,8 @@ const StyledAccount = styled('div')(({ theme }) => ({
   backgroundColor: alpha(theme.palette.grey[500], 0.12),
 }));
 
-// ----------------------------------------------------------------------
 
+// ----------------------------------------------------------------------
 export default function Nav({ openNav, onCloseNav }: any) {
   const { pathname } = useLocation();
 
