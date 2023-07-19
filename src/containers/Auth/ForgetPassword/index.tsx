@@ -57,7 +57,6 @@ const ForgetPassword = () => {
             <Button
               type="submit"
             >
-
               Send
             </Button>
           </StyledInputBox>
