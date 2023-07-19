@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 
 //
-// import Header from './header';
+import Header from './header';
 import Nav from './nav';
 
 // ----------------------------------------------------------------------
@@ -39,7 +39,7 @@ const Layout = () => {
 
   return (
     <StyledRoot>
-      {/* <Header onOpenNav={() => setOpen(true)} /> */}
+      <Header onOpenNav={() => setOpen(true)} />
 
       <Nav openNav={open} onCloseNav={() => setOpen(false)} />
 
