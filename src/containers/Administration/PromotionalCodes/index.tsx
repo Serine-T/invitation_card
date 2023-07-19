@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 const PromotionalCodes = () => {
   return (
-    <>
+    <> 
       PromotionalCodes
     </>
   );
