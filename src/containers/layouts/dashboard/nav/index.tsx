@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
 import { Box, Link, Button, Drawer, Typography, Stack } from '@mui/material';
 
-// ----------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 const NAV_WIDTH = 280;
 
@@ -16,7 +16,6 @@ const StyledAccount = styled('div')(({ theme }) => ({
   borderRadius: Number(theme.shape.borderRadius) * 1.5,
   backgroundColor: alpha(theme.palette.grey[500], 0.12),
 }));
-
 
 // ----------------------------------------------------------------------
 export default function Nav({ openNav, onCloseNav }: any) {

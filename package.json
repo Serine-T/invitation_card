@@ -34,8 +34,8 @@
     "prepare": "husky install",
     "eject": "react-scripts eject",
     "tsc": "tsc",
-    "lint": "next lint",
-    "lint:fix": "eslint \"**/*.{ts,tsx}\" --fix"
+    "lint": "lint",
+    "lint:fix": "eslint --fix"
   },
   "eslintConfig": {
     "extends": [
