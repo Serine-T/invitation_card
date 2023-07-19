@@ -33,6 +33,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "react-scripts test",
+    "prepare": "husky install",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
