@@ -1,6 +1,4 @@
-// TODO: Delete
-
-export enum PAGE_ROUTES_PRIVATE {
+export enum PAGE_ROUTES {
   DASHBOARD = '/dashboard',
   ORDERS = '/orders',
   PRODUCTS = '/products',
@@ -8,10 +6,32 @@ export enum PAGE_ROUTES_PRIVATE {
   PAYPAL = '/paypal',
   ADMINISTRATION = '/administration',
   CMS = '/cms',
-}
-
-export enum PAGE_ROUTES_PUBLIC {
-  ROOT_SIGN_IN = '/',
-  SIGN_IN = '/sign-in',
-  FORGOT_PASSWORD = '/forgot-password',
+  OPEN_JOBS = '/open_jobs',
+  COMPLETED_JOBS = '/completed_jobs',
+  CANCELLED_JOBS = '/cancelled_jobs',
+  OPEN_ORDERS_INVOICES = '/open_orders_invoices',
+  COMPLETED_ORDER_INVOICES = '/completed_order_invoices',
+  OPEN_ESTIMATES = '/open_estimates',
+  COMPLETE_ESTIMATES = '/complete_estimates',
+  EMAIL_TEMPLATES = '/email_templates',
+  PROCUREMENT_REPORT = '/procurement_report',
+  SEND_A_FILE = '/send_a_file',
+  PRODUCT_CATEGORIES = '/product_categories',
+  MENU_CATEGORIES = '/menu_categories',
+  ATTRIBUTE_CATEGORIES = '/attribute_categories',
+  ATTRIBUTES = '/attributes',
+  MAILING_SERVICE_FEES = '/mailing_service_fees',
+  IMPORT_PRODUCT_PRICING = '/import_product_pricing',
+  TEMPLATES = '/templates',
+  TEMPLATE_CATEGORIES = '/template_categories',
+  RESELLERS_PENDING = '/resellers_pending',
+  NON_PROFIT_PENDING = '/non_profit_pending',
+  PROCUREMENT_CUSTOMERS = '/procurement_customers',
+  CONTACT_FORM_MESSAGE = '/contact_form_message',
+  TASKS = '/tasks',
+  USERS = '/users',
+  PROMOTIONAL_CODES = '/promotional_codes',
+  SHIPPING_ZIPS = '/shipping_zips',
+  SHIPPING_RATE_MARKUP = '/shipping_rate_markup',
+  HOMEPAGE = '/homepage',
 }
