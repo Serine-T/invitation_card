@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import useResponsive from '@customHooks/useResponsive';
 
 import { StyledBox, StyledDraw } from './styled';
-import NavbarItems from './components/NavbarItems';
+import NavbarMenu from './components/NavbarMenu';
 import LogOut from './components/LogOut';
 
 interface INav {
@@ -34,7 +34,7 @@ const Nav = ({ openNav, onCloseNav }: INav) => {
         variant={isDesktop ? 'permanent' : 'temporary'}
         onClose={onCloseNav}
       >
-        <NavbarItems />
+        <NavbarMenu />
         <LogOut />
       </StyledDraw>
 
