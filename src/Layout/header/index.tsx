@@ -1,24 +1,24 @@
-import { styled } from '@mui/material/styles';
-import { AppBar, Toolbar, IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
-const StyledRoot = styled(AppBar)(() => ({
-  boxShadow: 'none',
-}));
+import { StyledHeader, StyledToolbar } from './styled';
 
-const StyledToolbar = styled(Toolbar)(() => ({
-  minHeight: 64,
-}));
+interface IHeader {
+  onOpenNav: ()=> void;
+}
 
-export default function Header({ onOpenNav }:any) {
+const Header = ({ onOpenNav }:IHeader) => {
   return (
-    <StyledRoot>
+    <StyledHeader>
       <StyledToolbar>
         <IconButton
           onClick={onOpenNav}
         >
-          fgfgg
+          <MenuIcon />
         </IconButton>
       </StyledToolbar>
-    </StyledRoot>
+    </StyledHeader>
   );
-}
+};
+
+export default Header;
