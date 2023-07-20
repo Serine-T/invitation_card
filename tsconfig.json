@@ -32,7 +32,7 @@
       "@routes/*": ["./src/routes/*"], 
       "@styles/*": ["./src/styles/*"], 
       "@models/*": ["./src/models/*"], 
-      "@hooks/*": ["./src/hooks/*"],       
+      "@customHooks/*": ["./src/customHooks/*"],       
     }
   },
   "include": [

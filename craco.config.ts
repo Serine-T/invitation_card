@@ -15,7 +15,7 @@ module.exports = {
       '@routes': path.resolve(__dirname, './src/routes'),
       '@styles': path.resolve(__dirname, './src/styles'),
       '@models': path.resolve(__dirname, './src/models'),
-      '@hooks': path.resolve(__dirname, './src/hooks'),
+      '@customHooks': path.resolve(__dirname, './src/customHooks'),
     },
   },
 };
