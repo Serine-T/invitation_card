@@ -6,7 +6,6 @@ export const StyledHeader = styled(AppBar)(({ theme }) => ({
   width: '100%',
   boxShadow: 'none',
   background: theme.palette.common.white,
-
 }));
 
 export const StyledToolbar = styled(Toolbar)(() => ({

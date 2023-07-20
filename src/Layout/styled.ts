@@ -7,9 +7,12 @@ export const StyledRoot = styled(Box)(() => ({
   overflow: 'hidden',
 }));
 
-export const StyledMain = styled(Box)(() => ({
+export const StyledMain = styled(Box)(({ theme }) => ({
   flexGrow: 1,
   overflow: 'auto',
   minHeight: '100%',
   padding: '40px 32px 80px',
+  [theme.breakpoints.down('lg')]: {
+    padding: '60px 32px 80px',
+  },
 }));

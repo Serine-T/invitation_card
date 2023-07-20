@@ -4,42 +4,50 @@ import { useLocation } from 'react-router-dom';
 import useResponsive from '@customHooks/useResponsive';
 
 import { StyledBox, StyledDraw } from './styled';
-import NavbarMenu from './components/NavbarMenu';
+import SidebarMenu from './components/SidebarMenu';
 import LogOut from './components/LogOut';
 
-interface INav {
-  openNav: boolean;
+interface ISidebar {
+  open: boolean;
   onCloseNav: () => void;
 }
 
-const Nav = ({ openNav, onCloseNav }: INav) => {
+const Sidebar = ({ open, onCloseNav }: ISidebar) => {
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
 
   useEffect(() => {
-    if (openNav) {
+    if (open) {
       onCloseNav();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  return (
+  const renderContent = (
+    <>
+      <SidebarMenu />
+      <LogOut />
+    </>
+  );
+
+  return isDesktop ? (
     <StyledBox
       component="nav"
       flexShrink={{ lg: 0 }}
     >
-      <StyledDraw
-        open={isDesktop ? true : openNav}
-        variant={isDesktop ? 'permanent' : 'temporary'}
-        onClose={onCloseNav}
-      >
-        <NavbarMenu />
-        <LogOut />
+      <StyledDraw open variant="permanent">
+        {renderContent}
       </StyledDraw>
-
     </StyledBox>
+  ) : (
+    <StyledDraw
+      open={open}
+      onClose={onCloseNav}
+    >
+      {renderContent}
+    </StyledDraw>
   );
 };
 
-export default memo(Nav);
+export default memo(Sidebar);

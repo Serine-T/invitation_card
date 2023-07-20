@@ -45,22 +45,23 @@ export const routingArray = [
   { path: PAGE_ROUTES.NEW_PASSWORD, element: <NewPassword /> },
   { path: PAGE_ROUTES.RESEND_PASSWORD, element: <SuccessPage /> },
   { path: PAGE_ROUTES.SIGN_IN, element: <SignIn /> },
-  { path: PAGE_ROUTES.DASHBOARD, element: <Dashboard /> },
+
   {
     element: <Layout />,
     children: [
+      { path: PAGE_ROUTES.DASHBOARD, element: <Dashboard /> },
       {
         path: '/orders',
         children: [
           { element: <Navigate to={PAGE_ROUTES.OPEN_JOBS} />, index: true },
-          { path: PAGE_ROUTES.CANCELLED_JOBS, element: <CancelledJobs /> },
           { path: PAGE_ROUTES.COMPLETED_JOBS, element: <CompletedJobs /> },
+          { path: PAGE_ROUTES.CANCELLED_JOBS, element: <CancelledJobs /> },
           { path: PAGE_ROUTES.COMPLETED_ORDER_INVOICES, element: <CompletedOrderInvoices /> },
+          { path: PAGE_ROUTES.OPEN_ORDERS_INVOICES, element: <OpenOrdersInvoices /> },
+          { path: PAGE_ROUTES.OPEN_ESTIMATES, element: <OpenEstimates /> },
           { path: PAGE_ROUTES.COMPLETE_ESTIMATES, element: <CompleteEstimates /> },
           { path: PAGE_ROUTES.EMAIL_TEMPLATES, element: <EmailTemplates /> },
-          { path: PAGE_ROUTES.OPEN_ESTIMATES, element: <OpenEstimates /> },
           { path: PAGE_ROUTES.OPEN_JOBS, element: <OpenJobs /> },
-          { path: PAGE_ROUTES.OPEN_ORDERS_INVOICES, element: <OpenOrdersInvoices /> },
           { path: PAGE_ROUTES.PROCUREMENT_REPORT, element: <ProcurementReport /> },
           { path: PAGE_ROUTES.SEND_A_FILE, element: <SendAFile /> },
         ],
@@ -70,14 +71,14 @@ export const routingArray = [
         children: [
           { element: <Navigate to={PAGE_ROUTES.PRODUCTS} />, index: true },
           { path: PAGE_ROUTES.PRODUCTS, element: <Products /> },
+          { path: PAGE_ROUTES.PRODUCT_CATEGORIES, element: <ProductCategories /> },
+          { path: PAGE_ROUTES.MENU_CATEGORIES, element: <MenuCategories /> },
           { path: PAGE_ROUTES.ATTRIBUTE_CATEGORIES, element: <AttributeCategories /> },
           { path: PAGE_ROUTES.ATTRIBUTES, element: <Attributes /> },
-          { path: PAGE_ROUTES.IMPORT_PRODUCT_PRICING, element: <ImportProductPricing /> },
           { path: PAGE_ROUTES.MAILING_SERVICE_FEES, element: <MailingServiceFees /> },
-          { path: PAGE_ROUTES.MENU_CATEGORIES, element: <MenuCategories /> },
-          { path: PAGE_ROUTES.PRODUCT_CATEGORIES, element: <ProductCategories /> },
-          { path: PAGE_ROUTES.TEMPLATE_CATEGORIES, element: <TemplateCategories /> },
+          { path: PAGE_ROUTES.IMPORT_PRODUCT_PRICING, element: <ImportProductPricing /> },
           { path: PAGE_ROUTES.TEMPLATES, element: <Templates /> },
+          { path: PAGE_ROUTES.TEMPLATE_CATEGORIES, element: <TemplateCategories /> },
         ],
       },
 
@@ -86,10 +87,11 @@ export const routingArray = [
         children: [
           { element: <Navigate to={PAGE_ROUTES.CUSTOMERS} />, index: true },
           { path: PAGE_ROUTES.CUSTOMERS, element: <Customers /> },
-          { path: PAGE_ROUTES.CONTACT_FORM_MESSAGE, element: <ContactFormMessage /> },
+          { path: PAGE_ROUTES.RESELLERS_PENDING, element: <ResellersPending /> },
           { path: PAGE_ROUTES.NON_PROFIT_PENDING, element: <NonProfitPending /> },
           { path: PAGE_ROUTES.PROCUREMENT_CUSTOMERS, element: <ProcurementCustomers /> },
-          { path: PAGE_ROUTES.RESELLERS_PENDING, element: <ResellersPending /> },
+          { path: PAGE_ROUTES.CONTACT_FORM_MESSAGE, element: <ContactFormMessage /> },
+
         ],
       },
       {
@@ -98,9 +100,9 @@ export const routingArray = [
           { element: <Navigate to={PAGE_ROUTES.TASKS} />, index: true },
           { path: PAGE_ROUTES.TASKS, element: <Tasks /> },
           { path: PAGE_ROUTES.USERS, element: <Users /> },
+          { path: PAGE_ROUTES.PROMOTIONAL_CODES, element: <PromotionalCodes /> },
           { path: PAGE_ROUTES.SHIPPING_ZIPS, element: <ShippingZips /> },
           { path: PAGE_ROUTES.SHIPPING_RATE_MARKUP, element: <ShippingRateMarkup /> },
-          { path: PAGE_ROUTES.PROMOTIONAL_CODES, element: <PromotionalCodes /> },
         ],
       },
       {

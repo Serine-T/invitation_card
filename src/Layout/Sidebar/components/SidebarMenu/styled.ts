@@ -31,8 +31,6 @@ export const StyledAccordion = styled(Accordion)(() => ({
 export const StyledAccordionSummary = styled(AccordionSummary)(() => ({
   padding: 0,
   flexGrow: 0,
-  background: 'red',
-  border: '1px solid blue',
   justifyContent: 'flex-start',
   alignItems: 'center',
   minHeight: '37px',
@@ -45,13 +43,11 @@ export const StyledAccordionSummary = styled(AccordionSummary)(() => ({
     margin: 0,
   },
   '.MuiAccordionSummary-content.Mui-expanded': {
-    background: 'blue',
     margin: 0,
   },
 }));
 
 export const StyledAccordionDetails = styled(AccordionDetails)(() => ({
-  background: 'yellow',
   padding: 0,
   margin: '8px 0 6px',
 }));
