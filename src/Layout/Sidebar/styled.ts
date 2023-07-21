@@ -7,6 +7,9 @@ export const StyledDraw = styled(Drawer)(() => ({
     width: 220,
     borderRadius: 0,
     padding: '20px 16px 32px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
 }));
 

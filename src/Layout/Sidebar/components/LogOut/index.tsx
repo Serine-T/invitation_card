@@ -2,13 +2,14 @@ import { memo } from 'react';
 
 import StyledTypography from '@containers/common/StyledTypography';
 import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
+
+import { StyledLogOutBox } from './styled';
 
 const LogOut = () => {
   const name = ' Mark';
 
   return (
-    <Stack direction="row">
+    <StyledLogOutBox direction="row">
       <Typography>
         Welcome
         {' '}
@@ -18,7 +19,7 @@ const LogOut = () => {
       <StyledTypography underLine color="blue" ml="3px">
         Log out
       </StyledTypography>
-    </Stack>
+    </StyledLogOutBox>
   );
 };
 

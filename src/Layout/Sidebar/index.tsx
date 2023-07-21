@@ -2,6 +2,7 @@ import { memo, useEffect, useMemo } from 'react';
 
 import { useLocation } from 'react-router-dom';
 import useResponsive from '@customHooks/useResponsive';
+import Box from '@mui/material/Box';
 
 import { StyledBox, StyledDraw } from './styled';
 import SidebarMenu from './components/SidebarMenu';
@@ -26,7 +27,9 @@ const Sidebar = ({ open, onCloseNav }: ISidebar) => {
 
   const renderContent = useMemo(() => (
     <>
-      <SidebarMenu />
+      <Box>
+        <SidebarMenu />
+      </Box>
       <LogOut />
     </>
   ), []);
