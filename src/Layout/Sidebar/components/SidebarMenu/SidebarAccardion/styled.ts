@@ -1,18 +1,7 @@
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-
-export const StyledLogoBox = styled(Box)(() => ({
-  display: 'flex',
-  justifyContent: 'center',
-
-  img: {
-    width: 170,
-    objectFit: 'contain',
-  },
-}));
 
 export const StyledAccordion = styled(Accordion)(() => ({
   '&.MuiAccordion-root': {
@@ -25,10 +14,11 @@ export const StyledAccordion = styled(Accordion)(() => ({
   '&::before': {
     height: 0,
   },
-
 }));
 
-export const StyledAccordionSummary = styled(AccordionSummary)(() => ({
+export const StyledAccordionSummary = styled(AccordionSummary, {
+  shouldForwardProp: (prop) => prop !== 'isActive',
+})<{isActive: boolean}>(({ theme, isActive }) => ({
   padding: 0,
   flexGrow: 0,
   justifyContent: 'flex-start',
@@ -45,14 +35,14 @@ export const StyledAccordionSummary = styled(AccordionSummary)(() => ({
   '.MuiAccordionSummary-content.Mui-expanded': {
     margin: 0,
   },
+  svg: {
+    width: '20px',
+    height: '18px',
+    color: isActive ? theme.palette.primary.dark : '',
+  },
 }));
 
 export const StyledAccordionDetails = styled(AccordionDetails)(() => ({
-  padding: 0,
-  margin: '8px 0 6px',
-}));
-
-export const StyledMenuItem = styled(AccordionDetails)(() => ({
   padding: 0,
   margin: '8px 0 6px',
 }));

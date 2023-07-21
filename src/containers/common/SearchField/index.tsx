@@ -2,27 +2,30 @@ import { memo } from 'react';
 
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
-import { OutlinedTextFieldProps } from '@mui/material/TextField';
+import BaseInput, { IBaseInputProps } from '@containers/common/Input/index';
+// import { useFormContext } from 'react-hook-form';
 
-import { StyledSearchField } from './styled';
+const SearchField = (props: IBaseInputProps) => {
+  const { name = 'search' } = props;
 
-interface ISearchFieldProps extends OutlinedTextFieldProps {}
+  // TODO: ADD register
+  // const { register } = useFormContext();
 
-const SearchField = ({ InputProps, ...restProps }: ISearchFieldProps) => (
-  <StyledSearchField
-    label="Search"
-    id="outlined-search"
-    placeholder="Search"
-    InputProps={{
-      ...InputProps,
-      endAdornment: (
-        <InputAdornment position="end">
+  return (
+    <BaseInput
+      {...props}
+      type="text"
+      autoComplete={name}
+      placeholder="Search"
+      // {...register(name)}
+      endAdornment={(
+        <InputAdornment position="start">
           <SearchIcon />
         </InputAdornment>
-      ),
-    }}
-    {...restProps}
-  />
-);
+      )}
+    />
+
+  );
+};
 
 export default memo(SearchField);

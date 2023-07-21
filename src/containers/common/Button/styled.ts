@@ -29,3 +29,15 @@ export const StyledButton = styled(Button, {
     cursor: 'not-allowed',
   },
 }));
+
+export const StyledTextButton = styled(Button)(() => ({
+  boxShadow: 'none',
+  textTransform: 'none',
+  fontSize: 10,
+  padding: 0,
+  margin: 0,
+  minWidth: 'unset',
+  '&:hover': {
+    backgroundColor: 'unset',
+  },
+}));

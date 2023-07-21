@@ -13,7 +13,7 @@ const SubMenuItem = ({ path, title }: ISubMenuItem) => {
 
   return (
     <Link to={path}>
-      <StyledTypography color={pathname === path ? 'blue' : ''}>
+      <StyledTypography variant="body3" color={pathname === path ? 'blue' : ''}>
         {title}
       </StyledTypography>
 

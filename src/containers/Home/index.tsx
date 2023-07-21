@@ -1,12 +1,25 @@
-import { memo } from 'react';
+import { ChangeEventHandler, memo } from 'react';
+
+import debounce from 'lodash/debounce';
+import SearchField from '@containers/common/SearchField';
 
 // import DashboardLayout from '@containers/layouts/dashboard/DashboardLayout';
 
 const Home = () => {
+  const handleSearchChange: ChangeEventHandler<HTMLInputElement> = debounce(
+    (event) => {
+      console.log(event.target.value);
+    },
+    1000,
+  );
+
   return (
     <>
       Home
-      {/* <DashboardLayout /> */}
+      <SearchField
+        onChange={handleSearchChange}
+        label="Search"
+      />
     </>
   );
 };

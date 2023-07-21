@@ -4,8 +4,9 @@ import BaseInput, { IBaseInputProps } from '@containers/common/Input/index';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useFormContext } from 'react-hook-form';
+import InputAdornment from '@mui/material/InputAdornment';
 
-import { StyledIconButton, StyledInputAdornment } from './styled';
+import { StyledIconButton } from './styled';
 
 const PasswordInput = (props: IBaseInputProps) => {
   const { disabled, name = 'password' } = props;
@@ -22,14 +23,14 @@ const PasswordInput = (props: IBaseInputProps) => {
       autoComplete={name}
       {...register(name)}
       endAdornment={(
-        <StyledInputAdornment position="end">
+        <InputAdornment position="end">
           <StyledIconButton
             onClick={handleClickShowPassword}
             disabled={disabled}
           >
             {showPassword ? <VisibilityOff /> : <Visibility />}
           </StyledIconButton>
-        </StyledInputAdornment>
+        </InputAdornment>
             )}
     />
 

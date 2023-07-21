@@ -16,3 +16,12 @@ export const StyledDraw = styled(Drawer)(() => ({
 export const StyledBox = styled(Box)(() => ({
   width: 220,
 }));
+export const StyledLogoBox = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+
+  img: {
+    width: 170,
+    objectFit: 'contain',
+  },
+}));

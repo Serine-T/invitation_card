@@ -49,6 +49,16 @@ export const StyledFormControl = styled(FormControl)(({ theme }) => ({
     'box-shadow',
   ]),
 
+  '.MuiInputAdornment-root': {
+    paddingRight: 4,
+    height: 16,
+    svg: {
+      width: '16px',
+      height: '16px',
+      color: theme.palette.grey[300],
+    },
+  },
+
   '&:hover': {
     borderColor: theme.palette.common.black,
   },

@@ -2,6 +2,8 @@ import { memo } from 'react';
 
 import StyledTypography from '@containers/common/StyledTypography';
 import Typography from '@mui/material/Typography';
+// import Button from '@mui/material/Button';
+import { StyledTextButton } from '@containers/common/Button/styled';
 
 import { StyledLogOutBox } from './styled';
 
@@ -10,15 +12,18 @@ const LogOut = () => {
 
   return (
     <StyledLogOutBox direction="row">
-      <Typography>
+      <Typography variant="body3">
         Welcome
         {' '}
         {name}
         ,
       </Typography>
-      <StyledTypography underLine color="blue" ml="3px">
-        Log out
-      </StyledTypography>
+      <StyledTextButton disableRipple variant="text">
+        <StyledTypography variant="body3" underLine color="blue" ml="3px">
+          Log out
+        </StyledTypography>
+      </StyledTextButton>
+
     </StyledLogOutBox>
   );
 };
