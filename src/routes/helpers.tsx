@@ -67,10 +67,10 @@ export const routingArray = [
         ],
       },
       {
-        path: '/products',
+        path: PAGE_ROUTES.PRODUCTS,
         children: [
-          { element: <Navigate to={PAGE_ROUTES.PRODUCTS} />, index: true },
-          { path: PAGE_ROUTES.PRODUCTS, element: <Products /> },
+          { element: <Navigate to={PAGE_ROUTES.PRODUCTS_PRODUCTS} />, index: true },
+          { path: PAGE_ROUTES.PRODUCTS_PRODUCTS, element: <Products /> },
           { path: PAGE_ROUTES.PRODUCT_CATEGORIES, element: <ProductCategories /> },
           { path: PAGE_ROUTES.MENU_CATEGORIES, element: <MenuCategories /> },
           { path: PAGE_ROUTES.ATTRIBUTE_CATEGORIES, element: <AttributeCategories /> },
@@ -83,10 +83,10 @@ export const routingArray = [
       },
 
       {
-        path: '/customers',
+        path: PAGE_ROUTES.CUSTOMERS,
         children: [
-          { element: <Navigate to={PAGE_ROUTES.CUSTOMERS} />, index: true },
-          { path: PAGE_ROUTES.CUSTOMERS, element: <Customers /> },
+          { element: <Navigate to={PAGE_ROUTES.CUSTOMERS_CUSTOMERS} />, index: true },
+          { path: PAGE_ROUTES.CUSTOMERS_CUSTOMERS, element: <Customers /> },
           { path: PAGE_ROUTES.RESELLERS_PENDING, element: <ResellersPending /> },
           { path: PAGE_ROUTES.NON_PROFIT_PENDING, element: <NonProfitPending /> },
           { path: PAGE_ROUTES.PROCUREMENT_CUSTOMERS, element: <ProcurementCustomers /> },
@@ -95,7 +95,7 @@ export const routingArray = [
         ],
       },
       {
-        path: '/administration',
+        path: PAGE_ROUTES.ADMINISTRATION,
         children: [
           { element: <Navigate to={PAGE_ROUTES.TASKS} />, index: true },
           { path: PAGE_ROUTES.TASKS, element: <Tasks /> },
@@ -106,7 +106,7 @@ export const routingArray = [
         ],
       },
       {
-        path: '/cms',
+        path: PAGE_ROUTES.CMS,
         children: [
           { element: <Navigate to={PAGE_ROUTES.HOMEPAGE} />, index: true },
           { path: PAGE_ROUTES.HOMEPAGE, element: <Homepage /> },

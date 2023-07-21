@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 
 import { useLocation } from 'react-router-dom';
 import useResponsive from '@customHooks/useResponsive';
@@ -24,12 +24,12 @@ const Sidebar = ({ open, onCloseNav }: ISidebar) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  const renderContent = (
+  const renderContent = useMemo(() => (
     <>
       <SidebarMenu />
       <LogOut />
     </>
-  );
+  ), []);
 
   return isDesktop ? (
     <StyledBox

@@ -1,5 +1,15 @@
 import { PAGE_ROUTES } from '@customTypes/enums/routes';
 
+export interface INavBarItem {
+    id: string;
+    title: string;
+    path: PAGE_ROUTES;
+}
+
+export interface INavbarData {
+
+}
+
 const navData = [
   {
     id: 'dashboard',
@@ -9,6 +19,7 @@ const navData = [
   {
     id: 'orders',
     title: 'Orders',
+    path: PAGE_ROUTES.ORDERS,
     children: [
       { path: PAGE_ROUTES.OPEN_JOBS, title: 'Open Jobs' },
       { path: PAGE_ROUTES.COMPLETED_JOBS, title: 'Completed Jobs' },
@@ -25,8 +36,9 @@ const navData = [
   {
     id: 'products',
     title: 'Products',
+    path: PAGE_ROUTES.PRODUCTS,
     children: [
-      { path: PAGE_ROUTES.PRODUCTS, title: 'Products' },
+      { path: PAGE_ROUTES.PRODUCTS_PRODUCTS, title: 'Products' },
       { path: PAGE_ROUTES.PRODUCT_CATEGORIES, title: 'Product Categories' },
       { path: PAGE_ROUTES.MENU_CATEGORIES, title: 'Menu Categories' },
       { path: PAGE_ROUTES.ATTRIBUTE_CATEGORIES, title: 'Attribute Categories' },
@@ -40,8 +52,9 @@ const navData = [
   {
     id: 'customers',
     title: 'Customers',
+    path: PAGE_ROUTES.CUSTOMERS,
     children: [
-      { path: PAGE_ROUTES.CUSTOMERS, title: 'Customers' },
+      { path: PAGE_ROUTES.CUSTOMERS_CUSTOMERS, title: 'Customers' },
       { path: PAGE_ROUTES.RESELLERS_PENDING, title: 'Resellers Pending' },
       { path: PAGE_ROUTES.NON_PROFIT_PENDING, title: 'Non-Profit Pending' },
       { path: PAGE_ROUTES.PROCUREMENT_CUSTOMERS, title: 'Procurement Customers' },
@@ -51,6 +64,7 @@ const navData = [
   {
     id: 'administration',
     title: 'Administration',
+    path: PAGE_ROUTES.ADMINISTRATION,
     children: [
       { path: PAGE_ROUTES.TASKS, title: 'Tasks' },
       { path: PAGE_ROUTES.USERS, title: 'Users' },
@@ -62,6 +76,7 @@ const navData = [
   {
     id: 'cms',
     title: 'CMS',
+    path: PAGE_ROUTES.CMS,
     children: [
       { path: PAGE_ROUTES.HOMEPAGE, title: 'Homepage' },
     ],
