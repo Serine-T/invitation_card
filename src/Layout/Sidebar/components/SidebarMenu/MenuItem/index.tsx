@@ -1,8 +1,7 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 import { Link, useLocation } from 'react-router-dom';
-
-import { StyldMenuItem } from './styled';
+import StyledTypography from '@containers/common/StyledTypography';
 
 interface IMenuItem {
   path: string;
@@ -14,16 +13,16 @@ const MenuItem = ({ hasChild, path, title }: IMenuItem) => {
   const { pathname } = useLocation();
   const isActive = pathname.startsWith(path);
 
-  return hasChild ? (
-    <StyldMenuItem isActive={isActive}>
+  const styledMenuItem = useMemo(() => (
+    <StyledTypography variant="subtitle3" color={isActive ? 'blue' : 'grey'}>
       {title}
-    </StyldMenuItem>
-  )
+    </StyledTypography>
+  ), [title, isActive]);
+
+  return hasChild ? styledMenuItem
     : (
       <Link to={path}>
-        <StyldMenuItem isActive={isActive}>
-          {title}
-        </StyldMenuItem>
+        {styledMenuItem}
       </Link>
     );
 };

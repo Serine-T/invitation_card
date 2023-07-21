@@ -1,8 +1,7 @@
 import { memo } from 'react';
 
 import { Link, useLocation } from 'react-router-dom';
-
-import { StyldSubMenuItem } from './styled';
+import StyledTypography from '@containers/common/StyledTypography';
 
 interface ISubMenuItem {
   path: string;
@@ -14,9 +13,10 @@ const SubMenuItem = ({ path, title }: ISubMenuItem) => {
 
   return (
     <Link to={path}>
-      <StyldSubMenuItem isActive={pathname === path}>
+      <StyledTypography color={pathname === path ? 'blue' : ''}>
         {title}
-      </StyldSubMenuItem>
+      </StyledTypography>
+
     </Link>
 
   );
