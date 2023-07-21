@@ -6,13 +6,14 @@ import { useLocation } from 'react-router-dom';
 import { StyledAccordion, StyledAccordionDetails, StyledAccordionSummary } from './styled';
 import MenuItem from '../MenuItem';
 import SubMenuItem from '../SubMenu';
+import { INavBarItem } from '../helpers';
 
-const SidebarAccordion = ({ title, children, path }: any) => {
+const SidebarAccordion = ({ title, children, path }: INavBarItem) => {
   const { pathname } = useLocation();
   const [isExpanded, setIsExpanded] = useState(pathname.startsWith(path));
 
   const handleAccordionChange = () => {
-    setIsExpanded((prev: any) => !prev);
+    setIsExpanded((prev) => !prev);
   };
 
   return (
@@ -25,7 +26,7 @@ const SidebarAccordion = ({ title, children, path }: any) => {
         <MenuItem title={title} path={path} hasChild={!!children} />
       </StyledAccordionSummary>
       {children &&
-        children.map((item: any) => (
+        children.map((item) => (
           <StyledAccordionDetails key={item.path}>
             <SubMenuItem {...item} />
           </StyledAccordionDetails>

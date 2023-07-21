@@ -1,16 +1,17 @@
 import { PAGE_ROUTES } from '@customTypes/enums/routes';
 
+export interface INavBarChildrenItem {
+  path: PAGE_ROUTES;
+  title: string;
+}
 export interface INavBarItem {
-    id: string;
-    title: string;
-    path: PAGE_ROUTES;
+  id: string;
+  title: string;
+  path: PAGE_ROUTES;
+  children?: INavBarChildrenItem[];
 }
 
-export interface INavbarData {
-
-}
-
-const navData = [
+const navData: INavBarItem[] = [
   {
     id: 'dashboard',
     title: 'Dashboard',
