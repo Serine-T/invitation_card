@@ -3,7 +3,6 @@ import InputBase from '@mui/material/InputBase';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { FontFamilyNames } from '@customTypes/global/theme/fonts';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 export const StyledInputBox = styled(Box, {
@@ -35,7 +34,6 @@ export const StyledBaseInput = styled(InputBase)(({ theme }) => ({
 export const StyledInputLabel = styled(InputLabel)(() => ({
   transform: 'unset',
   marginBottom: '6px',
-  lineHeight: '120%',
 }));
 
 export const StyledFormControl = styled(FormControl)(({ theme }) => ({
@@ -74,11 +72,4 @@ export const StyledFormControl = styled(FormControl)(({ theme }) => ({
   '&:has(.Mui-disabled), &:has(.Mui-disabled:hover)': {
     borderColor: `${theme.palette.grey[500]}63`,
   },
-}));
-
-// TODO: Delete if not using
-
-export const StyledErrorMessage = styled(Typography)(({ theme }) => ({
-  color: theme.palette.error.dark,
-  marginTop: 6,
 }));

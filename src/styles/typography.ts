@@ -97,6 +97,11 @@ const typography = (palette: Palette): TypographyOptions => ({
     fontWeight: 400,
     fontFamily: FontFamilyNames.DmSansRegular,
   },
+  body4: {
+    fontSize: 10,
+    fontWeight: 400,
+    fontFamily: FontFamilyNames.DmSansRegular,
+  },
   overline: {
     textTransform: 'uppercase',
     fontFamily: FontFamilyNames.DmSansRegular,
