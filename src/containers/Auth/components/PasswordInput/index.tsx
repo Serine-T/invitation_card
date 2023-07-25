@@ -33,7 +33,6 @@ const PasswordInput = (props: IBaseInputProps) => {
         </InputAdornment>
             )}
     />
-
   );
 };
 

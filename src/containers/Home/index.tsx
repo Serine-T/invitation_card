@@ -1,27 +1,20 @@
-import { ChangeEventHandler, memo } from 'react';
+import { memo } from 'react';
 
-import debounce from 'lodash/debounce';
-import SearchField from '@containers/common/SearchField';
-
-// import DashboardLayout from '@containers/layouts/dashboard/DashboardLayout';
+import { useAppSelector } from '@features/app/hooks';
+import { selectIsAuth } from '@features/auth/selectors';
+import { useNavigate } from 'react-router-dom';
+import { PAGE_ROUTES } from '@customTypes/enums/routes';
+import useMount from '@customHooks/useMount';
 
 const Home = () => {
-  const handleSearchChange: ChangeEventHandler<HTMLInputElement> = debounce(
-    (event) => {
-      console.log(event.target.value);
-    },
-    1000,
-  );
+  const navigate = useNavigate();
+  const { isAuth } = useAppSelector(selectIsAuth);
 
-  return (
-    <>
-      Home
-      <SearchField
-        onChange={handleSearchChange}
-        label="Search"
-      />
-    </>
-  );
+  useMount(() => {
+    navigate(isAuth ? PAGE_ROUTES.DASHBOARD : PAGE_ROUTES.SIGN_IN);
+  });
+
+  return <></>;
 };
 
 export default memo(Home);

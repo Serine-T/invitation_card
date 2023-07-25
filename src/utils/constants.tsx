@@ -14,7 +14,7 @@ export const APP_CONFIG = {
 };
 
 export const ACCESS_TOKEN_KEY = 'access_token';
-export const REFRESH_TOKEN = 'refresh_token';
+export const REFRESH_TOKEN_KEY = 'refresh_token';
 export const USER_KEY = 'user';
 
 const AWS_S3_BUCKET_NAME: string = process.env.REACT_APP_S3_BUCKET_NAME || 'agora-dev';

@@ -2,7 +2,7 @@ import { CSSProperties } from 'react';
 
 import CircularProgress, { CircularProgressProps } from '@mui/material/CircularProgress';
 
-import { StyledBox } from './styled';
+import { StyledBox, StyledOverlay } from './styled';
 
 interface ILoaderProps {
   sx?: CSSProperties;
@@ -11,7 +11,9 @@ interface ILoaderProps {
 
 const Loader = ({ color = 'primary', sx }: ILoaderProps) => (
   <StyledBox sx={{ ...sx }}>
-    <CircularProgress color={color} />
+    <StyledOverlay>
+      <CircularProgress color={color} />
+    </StyledOverlay>
   </StyledBox>
 );
 

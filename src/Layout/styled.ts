@@ -12,6 +12,7 @@ export const StyledMain = styled(Box)(({ theme }) => ({
   overflow: 'auto',
   minHeight: '100%',
   padding: '40px 32px 80px',
+  position: 'relative',
   [theme.breakpoints.down('lg')]: {
     padding: '60px 32px 80px',
   },

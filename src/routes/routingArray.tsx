@@ -40,12 +40,12 @@ import Layout from 'src/Layout';
 import { PAGE_ROUTES } from '@customTypes/enums/routes';
 
 export const routingArray = [
-  { path: '/', element: <Home /> },
-  { path: PAGE_ROUTES.FORGET_PASSWORD, element: <ForgetPassword /> },
-  { path: PAGE_ROUTES.NEW_PASSWORD, element: <NewPassword /> },
-  { path: PAGE_ROUTES.RESEND_PASSWORD, element: <SuccessPage /> },
-  { path: PAGE_ROUTES.SIGN_IN, element: <SignIn /> },
-
+  { path: '/', element: <Home />, isPublic: true },
+  { path: PAGE_ROUTES.FORGET_PASSWORD, element: <ForgetPassword />, isPublic: true },
+  { path: PAGE_ROUTES.NEW_PASSWORD, element: <NewPassword />, isPublic: true },
+  { path: PAGE_ROUTES.RESEND_PASSWORD, element: <SuccessPage />, isPublic: true },
+  { path: PAGE_ROUTES.SIGN_IN, element: <SignIn />, isPublic: true },
+  { path: '*', element: <NotFound />, isPublic: true },
   {
     element: <Layout />,
     children: [
@@ -91,7 +91,6 @@ export const routingArray = [
           { path: PAGE_ROUTES.NON_PROFIT_PENDING, element: <NonProfitPending /> },
           { path: PAGE_ROUTES.PROCUREMENT_CUSTOMERS, element: <ProcurementCustomers /> },
           { path: PAGE_ROUTES.CONTACT_FORM_MESSAGE, element: <ContactFormMessage /> },
-
         ],
       },
       {
@@ -112,7 +111,6 @@ export const routingArray = [
           { path: PAGE_ROUTES.HOMEPAGE, element: <Homepage /> },
         ],
       },
-      { path: '*', element: <NotFound /> },
     ],
   },
 
