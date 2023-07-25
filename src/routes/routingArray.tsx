@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, RouteObject } from 'react-router-dom';
 import ForgetPassword from '@containers/Auth/ForgetPassword';
 import SignIn from '@containers/Auth/SignIn';
 import NewPassword from '@containers/Auth/NewPassword';
@@ -39,7 +39,11 @@ import Homepage from '@containers/CMS/Homepage';
 import Layout from 'src/Layout';
 import { PAGE_ROUTES } from '@customTypes/enums/routes';
 
-export const routingArray = [
+export type CustomRouteObject = RouteObject & {
+  isPublic?: boolean;
+}
+
+export const routingArray: CustomRouteObject[] = [
   { path: '/', element: <Home />, isPublic: true },
   { path: PAGE_ROUTES.FORGET_PASSWORD, element: <ForgetPassword />, isPublic: true },
   { path: PAGE_ROUTES.NEW_PASSWORD, element: <NewPassword />, isPublic: true },
@@ -113,5 +117,4 @@ export const routingArray = [
       },
     ],
   },
-
 ];

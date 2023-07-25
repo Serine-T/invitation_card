@@ -23,7 +23,7 @@ const SignIn = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isLoading } = useAppSelector(selectIsAuth);
-  const handleForgetPass = useCallback(() => navigate('/forget-password'), [navigate]);
+  const handleForgetPass = useCallback(() => navigate(PAGE_ROUTES.FORGET_PASSWORD), [navigate]);
   const methods = useForm<ISignInForm>({
     resolver: yupResolver(SignInSchema),
     defaultValues: {

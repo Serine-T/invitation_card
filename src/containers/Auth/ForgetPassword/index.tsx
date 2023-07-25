@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { PAGE_ROUTES } from '@customTypes/enums/routes';
 
 import AuthComponent from '..';
 import { StyledInputBox, StyledTitle } from '../styled';
@@ -29,7 +30,7 @@ const ForgetPassword = () => {
   const onSubmit = useCallback((data: IForgetPasswordForm) => {
     console.log('data', data);
 
-    navigate('/resend-password');
+    navigate(PAGE_ROUTES.RESEND_PASSWORD);
   }, [navigate]);
 
   return (
