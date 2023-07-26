@@ -11,7 +11,6 @@ import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { selectIsAuth } from '@features/auth/selectors';
 import Loader from '@containers/common/Loader';
 import { PAGE_ROUTES } from '@customTypes/enums/routes';
-// import { REQUEST_STATUS } from '@utils/types';
 
 import EmailInput from '../components/Email';
 import AuthComponent from '..';

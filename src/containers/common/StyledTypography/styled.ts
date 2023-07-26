@@ -11,7 +11,6 @@ interface StyledMuiTypographyProps{
 export const StyledMuiTypography = styled(Typography, {
   shouldForwardProp: (prop) => prop !== 'color' && prop !== 'underLine',
 })<StyledMuiTypographyProps>(({ theme, color = 'black', underLine = false }) => ({
-  // color: color === 'blue' ? theme.palette.primary.dark : (color === 'grey' ? theme.palette.grey[300] : ''),
   color: gettingColor(color, theme),
   textDecoration: underLine ? 'underline' : 'none',
 }));

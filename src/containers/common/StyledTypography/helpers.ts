@@ -7,5 +7,5 @@ export const gettingColor = (color: string, theme: Theme) => {
     grey: theme.palette.grey[300],
   };
 
-  return colorObj[color];
+  return colorObj[color] || '';
 };
