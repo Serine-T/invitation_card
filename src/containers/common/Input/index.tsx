@@ -1,16 +1,14 @@
 import { forwardRef, memo, ReactNode } from 'react';
 
 import { InputBaseProps } from '@mui/material/InputBase';
-import Box from '@mui/material/Box';
 
 import {
   StyledBaseInput,
-  StyledErrorMessage,
   StyledFormControl,
   StyledInputBox,
   StyledInputLabel,
 } from './styled';
-import ErrorMessage from '../ErrorMessage';
+import StyledTypography from '../StyledTypography';
 
 export interface IBaseInputProps extends InputBaseProps {
   label?: string | ReactNode;
@@ -41,7 +39,7 @@ const BaseInput = forwardRef((props: IBaseInputProps, ref) => {
     ...restProps
   } = props;
 
-  const renderInputContent = () => (
+  return (
     <StyledInputBox marginBottom={marginBottom} errorMessage={!!errorMessage}>
       {label && (
         <StyledInputLabel shrink htmlFor={id}>
@@ -61,27 +59,12 @@ const BaseInput = forwardRef((props: IBaseInputProps, ref) => {
           {...restProps}
         />
       </StyledFormControl>
-
-      {/* TODO: text  */}
       {!!errorMessage && (
-        <StyledErrorMessage>
+        <StyledTypography variant="body4" color="red" mt="6px">
           {errorMessage}
-        </StyledErrorMessage>
+        </StyledTypography>
       )}
     </StyledInputBox>
-  );
-
-  return (
-
-    <Box>
-      {renderInputContent()}
-      {error && inputProps?.name && (
-      <ErrorMessage
-        errors={error}
-        name={inputProps.name}
-      />
-      )}
-    </Box>
   );
 });
 

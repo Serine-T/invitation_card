@@ -32,6 +32,7 @@
       "@routes/*": ["./src/routes/*"], 
       "@styles/*": ["./src/styles/*"], 
       "@models/*": ["./src/models/*"], 
+      "@customHooks/*": ["./src/customHooks/*"],       
     }
   },
   "include": [

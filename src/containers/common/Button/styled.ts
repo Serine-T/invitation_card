@@ -8,12 +8,12 @@ export const StyledButton = styled(Button, {
   theme, width, isOutlined = false,
 }) => ({
   width: width ?? '100%',
-  height: 34,
+  height: '34px',
   boxShadow: 'none',
   textTransform: 'none',
   fontSize: 10,
   border: '1px solid',
-  lineHeight: 12,
+  lineHeight: '12px',
   backgroundColor: isOutlined ? theme.palette.common.white : theme.palette.primary.dark,
   borderColor: theme.palette.primary.dark,
   borderRadius: 4,
@@ -27,5 +27,17 @@ export const StyledButton = styled(Button, {
   '&:disabled': {
     backgroundColor: alpha(theme.palette.grey[500], 0.1),
     cursor: 'not-allowed',
+  },
+}));
+
+export const StyledTextButton = styled(Button)(() => ({
+  boxShadow: 'none',
+  textTransform: 'none',
+  fontSize: 10,
+  padding: 0,
+  margin: 0,
+  minWidth: 'unset',
+  '&:hover': {
+    backgroundColor: 'unset',
   },
 }));

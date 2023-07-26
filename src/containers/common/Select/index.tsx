@@ -8,9 +8,10 @@ import {
 import MenuItem from '@mui/material/MenuItem';
 import { UseFormSetValue } from 'react-hook-form';
 
-import ErrorMessage from '../ErrorMessage';
 import { StyledFormControl, StyledSelect } from './styled';
 // TODO: Check if it's correct
+
+// TODO: ADD error handling
 interface ISelectProps extends SelectProps {
   id: string;
   errors?: any;
@@ -36,8 +37,6 @@ const Select = ({
   const handleSelectChange = (event: SelectChangeEvent<unknown>) => {
     const { value: targetValue } = event.target;
 
-    console.log('targetValue', targetValue);
-
     if (name) {
       setValue?.(name, targetValue);
     }
@@ -58,12 +57,6 @@ const Select = ({
           options.length > 0 &&
           options.map((v) => <MenuItem key={v} value={v}>{v}</MenuItem>)}
       </StyledSelect>
-      {errors && name && (
-        <ErrorMessage
-          errors={errors}
-          name={name}
-        />
-      )}
     </StyledFormControl>
   );
 };

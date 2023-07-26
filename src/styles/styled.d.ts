@@ -9,6 +9,7 @@ declare module '@mui/material/styles' {
   interface ThemeOptions extends CustomTheme {}
   interface TypographyVariantsOptions {
     body3: React.CSSProperties;
+    body4: React.CSSProperties;
     subtitle3: React.CSSProperties;
     h7: React.CSSProperties;
     h8: React.CSSProperties;
@@ -30,6 +31,7 @@ export { createTheme, responsiveFontSizes };
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     body3: true;
+    body4: true;
     subtitle3: true;
     h7: true;
     h8: true;

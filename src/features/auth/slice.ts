@@ -1,33 +1,47 @@
-import { gettingData } from '@features/auth/actions';
+import { signIn } from '@features/auth/actions';
 import { createSlice } from '@reduxjs/toolkit';
+import { REQUEST_STATUS } from '@utils/types';
 
-const initialState: any = {
+import { IAuthState } from './types';
+import { clearLocalStorageData, getAccessToken } from './helpers';
+
+const initialState: IAuthState = {
   isLoading: false,
   data: [],
-  errors: null,
-  isAuth: false,
+  errorMessage: '',
+  isAuth: !!getAccessToken(),
+  status: null,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    signIn: (state) => {
-      state.data = [];
+    logOut: (state) => {
+      clearLocalStorageData();
+      state.isAuth = false;
     },
+
   },
   extraReducers: (builder) => {
-    builder.addCase(gettingData.pending, (state) => {
+    builder.addCase(signIn.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(gettingData.fulfilled, (state) => {
-      state.data = [5, 2];
+    builder.addCase(signIn.fulfilled, (state) => {
+      state.isAuth = true;
+      state.status = REQUEST_STATUS.SUCCEED;
+      state.isLoading = false;
+    });
+
+    builder.addCase(signIn.rejected, (state, { payload: { message } }) => {
+      state.errorMessage = message;
+      state.isLoading = false;
     });
   },
 });
 
 export const {
-  signIn,
+  logOut,
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,22 +1,46 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosResponse } from 'axios';
 import { sleep } from '@utils/helpers';
 import { http } from '@services/RequestService';
+import { customErrorHandling } from '@utils/errorHandler';
+import { AxiosResponse } from 'axios';
 
-const prefix = '';
+import {
+  ISignInPayload,
+  // ISignInResponseType
+} from './types';
+import { setLocalStorageData } from './helpers';
 
-export const gettingData = createAsyncThunk(
+const prefix = '/auth';
+
+export const signIn = createAsyncThunk<void, ISignInPayload, {
+  rejectValue: AxiosResponse['data'];
+}>(
   'auth/signIn',
-  async (_, thunkAPI) => {
+  async (value, thunkAPI) => {
     try {
-      await sleep();
+      await sleep(1000);
 
-      const response = await http.get<AxiosResponse<any>>(`${prefix}`);
+      // TODO: should be returned back
+      // const { data } = await http.post<ISignInPayload, AxiosResponse<ISignInResponseType>>(
+      //   `${prefix}/login`,
+      //   value,
+      // );
 
-      console.log('response', response);
-    } catch (e: any) {
-      // console.log(e, e.message, e.response.status);
-      return thunkAPI.rejectWithValue({ message: e.message, status: e.response.status });
+      const { data } = await http.post<ISignInPayload, AxiosResponse<any>>(
+        `${prefix}/login`,
+        value,
+      );
+
+      // TODO: change typing
+      console.log('responseresponse', data);
+
+      const { accessToken, refreshToken } = data?.data as any;
+
+      setLocalStorageData({ accessToken, refreshToken });
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
     }
   },
 );

@@ -132,7 +132,6 @@ class RequestService {
 
       case StatusCode.Unauthorized: {
         StorageManager.clearItems();
-        window.location.href = '/';
         break;
       }
 

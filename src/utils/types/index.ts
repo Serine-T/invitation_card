@@ -44,3 +44,9 @@ export enum REQUEST_STATUS {
   SUCCEED = 'SUCCEED',
   FAILED = 'FAILED'
 }
+
+export type ErrorType = {
+  error: string;
+  message: string;
+  statusCode: number;
+}
