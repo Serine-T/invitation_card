@@ -10,7 +10,7 @@ import { signIn } from '@features/auth/actions';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { selectIsAuth } from '@features/auth/selectors';
 import Loader from '@containers/common/Loader';
-import { PAGE_ROUTES } from '@customTypes/enums/routes';
+import { PAGE_ROUTES } from '@routes/routingEnum';
 
 import EmailInput from '../components/Email';
 import AuthComponent from '..';
