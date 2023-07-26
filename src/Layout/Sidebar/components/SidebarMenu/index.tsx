@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import { memo, useState, SyntheticEvent } from 'react';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useLocation } from 'react-router-dom';
@@ -16,7 +16,7 @@ const SidebarMenu = () => {
   const [expanded, setExpanded] = useState<string | false>(initialValue);
 
   const handleChange =
-    (path: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (path: string) => (event: SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? path : false);
     };
 
@@ -42,11 +42,11 @@ const SidebarMenu = () => {
                 />
               </StyledAccordionSummary>
               {children &&
-        children.map((item) => (
-          <StyledAccordionDetails key={item.path}>
-            <SubMenuItem {...item} />
-          </StyledAccordionDetails>
-        ))}
+                  children.map((item) => (
+                    <StyledAccordionDetails key={item.path}>
+                      <SubMenuItem {...item} />
+                    </StyledAccordionDetails>
+                  ))}
             </StyledAccordion>
           );
         })
