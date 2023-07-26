@@ -7,7 +7,7 @@ interface IHeader {
   onOpenNav: () => void;
 }
 
-const Header = ({ onOpenNav }: IHeader) => {
+const HeaderSection = ({ onOpenNav }: IHeader) => {
   return (
     <StyledHeader>
       <StyledToolbar>
@@ -21,4 +21,4 @@ const Header = ({ onOpenNav }: IHeader) => {
   );
 };
 
-export default Header;
+export default HeaderSection;
