@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { useAppSelector } from '@features/app/hooks';
 import { selectIsAuth } from '@features/auth/selectors';
 import { useNavigate } from 'react-router-dom';
-import { PAGE_ROUTES } from '@customTypes/enums/routes';
+import { PAGE_ROUTES } from '@routes/routingEnum';
 import useMount from '@customHooks/useMount';
 
 const Home = () => {

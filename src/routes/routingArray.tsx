@@ -37,14 +37,14 @@ import ShippingRateMarkup from '@containers/Administration/ShippingRateMarkup';
 import PromotionalCodes from '@containers/Administration/PromotionalCodes';
 import Homepage from '@containers/CMS/Homepage';
 import Layout from 'src/Layout';
-import { PAGE_ROUTES } from '@customTypes/enums/routes';
+import { PAGE_ROUTES } from '@routes/routingEnum';
 
 export type CustomRouteObject = RouteObject & {
   isPublic?: boolean;
 }
 
 export const routingArray: CustomRouteObject[] = [
-  { path: '/', element: <Home />, isPublic: true },
+  { path: PAGE_ROUTES.HOME, element: <Home />, isPublic: true },
   { path: PAGE_ROUTES.FORGET_PASSWORD, element: <ForgetPassword />, isPublic: true },
   { path: PAGE_ROUTES.NEW_PASSWORD, element: <NewPassword />, isPublic: true },
   { path: PAGE_ROUTES.RESEND_PASSWORD, element: <SuccessPage />, isPublic: true },
@@ -55,7 +55,7 @@ export const routingArray: CustomRouteObject[] = [
     children: [
       { path: PAGE_ROUTES.DASHBOARD, element: <Dashboard /> },
       {
-        path: '/orders',
+        path: PAGE_ROUTES.ORDERS,
         children: [
           { element: <Navigate to={PAGE_ROUTES.OPEN_JOBS} />, index: true },
           { path: PAGE_ROUTES.COMPLETED_JOBS, element: <CompletedJobs /> },

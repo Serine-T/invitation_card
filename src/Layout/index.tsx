@@ -5,7 +5,7 @@ import useResponsive from '@customHooks/useResponsive';
 
 import Sidebar from './Sidebar';
 import { StyledMain, StyledRoot } from './styled';
-import HeaderSection from './HeaderSection';
+import HeaderSection from './Header';
 
 const Layout = () => {
   const [open, setOpen] = useState(false);

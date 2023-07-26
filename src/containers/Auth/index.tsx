@@ -4,7 +4,7 @@ import postcardsLogo from '@assets/images/postcards-logo.png';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '@features/app/hooks';
 import { selectIsAuth } from '@features/auth/selectors';
-import { PAGE_ROUTES } from '@customTypes/enums/routes';
+import { PAGE_ROUTES } from '@routes/routingEnum';
 import useMount from '@customHooks/useMount';
 
 import { StyledBox, StyledLogoBox, StyledContainer, StyledSection } from './styled';

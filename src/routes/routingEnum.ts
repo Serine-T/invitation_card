@@ -1,4 +1,5 @@
 export enum PAGE_ROUTES {
+  HOME = '/',
   FORGET_PASSWORD = '/forget-password',
   NEW_PASSWORD = '/new-password',
   RESEND_PASSWORD = '/resend-password',
