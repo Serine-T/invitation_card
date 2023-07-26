@@ -20,7 +20,7 @@ export const signIn = createAsyncThunk<void, ISignInPayload, {
     try {
       await sleep(1000);
 
-      // TODO: should return back
+      // TODO: should be returned back
       // const { data } = await http.post<ISignInPayload, AxiosResponse<ISignInResponseType>>(
       //   `${prefix}/login`,
       //   value,
@@ -37,10 +37,7 @@ export const signIn = createAsyncThunk<void, ISignInPayload, {
       const { accessToken, refreshToken } = data?.data as any;
 
       setLocalStorageData({ accessToken, refreshToken });
-      console.log({ accessToken, refreshToken });
     } catch (error) {
-      console.log('*****', error);
-
       const errorInfo = customErrorHandling(error);
 
       return thunkAPI.rejectWithValue(errorInfo);
