@@ -23,6 +23,10 @@ const AuthComponent = ({ children }: AuthComponentProps) => {
     }
   });
 
+  if (isAuth) {
+    return;
+  }
+
   return (
     <StyledSection>
       <StyledContainer>
