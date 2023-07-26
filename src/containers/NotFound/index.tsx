@@ -1,11 +1,10 @@
 import { memo } from 'react';
 
 import Typography from '@mui/material/Typography';
-import Button from '@containers/common/Button';
 import { useNavigate } from 'react-router-dom';
 import { PAGE_ROUTES } from '@routes/routingEnum';
 
-import { StyledContainer } from './styled';
+import { StyledButton, StyledContainer } from './styled';
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -24,7 +23,9 @@ const NotFound = () => {
       <Typography variant="h9" mb="30px">
         The page you are looking for does not exist. Please go back to Home Page to proceed.
       </Typography>
-      <Button width="85px" onClick={handleRedirectHome}>Home page</Button>
+      <StyledButton onClick={handleRedirectHome}>
+        Home page
+      </StyledButton>
     </StyledContainer>
   );
 };
