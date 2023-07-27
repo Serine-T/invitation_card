@@ -11,18 +11,18 @@ export const StyledButton = styled(Button, {
   height: '34px',
   boxShadow: 'none',
   textTransform: 'none',
-  fontSize: 10,
+  fontSize: '12px',
   border: '1px solid',
   lineHeight: '12px',
   backgroundColor: isOutlined ? theme.palette.common.white : theme.palette.primary.dark,
   borderColor: theme.palette.primary.dark,
   borderRadius: 4,
   fontFamily: FontFamilyNames.DmSansRegular,
-  color: isOutlined ? theme.palette.common.black : theme.palette.common.white,
+  color: isOutlined ? theme.palette.primary.dark : theme.palette.common.white,
   padding: '11px 12px',
 
   '&:hover': {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: isOutlined ? theme.palette.common.white : theme.palette.primary.dark,
   },
   '&:disabled': {
     backgroundColor: alpha(theme.palette.grey[500], 0.1),
