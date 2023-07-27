@@ -36,8 +36,7 @@ export const StyledAccordionSummary = styled(AccordionSummary, {
     margin: 0,
   },
   svg: {
-    width: '20px',
-    height: '18px',
+    fontSize: '16px',
     color: isActive ? theme.palette.primary.dark : '',
   },
 }));

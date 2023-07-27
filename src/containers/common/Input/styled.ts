@@ -51,8 +51,7 @@ export const StyledFormControl = styled(FormControl)(({ theme }) => ({
     paddingRight: 4,
     height: 16,
     svg: {
-      width: '16px',
-      height: '16px',
+      fontSize: '16px',
       color: theme.palette.grey[300],
     },
   },
