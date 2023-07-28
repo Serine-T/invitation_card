@@ -18,7 +18,7 @@ const TitlesWithBackButton = ({ title, children }:ITitlesWithBackButton) => {
         <BackButton path={PAGE_ROUTES.USERS} />
       </StyledBox>
       <ContentBox>
-        <Typography variant="h2">{title}</Typography>
+        <Typography variant="h2" mb="40px">{title}</Typography>
         {children}
       </ContentBox>
     </StyledContainer>
