@@ -37,7 +37,9 @@ import ShippingRateMarkup from '@containers/Administration/ShippingRateMarkup';
 import PromotionalCodes from '@containers/Administration/PromotionalCodes';
 import Homepage from '@containers/CMS/Homepage';
 import Layout from 'src/Layout';
-import { PAGE_ROUTES } from '@routes/routingEnum';
+import PAGE_ROUTES from '@routes/routingEnum';
+import AddUser from '@containers/Administration/Users/components/AddUser';
+import EditUser from '@containers/Administration/Users/components/EditUser';
 
 export type CustomRouteObject = RouteObject & {
   isPublic?: boolean;
@@ -102,7 +104,14 @@ export const routingArray: CustomRouteObject[] = [
         children: [
           { element: <Navigate to={PAGE_ROUTES.TASKS} />, index: true },
           { path: PAGE_ROUTES.TASKS, element: <Tasks /> },
-          { path: PAGE_ROUTES.USERS, element: <Users /> },
+          {
+            path: PAGE_ROUTES.USERS,
+            children: [
+              { element: <Users />, index: true },
+              { path: PAGE_ROUTES.ADD_USER, element: <AddUser /> },
+              { path: PAGE_ROUTES.EDIT_USER, element: <EditUser /> },
+            ],
+          },
           { path: PAGE_ROUTES.PROMOTIONAL_CODES, element: <PromotionalCodes /> },
           { path: PAGE_ROUTES.SHIPPING_ZIPS, element: <ShippingZips /> },
           { path: PAGE_ROUTES.SHIPPING_RATE_MARKUP, element: <ShippingRateMarkup /> },

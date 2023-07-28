@@ -16,7 +16,6 @@ const BackButton = ({ path }: IBackButton) => {
         <Typography variant="body3">
           Back
         </Typography>
-
       </StyledBackBox>
     </Link>
   );

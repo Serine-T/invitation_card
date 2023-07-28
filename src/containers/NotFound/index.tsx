@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
-import { PAGE_ROUTES } from '@routes/routingEnum';
+import PAGE_ROUTES from '@routes/routingEnum';
 
 import { StyledButton, StyledContainer } from './styled';
 

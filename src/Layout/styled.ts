@@ -14,6 +14,6 @@ export const StyledMain = styled(Box)(({ theme }) => ({
   padding: '40px 32px 80px',
   position: 'relative',
   [theme.breakpoints.down('lg')]: {
-    padding: '60px 32px 80px',
+    padding: '80px 32px 80px',
   },
 }));

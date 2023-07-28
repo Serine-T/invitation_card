@@ -10,10 +10,11 @@ interface ISubMenuItem {
 
 const SubMenuItem = ({ path, title }: ISubMenuItem) => {
   const { pathname } = useLocation();
+  const isActive = pathname === path || pathname.startsWith(path);
 
   return (
     <Link to={path}>
-      <StyledTypography variant="body3" color={pathname === path ? 'blue' : ''}>
+      <StyledTypography variant="body3" color={isActive ? 'blue' : ''}>
         {title}
       </StyledTypography>
 

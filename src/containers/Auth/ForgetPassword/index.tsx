@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { PAGE_ROUTES } from '@routes/routingEnum';
+import PAGE_ROUTES from '@routes/routingEnum';
 
 import AuthComponent from '..';
 import { StyledInputBox, StyledTitle } from '../styled';
