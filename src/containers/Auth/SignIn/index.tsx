@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import Button from '@containers/common/Button';
@@ -22,7 +22,7 @@ const SignIn = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isLoading } = useAppSelector(selectIsAuth);
-  const handleForgetPass = useCallback(() => navigate(PAGE_ROUTES.FORGET_PASSWORD), [navigate]);
+  const handleForgetPass = () => navigate(PAGE_ROUTES.FORGET_PASSWORD);
   const methods = useForm<ISignInForm>({
     resolver: yupResolver(SignInSchema),
     defaultValues: {
@@ -37,11 +37,11 @@ const SignIn = () => {
     setError,
   } = methods;
 
-  const onSubmit = useCallback(async (data: ISignInForm) => {
+  const onSubmit = async (data: ISignInForm) => {
     await dispatch(signIn(data)).unwrap().then(() => {
       navigate(PAGE_ROUTES.DASHBOARD);
     }).catch((e) => setError('password', { message: e.message }));
-  }, [dispatch, navigate, setError]);
+  };
 
   return (
     <>

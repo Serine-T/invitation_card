@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import Button from '@containers/common/Button';
@@ -27,11 +27,11 @@ const ForgetPassword = () => {
     formState: { errors },
   } = methods;
 
-  const onSubmit = useCallback((data: IForgetPasswordForm) => {
+  const onSubmit = (data: IForgetPasswordForm) => {
     console.log('data', data);
 
     navigate(PAGE_ROUTES.RESEND_PASSWORD);
-  }, [navigate]);
+  };
 
   return (
     <AuthComponent>
