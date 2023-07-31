@@ -25,9 +25,9 @@ export const defaultValues = {
 export const AddUserSchema = yup.object().shape({
   email: EmailSchema.email,
   password: PasswordSchema.password,
-  username: yup.string().required('Required'),
-  firstName: yup.string().required('Required'),
-  lastName: yup.string().required('Required'),
+  username: yup.string().required('Username is required'),
+  firstName: yup.string().required('First name is required'),
+  lastName: yup.string().required('Last name is required'),
 });
 
 type ValidFieldNames = {

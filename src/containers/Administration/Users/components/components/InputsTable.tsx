@@ -39,8 +39,6 @@ const InputsTable = ({ title }: IInputsTable) => {
     console.log('data', data);
   };
 
-  console.log('errors', errors);
-
   return (
     <>
       <TitlesWithBackButton title={title}>
@@ -54,7 +52,7 @@ const InputsTable = ({ title }: IInputsTable) => {
                 <StyledTableRow key={label}>
                   <StyledTableCell>{`${label}:`}</StyledTableCell>
                   <TableCell>
-                    <Input placeholder={label} {...register(field)} />
+                    <Input placeholder={label} {...register(field)} errorMessage={errors?.[field]?.message} />
                   </TableCell>
                 </StyledTableRow>
               ))}

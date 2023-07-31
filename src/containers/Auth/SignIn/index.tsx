@@ -56,14 +56,12 @@ const SignIn = () => {
             component="form"
           >
             <EmailInput
-              error={!!errors.email?.message}
               errorMessage={errors.email?.message}
             />
             <PasswordInput
               name="password"
               label="Password"
               placeholder="Enter Password"
-              error={!!errors.password?.message}
               errorMessage={errors.password?.message}
             />
             <StyledInputBox>
