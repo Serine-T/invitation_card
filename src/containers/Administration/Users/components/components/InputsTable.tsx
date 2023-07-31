@@ -7,6 +7,7 @@ import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import Input from '@containers/common/Input';
+import Checkbox from '@containers/common/Checkbox';
 
 import {
   AddUserSchema,
@@ -61,7 +62,7 @@ const InputsTable = ({ title }: IInputsTable) => {
                 <StyledTableRow key={label}>
                   <StyledTableCell>{`${label}:`}</StyledTableCell>
                   <TableCell>
-                    <Input placeholder={label} {...register(field)} />
+                    <Checkbox name={field} />
                   </TableCell>
                 </StyledTableRow>
               ))}
