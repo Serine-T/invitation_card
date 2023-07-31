@@ -3,9 +3,13 @@ import { memo } from 'react';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Stack from '@mui/material/Stack';
+import TableCell from '@mui/material/TableCell';
+import StyledTable from '@containers/common/Table';
+import { StyledTableRow } from '@containers/common/Table/styled';
+import Input from '@containers/common/Input';
 
-import { AddUserSchema, IAddUserForm } from './helpers';
+import { AddUserSchema, IAddUserForm, rows } from './helpers';
+import { StyledStack } from './styles';
 
 interface IInputsTable {
   title: string;
@@ -25,6 +29,7 @@ const InputsTable = ({ title }: IInputsTable) => {
     formState: { errors },
   } = methods;
 
+  // TODO: add logic, remove consoles
   const onSubmit = (data: IAddUserForm) => {
     console.log('data', data);
   };
@@ -35,12 +40,21 @@ const InputsTable = ({ title }: IInputsTable) => {
     <>
       <TitlesWithBackButton title={title}>
         <FormProvider {...methods}>
-          <Stack
+          <StyledStack
             onSubmit={handleSubmit(onSubmit)}
             component="form"
           >
-            erf
-          </Stack>
+            <StyledTable tableTitle="USER INFO" colSpan={2} hasPagination={false}>
+              {rows.map(({ label }) => (
+                <StyledTableRow key={label}>
+                  <TableCell sx={{ width: '232px', fontWeight: 500 }}>{`${label}:`}</TableCell>
+                  <TableCell>
+                    <Input placeholder={label} />
+                  </TableCell>
+                </StyledTableRow>
+              ))}
+            </StyledTable>
+          </StyledStack>
         </FormProvider>
       </TitlesWithBackButton>
     </>

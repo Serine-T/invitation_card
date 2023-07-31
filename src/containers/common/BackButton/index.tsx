@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { Link } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Typography from '@mui/material/Typography';
@@ -21,4 +23,4 @@ const BackButton = ({ path }: IBackButton) => {
   );
 };
 
-export default BackButton;
+export default memo(BackButton);

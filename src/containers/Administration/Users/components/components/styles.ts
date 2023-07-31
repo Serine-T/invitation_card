@@ -1,6 +1,11 @@
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 
-export const StyledBox = styled(Box)(() => ({
+export const StyledStack = styled(Stack)<{component?: string}>(({ theme }) => ({
+  width: '660px',
 
+  [theme.breakpoints.down('lg')]: {
+    maxWidth: 'calc(100vw - 64px)',
+    // minWidth: '500px',
+  },
 }));

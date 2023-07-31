@@ -21,6 +21,7 @@ export const COLORS = {
     400: '#DDDDE8',
     500: '#CFD9E0',
     600: '#AEBECA',
+    700: '#FAFAFA',
   },
 };
 

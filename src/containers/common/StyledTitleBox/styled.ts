@@ -5,4 +5,5 @@ export const StyledTitleBox = styled(Box)(() => ({
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
+  marginBottom: '28px',
 }));
