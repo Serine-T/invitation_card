@@ -8,7 +8,6 @@ import { StyledMuiTable, StyledPagination, StyledTableContainer, StyledTableRow 
 import { ITableHeadCell } from './helpers';
 
 interface IStyledTable {
-  test?: string;
   headCells?: ITableHeadCell[];
   children: ReactNode;
   tableTitle?: string;
@@ -16,9 +15,7 @@ interface IStyledTable {
   hasPagination?: boolean;
  }
 
-const StyledTable = ({ test, headCells, children, tableTitle, colSpan, hasPagination = true }: IStyledTable) => {
-  console.log('test', test);
-
+const StyledTable = ({ headCells, children, tableTitle, colSpan, hasPagination = true }: IStyledTable) => {
   return (
     <>
       <StyledTableContainer>

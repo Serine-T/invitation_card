@@ -8,8 +8,14 @@ import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import Input from '@containers/common/Input';
 
-import { AddUserSchema, IAddUserForm, rows } from './helpers';
-import { StyledStack } from './styles';
+import {
+  AddUserSchema,
+  IAddUserForm,
+  checkboxRows,
+  inputsRows,
+  defaultValues,
+} from './helpers';
+import { StyledButton, StyledStack, StyledTableCell } from './styles';
 
 interface IInputsTable {
   title: string;
@@ -18,14 +24,12 @@ interface IInputsTable {
 const InputsTable = ({ title }: IInputsTable) => {
   const methods = useForm<IAddUserForm>({
     resolver: yupResolver(AddUserSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+    defaultValues,
   });
 
   const {
     handleSubmit,
+    register,
     formState: { errors },
   } = methods;
 
@@ -45,17 +49,27 @@ const InputsTable = ({ title }: IInputsTable) => {
             component="form"
           >
             <StyledTable tableTitle="USER INFO" colSpan={2} hasPagination={false}>
-              {rows.map(({ label }) => (
+              {inputsRows.map(({ label, field }) => (
                 <StyledTableRow key={label}>
-                  <TableCell sx={{ width: '232px', fontWeight: 500 }}>{`${label}:`}</TableCell>
+                  <StyledTableCell>{`${label}:`}</StyledTableCell>
                   <TableCell>
-                    <Input placeholder={label} />
+                    <Input placeholder={label} {...register(field)} />
+                  </TableCell>
+                </StyledTableRow>
+              ))}
+              {checkboxRows.map(({ label, field }) => (
+                <StyledTableRow key={label}>
+                  <StyledTableCell>{`${label}:`}</StyledTableCell>
+                  <TableCell>
+                    <Input placeholder={label} {...register(field)} />
                   </TableCell>
                 </StyledTableRow>
               ))}
             </StyledTable>
+            <StyledButton type="submit">Submit</StyledButton>
           </StyledStack>
         </FormProvider>
+
       </TitlesWithBackButton>
     </>
   );

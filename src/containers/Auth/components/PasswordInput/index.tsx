@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useState } from 'react';
 
 import BaseInput, { IBaseInputProps } from '@containers/common/Input/index';
 import Visibility from '@mui/icons-material/Visibility';
@@ -13,7 +13,7 @@ const PasswordInput = (props: IBaseInputProps) => {
   const { register } = useFormContext();
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleClickShowPassword = useCallback(() => setShowPassword((prev) => !prev), []);
+  const handleClickShowPassword = () => setShowPassword((prev) => !prev);
 
   return (
     <BaseInput
