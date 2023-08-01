@@ -1,15 +1,15 @@
 import { memo } from 'react';
 
-import { StyledTitleBox } from '@containers/common/StyledTitleBox/styled';
-import Typography from '@mui/material/Typography';
+import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
+import PAGE_ROUTES from '@routes/routingEnum';
+
+import InputsTable from '../components/InputsTable';
 
 const AddBanner = () => {
   return (
-    <>
-      <StyledTitleBox>
-        <Typography variant="h2">Add Banner</Typography>
-      </StyledTitleBox>
-    </>
+    <TitlesWithBackButton title="Add New Banner" path={PAGE_ROUTES.HOMEPAGE}>
+      <InputsTable />
+    </TitlesWithBackButton>
   );
 };
 

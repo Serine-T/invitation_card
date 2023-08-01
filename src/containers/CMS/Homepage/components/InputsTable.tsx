@@ -7,19 +7,19 @@ import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import Input from '@containers/common/Input';
 import Checkbox from '@containers/common/Checkbox';
+import Upload from '@containers/common/Upload';
 
 import {
-  AddUserSchema,
-  IAddUserForm,
-  checkboxRows,
+  AddBannerSchema,
+  IAddBannerForm,
   inputsRows,
   defaultValues,
 } from './helpers';
 import { StyledButton, StyledStack, StyledTableCell } from './styles';
 
 const InputsTable = () => {
-  const methods = useForm<IAddUserForm>({
-    resolver: yupResolver(AddUserSchema),
+  const methods = useForm<IAddBannerForm>({
+    resolver: yupResolver(AddBannerSchema),
     defaultValues,
   });
 
@@ -30,7 +30,7 @@ const InputsTable = () => {
   } = methods;
 
   // TODO: add logic, remove consoles
-  const onSubmit = (data: IAddUserForm) => {
+  const onSubmit = (data: IAddBannerForm) => {
     console.log('data', data);
   };
 
@@ -41,7 +41,15 @@ const InputsTable = () => {
           onSubmit={handleSubmit(onSubmit)}
           component="form"
         >
-          <StyledTable tableTitle="USER INFO" colSpan={2} hasPagination={false}>
+          <StyledTable tableTitle="BANNER" colSpan={2} hasPagination={false}>
+            <StyledTableRow>
+              <StyledTableCell>Photo (Desktop):</StyledTableCell>
+              <TableCell>
+                <Upload id="ss">
+                  Photo
+                </Upload>
+              </TableCell>
+            </StyledTableRow>
             {inputsRows.map(({ label, field }) => (
               <StyledTableRow key={label}>
                 <StyledTableCell>{`${label}:`}</StyledTableCell>
@@ -50,14 +58,13 @@ const InputsTable = () => {
                 </TableCell>
               </StyledTableRow>
             ))}
-            {checkboxRows.map(({ label, field }) => (
-              <StyledTableRow key={label}>
-                <StyledTableCell>{`${label}:`}</StyledTableCell>
-                <TableCell>
-                  <Checkbox name={field} />
-                </TableCell>
-              </StyledTableRow>
-            ))}
+            {/* TODO: HOMEPAGE change checkbox name */}
+            <StyledTableRow>
+              <StyledTableCell>Display on Site</StyledTableCell>
+              <TableCell>
+                <Checkbox name="visibility" />
+              </TableCell>
+            </StyledTableRow>
           </StyledTable>
           <StyledButton type="submit">Submit</StyledButton>
         </StyledStack>
