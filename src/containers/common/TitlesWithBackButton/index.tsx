@@ -22,7 +22,6 @@ const TitlesWithBackButton = ({ title, children }:ITitlesWithBackButton) => {
         {children}
       </ContentBox>
     </StyledContainer>
-
   );
 };
 

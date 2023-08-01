@@ -16,6 +16,12 @@ export const COLORS = {
     dark: '#FFFFDF',
     light: '#F1F4FA',
   },
+  green: {
+    100: '#BCECBB',
+  },
+  yellow: {
+    100: '#F9DD96',
+  },
   grey: {
     300: '#788B9A',
     400: '#DDDDE8',

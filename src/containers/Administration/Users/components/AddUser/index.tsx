@@ -1,11 +1,15 @@
 import { memo } from 'react';
 
+import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
+
 import InputsTable from '../components/InputsTable';
 
 const AddUser = () => {
   return (
     <>
-      <InputsTable title="Add New User" />
+      <TitlesWithBackButton title="Add New User">
+        <InputsTable />
+      </TitlesWithBackButton>
     </>
   );
 };

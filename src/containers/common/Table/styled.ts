@@ -26,6 +26,10 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   'th:last-child, td:last-child': {
     borderRight: 0,
   },
+
+  '&:last-child td': {
+    borderBottom: 0,
+  },
 }));
 
 export const StyledMuiTable = styled(Table)(() => ({

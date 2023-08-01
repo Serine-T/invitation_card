@@ -39,3 +39,13 @@ declare module '@mui/material/Typography' {
     h10: true;
   }
 }
+
+declare module '@mui/material/styles/createPalette' {
+  interface Palette {
+    custom: {
+      red: string;
+      yellow: string;
+      green: string;
+    };
+  }
+}

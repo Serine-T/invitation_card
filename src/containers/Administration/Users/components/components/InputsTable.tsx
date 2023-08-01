@@ -1,6 +1,5 @@
 import { memo } from 'react';
 
-import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import TableCell from '@mui/material/TableCell';
@@ -18,11 +17,7 @@ import {
 } from './helpers';
 import { StyledButton, StyledStack, StyledTableCell } from './styles';
 
-interface IInputsTable {
-  title: string;
-}
-
-const InputsTable = ({ title }: IInputsTable) => {
+const InputsTable = () => {
   const methods = useForm<IAddUserForm>({
     resolver: yupResolver(AddUserSchema),
     defaultValues,
@@ -41,35 +36,32 @@ const InputsTable = ({ title }: IInputsTable) => {
 
   return (
     <>
-      <TitlesWithBackButton title={title}>
-        <FormProvider {...methods}>
-          <StyledStack
-            onSubmit={handleSubmit(onSubmit)}
-            component="form"
-          >
-            <StyledTable tableTitle="USER INFO" colSpan={2} hasPagination={false}>
-              {inputsRows.map(({ label, field }) => (
-                <StyledTableRow key={label}>
-                  <StyledTableCell>{`${label}:`}</StyledTableCell>
-                  <TableCell>
-                    <Input placeholder={label} {...register(field)} errorMessage={errors?.[field]?.message} />
-                  </TableCell>
-                </StyledTableRow>
-              ))}
-              {checkboxRows.map(({ label, field }) => (
-                <StyledTableRow key={label}>
-                  <StyledTableCell>{`${label}:`}</StyledTableCell>
-                  <TableCell>
-                    <Checkbox name={field} />
-                  </TableCell>
-                </StyledTableRow>
-              ))}
-            </StyledTable>
-            <StyledButton type="submit">Submit</StyledButton>
-          </StyledStack>
-        </FormProvider>
-
-      </TitlesWithBackButton>
+      <FormProvider {...methods}>
+        <StyledStack
+          onSubmit={handleSubmit(onSubmit)}
+          component="form"
+        >
+          <StyledTable tableTitle="USER INFO" colSpan={2} hasPagination={false}>
+            {inputsRows.map(({ label, field }) => (
+              <StyledTableRow key={label}>
+                <StyledTableCell>{`${label}:`}</StyledTableCell>
+                <TableCell>
+                  <Input placeholder={label} {...register(field)} errorMessage={errors?.[field]?.message} />
+                </TableCell>
+              </StyledTableRow>
+            ))}
+            {checkboxRows.map(({ label, field }) => (
+              <StyledTableRow key={label}>
+                <StyledTableCell>{`${label}:`}</StyledTableCell>
+                <TableCell>
+                  <Checkbox name={field} />
+                </TableCell>
+              </StyledTableRow>
+            ))}
+          </StyledTable>
+          <StyledButton type="submit">Submit</StyledButton>
+        </StyledStack>
+      </FormProvider>
     </>
   );
 };

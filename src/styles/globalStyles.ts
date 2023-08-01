@@ -34,7 +34,7 @@ export const MuiCssBaseline: Components<Theme>['MuiCssBaseline'] = {
       color: initial;
     }
     .MuiBackdrop-root.MuiModal-backdrop {
-      background-color: #06152B30; 
+      background-color: #06152B40; 
     }
   `.styles,
 };

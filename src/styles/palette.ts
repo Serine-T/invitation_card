@@ -3,7 +3,11 @@ import blueGrey from '@mui/material/colors/blueGrey';
 import { PaletteOptions } from '@mui/material';
 import { COLORS } from '@customTypes/global/theme/colors';
 
-const palette = {
+interface ExtendedPaletteOptions extends PaletteOptions{
+  custom: any;
+}
+
+const palette:ExtendedPaletteOptions = {
   background: {
     default: COLORS.white.main,
     paper: COLORS.white.main,
@@ -36,7 +40,9 @@ const palette = {
   // TODO: add another custom colors
   custom: {
     red: COLORS.red.dark,
+    yellow: COLORS.yellow,
+    green: COLORS.green,
   },
-} as PaletteOptions;
+};
 
 export default palette;
