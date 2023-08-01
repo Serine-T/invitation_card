@@ -21,7 +21,7 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   'td, th': {
     borderRight: `1px solid ${theme.palette.grey[500]}`,
     fontSize: '12px',
-    padding: '20px 16px',
+    padding: '18px 16px',
   },
   'th:last-child, td:last-child': {
     borderRight: 0,

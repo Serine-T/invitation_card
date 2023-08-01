@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 import { StyledTitleBox } from '@containers/common/StyledTitleBox/styled';
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import Button from '@containers/common/Button';
 import StyledTable from '@containers/common/Table';
 import { useNavigate } from 'react-router-dom';

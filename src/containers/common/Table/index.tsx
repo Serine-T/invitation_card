@@ -24,9 +24,13 @@ const StyledTable = ({ headCells, children, tableTitle, colSpan, hasPagination =
             <StyledTableRow>
               {
                 tableTitle ? <TableCell colSpan={colSpan}>{tableTitle}</TableCell>
-                  : (headCells ? headCells.map(({ label, sx }) => (
-                    <TableCell key={label} sx={sx}>{label}</TableCell>
-                  )) : null)
+                  : (headCells ? headCells.map((props) => {
+                    const { label } = props;
+
+                    return (
+                      <TableCell key={label} {...props}>{label}</TableCell>
+                    );
+                  }) : null)
                 }
             </StyledTableRow>
           </TableHead>

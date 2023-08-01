@@ -24,6 +24,7 @@ const DeleteBtn = ({ questionText, deleteAction }: IDeleteAction) => {
       onClick={handleDelete}
       color="blue"
       cursor
+      variant="body3"
     >
       Delete
     </StyledTypography>
