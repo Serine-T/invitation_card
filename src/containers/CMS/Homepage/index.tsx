@@ -14,6 +14,8 @@ import DragAndDropIcon from '@containers/common/Icons/DragAndDrop';
 import Stack from '@mui/material/Stack';
 
 import { headCells, rows } from './helpers';
+// TODO: DELETE AFTER IMPLEMENTS
+// import Test from './Test';
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -30,6 +32,7 @@ const Homepage = () => {
         <Typography variant="h2">Homepage</Typography>
         <Button width="120px" onClick={handleAddBanner}>Add Banner</Button>
       </StyledTitleBox>
+      {/* <Test /> */}
       <StyledTable headCells={headCells} hasPagination={false}>
         {rows.map(({ slider, visibility }) => (
           <StyledTableRow key={slider}>

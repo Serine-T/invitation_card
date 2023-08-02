@@ -5,11 +5,9 @@ export const headCells = [
     label: 'SLIDER',
   },
   {
-    width: '227px',
     label: 'VISIBLE ON SITE',
   },
   {
-    maxWidth: '284px',
     label: 'ACTIONS',
     colSpan: 3,
   },
