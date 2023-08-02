@@ -7,8 +7,6 @@ import { clearLocalStorageData, getAccessToken } from './helpers';
 
 const initialState: IAuthState = {
   isLoading: false,
-  data: [],
-  errorMessage: '',
   isAuth: !!getAccessToken(),
   status: null,
 };
@@ -33,8 +31,7 @@ const authSlice = createSlice({
       state.isLoading = false;
     });
 
-    builder.addCase(signIn.rejected, (state, { payload: { message } }) => {
-      state.errorMessage = message;
+    builder.addCase(signIn.rejected, (state) => {
       state.isLoading = false;
     });
   },

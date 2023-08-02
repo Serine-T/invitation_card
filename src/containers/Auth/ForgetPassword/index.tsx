@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import Button from '@containers/common/Button';
@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { PAGE_ROUTES } from '@routes/routingEnum';
+import PAGE_ROUTES from '@routes/routingEnum';
 
 import AuthComponent from '..';
 import { StyledInputBox, StyledTitle } from '../styled';
@@ -27,11 +27,11 @@ const ForgetPassword = () => {
     formState: { errors },
   } = methods;
 
-  const onSubmit = useCallback((data: IForgetPasswordForm) => {
+  const onSubmit = (data: IForgetPasswordForm) => {
     console.log('data', data);
 
     navigate(PAGE_ROUTES.RESEND_PASSWORD);
-  }, [navigate]);
+  };
 
   return (
     <AuthComponent>

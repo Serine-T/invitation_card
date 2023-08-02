@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import Button from '@containers/common/Button';
@@ -10,7 +10,7 @@ import { signIn } from '@features/auth/actions';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { selectIsAuth } from '@features/auth/selectors';
 import Loader from '@containers/common/Loader';
-import { PAGE_ROUTES } from '@routes/routingEnum';
+import PAGE_ROUTES from '@routes/routingEnum';
 
 import EmailInput from '../components/Email';
 import AuthComponent from '..';
@@ -22,7 +22,7 @@ const SignIn = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isLoading } = useAppSelector(selectIsAuth);
-  const handleForgetPass = useCallback(() => navigate(PAGE_ROUTES.FORGET_PASSWORD), [navigate]);
+  const handleForgetPass = () => navigate(PAGE_ROUTES.FORGET_PASSWORD);
   const methods = useForm<ISignInForm>({
     resolver: yupResolver(SignInSchema),
     defaultValues: {
@@ -37,11 +37,11 @@ const SignIn = () => {
     setError,
   } = methods;
 
-  const onSubmit = useCallback(async (data: ISignInForm) => {
+  const onSubmit = async (data: ISignInForm) => {
     await dispatch(signIn(data)).unwrap().then(() => {
       navigate(PAGE_ROUTES.DASHBOARD);
     }).catch((e) => setError('password', { message: e.message }));
-  }, [dispatch, navigate, setError]);
+  };
 
   return (
     <>
@@ -56,14 +56,12 @@ const SignIn = () => {
             component="form"
           >
             <EmailInput
-              error={!!errors.email?.message}
               errorMessage={errors.email?.message}
             />
             <PasswordInput
               name="password"
               label="Password"
               placeholder="Enter Password"
-              error={!!errors.password?.message}
               errorMessage={errors.password?.message}
             />
             <StyledInputBox>

@@ -1,4 +1,4 @@
-export enum PAGE_ROUTES {
+enum PAGE_ROUTES {
   HOME = '/',
   FORGET_PASSWORD = '/forget-password',
   NEW_PASSWORD = '/new-password',
@@ -36,8 +36,13 @@ export enum PAGE_ROUTES {
   CONTACT_FORM_MESSAGE = '/customers/contact-form-message',
   TASKS = '/administration/tasks',
   USERS = '/administration/users',
+  ADD_USER = '/administration/users/add-user',
+  EDIT_USER = '/administration/users/edit-user',
   PROMOTIONAL_CODES = '/administration/promotional-codes',
   SHIPPING_ZIPS = '/administration/shipping-zips',
   SHIPPING_RATE_MARKUP = '/administration/shipping-rate-markup',
   HOMEPAGE = '/cms/homepage',
+  ADD_BANNER = '/cms/homepage/add-banner',
+  EDIT_BANNER = '/cms/homepage/edit-banner',
 }
+export default PAGE_ROUTES;

@@ -37,7 +37,11 @@ import ShippingRateMarkup from '@containers/Administration/ShippingRateMarkup';
 import PromotionalCodes from '@containers/Administration/PromotionalCodes';
 import Homepage from '@containers/CMS/Homepage';
 import Layout from 'src/Layout';
-import { PAGE_ROUTES } from '@routes/routingEnum';
+import PAGE_ROUTES from '@routes/routingEnum';
+import AddUser from '@containers/Administration/Users/AddUser';
+import EditUser from '@containers/Administration/Users/EditUser';
+import EditBanner from '@containers/CMS/Homepage/EditBanner';
+import AddBanner from '@containers/CMS/Homepage/AddBanner';
 
 export type CustomRouteObject = RouteObject & {
   isPublic?: boolean;
@@ -102,7 +106,14 @@ export const routingArray: CustomRouteObject[] = [
         children: [
           { element: <Navigate to={PAGE_ROUTES.TASKS} />, index: true },
           { path: PAGE_ROUTES.TASKS, element: <Tasks /> },
-          { path: PAGE_ROUTES.USERS, element: <Users /> },
+          {
+            path: PAGE_ROUTES.USERS,
+            children: [
+              { element: <Users />, index: true },
+              { path: PAGE_ROUTES.ADD_USER, element: <AddUser /> },
+              { path: PAGE_ROUTES.EDIT_USER, element: <EditUser /> },
+            ],
+          },
           { path: PAGE_ROUTES.PROMOTIONAL_CODES, element: <PromotionalCodes /> },
           { path: PAGE_ROUTES.SHIPPING_ZIPS, element: <ShippingZips /> },
           { path: PAGE_ROUTES.SHIPPING_RATE_MARKUP, element: <ShippingRateMarkup /> },
@@ -112,7 +123,13 @@ export const routingArray: CustomRouteObject[] = [
         path: PAGE_ROUTES.CMS,
         children: [
           { element: <Navigate to={PAGE_ROUTES.HOMEPAGE} />, index: true },
-          { path: PAGE_ROUTES.HOMEPAGE, element: <Homepage /> },
+          {
+            path: PAGE_ROUTES.HOMEPAGE,
+            children: [
+              { element: <Homepage />, index: true },
+              { path: PAGE_ROUTES.ADD_BANNER, element: <AddBanner /> },
+              { path: PAGE_ROUTES.EDIT_BANNER, element: <EditBanner /> },
+            ] },
         ],
       },
     ],

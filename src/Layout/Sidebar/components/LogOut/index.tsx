@@ -7,7 +7,7 @@ import { StyledTextButton } from '@containers/common/Button/styled';
 import { useAppDispatch } from '@features/app/hooks';
 import { useNavigate } from 'react-router-dom';
 import { logOut } from '@features/auth/slice';
-import { PAGE_ROUTES } from '@routes/routingEnum';
+import PAGE_ROUTES from '@routes/routingEnum';
 
 import { StyledLogOutBox } from './styled';
 

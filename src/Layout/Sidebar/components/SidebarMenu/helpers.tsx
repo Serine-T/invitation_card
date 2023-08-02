@@ -1,4 +1,4 @@
-import { PAGE_ROUTES } from '@routes/routingEnum';
+import PAGE_ROUTES from '@routes/routingEnum';
 
 export interface INavBarChildrenItem {
   path: PAGE_ROUTES;

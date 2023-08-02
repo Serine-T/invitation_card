@@ -2,7 +2,7 @@ import { useLocation, useNavigate, useRoutes } from 'react-router-dom';
 import { useAppSelector } from '@features/app/hooks';
 import { selectIsAuth } from '@features/auth/selectors';
 import useMount from '@customHooks/useMount';
-import { PAGE_ROUTES } from '@routes/routingEnum';
+import PAGE_ROUTES from '@routes/routingEnum';
 
 import { routingArray } from './routingArray';
 import { hasValueEqualTo } from './helpers';
