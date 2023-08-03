@@ -1,6 +1,6 @@
 import { Theme } from '@mui/material';
 
-export const headCells = [
+export const headSliderCells = [
   {
     label: 'SLIDER',
   },
@@ -9,7 +9,20 @@ export const headCells = [
   },
   {
     label: 'ACTIONS',
-    colSpan: 3,
+    colSpan: 2,
+  },
+];
+
+export const headBannerCells = [
+  {
+    label: 'BANNERS',
+  },
+  {
+    label: 'VISIBLE ON SITE',
+  },
+  {
+    label: 'ACTIONS',
+    colSpan: 2,
   },
 ];
 

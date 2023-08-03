@@ -8,9 +8,10 @@ import StyledTypography from '@containers/common/StyledTypography';
 import UploadIcon from '@containers/common/Icons/UploadIcon';
 import { getCDNImagePath } from '@utils/helpers';
 import { StyledEllipsisText } from '@containers/common/EllipsisText/styled';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { FileStateType, getUploadUrl, uploadFile } from './helpers';
-import { StyledImgContainer, StyledTitleBox, StyledUploadContainer } from './styles';
+import { StyledEmptyContainer, StyledImgContainer, StyledTitleBox, StyledUploadContainer } from './styles';
 
 interface IImageUpload {
   name: string;
@@ -22,16 +23,22 @@ const ImageUpload = ({ name }: IImageUpload) => {
   const uploadedImg = watch('img');
   const [fileData, setFileData] = useState<File | null>(null);
 
+  // TODO: use this function
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const uploadToS3 = async (file: FileStateType) => {
     try {
+      setLoading(true);
+
       const { img, url } = await getUploadUrl();
 
       await uploadFile({ file: file as File, url });
 
       setValue(name, img);
       setFileData(file as File);
-      console.log('file', file);
-    } catch {}
+    } catch { } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -44,20 +51,32 @@ const ImageUpload = ({ name }: IImageUpload) => {
 
   const handleDrop = async (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
-    setLoading(true);
 
     const file = event.dataTransfer.files[0] as any;
 
     if (file) {
       await uploadToS3(file);
     }
-
-    setLoading(false);
   };
 
   const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
+
+  const handleDeleteImg = (event: any) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    setFileData(null);
+  };
+
+  if (loading) {
+    return (
+      <StyledEmptyContainer>
+        <CircularProgress size="20px" color="primary" />
+      </StyledEmptyContainer>
+    );
+  }
 
   return (
     <Box
@@ -73,32 +92,33 @@ const ImageUpload = ({ name }: IImageUpload) => {
         style={{ display: 'none' }}
         onChange={handleChange}
       />
-      {loading ? (
-        <StyledUploadContainer>
-          <CircularProgress size="20px" color="primary" />
-        </StyledUploadContainer>
-      ) : (
+      {
         (uploadedImg && fileData) ? (
-          <StyledUploadContainer uploadedImg>
+          <StyledUploadContainer>
             <StyledImgContainer>
               <img src={getCDNImagePath(uploadedImg)} alt="" />
             </StyledImgContainer>
             {/* TODO: check format of file size  */}
             <StyledTitleBox>
-              <StyledEllipsisText variant="body3">{fileData?.name}</StyledEllipsisText>
-              <StyledTypography variant="body3" color="grey">
+              <StyledEllipsisText variant="body3">
+                {fileData?.name}
+              </StyledEllipsisText>
+              <StyledTypography variant="body3" color="grey" minWidth="65px">
                 {`${(fileData.size / 1024).toFixed(2)} KB`}
               </StyledTypography>
             </StyledTitleBox>
+            <StyledTypography cursor onClick={handleDeleteImg}>
+              <CloseIcon fontSize="inherit" color="inherit" />
+            </StyledTypography>
           </StyledUploadContainer>
         ) : (
-          <StyledUploadContainer>
+          <StyledEmptyContainer>
             <Typography variant="body3">Drag and drop files or </Typography>
             <StyledTypography variant="body3" color="blue" m="0 16px 0 4px">Browse</StyledTypography>
             <UploadIcon />
-          </StyledUploadContainer>
+          </StyledEmptyContainer>
         )
-      )}
+      }
     </Box>
   );
 };

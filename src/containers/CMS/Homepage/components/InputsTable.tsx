@@ -9,7 +9,7 @@ import Input from '@containers/common/Input';
 import Checkbox from '@containers/common/Checkbox';
 import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/AddEditTablesStyles/styled';
 
-import ImageUpload from '../FileUploader';
+import ImageUpload from '../../../common/FileUploader';
 import {
   AddBannerSchema,
   IAddBannerForm,
