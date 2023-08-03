@@ -37,12 +37,12 @@ enum PAGE_ROUTES {
   TASKS = '/administration/tasks',
   USERS = '/administration/users',
   ADD_USER = '/administration/users/add-user',
-  EDIT_USER = '/administration/users/edit-user',
+  EDIT_USER = '/administration/users/edit-user/:id',
   PROMOTIONAL_CODES = '/administration/promotional-codes',
   SHIPPING_ZIPS = '/administration/shipping-zips',
   SHIPPING_RATE_MARKUP = '/administration/shipping-rate-markup',
   HOMEPAGE = '/cms/homepage',
   ADD_BANNER = '/cms/homepage/add-banner',
-  EDIT_BANNER = '/cms/homepage/edit-banner',
+  EDIT_BANNER = '/cms/homepage/edit-banner/:id',
 }
 export default PAGE_ROUTES;

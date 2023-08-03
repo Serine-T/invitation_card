@@ -7,15 +7,15 @@ import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import Input from '@containers/common/Input';
 import Checkbox from '@containers/common/Checkbox';
-import Upload from '@containers/common/Upload';
+import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/AddEditTablesStyles/styled';
 
+import ImageUpload from '../FileUploader';
 import {
   AddBannerSchema,
   IAddBannerForm,
   inputsRows,
   defaultValues,
 } from './helpers';
-import { StyledButton, StyledStack, StyledTableCell } from './styles';
 
 const InputsTable = () => {
   const methods = useForm<IAddBannerForm>({
@@ -45,9 +45,7 @@ const InputsTable = () => {
             <StyledTableRow>
               <StyledTableCell>Photo (Desktop):</StyledTableCell>
               <TableCell>
-                <Upload id="ss">
-                  Photo
-                </Upload>
+                <ImageUpload name="img" />
               </TableCell>
             </StyledTableRow>
             {inputsRows.map(({ label, field }) => (

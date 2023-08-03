@@ -38,6 +38,7 @@ export const StyledInputLabel = styled(InputLabel)(() => ({
 
 export const StyledFormControl = styled(FormControl)(({ theme }) => ({
   width: '100%',
+  height: '35px',
   borderRadius: 4,
   padding: 0,
   border: `1px solid ${theme.palette.grey[500]}`,

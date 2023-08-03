@@ -15,13 +15,12 @@ import Stack from '@mui/material/Stack';
 
 import { headCells, rows } from './helpers';
 // TODO: DELETE AFTER IMPLEMENTS
-// import Test from './Test';
 
 const Homepage = () => {
   const navigate = useNavigate();
 
   const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_BANNER);
-  const handleEditBanner = () => navigate(PAGE_ROUTES.EDIT_BANNER);
+  const handleEditBanner = (id:string) => navigate(`/cms/homepage/edit-banner/${id}`);
   const deleteAction = () => {
     console.log('deleteAction');
   };
@@ -32,7 +31,6 @@ const Homepage = () => {
         <Typography variant="h2">Homepage</Typography>
         <Button width="120px" onClick={handleAddBanner}>Add Banner</Button>
       </StyledTitleBox>
-      {/* <Test /> */}
       <StyledTable headCells={headCells} hasPagination={false}>
         {rows.map(({ slider, visibility }) => (
           <StyledTableRow key={slider}>
@@ -40,7 +38,7 @@ const Homepage = () => {
               <StyledTypography
                 color="blue"
                 underLine
-                onClick={handleEditBanner}
+                onClick={() => handleEditBanner('14')}
                 variant="body3"
                 cursor
               >
@@ -64,7 +62,7 @@ const Homepage = () => {
             <TableCell width="68px">
               <StyledTypography
                 color="blue"
-                onClick={handleEditBanner}
+                onClick={() => handleEditBanner('14')}
                 variant="body3"
                 cursor
               >

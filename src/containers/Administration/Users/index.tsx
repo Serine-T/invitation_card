@@ -18,7 +18,7 @@ const Users = () => {
 
   const handleAddUser = () => navigate(PAGE_ROUTES.ADD_USER);
 
-  const handleEditUser = () => navigate(PAGE_ROUTES.EDIT_USER);
+  const handleEditUser = (id: string) => navigate(`/administration/users/edit-user/${id}`);
   const deleteAction = () => {
     console.log('deleteAction');
   };
@@ -36,16 +36,16 @@ const Users = () => {
               <StyledTypography
                 color="blue"
                 underLine
-                onClick={handleEditUser}
+                onClick={() => handleEditUser('14')}
                 variant="body3"
                 cursor
               >
                 {name}
               </StyledTypography>
-
             </StyledTableCell>
             <StyledTableCell>{calories}</StyledTableCell>
             <StyledTableCell>{fat}</StyledTableCell>
+            <StyledTableCell>{calories}</StyledTableCell>
             <StyledTableCell>
               <StyledStatusBtn status={carbs}>
                 {carbs}
