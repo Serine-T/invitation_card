@@ -7,6 +7,7 @@ import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import Input from '@containers/common/Input';
 import Checkbox from '@containers/common/Checkbox';
+import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/AddEditTablesStyles/styled';
 
 import {
   AddUserSchema,
@@ -15,7 +16,6 @@ import {
   inputsRows,
   defaultValues,
 } from './helpers';
-import { StyledButton, StyledStack, StyledTableCell } from './styles';
 
 const InputsTable = () => {
   const methods = useForm<IAddUserForm>({

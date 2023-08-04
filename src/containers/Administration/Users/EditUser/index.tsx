@@ -7,9 +7,9 @@ import { ContentBox, StyledContainer, StyledBox } from '@containers/common/Title
 import Button from '@containers/common/Button';
 import confirmOptionsDialog from '@containers/common/Confirm';
 import { useConfirm } from 'material-ui-confirm';
+import { StyledStack } from '@containers/common/AddEditTablesStyles/styled';
 
 import InputsTable from '../components/InputsTable';
-import { StyledStack } from '../components/styles';
 
 const EditUser = () => {
   const confirm = useConfirm();

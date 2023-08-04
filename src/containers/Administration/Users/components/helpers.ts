@@ -37,7 +37,7 @@ type ValidFieldNames = {
 
 export const inputsRows: ValidFieldNames[] = [
   {
-    label: 'User Name',
+    label: 'Username',
     field: 'username',
   },
   {

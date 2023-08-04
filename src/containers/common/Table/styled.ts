@@ -3,6 +3,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Pagination from '@mui/material/Pagination';
 import Table from '@mui/material/Table';
+import { FontFamilyNames } from '@customTypes/global/theme/fonts';
 
 export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
   boxShadow: 'none',
@@ -17,11 +18,12 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
     background: theme.palette.grey[700],
     textTransform: 'uppercase',
     fontWeight: 500,
+    fontFamily: FontFamilyNames.DmSansMedium,
   },
   'td, th': {
     borderRight: `1px solid ${theme.palette.grey[500]}`,
     fontSize: '12px',
-    padding: '18px 16px',
+    padding: '20px 16px',
   },
   'th:last-child, td:last-child': {
     borderRight: 0,

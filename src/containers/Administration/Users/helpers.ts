@@ -8,6 +8,9 @@ export const headCells = [
     label: 'Full Name',
   },
   {
+    label: 'Email',
+  },
+  {
     label: 'Role',
   },
   {

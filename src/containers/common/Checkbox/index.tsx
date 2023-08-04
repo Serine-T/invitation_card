@@ -18,7 +18,13 @@ const StyledCheckbox = ({ name, label }:ICheckbox) => {
 
   return (
     <FormControlLabel
-      control={<Checkbox checked={watch(name)} onChange={handleCheckboxChange} />}
+      control={(
+        <Checkbox
+          disableRipple
+          checked={watch(name)}
+          onChange={handleCheckboxChange}
+        />
+)}
       label={label ?? label}
     />
   );
