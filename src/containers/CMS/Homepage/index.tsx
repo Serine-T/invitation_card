@@ -23,7 +23,6 @@ import { StyledDraggableRow } from './styled';
 
 const Homepage = () => {
   const navigate = useNavigate();
-  // const theme = useTheme();
   const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_BANNER);
   const handleEditBanner = (id:string) => navigate(`/cms/homepage/edit-banner/${id}`);
   const deleteAction = () => {
