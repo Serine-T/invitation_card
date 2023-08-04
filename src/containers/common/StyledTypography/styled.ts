@@ -6,7 +6,7 @@ import { gettingColor } from './helpers';
 interface StyledMuiTypographyProps{
   color?: string;
   underLine?: boolean;
-  cursor?: boolean;
+  cursor?: string;
 }
 
 export const StyledMuiTypography = styled(Typography, {
@@ -14,5 +14,5 @@ export const StyledMuiTypography = styled(Typography, {
 })<StyledMuiTypographyProps>(({ theme, cursor, color = 'black', underLine = false }) => ({
   color: gettingColor(color, theme),
   textDecoration: underLine ? 'underline' : 'none',
-  cursor: cursor ? 'pointer' : '',
+  cursor: cursor ?? 'pointer',
 }));

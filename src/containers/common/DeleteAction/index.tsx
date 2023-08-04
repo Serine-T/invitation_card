@@ -23,7 +23,7 @@ const DeleteBtn = ({ questionText, deleteAction }: IDeleteAction) => {
     <StyledTypography
       onClick={handleDelete}
       color="blue"
-      cursor
+      cursor="pointer"
       variant="body3"
     >
       Delete

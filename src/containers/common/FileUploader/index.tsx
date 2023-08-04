@@ -107,14 +107,14 @@ const ImageUpload = ({ name }: IImageUpload) => {
                 {`${(fileData.size / 1024).toFixed(2)} KB`}
               </StyledTypography>
             </StyledTitleBox>
-            <StyledTypography cursor onClick={handleDeleteImg}>
+            <StyledTypography cursor="pointer" onClick={handleDeleteImg}>
               <CloseIcon fontSize="inherit" color="inherit" />
             </StyledTypography>
           </StyledUploadContainer>
         ) : (
           <StyledEmptyContainer>
             <Typography variant="body3">Drag and drop files or </Typography>
-            <StyledTypography variant="body3" color="blue" m="0 16px 0 4px" cursor>
+            <StyledTypography variant="body3" color="blue" m="0 16px 0 4px" cursor="pointer">
               Browse
             </StyledTypography>
             <UploadIcon />

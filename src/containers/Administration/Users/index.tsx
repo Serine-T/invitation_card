@@ -38,7 +38,7 @@ const Users = () => {
                 underLine
                 onClick={() => handleEditUser('14')}
                 variant="body3"
-                cursor
+                cursor="pointer"
               >
                 {name}
               </StyledTypography>
