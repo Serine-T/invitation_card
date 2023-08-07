@@ -12,12 +12,14 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import { FileStateType, getUploadUrl, uploadFile } from './helpers';
 import { StyledEmptyContainer, StyledImgContainer, StyledTitleBox, StyledUploadContainer } from './styles';
+import ErrorMessage from '../ErrorMessage';
 
 interface IImageUpload {
   name: string;
+  errorMessage?: string;
 }
 
-const ImageUpload = ({ name }: IImageUpload) => {
+const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
   const [loading, setLoading] = useState(false);
   const { setValue, watch } = useFormContext();
   const uploadedImg = watch('img');
@@ -45,7 +47,7 @@ const ImageUpload = ({ name }: IImageUpload) => {
     const file = event.target.files?.[0];
 
     if (file) {
-      await uploadToS3(file);
+      // await uploadToS3(file);
     }
   };
 
@@ -55,7 +57,7 @@ const ImageUpload = ({ name }: IImageUpload) => {
     const file = event.dataTransfer.files[0] as any;
 
     if (file) {
-      await uploadToS3(file);
+      // await uploadToS3(file);
     }
   };
 
@@ -94,7 +96,7 @@ const ImageUpload = ({ name }: IImageUpload) => {
       />
       {
         (uploadedImg && fileData) ? (
-          <StyledUploadContainer>
+          <StyledUploadContainer error={!!errorMessage}>
             <StyledImgContainer>
               <img src={getCDNImagePath(uploadedImg)} alt="" />
             </StyledImgContainer>
@@ -112,15 +114,16 @@ const ImageUpload = ({ name }: IImageUpload) => {
             </StyledTypography>
           </StyledUploadContainer>
         ) : (
-          <StyledEmptyContainer>
+          <StyledEmptyContainer error={!!errorMessage}>
             <Typography variant="body3">Drag and drop files or </Typography>
-            <StyledTypography variant="body3" color="blue" m="0 16px 0 4px" cursor="pointer">
+            <StyledTypography variant="body3" color="blue" m="0 16px 0 4px">
               Browse
             </StyledTypography>
             <UploadIcon />
           </StyledEmptyContainer>
         )
       }
+      {!!errorMessage && <ErrorMessage message={errorMessage} />}
     </Box>
   );
 };

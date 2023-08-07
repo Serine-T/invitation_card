@@ -8,15 +8,11 @@ import {
   StyledInputBox,
   StyledInputLabel,
 } from './styled';
-import StyledTypography from '../StyledTypography';
+import ErrorMessage from '../ErrorMessage';
 
 export interface IBaseInputProps extends InputBaseProps {
   label?: string | ReactNode;
-  accept?: string;
-  inputBoxTitle?: string;
   calculateInputWidth?: boolean;
-  customMessageText?: ReactNode;
-  withStyledInputBox?: boolean;
   errorMessage?: string;
   marginBottom?: number;
 }
@@ -25,11 +21,6 @@ const BaseInput = forwardRef((props: IBaseInputProps, ref) => {
   const {
     id,
     label,
-    accept,
-    inputBoxTitle,
-    customMessageText,
-    withStyledInputBox,
-    calculateInputWidth = false,
     inputProps,
     sx,
     marginBottom,
@@ -48,19 +39,12 @@ const BaseInput = forwardRef((props: IBaseInputProps, ref) => {
         <StyledBaseInput
           inputRef={ref}
           inputProps={inputProps}
-          sx={calculateInputWidth ? {
-            input: {
-              width: `${`${restProps.value || 1}`.length || 1}ch`,
-            },
-            ...sx,
-          } : sx}
+          sx={sx}
           {...restProps}
         />
       </StyledFormControl>
       {!!errorMessage && (
-        <StyledTypography variant="body4" color="red" mt="6px">
-          {errorMessage}
-        </StyledTypography>
+        <ErrorMessage message={errorMessage} />
       )}
     </StyledInputBox>
   );

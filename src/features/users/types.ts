@@ -8,7 +8,8 @@ export interface IUserState {
 
 export enum Permissions {
   PRODUCTION = 'production',
-  SOCIAL = 'social'
+  SOCIAL = 'social',
+  USER_MANAGEMENT = 'user_management'
 }
 
 export interface IAddUserPayload {

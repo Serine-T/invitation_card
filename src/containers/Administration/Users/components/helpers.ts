@@ -18,8 +18,8 @@ export const defaultValues = {
   username: '',
   firstName: '',
   lastName: '',
-  [Permissions.PRODUCTION]: true,
-  [Permissions.SOCIAL]: true,
+  [Permissions.PRODUCTION]: false,
+  [Permissions.SOCIAL]: false,
 };
 
 export const AddUserSchema = yup.object().shape({

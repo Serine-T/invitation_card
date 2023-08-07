@@ -9,7 +9,7 @@ import {
 } from './types';
 
 // TODO: check if auth needed
-const prefix = '/auth/users';
+const prefix = '/users';
 
 export const addUser = createAsyncThunk<void, IAddUserPayload, {
   rejectValue: AxiosResponse['data'];
@@ -19,11 +19,10 @@ export const addUser = createAsyncThunk<void, IAddUserPayload, {
     try {
       await sleep(1000);
 
+      console.log('sleep');
+
       // TODO: delete any and data
-      const { data } = await http.post<IAddUserPayload, AxiosResponse<any>>(
-        `${prefix}/login`,
-        value,
-      );
+      const { data } = await http.post<IAddUserPayload, AxiosResponse<any>>(prefix, value);
 
       console.log('data', data);
     } catch (error) {
