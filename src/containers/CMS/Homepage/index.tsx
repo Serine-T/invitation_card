@@ -62,7 +62,7 @@ const Homepage = () => {
                 {...providedDroppable.droppableProps}
                 ref={providedDroppable.innerRef}
               >
-                <StyledTable headCells={headSliderCells} hasPagination={false}>
+                <StyledTable headCells={headSliderCells}>
                   {items.map(({ slider, visibility, id }, index) => (
 
                     <Draggable
@@ -133,7 +133,7 @@ const Homepage = () => {
                 {...providedDroppable.droppableProps}
                 ref={providedDroppable.innerRef}
               >
-                <StyledTable headCells={headBannerCells} hasPagination={false}>
+                <StyledTable headCells={headBannerCells}>
                   {items.map(({ slider, visibility, id }, index) => (
 
                     <Draggable

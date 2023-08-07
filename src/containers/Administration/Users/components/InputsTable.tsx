@@ -75,7 +75,7 @@ const InputsTable = () => {
           onSubmit={handleSubmit(onSubmit)}
           component="form"
         >
-          <StyledTable tableTitle="USER INFO" colSpan={2} hasPagination={false}>
+          <StyledTable tableTitle="USER INFO" colSpan={2}>
             {inputsRows.map(({ label, field }) => (
               <StyledTableRow key={label}>
                 <StyledTableCell>{`${label}:`}</StyledTableCell>

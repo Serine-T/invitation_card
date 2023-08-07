@@ -47,7 +47,7 @@ const InputsTable = () => {
           component="form"
         >
 
-          <StyledTable tableTitle="BANNER" colSpan={2} hasPagination={false}>
+          <StyledTable tableTitle="BANNER" colSpan={2}>
             <StyledTableRow>
               <StyledTableCell>Photo (Desktop):</StyledTableCell>
               <TableCell>
