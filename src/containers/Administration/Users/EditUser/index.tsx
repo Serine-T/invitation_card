@@ -27,9 +27,11 @@ const EditUser = () => {
   const { isLoading } = useAppSelector(selectUsers);
 
   useMount(() => {
-    id && dispatch(getUserById(id)).unwrap().then((data) => {
-      setUserInfo(data);
-    }).catch(() => navigate(PAGE_ROUTES.USERS));
+    if (id) {
+      dispatch(getUserById(id)).unwrap().then((data) => {
+        setUserInfo(data);
+      }).catch(() => navigate(PAGE_ROUTES.USERS));
+    }
   });
 
   const handleDelete = async () => {
