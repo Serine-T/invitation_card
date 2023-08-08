@@ -1,3 +1,4 @@
+import { IUserInfo, Permissions } from '@features/users/types';
 import { Theme } from '@mui/material';
 
 export const headCells = [
@@ -21,32 +22,36 @@ export const headCells = [
   },
 ];
 
-// TODO: test and delete : It's fake data
-
-export const createData = (
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: string,
-  protein: number,
-) => {
-  return { name, calories, fat, carbs, protein };
-};
-
-export const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 'active', 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 'active', 4.3),
-  createData('Eclair', 262, 16.0, 'active', 6.0),
-  createData('Cupcake', 305, 3.7, 'pending', 4.3),
-  createData('Gingerbread', 356, 16.0, 'active', 3.9),
-];
-
-// TODO: USER ADD STATUS ENUM
-export const gettingStatusColor = (status: string, theme: Theme) => {
+export const gettingStatusColor = (isVerified: boolean, theme: Theme) => {
   const colorObj:Record<string, string> = {
     active: theme.palette.custom.green[100],
     pending: theme.palette.custom.yellow[100],
   };
 
-  return colorObj[status] || '';
+  return isVerified ? colorObj.active : colorObj.pending;
+};
+
+export const formattedPermissions = (permissions: IUserInfo['permissions']) => {
+  return permissions.map((item) => item.title);
+};
+
+export const formattedRole = (permissions: IUserInfo['permissions']) => {
+  const list = formattedPermissions(permissions);
+
+  if (list.includes(Permissions.USER_MANAGEMENT)) {
+    return 'User Management';
+  }
+
+  const hasSocial = list.includes(Permissions.SOCIAL);
+  const hasProduction = list.includes(Permissions.PRODUCTION);
+
+  if (hasSocial && !hasProduction) {
+    return 'Social';
+  }
+
+  if (hasProduction && !hasSocial) {
+    return 'Production';
+  }
+
+  return 'Production, Social';
 };

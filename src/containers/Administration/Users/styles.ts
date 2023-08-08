@@ -8,13 +8,12 @@ export const StyledTableCell = styled(TableCell)(() => ({
   width: '193px',
 }));
 
-// TODO: USER ADD STATUS ENUM
 export const StyledStatusBtn = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'status',
-})<{ status: string }>(({ theme, status }) => ({
+  shouldForwardProp: (prop) => prop !== 'isVerified',
+})<{ isVerified: boolean }>(({ theme, isVerified }) => ({
   width: 'max-content',
   height: '20px',
-  background: gettingStatusColor(status, theme),
+  background: gettingStatusColor(isVerified, theme),
   textTransform: 'capitalize',
   borderRadius: '12px',
   fontWeight: 500,

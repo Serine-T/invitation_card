@@ -62,7 +62,7 @@ const Homepage = () => {
                 {...providedDroppable.droppableProps}
                 ref={providedDroppable.innerRef}
               >
-                <StyledTable headCells={headSliderCells} hasPagination={false}>
+                <StyledTable headCells={headSliderCells}>
                   {items.map(({ slider, visibility, id }, index) => (
 
                     <Draggable
@@ -84,7 +84,7 @@ const Homepage = () => {
                                 underLine
                                 onClick={() => handleEditBanner('14')}
                                 variant="body3"
-                                cursor
+                                cursor="pointer"
                               >
                                 {slider}
                               </StyledTypography>
@@ -96,7 +96,7 @@ const Homepage = () => {
                                 <StyledTypography
                                   color="blue"
                                   variant="body3"
-                                  cursor
+                                  cursor="grab"
                                   ml="8px"
                                 >
                                   Drag to Reorder
@@ -133,7 +133,7 @@ const Homepage = () => {
                 {...providedDroppable.droppableProps}
                 ref={providedDroppable.innerRef}
               >
-                <StyledTable headCells={headBannerCells} hasPagination={false}>
+                <StyledTable headCells={headBannerCells}>
                   {items.map(({ slider, visibility, id }, index) => (
 
                     <Draggable
@@ -155,7 +155,7 @@ const Homepage = () => {
                                 underLine
                                 onClick={() => handleEditBanner('14')}
                                 variant="body3"
-                                cursor
+                                cursor="pointer"
                               >
                                 {slider}
                               </StyledTypography>
@@ -167,8 +167,8 @@ const Homepage = () => {
                                 <StyledTypography
                                   color="blue"
                                   variant="body3"
-                                  cursor
                                   ml="8px"
+                                  cursor="grab"
                                 >
                                   Drag to Reorder
                                 </StyledTypography>

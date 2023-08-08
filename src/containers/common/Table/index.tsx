@@ -15,7 +15,7 @@ interface IStyledTable {
   hasPagination?: boolean;
  }
 
-const StyledTable = ({ headCells, children, tableTitle, colSpan, hasPagination = true }: IStyledTable) => {
+const StyledTable = ({ headCells, children, tableTitle, colSpan, hasPagination = false }: IStyledTable) => {
   return (
     <>
       <StyledTableContainer>

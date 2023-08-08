@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+
 export type BaseAction<T = any> = {
   type: string;
   payload?: T;
@@ -39,7 +41,7 @@ export interface ResponsePagination<T> {
 export type Order = 'asc' | 'desc';
 
 // TODO: test above code if they aren't used delete them
-
+export type AxiosData = AxiosResponse['data']
 export enum REQUEST_STATUS {
   SUCCEED = 'SUCCEED',
   FAILED = 'FAILED'

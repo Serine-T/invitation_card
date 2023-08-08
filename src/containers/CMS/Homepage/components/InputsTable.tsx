@@ -8,8 +8,9 @@ import { StyledTableRow } from '@containers/common/Table/styled';
 import Input from '@containers/common/Input';
 import Checkbox from '@containers/common/Checkbox';
 import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/AddEditTablesStyles/styled';
+import StyledBaseInput from '@containers/common/Textarea';
+import ImageUpload from '@containers/common/FileUploader';
 
-import ImageUpload from '../../../common/FileUploader';
 import {
   AddBannerSchema,
   IAddBannerForm,
@@ -26,10 +27,14 @@ const InputsTable = () => {
   const {
     handleSubmit,
     register,
+    watch,
     formState: { errors },
   } = methods;
 
   // TODO: add logic, remove consoles
+
+  console.log('errors', errors, watch());
+
   const onSubmit = (data: IAddBannerForm) => {
     console.log('data', data);
   };
@@ -41,11 +46,12 @@ const InputsTable = () => {
           onSubmit={handleSubmit(onSubmit)}
           component="form"
         >
-          <StyledTable tableTitle="BANNER" colSpan={2} hasPagination={false}>
+
+          <StyledTable tableTitle="BANNER" colSpan={2}>
             <StyledTableRow>
               <StyledTableCell>Photo (Desktop):</StyledTableCell>
               <TableCell>
-                <ImageUpload name="img" />
+                <ImageUpload name="image" errorMessage={errors?.image?.message} />
               </TableCell>
             </StyledTableRow>
             {inputsRows.map(({ label, field }) => (
@@ -56,6 +62,18 @@ const InputsTable = () => {
                 </TableCell>
               </StyledTableRow>
             ))}
+
+            {/* TODO: check if this field should be textarea */}
+            <StyledTableRow>
+              <StyledTableCell>Description</StyledTableCell>
+              <TableCell>
+                <StyledBaseInput
+                  errorMessage={errors?.description?.message}
+                  placeholder="Description"
+                  {...register('description')}
+                />
+              </TableCell>
+            </StyledTableRow>
             {/* TODO: HOMEPAGE change checkbox name */}
             <StyledTableRow>
               <StyledTableCell>Display on Site</StyledTableCell>
@@ -63,6 +81,7 @@ const InputsTable = () => {
                 <Checkbox name="visibility" />
               </TableCell>
             </StyledTableRow>
+
           </StyledTable>
           <StyledButton type="submit">Submit</StyledButton>
         </StyledStack>

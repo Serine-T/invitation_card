@@ -3,6 +3,7 @@ import { sleep } from '@utils/helpers';
 import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosResponse } from 'axios';
+import { AxiosData } from '@utils/types';
 
 import {
   ISignInPayload,
@@ -13,7 +14,7 @@ import { setLocalStorageData } from './helpers';
 const prefix = '/auth';
 
 export const signIn = createAsyncThunk<void, ISignInPayload, {
-  rejectValue: AxiosResponse['data'];
+  rejectValue:AxiosData;
 }>(
   'auth/signIn',
   async (value, thunkAPI) => {

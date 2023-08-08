@@ -45,7 +45,7 @@ const SignIn = () => {
 
   return (
     <>
-      {isLoading && <Loader />}
+      {isLoading && <Loader isLayout={false} />}
       <AuthComponent>
         <StyledTitle variant="h5">
           Log in

@@ -5,6 +5,7 @@ export interface IAddBannerForm {
   description: string;
   buttonName: string;
   buttonLink: string;
+  image: string;
 }
 
 export const defaultValues = {
@@ -12,9 +13,11 @@ export const defaultValues = {
   description: '',
   buttonName: '',
   buttonLink: '',
+  image: '',
 };
 
 export const AddBannerSchema = yup.object().shape({
+  image: yup.string().required('Username is required'),
   title: yup.string().required('Username is required'),
   description: yup.string().required('Username is required'),
   buttonName: yup.string().required('Username is required'),
@@ -30,10 +33,6 @@ export const inputsRows: ValidFieldNames[] = [
   {
     label: 'Title',
     field: 'title',
-  },
-  {
-    label: 'Description',
-    field: 'description',
   },
   {
     label: 'Button Name',
