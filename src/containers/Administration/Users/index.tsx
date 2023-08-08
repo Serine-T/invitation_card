@@ -15,7 +15,7 @@ import { getAllUsers } from '@features/users/actions';
 import { selectUsers } from '@features/users/selectors';
 import Loader from '@containers/common/Loader';
 
-import { headCells } from './helpers';
+import { formattedRole, headCells } from './helpers';
 import { StyledStatusBtn, StyledTableCell } from './styles';
 
 const Users = () => {
@@ -23,8 +23,6 @@ const Users = () => {
   const dispatch = useAppDispatch();
   const handleAddUser = () => navigate(PAGE_ROUTES.ADD_USER);
   const { data: users, isLoading } = useAppSelector(selectUsers);
-
-  console.log('users', users);
 
   const handleEditUser = (id: string) => navigate(`/administration/users/edit-user/${id}`);
   const deleteAction = () => {
@@ -47,7 +45,7 @@ const Users = () => {
       </StyledTitleBox>
       {users.length ? (
         <StyledTable headCells={headCells}>
-          { users.map(({ id, email, firstName, lastName, username, isVerified }) => (
+          { users.map(({ id, email, firstName, lastName, username, isVerified, permissions }) => (
             <StyledTableRow key={id}>
               <StyledTableCell>
                 <StyledTypography
@@ -62,7 +60,7 @@ const Users = () => {
               </StyledTableCell>
               <StyledTableCell>{`${firstName} ${lastName}`}</StyledTableCell>
               <StyledTableCell>{email}</StyledTableCell>
-              <StyledTableCell>superadmin</StyledTableCell>
+              <StyledTableCell>{ formattedRole(permissions)}</StyledTableCell>
               <StyledTableCell>
                 <StyledStatusBtn isVerified={isVerified}>
                   {isVerified ? 'Active' : 'Pending'}
@@ -77,7 +75,7 @@ const Users = () => {
             </StyledTableRow>
           ))}
         </StyledTable>
-      ) : <>Empty state</>}
+      ) : <Typography variant="h6">Users do not exist yet</Typography>}
 
     </>
   );

@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { sleep } from '@utils/helpers';
 import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
-import { AxiosResponse } from 'axios';
+import { AxiosData } from '@utils/types';
 
 import {
   IAddUserPayload, IUserInfo,
@@ -11,13 +11,13 @@ import {
 const prefix = '/users';
 
 export const addUser = createAsyncThunk<void, IAddUserPayload, {
-  rejectValue: AxiosResponse['data'];
+  rejectValue: AxiosData;
 }>(
-  'users/addUser',
-  async (value, thunkAPI) => {
+  'users/add-user',
+  async (body, thunkAPI) => {
     try {
       await sleep(1000);
-      await http.post<IAddUserPayload>(prefix, value);
+      await http.post<IAddUserPayload>(prefix, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -27,7 +27,7 @@ export const addUser = createAsyncThunk<void, IAddUserPayload, {
 );
 
 export const getAllUsers = createAsyncThunk<IUserInfo[], void, {
-  rejectValue: AxiosResponse['data'];
+  rejectValue: AxiosData;
 }>(
   'users/all-users',
   async (_, thunkAPI) => {
@@ -37,6 +37,41 @@ export const getAllUsers = createAsyncThunk<IUserInfo[], void, {
       const { data } = await http.get<IUserInfo[]>(prefix);
 
       return data;
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);
+
+export const getUserById = createAsyncThunk<IUserInfo, string, {
+  rejectValue: AxiosData;
+}>(
+  'users/get-user',
+  async (id, thunkAPI) => {
+    try {
+      await sleep(1000);
+
+      const { data } = await http.get<IUserInfo>(`${prefix}/${id}`);
+
+      return data;
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);
+
+export const editUser = createAsyncThunk<void, IAddUserPayload, {
+  rejectValue: AxiosData;
+}>(
+  'users/edit-user',
+  async (body, thunkAPI) => {
+    try {
+      await sleep(1000);
+      await http.put<IAddUserPayload>(`${prefix}/${body.id}`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

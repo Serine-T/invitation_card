@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
@@ -15,17 +15,15 @@ const container = document.getElementById('root')!;
 const root = createRoot(container);
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <ConfirmProvider>
         <CssBaseline />
-        <ConfirmProvider>
-          <CssBaseline />
-          <App />
-        </ConfirmProvider>
-      </ThemeProvider>
-    </Provider>
-  </React.StrictMode>,
+        <App />
+      </ConfirmProvider>
+    </ThemeProvider>
+  </Provider>,
 );
 
 // If you want to start measuring performance in your app, pass a function

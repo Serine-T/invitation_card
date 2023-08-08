@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { IUserState } from './types';
-import { addUser, getAllUsers } from './actions';
+import { getAllUsers, getUserById } from './actions';
 
 const initialState: IUserState = {
   isLoading: false,
@@ -11,20 +11,8 @@ const initialState: IUserState = {
 const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {
-
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(addUser.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(addUser.fulfilled, (state) => {
-      state.isLoading = false;
-    });
-
-    builder.addCase(addUser.rejected, (state) => {
-      state.isLoading = false;
-    });
     builder.addCase(getAllUsers.pending, (state) => {
       state.isLoading = true;
     });
@@ -32,13 +20,20 @@ const usersSlice = createSlice({
       state.data = payload;
       state.isLoading = false;
     });
-
     builder.addCase(getAllUsers.rejected, (state) => {
+      state.isLoading = false;
+    });
+
+    builder.addCase(getUserById.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getUserById.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(getUserById.rejected, (state) => {
       state.isLoading = false;
     });
   },
 });
-
-// export const {} = usersSlice.actions;
 
 export default usersSlice.reducer;

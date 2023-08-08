@@ -10,8 +10,9 @@ import Input from '@containers/common/Input';
 import Checkbox from '@containers/common/Checkbox';
 import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/AddEditTablesStyles/styled';
 import { useAppDispatch } from '@features/app/hooks';
-import { addUser } from '@features/users/actions';
+import { addUser, editUser } from '@features/users/actions';
 import PAGE_ROUTES from '@routes/routingEnum';
+import { IUserInfo } from '@features/users/types';
 
 import {
   AddUserSchema,
@@ -20,16 +21,24 @@ import {
   inputsRows,
   defaultValues,
   formattingPayload,
+  formattingDefaultValue,
+  EditUserSchema,
 } from './helpers';
 
 // TODO: change any typing
-const InputsTable = () => {
+
+interface IInputsTable {
+  userInfo?: IUserInfo;
+}
+
+const InputsTable = ({ userInfo }: IInputsTable) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const ValidationSchema = userInfo ? EditUserSchema : AddUserSchema;
   const methods = useForm<IAddUserForm>({
-    resolver: yupResolver(AddUserSchema as any),
-    defaultValues,
+    resolver: yupResolver(ValidationSchema as any),
+    defaultValues: userInfo ? formattingDefaultValue(userInfo) : defaultValues,
   });
 
   const {
@@ -42,7 +51,7 @@ const InputsTable = () => {
   const onSubmit = async (data: IAddUserForm) => {
     const payload = formattingPayload(data);
 
-    await dispatch(addUser(payload)).unwrap().then(() => {
+    await dispatch(userInfo ? editUser(payload) : addUser(payload)).unwrap().then(() => {
       navigate(PAGE_ROUTES.USERS);
     }).catch((e) => {
       setError('email', { message: e.message });
@@ -59,7 +68,9 @@ const InputsTable = () => {
           <StyledTable tableTitle="USER INFO" colSpan={2}>
             {inputsRows.map(({ label, field }) => (
               <StyledTableRow key={label}>
-                <StyledTableCell>{`${label}:`}</StyledTableCell>
+                <StyledTableCell>
+                  {`${label}: ${userInfo && field !== 'password' ? '*' : ''}`}
+                </StyledTableCell>
                 <TableCell>
                   <Input
                     type={field === 'password' ? 'password' : 'text'}
@@ -75,7 +86,9 @@ const InputsTable = () => {
             ))}
             {checkboxRows.map(({ label, field }) => (
               <StyledTableRow key={label}>
-                <StyledTableCell>{`${label}:`}</StyledTableCell>
+                <StyledTableCell>
+                  {`${label}: ${userInfo ? '*' : ''}`}
+                </StyledTableCell>
                 <TableCell>
                   <Checkbox name={`permissions[${field}]`} />
                 </TableCell>
