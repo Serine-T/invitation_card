@@ -5,10 +5,9 @@ import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosResponse } from 'axios';
 
 import {
-  IAddUserPayload,
+  IAddUserPayload, IUserInfo,
 } from './types';
 
-// TODO: check if auth needed
 const prefix = '/users';
 
 export const addUser = createAsyncThunk<void, IAddUserPayload, {
@@ -18,13 +17,26 @@ export const addUser = createAsyncThunk<void, IAddUserPayload, {
   async (value, thunkAPI) => {
     try {
       await sleep(1000);
+      await http.post<IAddUserPayload>(prefix, value);
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
 
-      console.log('sleep');
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);
 
-      // TODO: delete any and data
-      const { data } = await http.post<IAddUserPayload, AxiosResponse<any>>(prefix, value);
+export const getAllUsers = createAsyncThunk<IUserInfo[], void, {
+  rejectValue: AxiosResponse['data'];
+}>(
+  'users/all-users',
+  async (_, thunkAPI) => {
+    try {
+      await sleep(1000);
 
-      console.log('data', data);
+      const { data } = await http.get<IUserInfo[]>(prefix);
+
+      return data;
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

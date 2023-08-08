@@ -9,12 +9,9 @@ import { StyledTableRow } from '@containers/common/Table/styled';
 import Input from '@containers/common/Input';
 import Checkbox from '@containers/common/Checkbox';
 import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/AddEditTablesStyles/styled';
-import { useAppDispatch, useAppSelector } from '@features/app/hooks';
-import { selectUsers } from '@features/users/selectors';
-import Loader from '@containers/common/Loader';
+import { useAppDispatch } from '@features/app/hooks';
 import { addUser } from '@features/users/actions';
 import PAGE_ROUTES from '@routes/routingEnum';
-import { Permissions } from '@features/users/types';
 
 import {
   AddUserSchema,
@@ -22,14 +19,16 @@ import {
   checkboxRows,
   inputsRows,
   defaultValues,
+  formattingPayload,
 } from './helpers';
 
+// TODO: change any typing
 const InputsTable = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isLoading } = useAppSelector(selectUsers);
+
   const methods = useForm<IAddUserForm>({
-    resolver: yupResolver(AddUserSchema),
+    resolver: yupResolver(AddUserSchema as any),
     defaultValues,
   });
 
@@ -37,36 +36,18 @@ const InputsTable = () => {
     handleSubmit,
     register,
     formState: { errors },
+    setError,
   } = methods;
 
-  console.log('errors*****', errors);
-
-  // TODO: add logic, remove consoles, payload
   const onSubmit = async (data: IAddUserForm) => {
-    console.log('data', data);
-
-    const payload = {
-      email: 'string',
-      password: 'string',
-      username: 'string',
-      firstName: 'string',
-      lastName: 'string',
-      permissions: [Permissions.PRODUCTION],
-    };
+    const payload = formattingPayload(data);
 
     await dispatch(addUser(payload)).unwrap().then(() => {
-      console.log('********then');
       navigate(PAGE_ROUTES.USERS);
     }).catch((e) => {
-      console.log('ee*******', e);
-
-      // setError('password', { message: e.message })
+      setError('email', { message: e.message });
     });
   };
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <>
@@ -80,7 +61,15 @@ const InputsTable = () => {
               <StyledTableRow key={label}>
                 <StyledTableCell>{`${label}:`}</StyledTableCell>
                 <TableCell>
-                  <Input placeholder={label} {...register(field)} errorMessage={errors?.[field]?.message} />
+                  <Input
+                    type={field === 'password' ? 'password' : 'text'}
+                    placeholder={label}
+                    {...register(field)}
+                    errorMessage={errors?.[field]?.message}
+                    inputProps={
+                     { autoComplete: 'new-password' }
+                    }
+                  />
                 </TableCell>
               </StyledTableRow>
             ))}
@@ -88,7 +77,7 @@ const InputsTable = () => {
               <StyledTableRow key={label}>
                 <StyledTableCell>{`${label}:`}</StyledTableCell>
                 <TableCell>
-                  <Checkbox name={field} />
+                  <Checkbox name={`permissions[${field}]`} />
                 </TableCell>
               </StyledTableRow>
             ))}

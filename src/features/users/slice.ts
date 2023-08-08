@@ -1,13 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { REQUEST_STATUS } from '@utils/types';
 
 import { IUserState } from './types';
-import { addUser } from './actions';
+import { addUser, getAllUsers } from './actions';
 
 const initialState: IUserState = {
   isLoading: false,
   data: [],
-  status: null,
 };
 
 const usersSlice = createSlice({
@@ -21,11 +19,21 @@ const usersSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(addUser.fulfilled, (state) => {
-      state.status = REQUEST_STATUS.SUCCEED;
       state.isLoading = false;
     });
 
     builder.addCase(addUser.rejected, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(getAllUsers.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getAllUsers.fulfilled, (state, { payload }) => {
+      state.data = payload;
+      state.isLoading = false;
+    });
+
+    builder.addCase(getAllUsers.rejected, (state) => {
       state.isLoading = false;
     });
   },
