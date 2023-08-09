@@ -39,7 +39,7 @@ export const formattedRole = (permissions: IUserInfo['permissions']) => {
   const list = formattedPermissions(permissions);
 
   if (list.includes(Permissions.USER_MANAGEMENT)) {
-    return 'User Management';
+    return 'Superadmin';
   }
 
   const hasSocial = list.includes(Permissions.SOCIAL);

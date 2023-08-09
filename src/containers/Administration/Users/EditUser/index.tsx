@@ -11,10 +11,11 @@ import { StyledStack } from '@containers/common/AddEditTablesStyles/styled';
 import useMount from '@customHooks/useMount';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getUserById } from '@features/users/actions';
+import { deleteUser, getUserById } from '@features/users/actions';
 import { IUserInfo } from '@features/users/types';
 import { selectUsers } from '@features/users/selectors';
 import Loader from '@containers/common/Loader';
+import StyledSnackbar from '@containers/common/Alert';
 
 import InputsTable from '../components/InputsTable';
 
@@ -25,18 +26,20 @@ const EditUser = () => {
   const { id } = useParams();
   const [userInfo, setUserInfo] = useState<IUserInfo | null>(null);
   const { isLoading } = useAppSelector(selectUsers);
+  const [open, setOpen] = useState(false);
 
   useMount(() => {
-    if (id) {
-      dispatch(getUserById(id)).unwrap().then((data) => {
-        setUserInfo(data);
-      }).catch(() => navigate(PAGE_ROUTES.USERS));
-    }
+    dispatch(getUserById(id as string)).unwrap().then((data) => {
+      setUserInfo(data);
+    }).catch(() => navigate(PAGE_ROUTES.USERS));
   });
 
   const handleDelete = async () => {
     try {
       await confirm(confirmOptionsDialog({ questionText: 'Are you sure you want to delete this user ?' }));
+      dispatch(deleteUser(id as string)).unwrap().then(() => {
+        navigate(PAGE_ROUTES.USERS);
+      }).catch(() => setOpen(true));
     } catch { }
   };
 
@@ -58,7 +61,14 @@ const EditUser = () => {
           { userInfo && <InputsTable userInfo={userInfo} />}
         </ContentBox>
       </StyledContainer>
-
+      { open && (
+      <StyledSnackbar
+        open={open}
+        setOpen={setOpen}
+        type="error"
+        message="User not found for deletion!"
+      />
+      )}
     </>
   );
 };

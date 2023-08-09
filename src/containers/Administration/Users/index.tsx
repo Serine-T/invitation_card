@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 
 import { StyledTitleBox } from '@containers/common/StyledTitleBox/styled';
 import Typography from '@mui/material/Typography';
@@ -27,11 +27,11 @@ const Users = () => {
   const [open, setOpen] = useState(false);
 
   const handleEditUser = (id: string) => navigate(`/administration/users/edit-user/${id}`);
-  const deleteAction = (id: string) => {
+  const deleteAction = useCallback((id: string) => {
     dispatch(deleteUser(id)).unwrap().then(() => {
       dispatch(getAllUsers());
     }).catch(() => setOpen(true));
-  };
+  }, [dispatch]);
 
   useMount(() => {
     dispatch(getAllUsers());
