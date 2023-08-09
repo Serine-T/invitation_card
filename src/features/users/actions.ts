@@ -70,8 +70,22 @@ export const editUser = createAsyncThunk<void, IAddUserPayload, {
   'users/edit-user',
   async (body, thunkAPI) => {
     try {
-      await sleep(1000);
       await http.put<IAddUserPayload>(`${prefix}/${body.id}`, body);
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);
+
+export const deleteUser = createAsyncThunk<void, string, {
+  rejectValue: AxiosData;
+}>(
+  'users/delete-user',
+  async (id, thunkAPI) => {
+    try {
+      await http.delete<IAddUserPayload>(`${prefix}/${id}`);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

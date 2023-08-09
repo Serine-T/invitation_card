@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 
 import { StyledTitleBox } from '@containers/common/StyledTitleBox/styled';
 import Typography from '@mui/material/Typography';
@@ -11,9 +11,10 @@ import StyledTypography from '@containers/common/StyledTypography';
 import DeleteBtn from '@containers/common/DeleteAction';
 import useMount from '@customHooks/useMount';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
-import { getAllUsers } from '@features/users/actions';
+import { deleteUser, getAllUsers } from '@features/users/actions';
 import { selectUsers } from '@features/users/selectors';
 import Loader from '@containers/common/Loader';
+import StyledSnackbar from '@containers/common/Alert';
 
 import { formattedRole, headCells } from './helpers';
 import { StyledStatusBtn, StyledTableCell } from './styles';
@@ -23,10 +24,13 @@ const Users = () => {
   const dispatch = useAppDispatch();
   const handleAddUser = () => navigate(PAGE_ROUTES.ADD_USER);
   const { data: users, isLoading } = useAppSelector(selectUsers);
+  const [open, setOpen] = useState(false);
 
   const handleEditUser = (id: string) => navigate(`/administration/users/edit-user/${id}`);
-  const deleteAction = () => {
-    console.log('deleteAction');
+  const deleteAction = (id: string) => {
+    dispatch(deleteUser(id)).unwrap().then(() => {
+      dispatch(getAllUsers());
+    }).catch(() => setOpen(true));
   };
 
   useMount(() => {
@@ -43,6 +47,7 @@ const Users = () => {
         <Typography variant="h2">Users</Typography>
         <Button width="120px" onClick={handleAddUser}>Add User</Button>
       </StyledTitleBox>
+
       {users.length ? (
         <StyledTable headCells={headCells}>
           { users.map(({ id, email, firstName, lastName, username, isVerified, permissions }) => (
@@ -68,7 +73,7 @@ const Users = () => {
               </StyledTableCell>
               <StyledTableCell>
                 <DeleteBtn
-                  deleteAction={deleteAction}
+                  deleteAction={() => deleteAction(id)}
                   questionText="Are you sure you want to delete this user ?"
                 />
               </StyledTableCell>
@@ -76,7 +81,14 @@ const Users = () => {
           ))}
         </StyledTable>
       ) : <Typography variant="h6">Users do not exist yet</Typography>}
-
+      { open && (
+      <StyledSnackbar
+        open={open}
+        setOpen={setOpen}
+        type="error"
+        message="User not found for deletion!"
+      />
+      )}
     </>
   );
 };
