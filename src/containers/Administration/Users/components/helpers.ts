@@ -31,6 +31,15 @@ export const defaultValues = {
 
 export const EditUserSchema = yup.object().shape({
   email: EmailSchema.email,
+  password: yup.string().optional().test({
+    test(value) {
+      if (!value) {
+        return true;
+      }
+
+      return PasswordSchema.password.isValidSync(value);
+    },
+  }),
   username: yup.string().required('Username is required'),
   firstName: yup.string().required('First name is required'),
   lastName: yup.string().required('Last name is required'),
