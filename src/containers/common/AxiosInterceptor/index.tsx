@@ -8,7 +8,7 @@ import { IRefreshTokenPayload, ISignInResponseType } from '@features/auth/types'
 import { AxiosResponse } from 'axios';
 import { clearLocalStorageData, setLocalStorageData } from '@features/auth/helpers';
 import { useAppDispatch } from '@features/app/hooks';
-import { logOut, setToken } from '@features/auth/slice';
+import { logOut } from '@features/auth/slice';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 
@@ -42,7 +42,6 @@ const AxiosInterceptor = ({ children }: IAxiosInterceptor) => {
 
               if (accessToken && refreshToken) {
                 setLocalStorageData({ accessToken, refreshToken });
-                dispatch(setToken(accessToken));
               }
             } catch {
               clearLocalStorageData();

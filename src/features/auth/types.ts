@@ -4,7 +4,6 @@ export interface IAuthState {
   isLoading: boolean;
   isAuth: boolean;
   status: REQUEST_STATUS | null;
-  accessToken: string | null;
 }
 
 export interface ISignInPayload {
