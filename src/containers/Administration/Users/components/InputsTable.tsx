@@ -13,6 +13,7 @@ import { useAppDispatch } from '@features/app/hooks';
 import { addUser, editUser } from '@features/users/actions';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { IUserInfo } from '@features/users/types';
+import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 
 import {
   AddUserSchema,
@@ -61,7 +62,7 @@ const InputsTable = ({ userInfo }: IInputsTable) => {
   };
 
   return (
-    <>
+    <TitlesWithBackButton title={userInfo ? 'Edit User' : 'Add New User'} path={PAGE_ROUTES.USERS}>
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}
@@ -100,7 +101,7 @@ const InputsTable = ({ userInfo }: IInputsTable) => {
           <StyledButton type="submit">Submit</StyledButton>
         </StyledStack>
       </FormProvider>
-    </>
+    </TitlesWithBackButton>
   );
 };
 
