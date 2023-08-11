@@ -18,15 +18,9 @@ const AxiosInterceptor = ({ children }: IAxiosInterceptor) => {
   const dispatch = useAppDispatch();
 
   useMount(() => {
-    const resInterceptor = (response: any) => {
-      console.log('resInterceptor***', response);
-
-      return response;
-    };
+    const resInterceptor = (response: any) => response;
 
     const errInterceptor = (error: any) => {
-      console.log('errInterceptor***');
-
       const accessTokenItem = StorageManager.getItem(ACCESS_TOKEN_KEY);
 
       if ((accessTokenItem) && error.data.statusCode === 401) {

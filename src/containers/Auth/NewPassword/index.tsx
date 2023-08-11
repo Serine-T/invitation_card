@@ -22,12 +22,7 @@ const NewPassword = () => {
   const {
     handleSubmit,
     formState: { errors },
-    watch,
   } = methods;
-
-  console.log('aaa***', watch());
-
-  console.log('errr', errors);
 
   const onSubmit = useCallback((data: INewPasswordForm) => {
     console.log('data', data);
