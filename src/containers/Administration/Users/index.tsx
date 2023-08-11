@@ -9,12 +9,12 @@ import PAGE_ROUTES from '@routes/routingEnum';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import StyledTypography from '@containers/common/StyledTypography';
 import DeleteBtn from '@containers/common/DeleteAction';
-import useMount from '@customHooks/useMount';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { deleteUser, getAllUsers } from '@features/users/actions';
 import { selectUsers } from '@features/users/selectors';
 import Loader from '@containers/common/Loader';
 import StyledSnackbar from '@containers/common/Alert';
+import useMount from '@customHooks/useMount';
 
 import { formattedRole, headCells } from './helpers';
 import { StyledStatusBtn, StyledTableCell } from './styles';

@@ -29,8 +29,19 @@ export const defaultValues = {
   },
 };
 
-export const EditUserSchema = yup.object().shape({
+export const UserSchema = {
   email: EmailSchema.email,
+  username: yup.string().required('Username is required'),
+  firstName: yup.string().required('First name is required'),
+  lastName: yup.string().required('Last name is required'),
+  permissions: yup.object().shape({
+    [Permissions.PRODUCTION]: yup.boolean().optional(),
+    [Permissions.SOCIAL]: yup.boolean().optional(),
+  }),
+};
+
+export const EditUserSchema = yup.object().shape({
+  ...UserSchema,
   password: yup.string().optional().test({
     test(value) {
       if (!value) {
@@ -40,17 +51,11 @@ export const EditUserSchema = yup.object().shape({
       return PasswordSchema.password.isValidSync(value);
     },
   }),
-  username: yup.string().required('Username is required'),
-  firstName: yup.string().required('First name is required'),
-  lastName: yup.string().required('Last name is required'),
-  permissions: yup.object().shape({
-    [Permissions.PRODUCTION]: yup.boolean().optional(),
-    [Permissions.SOCIAL]: yup.boolean().optional(),
-  }),
+
 });
 
 export const AddUserSchema = yup.object().shape({
-  ...EditUserSchema.fields,
+  ...UserSchema,
   password: PasswordSchema.password,
 });
 

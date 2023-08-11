@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signIn } from '@features/auth/actions';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
-import { selectIsAuth } from '@features/auth/selectors';
+import { selectAuth } from '@features/auth/selectors';
 import Loader from '@containers/common/Loader';
 import PAGE_ROUTES from '@routes/routingEnum';
 
@@ -21,7 +21,7 @@ import { ISignInForm, SignInSchema } from './helpers';
 const SignIn = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isLoading } = useAppSelector(selectIsAuth);
+  const { isLoading } = useAppSelector(selectAuth);
   const handleForgetPass = () => navigate(PAGE_ROUTES.FORGET_PASSWORD);
   const methods = useForm<ISignInForm>({
     resolver: yupResolver(SignInSchema),

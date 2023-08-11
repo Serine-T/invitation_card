@@ -85,7 +85,7 @@ export const deleteUser = createAsyncThunk<void, string, {
   'users/delete-user',
   async (id, thunkAPI) => {
     try {
-      await http.delete<IAddUserPayload>(`${prefix}/${id}`);
+      await http.delete(`${prefix}/${id}`);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

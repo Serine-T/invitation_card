@@ -13,6 +13,7 @@ import { useAppDispatch } from '@features/app/hooks';
 import { addUser, editUser } from '@features/users/actions';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { IUserInfo } from '@features/users/types';
+import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 
 import {
   AddUserSchema,
@@ -54,12 +55,14 @@ const InputsTable = ({ userInfo }: IInputsTable) => {
     await dispatch(userInfo ? editUser(payload) : addUser(payload)).unwrap().then(() => {
       navigate(PAGE_ROUTES.USERS);
     }).catch((e) => {
-      setError('email', { message: e.message });
+      if (e.message === 'User with the provided email already exists!') {
+        setError('email', { message: e.message });
+      }
     });
   };
 
   return (
-    <>
+    <TitlesWithBackButton title={userInfo ? 'Edit User' : 'Add New User'} path={PAGE_ROUTES.USERS}>
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}
@@ -98,7 +101,7 @@ const InputsTable = ({ userInfo }: IInputsTable) => {
           <StyledButton type="submit">Submit</StyledButton>
         </StyledStack>
       </FormProvider>
-    </>
+    </TitlesWithBackButton>
   );
 };
 

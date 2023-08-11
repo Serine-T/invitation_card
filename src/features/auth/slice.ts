@@ -19,7 +19,6 @@ const authSlice = createSlice({
       clearLocalStorageData();
       state.isAuth = false;
     },
-
   },
   extraReducers: (builder) => {
     builder.addCase(signIn.pending, (state) => {

@@ -1,3 +1,3 @@
 import { RootState } from '@features/app/store';
 
-export const selectIsAuth = (state: RootState) => state.auth;
+export const selectAuth = (state: RootState) => state.auth;
