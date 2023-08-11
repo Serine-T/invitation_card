@@ -6,16 +6,20 @@ import useMount from '@customHooks/useMount';
 import StorageManager from '@utils/storage-manager';
 import { IRefreshTokenPayload, ISignInResponseType } from '@features/auth/types';
 import { AxiosResponse } from 'axios';
-import { setLocalStorageData } from '@features/auth/helpers';
+import { clearLocalStorageData, setLocalStorageData } from '@features/auth/helpers';
 import { useAppDispatch } from '@features/app/hooks';
 import { logOut, setToken } from '@features/auth/slice';
+import { useNavigate } from 'react-router-dom';
+import PAGE_ROUTES from '@routes/routingEnum';
 
 interface IAxiosInterceptor {
   children: ReactNode;
 }
 
+// TODO: not deleting maybe use in future  for updating refresh or access token
 const AxiosInterceptor = ({ children }: IAxiosInterceptor) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useMount(() => {
     const resInterceptor = (response: any) => response;
@@ -41,7 +45,9 @@ const AxiosInterceptor = ({ children }: IAxiosInterceptor) => {
                 dispatch(setToken(accessToken));
               }
             } catch {
+              clearLocalStorageData();
               dispatch(logOut());
+              navigate(PAGE_ROUTES.SIGN_IN);
             }
           };
 
@@ -50,6 +56,8 @@ const AxiosInterceptor = ({ children }: IAxiosInterceptor) => {
 
         return Promise.reject(error);
       }
+
+      dispatch(logOut());
 
       return Promise.reject(error);
     };
