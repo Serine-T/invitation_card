@@ -54,7 +54,9 @@ const InputsTable = ({ userInfo }: IInputsTable) => {
     await dispatch(userInfo ? editUser(payload) : addUser(payload)).unwrap().then(() => {
       navigate(PAGE_ROUTES.USERS);
     }).catch((e) => {
-      setError('email', { message: e.message });
+      if (e.message === 'User with the provided email already exists!') {
+        setError('email', { message: e.message });
+      }
     });
   };
 

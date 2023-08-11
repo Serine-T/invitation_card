@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 
 import { StyledTitleBox } from '@containers/common/StyledTitleBox/styled';
 import Typography from '@mui/material/Typography';
@@ -9,12 +9,12 @@ import PAGE_ROUTES from '@routes/routingEnum';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import StyledTypography from '@containers/common/StyledTypography';
 import DeleteBtn from '@containers/common/DeleteAction';
-import useMount from '@customHooks/useMount';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { deleteUser, getAllUsers } from '@features/users/actions';
 import { selectUsers } from '@features/users/selectors';
 import Loader from '@containers/common/Loader';
 import StyledSnackbar from '@containers/common/Alert';
+import { selectAuth } from '@features/auth/selectors';
 
 import { formattedRole, headCells } from './helpers';
 import { StyledStatusBtn, StyledTableCell } from './styles';
@@ -24,6 +24,7 @@ const Users = () => {
   const dispatch = useAppDispatch();
   const handleAddUser = () => navigate(PAGE_ROUTES.ADD_USER);
   const { data: users, isLoading } = useAppSelector(selectUsers);
+  const { accessToken } = useAppSelector(selectAuth);
   const [open, setOpen] = useState(false);
 
   const handleEditUser = (id: string) => navigate(`/administration/users/edit-user/${id}`);
@@ -33,9 +34,9 @@ const Users = () => {
     }).catch(() => setOpen(true));
   }, [dispatch]);
 
-  useMount(() => {
+  useEffect(() => {
     dispatch(getAllUsers());
-  });
+  }, [dispatch, accessToken]);
 
   if (isLoading) {
     return <Loader />;

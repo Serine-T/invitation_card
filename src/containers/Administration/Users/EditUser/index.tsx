@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import Typography from '@mui/material/Typography';
 import PAGE_ROUTES from '@routes/routingEnum';
@@ -8,13 +8,13 @@ import Button from '@containers/common/Button';
 import confirmOptionsDialog from '@containers/common/Confirm';
 import { useConfirm } from 'material-ui-confirm';
 import { StyledStack } from '@containers/common/AddEditTablesStyles/styled';
-import useMount from '@customHooks/useMount';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
 import { deleteUser, getUserById } from '@features/users/actions';
 import { IUserInfo } from '@features/users/types';
 import { selectUsers } from '@features/users/selectors';
 import Loader from '@containers/common/Loader';
+import { selectAuth } from '@features/auth/selectors';
 
 import InputsTable from '../components/InputsTable';
 
@@ -25,19 +25,20 @@ const EditUser = () => {
   const { id } = useParams();
   const [userInfo, setUserInfo] = useState<IUserInfo | null>(null);
   const { isLoading } = useAppSelector(selectUsers);
+  const { accessToken } = useAppSelector(selectAuth);
 
-  useMount(() => {
+  useEffect(() => {
     dispatch(getUserById(id as string)).unwrap().then((data) => {
       setUserInfo(data);
     }).catch(() => navigate(PAGE_ROUTES.USERS));
-  });
+  }, [dispatch, accessToken, id, navigate]);
 
   const handleDelete = async () => {
     try {
       await confirm(confirmOptionsDialog({ questionText: 'Are you sure you want to delete this user ?' }));
       dispatch(deleteUser(id as string)).unwrap().then(() => {
         navigate(PAGE_ROUTES.USERS);
-      }).catch(() => navigate(PAGE_ROUTES.USERS));
+      }).catch(() => {});
     } catch { }
   };
 

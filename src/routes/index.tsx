@@ -1,6 +1,6 @@
 import { useLocation, useNavigate, useRoutes } from 'react-router-dom';
 import { useAppSelector } from '@features/app/hooks';
-import { selectIsAuth } from '@features/auth/selectors';
+import { selectAuth } from '@features/auth/selectors';
 import useMount from '@customHooks/useMount';
 import PAGE_ROUTES from '@routes/routingEnum';
 
@@ -8,7 +8,7 @@ import { routingArray } from './routingArray';
 import { hasValueEqualTo } from './helpers';
 
 const Router = () => {
-  const { isAuth } = useAppSelector(selectIsAuth);
+  const { isAuth } = useAppSelector(selectAuth);
   const navigate = useNavigate();
   const { pathname } = useLocation();
 

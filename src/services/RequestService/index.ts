@@ -131,7 +131,7 @@ class RequestService {
       }
 
       case StatusCode.Unauthorized: {
-        StorageManager.clearItems();
+        // StorageManager.clearItems();
         break;
       }
 

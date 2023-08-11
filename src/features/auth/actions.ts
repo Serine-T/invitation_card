@@ -13,7 +13,7 @@ import { setLocalStorageData } from './helpers';
 
 const prefix = '/auth';
 
-export const signIn = createAsyncThunk<void, ISignInPayload, {
+export const signIn = createAsyncThunk<{accessToken: string}, ISignInPayload, {
   rejectValue:AxiosData;
 }>(
   'auth/signIn',
@@ -29,6 +29,8 @@ export const signIn = createAsyncThunk<void, ISignInPayload, {
       const { accessToken, refreshToken } = data;
 
       setLocalStorageData({ accessToken, refreshToken });
+
+      return { accessToken };
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
