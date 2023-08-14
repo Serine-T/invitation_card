@@ -9,11 +9,12 @@ import { StyledTableRow } from '@containers/common/Table/styled';
 import Input from '@containers/common/Input';
 import Checkbox from '@containers/common/Checkbox';
 import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/AddEditTablesStyles/styled';
-import { useAppDispatch } from '@features/app/hooks';
+import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { addUser, editUser } from '@features/users/actions';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { IUserInfo } from '@features/users/types';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
+import { selectUsers } from '@features/users/selectors';
 
 import {
   AddUserSchema,
@@ -26,8 +27,6 @@ import {
   EditUserSchema,
 } from './helpers';
 
-// TODO: change any typing
-
 interface IInputsTable {
   userInfo?: IUserInfo;
 }
@@ -35,7 +34,7 @@ interface IInputsTable {
 const InputsTable = ({ userInfo }: IInputsTable) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const { actionLoading } = useAppSelector(selectUsers);
   const ValidationSchema = userInfo ? EditUserSchema : AddUserSchema;
   const methods = useForm<IAddUserForm>({
     resolver: yupResolver(ValidationSchema as any),
@@ -98,7 +97,13 @@ const InputsTable = ({ userInfo }: IInputsTable) => {
               </StyledTableRow>
             ))}
           </StyledTable>
-          <StyledButton type="submit">Submit</StyledButton>
+          <StyledButton
+            type="submit"
+            disabled={actionLoading}
+            isLoading={actionLoading}
+          >
+            Submit
+          </StyledButton>
         </StyledStack>
       </FormProvider>
     </TitlesWithBackButton>

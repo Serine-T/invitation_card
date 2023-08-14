@@ -1,6 +1,7 @@
 export interface IUserState {
   isLoading: boolean;
   data: IUserInfo[];
+  actionLoading: boolean;
 }
 
 export enum Permissions {

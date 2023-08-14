@@ -19,3 +19,13 @@ export interface ISignInResponseType {
 export interface IRefreshTokenPayload {
   refreshToken: string;
 }
+export interface IForgetPasswordPayload {
+  email: string;
+}
+export interface IResetPasswordPayload {
+  body: {
+    newPassword: string;
+    confirmPassword: string;
+  };
+  token: string;
+}

@@ -2,12 +2,13 @@ import { memo, ReactNode } from 'react';
 
 import MuiButton, { ButtonProps } from '@mui/material/Button';
 
-import { StyledButton } from './styled';
+import { StyledButton, StyledCircularProgress } from './styled';
 
 interface IButtonProps extends Omit<ButtonProps, 'title'> {
   title?: ReactNode;
   width?: string | number;
   isOutlined?: boolean;
+  isLoading?: boolean;
 }
 
 const Button = ({
@@ -17,6 +18,7 @@ const Button = ({
   children,
   title,
   isOutlined,
+  isLoading,
   ...restProps
 }: IButtonProps) => {
   if (color && variant) {
@@ -32,9 +34,10 @@ const Button = ({
       disableRipple
       width={width}
       isOutlined={isOutlined}
+      isLoading={isLoading}
       {...restProps}
     >
-      {children || title}
+      {isLoading ? <StyledCircularProgress size={18} /> : (children || title)}
     </StyledButton>
   );
 };

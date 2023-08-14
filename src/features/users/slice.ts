@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { IUserState } from './types';
-import { getAllUsers, getUserById } from './actions';
+import { addUser, editUser, getAllUsers, getUserById } from './actions';
 
 const initialState: IUserState = {
   isLoading: false,
   data: [],
+  actionLoading: false,
 };
 
 const usersSlice = createSlice({
@@ -32,6 +33,26 @@ const usersSlice = createSlice({
     });
     builder.addCase(getUserById.rejected, (state) => {
       state.isLoading = false;
+    });
+
+    builder.addCase(editUser.pending, (state) => {
+      state.actionLoading = true;
+    });
+    builder.addCase(editUser.fulfilled, (state) => {
+      state.actionLoading = false;
+    });
+    builder.addCase(editUser.rejected, (state) => {
+      state.actionLoading = false;
+    });
+
+    builder.addCase(addUser.pending, (state) => {
+      state.actionLoading = true;
+    });
+    builder.addCase(addUser.fulfilled, (state) => {
+      state.actionLoading = false;
+    });
+    builder.addCase(addUser.rejected, (state) => {
+      state.actionLoading = false;
     });
   },
 });

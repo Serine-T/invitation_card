@@ -9,7 +9,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { signIn } from '@features/auth/actions';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { selectAuth } from '@features/auth/selectors';
-import Loader from '@containers/common/Loader';
 import PAGE_ROUTES from '@routes/routingEnum';
 
 import EmailInput from '../components/Email';
@@ -45,7 +44,6 @@ const SignIn = () => {
 
   return (
     <>
-      {isLoading && <Loader isLayout={false} />}
       <AuthComponent>
         <StyledTitle variant="h5">
           Log in
@@ -67,6 +65,8 @@ const SignIn = () => {
             <StyledInputBox>
               <Button
                 type="submit"
+                disabled={isLoading}
+                isLoading={isLoading}
               >
                 Log in
               </Button>

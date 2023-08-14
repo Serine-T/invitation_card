@@ -21,6 +21,7 @@ const DeleteBtn = ({ questionText, deleteAction }: IDeleteAction) => {
 
   return (
     <StyledTypography
+      aria-disabled
       onClick={handleDelete}
       color="blue"
       cursor="pointer"

@@ -3,12 +3,12 @@ import * as yup from 'yup';
 
 export interface INewPasswordForm {
   newPassword: string;
-  conformPassword: string;
+  confirmPassword: string;
 }
 
 export const NewPasswordSchema = yup.object().shape({
   newPassword: PasswordSchema.password,
-  conformPassword: PasswordSchema.password
+  confirmPassword: PasswordSchema.password
     .required('Conform password is required')
     .oneOf([yup.ref('newPassword')], 'Passwords don’t match'),
 });
