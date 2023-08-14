@@ -70,6 +70,7 @@ export const editUser = createAsyncThunk<void, IAddUserPayload, {
   'users/edit-user',
   async (body, thunkAPI) => {
     try {
+      await sleep(1000);
       await http.put<IAddUserPayload>(`${prefix}/${body.id}`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
