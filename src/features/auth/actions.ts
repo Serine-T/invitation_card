@@ -89,7 +89,7 @@ export const confirmEmail = createAsyncThunk<void, string, {
       await sleep(1000);
 
       await http.get<ISignInResponseType>(
-        `${prefix}/confirm-email${token}`,
+        `${prefix}/confirm-email/${token}`,
       );
     } catch (error) {
       const errorInfo = customErrorHandling(error);
