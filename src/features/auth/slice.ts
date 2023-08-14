@@ -9,6 +9,7 @@ const initialState: IAuthState = {
   isLoading: false,
   isAuth: !!getAccessToken(),
   status: null,
+  errorMessage: '',
 };
 
 const authSlice = createSlice({
@@ -57,9 +58,12 @@ const authSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(confirmEmail.fulfilled, (state) => {
+      state.isAuth = true;
+      state.status = REQUEST_STATUS.SUCCEED;
       state.isLoading = false;
     });
-    builder.addCase(confirmEmail.rejected, (state) => {
+    builder.addCase(confirmEmail.rejected, (state, { payload }) => {
+      state.errorMessage = payload.message;
       state.isLoading = false;
     });
   },

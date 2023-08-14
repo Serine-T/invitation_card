@@ -26,7 +26,7 @@ const SuccessPage = () => {
       setIsTime((prev) => !prev);
       await dispatch(forgetPassword(data)).unwrap().then(() => {
         navigate(PAGE_ROUTES.RESEND_PASSWORD, { state: { data } });
-      }).catch((e) => console.log('e', e));
+      }).catch(() => {});
     }
   };
 

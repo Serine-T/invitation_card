@@ -3,22 +3,26 @@ import useMount from '@customHooks/useMount';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { confirmEmail } from '@features/auth/actions';
 import { selectAuth } from '@features/auth/selectors';
-import { useParams } from 'react-router-dom';
+import PAGE_ROUTES from '@routes/routingEnum';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ConfirmEmail = () => {
   const { token } = useParams();
   const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector(selectAuth);
+  const navigate = useNavigate();
+  const { isLoading, errorMessage } = useAppSelector(selectAuth);
 
   useMount(() => {
     if (token) {
-      dispatch(confirmEmail(token));
+      dispatch(confirmEmail(token)).unwrap().then(() => {
+        navigate(PAGE_ROUTES.HOME);
+      }).catch(() => {});
     }
   });
 
   return (
     <>
-      {isLoading ? <Loader isLayout={false} /> : <>Something went wrong</>}
+      {isLoading ? <Loader isLayout={false} /> : (errorMessage && <>{errorMessage}</>)}
     </>
   );
 };

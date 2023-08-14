@@ -88,9 +88,13 @@ export const confirmEmail = createAsyncThunk<void, string, {
     try {
       await sleep(1000);
 
-      await http.get<ISignInResponseType>(
+      const { data } = await http.get<ISignInResponseType>(
         `${prefix}/confirm-email/${token}`,
       );
+
+      const { accessToken, refreshToken } = data;
+
+      setLocalStorageData({ accessToken, refreshToken });
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
