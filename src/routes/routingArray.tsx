@@ -42,6 +42,7 @@ import AddUser from '@containers/Administration/Users/AddUser';
 import EditUser from '@containers/Administration/Users/EditUser';
 import EditBanner from '@containers/CMS/Homepage/EditBanner';
 import AddBanner from '@containers/CMS/Homepage/AddBanner';
+import ConfirmEmail from '@containers/Auth/ConfirmEmail';
 
 export type CustomRouteObject = RouteObject & {
   isPublic?: boolean;
@@ -53,6 +54,7 @@ export const routingArray: CustomRouteObject[] = [
   { path: PAGE_ROUTES.NEW_PASSWORD, element: <NewPassword />, isPublic: true },
   { path: PAGE_ROUTES.RESEND_PASSWORD, element: <SuccessPage />, isPublic: true },
   { path: PAGE_ROUTES.SIGN_IN, element: <SignIn />, isPublic: true },
+  { path: PAGE_ROUTES.CONFIRM_EMAIL, element: <ConfirmEmail />, isPublic: true },
   { path: '*', element: <NotFound />, isPublic: true },
   {
     element: <Layout />,

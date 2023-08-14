@@ -1,4 +1,4 @@
-import { signIn } from '@features/auth/actions';
+import { confirmEmail, forgetPassword, resetPassword, signIn } from '@features/auth/actions';
 import { createSlice } from '@reduxjs/toolkit';
 import { REQUEST_STATUS } from '@utils/types';
 
@@ -29,8 +29,37 @@ const authSlice = createSlice({
       state.status = REQUEST_STATUS.SUCCEED;
       state.isLoading = false;
     });
-
     builder.addCase(signIn.rejected, (state) => {
+      state.isLoading = false;
+    });
+
+    builder.addCase(forgetPassword.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(forgetPassword.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(forgetPassword.rejected, (state) => {
+      state.isLoading = false;
+    });
+
+    builder.addCase(resetPassword.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(resetPassword.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(resetPassword.rejected, (state) => {
+      state.isLoading = false;
+    });
+
+    builder.addCase(confirmEmail.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(confirmEmail.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(confirmEmail.rejected, (state) => {
       state.isLoading = false;
     });
   },

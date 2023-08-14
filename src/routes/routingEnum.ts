@@ -1,8 +1,9 @@
 enum PAGE_ROUTES {
   HOME = '/',
   FORGET_PASSWORD = '/forget-password',
-  NEW_PASSWORD = '/new-password',
+  NEW_PASSWORD = '/new-password/:token',
   RESEND_PASSWORD = '/resend-password',
+  CONFIRM_EMAIL = '/confirm-email/:token',
   SIGN_IN = '/sign-in',
   DASHBOARD = '/dashboard',
   ORDERS = '/orders',
