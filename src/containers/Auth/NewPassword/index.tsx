@@ -32,8 +32,9 @@ const NewPassword = () => {
   const {
     handleSubmit,
     formState: { errors },
-    // setError,
   } = methods;
+
+  // TODO: Auth finish
 
   const onSubmit = async (body: INewPasswordForm) => {
     if (token) {
@@ -41,7 +42,6 @@ const NewPassword = () => {
         navigate(PAGE_ROUTES.SIGN_IN);
       }).catch((e) => {
         console.log('ee****', e);
-      // setError('email', { message: e.message });
       });
     }
   };
