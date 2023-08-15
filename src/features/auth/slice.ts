@@ -50,8 +50,9 @@ const authSlice = createSlice({
     builder.addCase(resetPassword.fulfilled, (state) => {
       state.isLoading = false;
     });
-    builder.addCase(resetPassword.rejected, (state) => {
+    builder.addCase(resetPassword.rejected, (state, { payload }) => {
       state.isLoading = false;
+      state.errorMessage = payload.message;
     });
 
     builder.addCase(confirmEmail.pending, (state) => {

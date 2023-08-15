@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { sleep } from '@utils/helpers';
 import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData } from '@utils/types';
@@ -16,7 +15,6 @@ export const addUser = createAsyncThunk<void, IAddUserPayload, {
   'users/add-user',
   async (body, thunkAPI) => {
     try {
-      await sleep(1000);
       await http.post<IAddUserPayload>(prefix, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
@@ -32,8 +30,6 @@ export const getAllUsers = createAsyncThunk<IUserInfo[], void, {
   'users/all-users',
   async (_, thunkAPI) => {
     try {
-      await sleep(1000);
-
       const { data } = await http.get<IUserInfo[]>(prefix);
 
       return data;
@@ -51,8 +47,6 @@ export const getUserById = createAsyncThunk<IUserInfo, string, {
   'users/get-user',
   async (id, thunkAPI) => {
     try {
-      await sleep(1000);
-
       const { data } = await http.get<IUserInfo>(`${prefix}/${id}`);
 
       return data;
@@ -70,7 +64,6 @@ export const editUser = createAsyncThunk<void, IAddUserPayload, {
   'users/edit-user',
   async (body, thunkAPI) => {
     try {
-      await sleep(1000);
       await http.put<IAddUserPayload>(`${prefix}/${body.id}`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);

@@ -29,7 +29,6 @@ const InputsTable = () => {
     handleSubmit,
     register,
     formState: { errors },
-    watch,
   } = methods;
 
   // TODO: add logic, remove consoles
@@ -37,10 +36,6 @@ const InputsTable = () => {
   const onSubmit = (data: IAddBannerForm) => {
     console.log('data', data);
   };
-
-  console.log('daaaaataaa***', watch());
-
-  console.log('rrrr*****', errors);
 
   return (
     <>

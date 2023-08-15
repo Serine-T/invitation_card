@@ -6,6 +6,8 @@ import { selectAuth } from '@features/auth/selectors';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import FailPage from '../FailPage';
+
 const ConfirmEmail = () => {
   const { token } = useParams();
   const dispatch = useAppDispatch();
@@ -22,7 +24,7 @@ const ConfirmEmail = () => {
 
   return (
     <>
-      {isLoading ? <Loader isLayout={false} /> : (errorMessage && <>{errorMessage}</>)}
+      {isLoading ? <Loader isLayout={false} /> : (errorMessage && <FailPage />)}
     </>
   );
 };

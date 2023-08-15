@@ -14,9 +14,10 @@ import AuthComponent from '..';
 import { StyledInputBox, StyledTitle } from '../styled';
 import PasswordInput from '../components/PasswordInput';
 import { INewPasswordForm, NewPasswordSchema } from './helpers';
+import FailPage from '../FailPage';
 
 const NewPassword = () => {
-  const { isLoading } = useAppSelector(selectAuth);
+  const { isLoading, errorMessage } = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
   const { token } = useParams();
   const navigate = useNavigate();
@@ -40,13 +41,11 @@ const NewPassword = () => {
     if (token) {
       await dispatch(resetPassword({ token, body })).unwrap().then(() => {
         navigate(PAGE_ROUTES.SIGN_IN);
-      }).catch((e) => {
-        console.log('ee****', e);
-      });
+      }).catch(() => { });
     }
   };
 
-  return (
+  return errorMessage ? <FailPage /> : (
     <AuthComponent>
       <StyledTitle variant="h5">
         New Password
