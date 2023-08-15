@@ -35,13 +35,10 @@ import Tasks from '@containers/Administration/Tasks';
 import ShippingZips from '@containers/Administration/ShippingZips';
 import ShippingRateMarkup from '@containers/Administration/ShippingRateMarkup';
 import PromotionalCodes from '@containers/Administration/PromotionalCodes';
-import Homepage from '@containers/CMS/Homepage';
 import Layout from 'src/Layout';
 import PAGE_ROUTES from '@routes/routingEnum';
 import AddUser from '@containers/Administration/Users/AddUser';
 import EditUser from '@containers/Administration/Users/EditUser';
-import EditBanner from '@containers/CMS/Homepage/EditBanner';
-import AddBanner from '@containers/CMS/Homepage/AddBanner';
 import ConfirmEmail from '@containers/Auth/ConfirmEmail';
 
 export type CustomRouteObject = RouteObject & {
@@ -125,13 +122,6 @@ export const routingArray: CustomRouteObject[] = [
         path: PAGE_ROUTES.CMS,
         children: [
           { element: <Navigate to={PAGE_ROUTES.HOMEPAGE} />, index: true },
-          {
-            path: PAGE_ROUTES.HOMEPAGE,
-            children: [
-              { element: <Homepage />, index: true },
-              { path: PAGE_ROUTES.ADD_BANNER, element: <AddBanner /> },
-              { path: PAGE_ROUTES.EDIT_BANNER, element: <EditBanner /> },
-            ] },
         ],
       },
     ],

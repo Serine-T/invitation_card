@@ -35,8 +35,6 @@ const NewPassword = () => {
     formState: { errors },
   } = methods;
 
-  // TODO: Auth finish
-
   const onSubmit = async (body: INewPasswordForm) => {
     if (token) {
       await dispatch(resetPassword({ token, body })).unwrap().then(() => {
