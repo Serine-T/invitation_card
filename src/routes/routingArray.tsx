@@ -43,6 +43,7 @@ import ConfirmEmail from '@containers/Auth/ConfirmEmail';
 import Homepage from '@containers/CMS/Homepage';
 import AddBanner from '@containers/CMS/Homepage/AddBanner';
 import EditBanner from '@containers/CMS/Homepage/EditBanner';
+import Header from '@containers/CMS/Header';
 
 export type CustomRouteObject = RouteObject & {
   isPublic?: boolean;
@@ -131,7 +132,14 @@ export const routingArray: CustomRouteObject[] = [
               { element: <Homepage />, index: true },
               { path: PAGE_ROUTES.ADD_BANNER, element: <AddBanner /> },
               { path: PAGE_ROUTES.EDIT_BANNER, element: <EditBanner /> },
-            ] },
+            ],
+          },
+          {
+            path: PAGE_ROUTES.HEADER,
+            children: [
+              { element: <Header />, index: true },
+            ],
+          },
         ],
       },
     ],

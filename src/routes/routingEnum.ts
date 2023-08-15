@@ -45,5 +45,6 @@ enum PAGE_ROUTES {
   HOMEPAGE = '/cms/homepage',
   ADD_BANNER = '/cms/homepage/add-banner',
   EDIT_BANNER = '/cms/homepage/edit-banner/:id',
+  HEADER = '/cms/header',
 }
 export default PAGE_ROUTES;

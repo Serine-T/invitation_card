@@ -18,10 +18,10 @@ import {
 } from '@hello-pangea/dnd';
 import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
 
-import { headBannerCells, headSliderCells, rows } from './helpers';
+import { headSliderCells, rows } from './helpers';
 // TODO: DELETE consoles AFTER IMPLEMENTS and make seprate tables
 
-const Homepage = () => {
+const Header = () => {
   const navigate = useNavigate();
   const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_BANNER);
   const handleEditBanner = (id:string) => navigate(`/cms/homepage/edit-banner/${id}`);
@@ -50,8 +50,8 @@ const Homepage = () => {
   return (
     <>
       <StyledTitleBox>
-        <Typography variant="h2">Homepage</Typography>
-        <Button width="120px" onClick={handleAddBanner}>Add Banner</Button>
+        <Typography variant="h2">Header</Typography>
+        <Button width="120px" onClick={handleAddBanner}>Add Category</Button>
       </StyledTitleBox>
 
       <DragDropContext onDragEnd={onDragEnd}>
@@ -63,7 +63,7 @@ const Homepage = () => {
                 ref={providedDroppable.innerRef}
               >
                 <StyledTable headCells={headSliderCells}>
-                  {items.map(({ slider, visibility, id }, index) => (
+                  {items.map(({ category, visibility, id, type }, index) => (
 
                     <Draggable
                       key={id}
@@ -77,7 +77,7 @@ const Homepage = () => {
                             data-snapshot={snapshot}
                             {...providedDraggable.draggableProps}
                             isDraggingOver={!!snapshot.draggingOver}
-                            gridTemplateColumns="auto 227px  148px 68px"
+                            gridTemplateColumns="auto 174px  84px 246px 68px"
                           >
                             <TableCell>
                               <StyledTypography
@@ -87,11 +87,12 @@ const Homepage = () => {
                                 variant="body3"
                                 cursor="pointer"
                               >
-                                {slider}
+                                {category}
                               </StyledTypography>
                             </TableCell>
-                            <TableCell width="227px">{visibility}</TableCell>
-                            <TableCell width="148px">
+                            <TableCell width="174px">{visibility}</TableCell>
+                            <TableCell width="84px">{type}</TableCell>
+                            <TableCell width="246px">
                               <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
                                 <DragAndDropIcon />
                                 <StyledTypography
@@ -125,76 +126,8 @@ const Homepage = () => {
 
         </Droppable>
       </DragDropContext>
-
-      <Box mt="40px">
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="droppable" isCombineEnabled={false}>
-            {(providedDroppable: DroppableProvided) => (
-              <Box
-                {...providedDroppable.droppableProps}
-                ref={providedDroppable.innerRef}
-              >
-                <StyledTable headCells={headBannerCells}>
-                  {items.map(({ slider, visibility, id }, index) => (
-
-                    <Draggable
-                      key={id}
-                      draggableId={id}
-                      index={index}
-                    >
-                      {(providedDraggable, snapshot) => {
-                        return (
-                          <StyledDraggableRow
-                            ref={providedDraggable.innerRef}
-                            data-snapshot={snapshot}
-                            {...providedDraggable.draggableProps}
-                            isDraggingOver={!!snapshot.draggingOver}
-                            gridTemplateColumns="auto 227px  148px 68px"
-                          >
-                            <TableCell>
-                              <StyledTypography
-                                color="blue"
-                                underLine
-                                onClick={() => handleEditBanner('14')}
-                                variant="body3"
-                                cursor="pointer"
-                              >
-                                {slider}
-                              </StyledTypography>
-                            </TableCell>
-                            <TableCell width="227px">{visibility}</TableCell>
-                            <TableCell width="148px">
-                              <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
-                                <DragAndDropIcon />
-                                <StyledTypography
-                                  color="blue"
-                                  variant="body3"
-                                  ml="8px"
-                                  cursor="grab"
-                                >
-                                  Drag to Reorder
-                                </StyledTypography>
-                              </Stack>
-                            </TableCell>
-                            <TableCell width="68px">
-                              <DeleteBtn
-                                deleteAction={deleteAction}
-                                questionText="Are you sure you want to delete this banner ?"
-                              />
-                            </TableCell>
-                          </StyledDraggableRow>
-                        );
-                      }}
-                    </Draggable>
-                  ))}
-                </StyledTable>
-              </Box>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </Box>
     </>
   );
 };
 
-export default memo(Homepage);
+export default memo(Header);
