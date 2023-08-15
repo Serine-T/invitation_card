@@ -35,14 +35,14 @@ import Tasks from '@containers/Administration/Tasks';
 import ShippingZips from '@containers/Administration/ShippingZips';
 import ShippingRateMarkup from '@containers/Administration/ShippingRateMarkup';
 import PromotionalCodes from '@containers/Administration/PromotionalCodes';
-import Homepage from '@containers/CMS/Homepage';
 import Layout from 'src/Layout';
 import PAGE_ROUTES from '@routes/routingEnum';
 import AddUser from '@containers/Administration/Users/AddUser';
 import EditUser from '@containers/Administration/Users/EditUser';
-import EditBanner from '@containers/CMS/Homepage/EditBanner';
-import AddBanner from '@containers/CMS/Homepage/AddBanner';
 import ConfirmEmail from '@containers/Auth/ConfirmEmail';
+import Homepage from '@containers/CMS/Homepage';
+import AddBanner from '@containers/CMS/Homepage/AddBanner';
+import EditBanner from '@containers/CMS/Homepage/EditBanner';
 
 export type CustomRouteObject = RouteObject & {
   isPublic?: boolean;

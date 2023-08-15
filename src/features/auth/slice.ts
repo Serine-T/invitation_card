@@ -9,6 +9,7 @@ const initialState: IAuthState = {
   isLoading: false,
   isAuth: !!getAccessToken(),
   status: null,
+  errorMessage: '',
 };
 
 const authSlice = createSlice({
@@ -49,17 +50,21 @@ const authSlice = createSlice({
     builder.addCase(resetPassword.fulfilled, (state) => {
       state.isLoading = false;
     });
-    builder.addCase(resetPassword.rejected, (state) => {
+    builder.addCase(resetPassword.rejected, (state, { payload }) => {
       state.isLoading = false;
+      state.errorMessage = payload.message;
     });
 
     builder.addCase(confirmEmail.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(confirmEmail.fulfilled, (state) => {
+      state.isAuth = true;
+      state.status = REQUEST_STATUS.SUCCEED;
       state.isLoading = false;
     });
-    builder.addCase(confirmEmail.rejected, (state) => {
+    builder.addCase(confirmEmail.rejected, (state, { payload }) => {
+      state.errorMessage = payload.message;
       state.isLoading = false;
     });
   },

@@ -4,7 +4,7 @@ import { IUserState } from './types';
 import { addUser, editUser, getAllUsers, getUserById } from './actions';
 
 const initialState: IUserState = {
-  isLoading: false,
+  isLoading: true,
   data: [],
   actionLoading: false,
 };
