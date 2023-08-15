@@ -10,6 +10,7 @@ import Checkbox from '@containers/common/Checkbox';
 import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/AddEditTablesStyles/styled';
 import StyledBaseInput from '@containers/common/Textarea';
 import ImageUpload from '@containers/common/FileUploader';
+import ColorPickerInput from '@containers/common/ColorPickerInput';
 
 import {
   AddBannerSchema,
@@ -28,6 +29,7 @@ const InputsTable = () => {
     handleSubmit,
     register,
     formState: { errors },
+    watch,
   } = methods;
 
   // TODO: add logic, remove consoles
@@ -36,6 +38,10 @@ const InputsTable = () => {
     console.log('data', data);
   };
 
+  console.log('daaaaataaa***', watch());
+
+  console.log('rrrr*****', errors);
+
   return (
     <>
       <FormProvider {...methods}>
@@ -43,7 +49,6 @@ const InputsTable = () => {
           onSubmit={handleSubmit(onSubmit)}
           component="form"
         >
-
           <StyledTable tableTitle="BANNER" colSpan={2}>
             <StyledTableRow>
               <StyledTableCell>Photo (Desktop):</StyledTableCell>
@@ -51,6 +56,17 @@ const InputsTable = () => {
                 <ImageUpload name="image" errorMessage={errors?.image?.message} />
               </TableCell>
             </StyledTableRow>
+            <StyledTableRow>
+              <StyledTableCell>Background color (HEX):</StyledTableCell>
+              <TableCell>
+                <ColorPickerInput
+                  name="bgColor"
+                  id="bg-color-picker"
+                  errorMessage={errors?.bgColor?.message}
+                />
+              </TableCell>
+            </StyledTableRow>
+
             {inputsRows.map(({ label, field }) => (
               <StyledTableRow key={label}>
                 <StyledTableCell>{`${label}:`}</StyledTableCell>

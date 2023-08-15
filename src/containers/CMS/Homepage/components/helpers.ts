@@ -1,3 +1,4 @@
+import { isHexCodeRegex } from '@utils/regexp';
 import * as yup from 'yup';
 
 export interface IAddBannerForm {
@@ -6,6 +7,7 @@ export interface IAddBannerForm {
   buttonName: string;
   buttonLink: string;
   image: string;
+  bgColor: string;
 }
 
 export const defaultValues = {
@@ -14,6 +16,7 @@ export const defaultValues = {
   buttonName: '',
   buttonLink: '',
   image: '',
+  bgColor: '',
 };
 
 export const AddBannerSchema = yup.object().shape({
@@ -22,6 +25,10 @@ export const AddBannerSchema = yup.object().shape({
   description: yup.string().required('Username is required'),
   buttonName: yup.string().required('Username is required'),
   buttonLink: yup.string().required('Username is required'),
+  bgColor: yup
+    .string()
+    .required('Background color is required')
+    .matches(isHexCodeRegex, 'Invalid hex code'),
 });
 
 type ValidFieldNames = {

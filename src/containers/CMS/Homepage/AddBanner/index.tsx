@@ -8,6 +8,7 @@ import InputsTable from '../components/InputsTable';
 const AddBanner = () => {
   return (
     <TitlesWithBackButton title="Add New Banner" path={PAGE_ROUTES.HOMEPAGE}>
+
       <InputsTable />
     </TitlesWithBackButton>
   );
