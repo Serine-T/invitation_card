@@ -10,6 +10,8 @@ import Checkbox from '@containers/common/Checkbox';
 import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
 import StyledBaseInput from '@containers/common/Textarea';
 import ImageUpload from '@containers/common/FileUploader';
+import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
+import PAGE_ROUTES from '@routes/routingEnum';
 
 import {
   AddBannerSchema,
@@ -18,7 +20,11 @@ import {
   defaultValues,
 } from './helpers';
 
-const InputsTable = () => {
+interface IInputsTable{
+  title: string;
+}
+
+const InputsTable = ({ title }: IInputsTable) => {
   const methods = useForm<IAddBannerForm>({
     resolver: yupResolver(AddBannerSchema),
     defaultValues,
@@ -37,7 +43,7 @@ const InputsTable = () => {
   };
 
   return (
-    <>
+    <TitlesWithBackButton title={title} path={PAGE_ROUTES.MENU_CATEGORIES}>
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}
@@ -83,7 +89,7 @@ const InputsTable = () => {
           <StyledButton type="submit">Submit</StyledButton>
         </StyledStack>
       </FormProvider>
-    </>
+    </TitlesWithBackButton>
   );
 };
 

@@ -5,14 +5,10 @@ export const headSliderCells = [
   },
   {
     id: '2',
-    label: 'VISIBLE ON HEADER',
+    label: 'VISIBLE ON SITE',
   },
   {
     id: '3',
-    label: 'Type',
-  },
-  {
-    id: '4',
     label: 'ACTIONS',
     colSpan: 2,
   },

@@ -8,7 +8,7 @@ import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import Input from '@containers/common/Input';
 import Checkbox from '@containers/common/Checkbox';
-import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/AddEditTablesStyles/styled';
+import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { addUser, editUser } from '@features/users/actions';
 import PAGE_ROUTES from '@routes/routingEnum';
@@ -61,7 +61,7 @@ const InputsTable = ({ userInfo }: IInputsTable) => {
   };
 
   return (
-    <TitlesWithBackButton title={userInfo ? 'Edit User' : 'Add New User'} path={PAGE_ROUTES.USERS}>
+    <TitlesWithBackButton title={userInfo ? 'Edit User' : 'Add User'} path={PAGE_ROUTES.USERS}>
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}

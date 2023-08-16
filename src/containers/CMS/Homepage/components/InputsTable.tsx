@@ -7,7 +7,7 @@ import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import Input from '@containers/common/Input';
 import Checkbox from '@containers/common/Checkbox';
-import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/AddEditTablesStyles/styled';
+import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
 import StyledBaseInput from '@containers/common/Textarea';
 import ImageUpload from '@containers/common/FileUploader';
 

@@ -24,6 +24,8 @@ enum PAGE_ROUTES {
   PRODUCTS_PRODUCTS = '/products/products',
   PRODUCT_CATEGORIES = '/products/product-categories',
   MENU_CATEGORIES = '/products/menu-categories',
+  ADD_MENU_CATEGORY = '/products/menu-categories/add-menu-category',
+  EDIT_MENU_CATEGORY = '/products/menu-categories/edit-menu-category/:id',
   ATTRIBUTE_CATEGORIES = '/products/attribute-categories',
   ATTRIBUTES = '/products/attributes',
   MAILING_SERVICE_FEES = '/products/mailing-service-fees',

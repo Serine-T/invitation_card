@@ -44,6 +44,8 @@ import Homepage from '@containers/CMS/Homepage';
 import AddBanner from '@containers/CMS/Homepage/AddBanner';
 import EditBanner from '@containers/CMS/Homepage/EditBanner';
 import Header from '@containers/CMS/Header';
+import AddMenuCategory from '@containers/Products/MenuCategories/AddMenuCategory';
+import EditMenuCategory from '@containers/Products/MenuCategories/EditMenuCategory';
 
 export type CustomRouteObject = RouteObject & {
   isPublic?: boolean;
@@ -83,7 +85,14 @@ export const routingArray: CustomRouteObject[] = [
           { element: <Navigate to={PAGE_ROUTES.PRODUCTS_PRODUCTS} />, index: true },
           { path: PAGE_ROUTES.PRODUCTS_PRODUCTS, element: <Products /> },
           { path: PAGE_ROUTES.PRODUCT_CATEGORIES, element: <ProductCategories /> },
-          { path: PAGE_ROUTES.MENU_CATEGORIES, element: <MenuCategories /> },
+          {
+            path: PAGE_ROUTES.MENU_CATEGORIES,
+            children: [
+              { element: <MenuCategories />, index: true },
+              { path: PAGE_ROUTES.ADD_MENU_CATEGORY, element: <AddMenuCategory /> },
+              { path: PAGE_ROUTES.EDIT_MENU_CATEGORY, element: <EditMenuCategory /> },
+            ],
+          },
           { path: PAGE_ROUTES.ATTRIBUTE_CATEGORIES, element: <AttributeCategories /> },
           { path: PAGE_ROUTES.ATTRIBUTES, element: <Attributes /> },
           { path: PAGE_ROUTES.MAILING_SERVICE_FEES, element: <MailingServiceFees /> },

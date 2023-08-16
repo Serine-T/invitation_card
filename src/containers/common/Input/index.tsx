@@ -12,7 +12,7 @@ import ErrorMessage from '../ErrorMessage';
 
 export interface IBaseInputProps extends InputBaseProps {
   label?: string | ReactNode;
-  calculateInputWidth?: boolean;
+  width?: string;
   errorMessage?: string;
   marginBottom?: number;
 }
@@ -23,6 +23,7 @@ const BaseInput = forwardRef((props: IBaseInputProps, ref) => {
     label,
     inputProps,
     sx,
+    width,
     marginBottom,
     errorMessage,
     ...restProps
@@ -35,7 +36,7 @@ const BaseInput = forwardRef((props: IBaseInputProps, ref) => {
           {label}
         </StyledInputLabel>
       )}
-      <StyledFormControl variant="standard" error={!!errorMessage}>
+      <StyledFormControl width={width} variant="standard" error={!!errorMessage}>
         <StyledBaseInput
           inputRef={ref}
           inputProps={inputProps}

@@ -1,63 +1,66 @@
-import { memo, ReactNode } from 'react';
+import { memo } from 'react';
 
-import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import { useFormContext } from 'react-hook-form';
 import {
   SelectProps,
   SelectChangeEvent,
 } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { UseFormSetValue } from 'react-hook-form';
 
 import { StyledFormControl, StyledSelect } from './styled';
+import { StyledInputBox, StyledInputLabel } from '../Input/styled';
+import ErrorMessage from '../ErrorMessage';
+
 // TODO: Check if it's correct
 
 // TODO: ADD error handling
 interface ISelectProps extends SelectProps {
   id: string;
   errors?: any;
-  value: string;
   label?: string;
   options?: string[];
-  customMessageText?: ReactNode;
-  setValue?: UseFormSetValue<any>;
+  width: string;
+  name: string;
+  errorMessage?: string;
+  marginBottom?: number;
 }
 
 const Select = ({
   id,
   name,
-  value,
   label,
   errors,
   options,
-  setValue,
-  onChange,
-  customMessageText,
+  width,
+  errorMessage,
+  marginBottom,
   ...restProps
 }: ISelectProps) => {
-  const handleSelectChange = (event: SelectChangeEvent<unknown>) => {
-    const { value: targetValue } = event.target;
-
+  const { watch, setValue } = useFormContext();
+  const handleSelectChange = (e: SelectChangeEvent<unknown>) => {
     if (name) {
-      setValue?.(name, targetValue);
+      setValue(name, e.target.value);
     }
   };
 
   return (
-    <StyledFormControl>
-      <InputLabel>{label}</InputLabel>
-      <StyledSelect
-        id={id}
-        labelId={id}
-        label={label}
-        value={value}
-        onChange={handleSelectChange}
-        {...restProps}
-      >
-        {options &&
+    <StyledInputBox marginBottom={marginBottom} errorMessage={!!errorMessage}>
+      { label && <StyledInputLabel shrink>{label}</StyledInputLabel>}
+      <StyledFormControl width={width} error={!!errorMessage}>
+        <StyledSelect
+          id={id}
+          labelId={id}
+          value={watch(name)}
+          onChange={handleSelectChange}
+          {...restProps}
+        >
+          {options &&
           options.length > 0 &&
           options.map((v) => <MenuItem key={v} value={v}>{v}</MenuItem>)}
-      </StyledSelect>
-    </StyledFormControl>
+        </StyledSelect>
+      </StyledFormControl>
+      {errorMessage && <ErrorMessage message={errorMessage} />}
+    </StyledInputBox>
   );
 };
 

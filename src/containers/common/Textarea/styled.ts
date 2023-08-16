@@ -1,6 +1,5 @@
 import { styled } from '@mui/material/styles';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import MuiInputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { FontFamilyNames } from '@customTypes/global/theme/fonts';
 
@@ -38,8 +37,4 @@ export const StyledTextareaAutosize = styled(TextareaAutosize, {
   '&:hover:focus': {
     borderColor: error ? theme.palette.error.dark : theme.palette.primary.dark,
   },
-}));
-
-export const StyledInputLabel = styled(MuiInputLabel)(() => ({
-
 }));

@@ -50,7 +50,7 @@ const Header = () => {
   return (
     <>
       <StyledTitleBox>
-        <Typography variant="h2">Header</Typography>
+        <Typography variant="h2">Menu Categories</Typography>
         <Button width="120px" onClick={handleAddBanner}>Add Category</Button>
       </StyledTitleBox>
 
