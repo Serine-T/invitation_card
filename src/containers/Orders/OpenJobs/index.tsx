@@ -22,7 +22,12 @@ const OpenJobs = () => {
           onSubmit={handleSubmit(onSubmit)}
           component="form"
         >
-          <StyledDatePicker width="153px" name="dateFrom" />
+          <StyledDatePicker
+            width="153px"
+            name="dateFrom"
+            inputProps={{ placeholder: 'Date from' }}
+            errorMessage=""
+          />
         </Stack>
         <div style={{ background: '#f0f0f0' }}>
           What is your favorite day? Lorem ipsum dolor,
