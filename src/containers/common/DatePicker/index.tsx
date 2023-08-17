@@ -4,23 +4,24 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import CalendarIcon from '@containers/common/Icons/CalendarIcon';
 import { useFormContext } from 'react-hook-form';
-import { InputBaseProps } from '@mui/material';
+// import { InputBaseProps } from '@mui/material';
 
 import { StyledBox, StyledCalendarIcon } from './styled';
-import Input from '../Input';
+import Input, { IBaseInputProps } from '../Input';
 
-interface IStyledDatePicker extends InputBaseProps{
+interface IStyledDatePicker extends IBaseInputProps{
   name: string;
-  width: string;
-  errorMessage: string;
 }
 
-const StyledDatePicker = ({ name, width, inputProps, errorMessage }: IStyledDatePicker) => {
-  const { watch, setValue } = useFormContext();
+const StyledDatePicker = (props: IStyledDatePicker) => {
+  const { name } = props;
+  const { watch, setValue, register } = useFormContext();
   const datePickerRef = useRef<any>(null);
   const handleIconClick = () => {
     datePickerRef.current!.setFocus();
   };
+
+  console.log(watch());
 
   return (
     <StyledBox>
@@ -28,7 +29,7 @@ const StyledDatePicker = ({ name, width, inputProps, errorMessage }: IStyledDate
         ref={datePickerRef}
         selected={watch(name)}
         onChange={(date: Date) => setValue(name, date)}
-        customInput={<Input width={width} inputProps={inputProps} errorMessage={errorMessage} />}
+        customInput={<Input {...register(name)} {...props} />}
       />
       <StyledCalendarIcon
         onClick={handleIconClick}
