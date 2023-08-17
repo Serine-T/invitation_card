@@ -5,12 +5,12 @@ import PAGE_ROUTES from '@routes/routingEnum';
 
 import InputsTable from '../components/InputsTable';
 
-const AddBanner = () => {
+const AddBestSeller = () => {
   return (
-    <TitlesWithBackButton title="Add New Banner" path={PAGE_ROUTES.HOMEPAGE}>
+    <TitlesWithBackButton title="Add New Banner" path={PAGE_ROUTES.BEST_SELLER}>
       <InputsTable />
     </TitlesWithBackButton>
   );
 };
 
-export default memo(AddBanner);
+export default memo(AddBestSeller);

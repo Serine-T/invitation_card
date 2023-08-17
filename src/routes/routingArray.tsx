@@ -43,9 +43,11 @@ import ConfirmEmail from '@containers/Auth/ConfirmEmail';
 import Homepage from '@containers/CMS/Homepage';
 import AddBanner from '@containers/CMS/Homepage/AddBanner';
 import EditBanner from '@containers/CMS/Homepage/EditBanner';
-import Header from '@containers/CMS/Header';
 import AddMenuCategory from '@containers/Products/MenuCategories/AddMenuCategory';
 import EditMenuCategory from '@containers/Products/MenuCategories/EditMenuCategory';
+import BestSeller from '@containers/CMS/BestSeller';
+import AddBestSeller from '@containers/CMS/BestSeller/AddBestSeller';
+import EditBestSeller from '@containers/CMS/BestSeller/EditBestSeller';
 
 export type CustomRouteObject = RouteObject & {
   isPublic?: boolean;
@@ -144,9 +146,11 @@ export const routingArray: CustomRouteObject[] = [
             ],
           },
           {
-            path: PAGE_ROUTES.HEADER,
+            path: PAGE_ROUTES.BEST_SELLER,
             children: [
-              { element: <Header />, index: true },
+              { element: <BestSeller />, index: true },
+              { path: PAGE_ROUTES.ADD_BEST_SELLER, element: <AddBestSeller /> },
+              { path: PAGE_ROUTES.EDIT_BEST_SELLER, element: <EditBestSeller /> },
             ],
           },
         ],

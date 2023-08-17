@@ -21,10 +21,10 @@ import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
 import { headSliderCells, rows } from './helpers';
 // TODO: DELETE consoles AFTER IMPLEMENTS and make seprate tables
 
-const Header = () => {
+const BestSeller = () => {
   const navigate = useNavigate();
-  const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_BANNER);
-  const handleEditBanner = (id:string) => navigate(`/cms/homepage/edit-banner/${id}`);
+  const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_BEST_SELLER);
+  const handleEditBanner = (id:string) => navigate(`/cms/best-seller/-best-seller/${id}`);
   const deleteAction = () => {
     console.log('deleteAction');
   };
@@ -50,7 +50,7 @@ const Header = () => {
   return (
     <>
       <StyledTitleBox>
-        <Typography variant="h2">Menu Categories</Typography>
+        <Typography variant="h2">Best Sellers</Typography>
         <Button width="120px" onClick={handleAddBanner}>Add Category</Button>
       </StyledTitleBox>
 
@@ -130,4 +130,4 @@ const Header = () => {
   );
 };
 
-export default memo(Header);
+export default memo(BestSeller);

@@ -80,7 +80,7 @@ const navData: INavBarItem[] = [
     path: PAGE_ROUTES.CMS,
     children: [
       { path: PAGE_ROUTES.HOMEPAGE, title: 'Homepage' },
-      { path: PAGE_ROUTES.HEADER, title: 'Header' },
+      { path: PAGE_ROUTES.BEST_SELLER, title: 'Best Sellers' },
     ],
   },
 ];
