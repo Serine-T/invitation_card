@@ -4,7 +4,6 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import CalendarIcon from '@containers/common/Icons/CalendarIcon';
 import { useFormContext } from 'react-hook-form';
-// import { InputBaseProps } from '@mui/material';
 
 import { StyledBox, StyledCalendarIcon } from './styled';
 import Input, { IBaseInputProps } from '../Input';
@@ -20,8 +19,6 @@ const StyledDatePicker = (props: IStyledDatePicker) => {
   const handleIconClick = () => {
     datePickerRef.current!.setFocus();
   };
-
-  console.log(watch());
 
   return (
     <StyledBox>
