@@ -9,7 +9,6 @@ import Input from '@containers/common/Input';
 import Checkbox from '@containers/common/Checkbox';
 import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
 import StyledBaseInput from '@containers/common/Textarea';
-import ImageUpload from '@containers/common/FileUploader';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 
@@ -50,13 +49,7 @@ const InputsTable = ({ title }: IInputsTable) => {
           component="form"
         >
 
-          <StyledTable tableTitle="BANNER" colSpan={2}>
-            <StyledTableRow>
-              <StyledTableCell>Photo (Desktop):</StyledTableCell>
-              <TableCell>
-                <ImageUpload name="image" errorMessage={errors?.image?.message} />
-              </TableCell>
-            </StyledTableRow>
+          <StyledTable tableTitle="CATEGORY" colSpan={2}>
             {inputsRows.map(({ label, field }) => (
               <StyledTableRow key={label}>
                 <StyledTableCell>{`${label}:`}</StyledTableCell>

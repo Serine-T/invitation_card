@@ -10,8 +10,7 @@ const OpenJobs = () => {
   const { handleSubmit } = methods;
 
   // TODO: Add logic
-  const onSubmit = (data: any) => {
-    console.log('data****', data);
+  const onSubmit = () => {
   };
 
   return (

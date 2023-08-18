@@ -1,8 +1,6 @@
 import { memo, useCallback, useState } from 'react';
 
-import { StyledTitleBox } from '@containers/common/StyledTitleBox/styled';
 import Typography from '@mui/material/Typography';
-import Button from '@containers/common/Button';
 import StyledTable from '@containers/common/Table';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
@@ -15,6 +13,7 @@ import { selectUsers } from '@features/users/selectors';
 import Loader from '@containers/common/Loader';
 import StyledSnackbar from '@containers/common/Alert';
 import useMount from '@customHooks/useMount';
+import PageTitle from '@containers/common/PageTitle';
 
 import { formattedRole, headCells } from './helpers';
 import { StyledStatusBtn, StyledTableCell } from './styles';
@@ -22,7 +21,9 @@ import { StyledStatusBtn, StyledTableCell } from './styles';
 const Users = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const handleAddUser = () => navigate(PAGE_ROUTES.ADD_USER);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleAddUser = useCallback(() => navigate(PAGE_ROUTES.ADD_USER), []);
   const { data: users, isLoading } = useAppSelector(selectUsers);
   const [open, setOpen] = useState(false);
 
@@ -43,10 +44,7 @@ const Users = () => {
 
   return (
     <>
-      <StyledTitleBox>
-        <Typography variant="h2">Users</Typography>
-        <Button width="120px" onClick={handleAddUser}>Add User</Button>
-      </StyledTitleBox>
+      <PageTitle title="Users" btnName="Add Section" handleAdd={handleAddUser} />
 
       {users.length ? (
         <StyledTable headCells={headCells}>

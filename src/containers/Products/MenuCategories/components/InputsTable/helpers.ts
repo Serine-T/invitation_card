@@ -34,12 +34,4 @@ export const inputsRows: ValidFieldNames[] = [
     label: 'Title',
     field: 'title',
   },
-  {
-    label: 'Button Name',
-    field: 'buttonName',
-  },
-  {
-    label: 'Button Link',
-    field: 'buttonLink',
-  },
 ];

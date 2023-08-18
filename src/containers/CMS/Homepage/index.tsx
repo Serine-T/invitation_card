@@ -1,9 +1,6 @@
 import { memo, useState } from 'react';
 
 import TableCell from '@mui/material/TableCell';
-import { StyledTitleBox } from '@containers/common/StyledTitleBox/styled';
-import Typography from '@mui/material/Typography';
-import Button from '@containers/common/Button';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
@@ -17,6 +14,7 @@ import {
   Draggable, DroppableProvided,
 } from '@hello-pangea/dnd';
 import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
+import PageTitle from '@containers/common/PageTitle';
 
 import { headBannerCells, headSliderCells, rows } from './helpers';
 // TODO: DELETE consoles AFTER IMPLEMENTS and make seprate tables
@@ -49,11 +47,7 @@ const Homepage = () => {
 
   return (
     <>
-      <StyledTitleBox>
-        <Typography variant="h2">Homepage</Typography>
-        <Button width="120px" onClick={handleAddBanner}>Add Banner</Button>
-      </StyledTitleBox>
-
+      <PageTitle title="Homepage" btnName="Add Section" handleAdd={handleAddBanner} />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(providedDroppable: DroppableProvided) => {

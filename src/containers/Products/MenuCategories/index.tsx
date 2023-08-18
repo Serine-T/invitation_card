@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 
 import TableCell from '@mui/material/TableCell';
-import { StyledTitleBox } from '@containers/common/StyledTitleBox/styled';
+import { StyledTitleBox } from '@containers/common/PageTitle/styled';
 import Typography from '@mui/material/Typography';
 import Button from '@containers/common/Button';
 import { useNavigate } from 'react-router-dom';

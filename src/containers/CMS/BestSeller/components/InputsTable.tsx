@@ -10,6 +10,8 @@ import Checkbox from '@containers/common/Checkbox';
 import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
 import StyledBaseInput from '@containers/common/Textarea';
 import ImageUpload from '@containers/common/FileUploader';
+import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
+import PAGE_ROUTES from '@routes/routingEnum';
 
 import {
   AddBannerSchema,
@@ -18,7 +20,11 @@ import {
   defaultValues,
 } from './helpers';
 
-const InputsTable = () => {
+interface IInputsTable{
+  bestSellerData?: any;
+}
+
+const InputsTable = ({ bestSellerData }: IInputsTable) => {
   const methods = useForm<IAddBannerForm>({
     resolver: yupResolver(AddBannerSchema),
     defaultValues,
@@ -37,16 +43,16 @@ const InputsTable = () => {
   };
 
   return (
-    <>
+    <TitlesWithBackButton title={bestSellerData ? 'Edit Section' : 'Add Section'} path={PAGE_ROUTES.BEST_SELLER}>
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}
           component="form"
         >
 
-          <StyledTable tableTitle="BANNER" colSpan={2}>
+          <StyledTable tableTitle="SECTION" colSpan={2}>
             <StyledTableRow>
-              <StyledTableCell>Photo (Desktop):</StyledTableCell>
+              <StyledTableCell>Photo:</StyledTableCell>
               <TableCell>
                 <ImageUpload name="image" errorMessage={errors?.image?.message} />
               </TableCell>
@@ -83,7 +89,7 @@ const InputsTable = () => {
           <StyledButton type="submit">Submit</StyledButton>
         </StyledStack>
       </FormProvider>
-    </>
+    </TitlesWithBackButton>
   );
 };
 

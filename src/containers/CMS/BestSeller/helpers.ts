@@ -1,15 +1,11 @@
 export const headSliderCells = [
   {
     id: '1',
-    label: 'Category',
+    label: 'Section',
   },
   {
     id: '2',
-    label: 'VISIBLE ON HEADER',
-  },
-  {
-    id: '3',
-    label: 'Type',
+    label: 'VISIBLE in section',
   },
   {
     id: '4',

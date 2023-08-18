@@ -1,9 +1,6 @@
-import { memo, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 
 import TableCell from '@mui/material/TableCell';
-import { StyledTitleBox } from '@containers/common/StyledTitleBox/styled';
-import Typography from '@mui/material/Typography';
-import Button from '@containers/common/Button';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
@@ -12,6 +9,7 @@ import StyledTable from '@containers/common/Table';
 import DragAndDropIcon from '@containers/common/Icons/DragAndDrop';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
+import PageTitle from '@containers/common/PageTitle';
 import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided,
@@ -23,8 +21,9 @@ import { headSliderCells, rows } from './helpers';
 
 const BestSeller = () => {
   const navigate = useNavigate();
-  const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_BEST_SELLER);
-  const handleEditBanner = (id:string) => navigate(`/cms/best-seller/-best-seller/${id}`);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleAddSection = useCallback(() => navigate(PAGE_ROUTES.ADD_BEST_SELLER), []);
+  const handleEditSection = (id:string) => navigate(`/cms/best-seller/-best-seller/${id}`);
   const deleteAction = () => {
     console.log('deleteAction');
   };
@@ -49,11 +48,7 @@ const BestSeller = () => {
 
   return (
     <>
-      <StyledTitleBox>
-        <Typography variant="h2">Best Sellers</Typography>
-        <Button width="120px" onClick={handleAddBanner}>Add Category</Button>
-      </StyledTitleBox>
-
+      <PageTitle title="Best Sellers" btnName="Add Section" handleAdd={handleAddSection} />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(providedDroppable: DroppableProvided) => {
@@ -63,7 +58,7 @@ const BestSeller = () => {
                 ref={providedDroppable.innerRef}
               >
                 <StyledTable headCells={headSliderCells}>
-                  {items.map(({ category, visibility, id, type }, index) => (
+                  {items.map(({ category, visibility, id }, index) => (
 
                     <Draggable
                       key={id}
@@ -83,7 +78,7 @@ const BestSeller = () => {
                               <StyledTypography
                                 color="blue"
                                 underLine
-                                onClick={() => handleEditBanner('14')}
+                                onClick={() => handleEditSection('14')}
                                 variant="body3"
                                 cursor="pointer"
                               >
@@ -91,7 +86,6 @@ const BestSeller = () => {
                               </StyledTypography>
                             </TableCell>
                             <TableCell width="174px">{visibility}</TableCell>
-                            <TableCell width="84px">{type}</TableCell>
                             <TableCell width="246px">
                               <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
                                 <DragAndDropIcon />
