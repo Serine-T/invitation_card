@@ -15,9 +15,13 @@ function ReusableFields({ field, type, label }: IReusableFields) {
   if (type === InputTypes.text) {
     return (
       <Input
+        type={field === 'password' ? 'password' : 'text'}
         placeholder={label}
         {...register(field as string)}
         errorMessage={errors?.[field]?.message as string}
+        inputProps={
+          { autoComplete: 'new-password' }
+        }
       />
     );
   }
