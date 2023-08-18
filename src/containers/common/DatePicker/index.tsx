@@ -15,7 +15,7 @@ interface IStyledDatePicker extends IBaseInputProps{
 const StyledDatePicker = (props: IStyledDatePicker) => {
   const { name } = props;
   const { watch, setValue, register } = useFormContext();
-  const datePickerRef = useRef<any>(null);
+  const datePickerRef = useRef<DatePicker | null>(null);
   const handleIconClick = () => {
     datePickerRef.current!.setFocus();
   };
