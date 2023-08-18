@@ -9,6 +9,10 @@ import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/S
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '@features/app/hooks';
+import { addCategory, editCategory } from '@features/categories/actions';
+import { ICategories } from '@features/categories/types';
 
 import {
   AddBannerSchema,
@@ -18,25 +22,34 @@ import {
 } from './helpers';
 
 interface IInputsTable{
-  title: string;
+  categoriesData?: ICategories;
 }
 
-const InputsTable = ({ title }: IInputsTable) => {
+const InputsTable = ({ categoriesData }: IInputsTable) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const methods = useForm<IAddBannerForm>({
     resolver: yupResolver(AddBannerSchema),
-    defaultValues,
+    defaultValues: categoriesData ?? defaultValues,
   });
 
   const {
     handleSubmit,
+    setError,
   } = methods;
 
-  const onSubmit = (data: IAddBannerForm) => {
-    console.log('data', data);
+  const onSubmit = async (data: IAddBannerForm) => {
+    await dispatch(categoriesData ? editCategory(data) : addCategory(data)).unwrap().then(() => {
+      navigate(PAGE_ROUTES.MENU_CATEGORIES);
+    }).catch((e) => {
+      if (e.message === 'Category with the provided title already exists!') {
+        setError('title', { message: e.message });
+      }
+    });
   };
 
   return (
-    <TitlesWithBackButton title={title} path={PAGE_ROUTES.MENU_CATEGORIES}>
+    <TitlesWithBackButton title={categoriesData ? '' : ''} path={PAGE_ROUTES.MENU_CATEGORIES}>
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}

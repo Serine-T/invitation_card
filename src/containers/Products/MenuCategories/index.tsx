@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
 import TableCell from '@mui/material/TableCell';
 import { StyledTitleBox } from '@containers/common/PageTitle/styled';
@@ -17,12 +17,18 @@ import {
   Draggable, DroppableProvided,
 } from '@hello-pangea/dnd';
 import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
+import useMount from '@customHooks/useMount';
+import { useAppDispatch, useAppSelector } from '@features/app/hooks';
+import { getAllCategories } from '@features/categories/actions';
+import { selectCategories } from '@features/categories/selectors';
+import Loader from '@containers/common/Loader';
+import { setCategories } from '@features/categories/slice';
 
-import { headSliderCells, rows } from './helpers';
+import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
-// TODO: DELETE consoles AFTER IMPLEMENTS and make seprate tables
 
 const MenuCategories = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_MENU_CATEGORY);
   const handleEditBanner = (id:string) => navigate(`/products/menu-categories/edit/${id}`);
@@ -30,9 +36,13 @@ const MenuCategories = () => {
     console.log('deleteAction');
   };
 
-  const [items, setItems] = useState(rows);
+  const { data: categories, isLoading } = useAppSelector(selectCategories);
 
-  // TODO: add typing
+  console.log('categories******', categories, isLoading);
+
+  useMount(() => {
+    dispatch(getAllCategories());
+  });
 
   const onDragEnd = (result: any) => {
     const { destination } = result;
@@ -41,12 +51,16 @@ const MenuCategories = () => {
       return;
     }
 
-    const newItems = [...items];
+    const newItems = [...categories];
     const [removed] = newItems.splice(result.source.index, 1);
 
     newItems.splice(result.destination.index, 0, removed);
-    setItems(newItems);
+    dispatch(setCategories(newItems));
   };
+
+  if (isLoading) {
+    <Loader />;
+  }
 
   return (
     <>
@@ -64,7 +78,7 @@ const MenuCategories = () => {
                 ref={providedDroppable.innerRef}
               >
                 <StyledTable headCells={headSliderCells}>
-                  {items.map(({ category, visibility, id }, index) => (
+                  {categories.map(({ title, displayInHeader, id }, index) => (
                     <Draggable
                       key={id}
                       draggableId={id}
@@ -83,14 +97,14 @@ const MenuCategories = () => {
                               <StyledTypography
                                 color="blue"
                                 underLine
-                                onClick={() => handleEditBanner('14')}
+                                onClick={() => handleEditBanner(id)}
                                 variant="body3"
                                 cursor="pointer"
                               >
-                                {category}
+                                {title}
                               </StyledTypography>
                             </TableCell>
-                            <TableCell width="138px">{visibility}</TableCell>
+                            <TableCell width="138px">{displayInHeader ? 'Yes' : 'No'}</TableCell>
                             <TableCell width="140px">
                               <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
                                 <DragAndDropIcon />

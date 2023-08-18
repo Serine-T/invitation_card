@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { IUserState } from './types';
+import { IState } from './types';
 import { addUser, editUser, getAllUsers, getUserById } from './actions';
 
-const initialState: IUserState = {
+const initialState: IState = {
   isLoading: true,
   data: [],
   actionLoading: false,

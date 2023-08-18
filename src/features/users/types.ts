@@ -1,4 +1,4 @@
-export interface IUserState {
+export interface IState {
   isLoading: boolean;
   data: IUserInfo[];
   actionLoading: boolean;

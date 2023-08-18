@@ -2,7 +2,7 @@ import InputsTable from '../components/InputsTable';
 
 const AddMenuCategory = () => {
   return (
-    <InputsTable title="Add Category" />
+    <InputsTable />
   );
 };
 

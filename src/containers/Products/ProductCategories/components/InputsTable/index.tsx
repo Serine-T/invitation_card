@@ -48,7 +48,7 @@ const InputsTable = ({ productCategoriesData }: IInputsTable) => {
           component="form"
         >
 
-          <StyledTable tableTitle="CATEGORY" colSpan={2}>
+          <StyledTable tableTitle="SUBCATEGORY" colSpan={2}>
             {inputsRows.map((item) => {
               const { label } = item;
 
