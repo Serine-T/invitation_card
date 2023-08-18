@@ -89,7 +89,7 @@ const InputsTable = ({ userInfo }: IInputsTable) => {
             {checkboxRows.map(({ label, field }) => (
               <StyledTableRow key={label}>
                 <StyledTableCell>
-                  {`${label}: ${userInfo ? '*' : ''}`}
+                  {`${label}:`}
                 </StyledTableCell>
                 <TableCell>
                   <Checkbox name={`permissions[${field}]`} />

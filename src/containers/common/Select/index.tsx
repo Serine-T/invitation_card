@@ -6,6 +6,7 @@ import {
   SelectProps,
   SelectChangeEvent,
 } from '@mui/material/Select';
+import Typography from '@mui/material/Typography';
 
 import { StyledFormControl, StyledSelect } from './styled';
 import { StyledInputBox, StyledInputLabel } from '../Input/styled';
@@ -56,7 +57,11 @@ const Select = ({
         >
           {options &&
           options.length > 0 &&
-          options.map((v) => <MenuItem key={v} value={v}>{v}</MenuItem>)}
+            options.map((v) => (
+              <MenuItem key={v} value={v}>
+                <Typography variant="body3">{v}</Typography>
+              </MenuItem>
+            ))}
         </StyledSelect>
       </StyledFormControl>
       {errorMessage && <ErrorMessage message={errorMessage} />}

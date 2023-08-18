@@ -23,7 +23,7 @@ const BestSeller = () => {
   const navigate = useNavigate();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleAddSection = useCallback(() => navigate(PAGE_ROUTES.ADD_BEST_SELLER), []);
-  const handleEditSection = (id:string) => navigate(`/cms/best-seller/-best-seller/${id}`);
+  const handleEditSection = (id:string) => navigate(`/cms/best-seller/edit/${id}`);
   const deleteAction = () => {
     console.log('deleteAction');
   };

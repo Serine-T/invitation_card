@@ -1,3 +1,4 @@
+import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
 
 export interface IAddBannerForm {
@@ -24,14 +25,20 @@ export const AddBannerSchema = yup.object().shape({
   buttonLink: yup.string().required('Username is required'),
 });
 
-type ValidFieldNames = {
-  label: string;
-  field: keyof IAddBannerForm;
-}
-
 export const inputsRows: ValidFieldNames[] = [
   {
     label: 'Title',
     field: 'title',
+    type: InputTypes.text,
+  },
+  {
+    label: 'Title',
+    field: 'title',
+    type: InputTypes.textarea,
+  },
+  {
+    label: 'Title',
+    field: 'title',
+    type: InputTypes.textarea,
   },
 ];

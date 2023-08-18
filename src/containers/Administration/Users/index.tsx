@@ -44,7 +44,7 @@ const Users = () => {
 
   return (
     <>
-      <PageTitle title="Users" btnName="Add Section" handleAdd={handleAddUser} />
+      <PageTitle title="Users" btnName="Add User" handleAdd={handleAddUser} />
 
       {users.length ? (
         <StyledTable headCells={headCells}>

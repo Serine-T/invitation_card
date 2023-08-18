@@ -55,6 +55,7 @@ const SearchSection = () => {
               id="visibleOnSite"
               name="visibleOnSite"
               errorMessage={errors?.visibleOnSite?.message}
+              options={['All', 'Visible', 'Not visible']}
             />
           </StyledSearchRows>
           <Stack direction="row" gap="16px" alignItems="center">

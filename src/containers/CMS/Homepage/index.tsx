@@ -22,7 +22,7 @@ import { headBannerCells, headSliderCells, rows } from './helpers';
 const Homepage = () => {
   const navigate = useNavigate();
   const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_BANNER);
-  const handleEditBanner = (id:string) => navigate(`/cms/homepage/edit-banner/${id}`);
+  const handleEditBanner = (id:string) => navigate(`/cms/homepage/edit/${id}`);
   const deleteAction = () => {
     console.log('deleteAction');
   };

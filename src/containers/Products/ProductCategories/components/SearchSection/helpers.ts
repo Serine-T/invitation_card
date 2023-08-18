@@ -7,7 +7,7 @@ export interface IFiltersForm {
 
 export const defaultValues = {
   search: '',
-  visibleOnSite: '',
+  visibleOnSite: 'All',
 };
 
 export const FiltersSchema = yup.object().shape({
