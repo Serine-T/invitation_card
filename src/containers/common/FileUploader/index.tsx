@@ -22,7 +22,7 @@ interface IImageUpload {
 const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
   const [loading, setLoading] = useState(false);
   const { setValue, watch } = useFormContext();
-  const uploadedImg = watch('img');
+  const uploadedImg = watch(name);
   const [fileData, setFileData] = useState<File | null>(null);
 
   // TODO: use this function
@@ -35,7 +35,6 @@ const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
       const { img, url } = await getUploadUrl();
 
       await uploadFile({ file: file as File, url });
-
       setValue(name, img);
       setFileData(file as File);
     } catch { } finally {

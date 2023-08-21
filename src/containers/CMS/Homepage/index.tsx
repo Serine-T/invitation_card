@@ -47,7 +47,7 @@ const Homepage = () => {
 
   return (
     <>
-      <PageTitle title="Homepage" btnName="Add Section" handleAdd={handleAddBanner} />
+      <PageTitle title="Homepage" btnName="Add Banner" handleAdd={handleAddBanner} />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(providedDroppable: DroppableProvided) => {

@@ -9,6 +9,7 @@ import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/S
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
+import Select from '@containers/common/Select';
 
 import {
   AddBannerSchema,
@@ -49,6 +50,18 @@ const InputsTable = ({ productCategoriesData }: IInputsTable) => {
         >
 
           <StyledTable tableTitle="SUBCATEGORY" colSpan={2}>
+            <StyledTableRow>
+              <StyledTableCell>Category:</StyledTableCell>
+              <TableCell>
+                <Select name="categoryId" options={['Marketing Products', 'Grand Format']} />
+              </TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <StyledTableCell>Print type:</StyledTableCell>
+              <TableCell>
+                <Select name="printType" options={['Marketing Products', 'Grand Format']} />
+              </TableCell>
+            </StyledTableRow>
             {inputsRows.map((item) => {
               const { label } = item;
 

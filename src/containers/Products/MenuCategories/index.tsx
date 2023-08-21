@@ -1,9 +1,7 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 
 import TableCell from '@mui/material/TableCell';
-import { StyledTitleBox } from '@containers/common/PageTitle/styled';
 import Typography from '@mui/material/Typography';
-import Button from '@containers/common/Button';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
@@ -23,6 +21,7 @@ import { getAllCategories } from '@features/categories/actions';
 import { selectCategories } from '@features/categories/selectors';
 import Loader from '@containers/common/Loader';
 import { setCategories } from '@features/categories/slice';
+import PageTitle from '@containers/common/PageTitle';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -30,8 +29,9 @@ import SearchSection from './components/SearchSection';
 const MenuCategories = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_MENU_CATEGORY);
-  const handleEditBanner = (id:string) => navigate(`/products/menu-categories/edit/${id}`);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleAddCategory = useCallback(() => navigate(PAGE_ROUTES.ADD_MENU_CATEGORY), []);
+  const handleEditCategory = (id:string) => navigate(`/products/menu-categories/edit/${id}`);
   const deleteAction = () => {
     console.log('deleteAction');
   };
@@ -62,10 +62,7 @@ const MenuCategories = () => {
 
   return (
     <>
-      <StyledTitleBox>
-        <Typography variant="h2">Menu Categories</Typography>
-        <Button width="120px" onClick={handleAddBanner}>Add Category</Button>
-      </StyledTitleBox>
+      <PageTitle title="Menu Categories" btnName="Add Category" handleAdd={handleAddCategory} />
       { !!categories.length && <SearchSection />}
 
       {categories.length ? (
@@ -97,7 +94,7 @@ const MenuCategories = () => {
                                 <StyledTypography
                                   color="blue"
                                   underLine
-                                  onClick={() => handleEditBanner(id)}
+                                  onClick={() => handleEditCategory(id)}
                                   variant="body3"
                                   cursor="pointer"
                                 >

@@ -45,7 +45,8 @@ export type Order = 'asc' | 'desc';
 export enum InputTypes {
   text = 'text',
   textarea = 'textarea',
-  checkbox = 'checkbox'
+  checkbox = 'checkbox',
+  select = 'select',
 }
 
 export type ValidFieldNames = {

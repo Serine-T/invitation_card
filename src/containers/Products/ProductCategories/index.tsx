@@ -24,8 +24,8 @@ import SearchSection from './components/SearchSection';
 
 const ProductCategories = () => {
   const navigate = useNavigate();
-  const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_MENU_CATEGORY);
-  const handleEditBanner = (id:string) => navigate(`/products/menu-categories/edit/${id}`);
+  const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_PRODUCT_CATEGORIES);
+  const handleEditBanner = (id:string) => navigate(`/products/product-categories/edit/${id}`);
   const deleteAction = () => {
     console.log('deleteAction');
   };

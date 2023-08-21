@@ -4,41 +4,47 @@ import * as yup from 'yup';
 export interface IAddBannerForm {
   title: string;
   description: string;
-  buttonName: string;
-  buttonLink: string;
-  image: string;
+  photo: string;
+  categoryId: string;
+  printType: string;
+  displayInCategory?: boolean;
+  displayAsCardInHeader?: boolean;
+  isNew?: boolean;
 }
 
 export const defaultValues = {
   title: '',
   description: '',
-  buttonName: '',
-  buttonLink: '',
-  image: '',
+  photo: '',
+  categoryId: '',
+  printType: '',
+  displayInCategory: false,
+  displayAsCardInHeader: false,
+  isNew: false,
 };
 
 export const AddBannerSchema = yup.object().shape({
-  image: yup.string().required('Username is required'),
   title: yup.string().required('Username is required'),
   description: yup.string().required('Username is required'),
-  buttonName: yup.string().required('Username is required'),
-  buttonLink: yup.string().required('Username is required'),
+  photo: yup.string().required('Username is required'),
+  categoryId: yup.string().required('Username is required'),
+  printType: yup.string().required('Username is required'),
 });
 
 export const inputsRows: ValidFieldNames[] = [
   {
-    label: 'Title',
-    field: 'title',
-    type: InputTypes.text,
+    label: 'Use Grand Format SQ. Ft. Template',
+    field: 'category',
+    type: InputTypes.checkbox,
   },
   {
-    label: 'Title',
-    field: 'title',
-    type: InputTypes.textarea,
+    label: 'Mark as new',
+    field: 'isNew',
+    type: InputTypes.checkbox,
   },
   {
-    label: 'Title',
-    field: 'title',
-    type: InputTypes.textarea,
+    label: 'Mark as sale',
+    field: 'isNew',
+    type: InputTypes.checkbox,
   },
 ];

@@ -12,22 +12,18 @@ import { StyledFormControl, StyledSelect } from './styled';
 import { StyledInputBox, StyledInputLabel } from '../Input/styled';
 import ErrorMessage from '../ErrorMessage';
 
-// TODO: Check if it's correct
-
 // TODO: ADD error handling
 interface ISelectProps extends SelectProps {
-  id: string;
   errors?: any;
   label?: string;
   options?: string[];
-  width: string;
+  width?: string;
   name: string;
   errorMessage?: string;
   marginBottom?: number;
 }
 
 const Select = ({
-  id,
   name,
   label,
   errors,
@@ -49,8 +45,8 @@ const Select = ({
       { label && <StyledInputLabel shrink>{label}</StyledInputLabel>}
       <StyledFormControl width={width} error={!!errorMessage}>
         <StyledSelect
-          id={id}
-          labelId={id}
+          id={name}
+          labelId={name}
           value={watch(name)}
           onChange={handleSelectChange}
           {...restProps}
