@@ -38,8 +38,6 @@ const MenuCategories = () => {
 
   const { data: categories, isLoading } = useAppSelector(selectCategories);
 
-  console.log('categories******', categories, isLoading);
-
   useMount(() => {
     dispatch(getAllCategories());
   });
