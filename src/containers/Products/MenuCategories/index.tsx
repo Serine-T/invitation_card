@@ -59,7 +59,7 @@ const MenuCategories = () => {
   };
 
   if (isLoading) {
-    <Loader />;
+    return <Loader />;
   }
 
   return (
@@ -68,73 +68,76 @@ const MenuCategories = () => {
         <Typography variant="h2">Menu Categories</Typography>
         <Button width="120px" onClick={handleAddBanner}>Add Category</Button>
       </StyledTitleBox>
-      <SearchSection />
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="droppable">
-          {(providedDroppable: DroppableProvided) => {
-            return (
-              <Box
-                {...providedDroppable.droppableProps}
-                ref={providedDroppable.innerRef}
-              >
-                <StyledTable headCells={headSliderCells}>
-                  {categories.map(({ title, displayInHeader, id }, index) => (
-                    <Draggable
-                      key={id}
-                      draggableId={id}
-                      index={index}
-                    >
-                      {(providedDraggable, snapshot) => {
-                        return (
-                          <StyledDraggableRow
-                            ref={providedDraggable.innerRef}
-                            data-snapshot={snapshot}
-                            {...providedDraggable.draggableProps}
-                            isDraggingOver={!!snapshot.draggingOver}
-                            gridTemplateColumns="auto 138px 140px 150px"
-                          >
-                            <TableCell>
-                              <StyledTypography
-                                color="blue"
-                                underLine
-                                onClick={() => handleEditBanner(id)}
-                                variant="body3"
-                                cursor="pointer"
-                              >
-                                {title}
-                              </StyledTypography>
-                            </TableCell>
-                            <TableCell width="138px">{displayInHeader ? 'Yes' : 'No'}</TableCell>
-                            <TableCell width="140px">
-                              <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
-                                <DragAndDropIcon />
+      { !!categories.length && <SearchSection />}
+
+      {categories.length ? (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable">
+            {(providedDroppable: DroppableProvided) => {
+              return (
+                <Box
+                  {...providedDroppable.droppableProps}
+                  ref={providedDroppable.innerRef}
+                >
+                  <StyledTable headCells={headSliderCells}>
+                    {categories.map(({ title, displayInHeader, id }, index) => (
+                      <Draggable
+                        key={id}
+                        draggableId={id}
+                        index={index}
+                      >
+                        {(providedDraggable, snapshot) => {
+                          return (
+                            <StyledDraggableRow
+                              ref={providedDraggable.innerRef}
+                              data-snapshot={snapshot}
+                              {...providedDraggable.draggableProps}
+                              isDraggingOver={!!snapshot.draggingOver}
+                              gridTemplateColumns="auto 138px 140px 150px"
+                            >
+                              <TableCell>
                                 <StyledTypography
                                   color="blue"
+                                  underLine
+                                  onClick={() => handleEditBanner(id)}
                                   variant="body3"
-                                  cursor="grab"
-                                  ml="8px"
+                                  cursor="pointer"
                                 >
-                                  Drag to Reorder
+                                  {title}
                                 </StyledTypography>
-                              </Stack>
-                            </TableCell>
-                            <TableCell width="150px">
-                              <DeleteBtn
-                                deleteAction={deleteAction}
-                                questionText="Are you sure you want to delete this banner ?"
-                              />
-                            </TableCell>
-                          </StyledDraggableRow>
-                        );
-                      }}
-                    </Draggable>
-                  ))}
-                </StyledTable>
-              </Box>
-            );
-          }}
-        </Droppable>
-      </DragDropContext>
+                              </TableCell>
+                              <TableCell width="138px">{displayInHeader ? 'Yes' : 'No'}</TableCell>
+                              <TableCell width="140px">
+                                <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
+                                  <DragAndDropIcon />
+                                  <StyledTypography
+                                    color="blue"
+                                    variant="body3"
+                                    cursor="grab"
+                                    ml="8px"
+                                  >
+                                    Drag to Reorder
+                                  </StyledTypography>
+                                </Stack>
+                              </TableCell>
+                              <TableCell width="150px">
+                                <DeleteBtn
+                                  deleteAction={deleteAction}
+                                  questionText="Are you sure you want to delete this banner ?"
+                                />
+                              </TableCell>
+                            </StyledDraggableRow>
+                          );
+                        }}
+                      </Draggable>
+                    ))}
+                  </StyledTable>
+                </Box>
+              );
+            }}
+          </Droppable>
+        </DragDropContext>
+      ) : <Typography>No Categories</Typography>}
     </>
   );
 };
