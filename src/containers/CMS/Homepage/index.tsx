@@ -109,11 +109,9 @@ const Homepage = () => {
                       }}
 
                     </Draggable>
-
                   ))}
                 </StyledTable>
               </Box>
-
             );
           }}
 

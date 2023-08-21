@@ -27,6 +27,7 @@ export const StyledEmptyContainer = styled(Box, {
   border: `1px dashed ${error ? theme.palette.error.dark : theme.palette.grey[500]}`,
   justifyContent: 'center',
   alignItems: 'center',
+  flexWrap: 'wrap',
 }));
 
 export const StyledImgContainer = styled(Box)(() => ({

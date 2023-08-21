@@ -34,8 +34,10 @@ const InputsTable = ({ hompageData }: IInputsTable) => {
     handleSubmit,
     register,
     formState: { errors },
+    watch,
   } = methods;
 
+  console.log('watch*****', watch());
   // TODO: add logic, remove consoles
 
   const onSubmit = (data: IAddBannerForm) => {

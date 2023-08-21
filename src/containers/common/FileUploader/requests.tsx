@@ -1,5 +1,7 @@
 // TODO: Delete after testing
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { http } from '@services/RequestService';
+import { AWS_S3_PREFIX } from '@utils/constants';
+import axios, { AxiosRequestConfig } from 'axios';
 
 export interface IUploadFileProps {
   file: File;
@@ -27,13 +29,14 @@ export const uploadFile = async ({ file, url }: IUploadFileProps) => {
   }
 };
 
-export const getUploadUrl = async () => {
+export const getUploadUrl = async ({ fileName } : {fileName: string}) => {
   try {
-    const {
-      data: { data },
-    } = await axios.get<AxiosResponse<ICreateAWSLinkResponse>>(
-      'https://agora.server.brainstormtech.io/api_v2/s3/url?extension=png',
-    );
+    const idx = fileName.lastIndexOf('.');
+
+    const name = fileName.substring(0, idx);
+    const extension = fileName.substring(idx + 1);
+    const { data } = await http.get<
+      ICreateAWSLinkResponse>(`${AWS_S3_PREFIX}?extension=${extension}&name=${name}`);
 
     return { url: data?.putUrl || '', img: data?.path || '' };
   } catch (error) {
