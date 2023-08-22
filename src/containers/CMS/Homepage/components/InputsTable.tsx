@@ -29,8 +29,6 @@ const InputsTable = ({ hompageData }: IInputsTable) => {
 
   const {
     handleSubmit,
-    // register,
-    // formState: { errors },
   } = methods;
   // TODO: add logic, remove consoles
 
