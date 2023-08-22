@@ -2,8 +2,9 @@ import { ForwardedRef, forwardRef, memo } from 'react';
 
 import { TextareaAutosizeProps } from '@mui/material/TextareaAutosize';
 
-import { StyledFormControl, StyledInputLabel, StyledTextareaAutosize } from './styled';
+import { StyledFormControl, StyledTextareaAutosize } from './styled';
 import ErrorMessage from '../ErrorMessage';
+import { StyledInputLabel } from '../Input/styled';
 
 interface ITextareaProps extends TextareaAutosizeProps {
   label?: string;

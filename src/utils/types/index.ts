@@ -41,6 +41,22 @@ export interface ResponsePagination<T> {
 export type Order = 'asc' | 'desc';
 
 // TODO: test above code if they aren't used delete them
+
+export enum InputTypes {
+  text = 'text',
+  textarea = 'textarea',
+  checkbox = 'checkbox',
+  select = 'select',
+  image = 'image',
+  colorPicker ='colorPicker'
+}
+
+export type ValidFieldNames = {
+  label: string;
+  field:string;
+  type: InputTypes;
+}
+
 export type AxiosData = AxiosResponse['data']
 export enum REQUEST_STATUS {
   SUCCEED = 'SUCCEED',

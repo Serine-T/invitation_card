@@ -43,6 +43,13 @@ import ConfirmEmail from '@containers/Auth/ConfirmEmail';
 import Homepage from '@containers/CMS/Homepage';
 import AddBanner from '@containers/CMS/Homepage/AddBanner';
 import EditBanner from '@containers/CMS/Homepage/EditBanner';
+import AddMenuCategory from '@containers/Products/MenuCategories/AddMenuCategory';
+import EditMenuCategory from '@containers/Products/MenuCategories/EditMenuCategory';
+import BestSeller from '@containers/CMS/BestSeller';
+import AddBestSeller from '@containers/CMS/BestSeller/AddBestSeller';
+import EditBestSeller from '@containers/CMS/BestSeller/EditBestSeller';
+import AddProductCategory from '@containers/Products/ProductCategories/AddProductCategory';
+import EditProductCategory from '@containers/Products/ProductCategories/EditProductCategory';
 
 export type CustomRouteObject = RouteObject & {
   isPublic?: boolean;
@@ -81,8 +88,22 @@ export const routingArray: CustomRouteObject[] = [
         children: [
           { element: <Navigate to={PAGE_ROUTES.PRODUCTS_PRODUCTS} />, index: true },
           { path: PAGE_ROUTES.PRODUCTS_PRODUCTS, element: <Products /> },
-          { path: PAGE_ROUTES.PRODUCT_CATEGORIES, element: <ProductCategories /> },
-          { path: PAGE_ROUTES.MENU_CATEGORIES, element: <MenuCategories /> },
+          {
+            path: PAGE_ROUTES.PRODUCT_CATEGORIES,
+            children: [
+              { element: <ProductCategories />, index: true },
+              { path: PAGE_ROUTES.ADD_PRODUCT_CATEGORIES, element: <AddProductCategory /> },
+              { path: PAGE_ROUTES.EDIT_PRODUCT_CATEGORIES, element: <EditProductCategory /> },
+            ],
+          },
+          {
+            path: PAGE_ROUTES.MENU_CATEGORIES,
+            children: [
+              { element: <MenuCategories />, index: true },
+              { path: PAGE_ROUTES.ADD_MENU_CATEGORY, element: <AddMenuCategory /> },
+              { path: PAGE_ROUTES.EDIT_MENU_CATEGORY, element: <EditMenuCategory /> },
+            ],
+          },
           { path: PAGE_ROUTES.ATTRIBUTE_CATEGORIES, element: <AttributeCategories /> },
           { path: PAGE_ROUTES.ATTRIBUTES, element: <Attributes /> },
           { path: PAGE_ROUTES.MAILING_SERVICE_FEES, element: <MailingServiceFees /> },
@@ -131,7 +152,16 @@ export const routingArray: CustomRouteObject[] = [
               { element: <Homepage />, index: true },
               { path: PAGE_ROUTES.ADD_BANNER, element: <AddBanner /> },
               { path: PAGE_ROUTES.EDIT_BANNER, element: <EditBanner /> },
-            ] },
+            ],
+          },
+          {
+            path: PAGE_ROUTES.BEST_SELLER,
+            children: [
+              { element: <BestSeller />, index: true },
+              { path: PAGE_ROUTES.ADD_BEST_SELLER, element: <AddBestSeller /> },
+              { path: PAGE_ROUTES.EDIT_BEST_SELLER, element: <EditBestSeller /> },
+            ],
+          },
         ],
       },
     ],

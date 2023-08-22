@@ -1,5 +1,3 @@
-import { Theme } from '@mui/material';
-
 export const headSliderCells = [
   {
     id: '1',
@@ -46,13 +44,3 @@ export const rows = [
   createData('Business Cards', 'Yes', '4'),
   createData('Gingerbread', 'No', '5'),
 ];
-
-// TODO: USER ADD STATUS ENUM
-export const gettingStatusColor = (status: string, theme: Theme) => {
-  const colorObj:Record<string, string> = {
-    active: theme.palette.custom.green[100],
-    pending: theme.palette.custom.yellow[100],
-  };
-
-  return colorObj[status] || '';
-};

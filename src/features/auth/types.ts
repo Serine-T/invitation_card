@@ -1,6 +1,6 @@
 import { REQUEST_STATUS } from '@utils/types';
 
-export interface IAuthState {
+export interface IState {
   isLoading: boolean;
   isAuth: boolean;
   status: REQUEST_STATUS | null;

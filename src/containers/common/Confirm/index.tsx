@@ -18,6 +18,11 @@ const confirmOptionsDialog = ({ questionText }: IconfirmOptionsDialog): ConfirmO
     dialogProps: {
       maxWidth: 'xs',
       fullWidth: true,
+      BackdropProps: {
+        style: {
+          backgroundColor: '#06152B40',
+        },
+      },
       PaperProps: {
         sx: {
           maxWidth: '308px',

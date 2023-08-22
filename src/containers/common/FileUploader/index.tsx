@@ -10,7 +10,7 @@ import { getCDNImagePath } from '@utils/helpers';
 import { StyledEllipsisText } from '@containers/common/EllipsisText/styled';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { FileStateType, getUploadUrl, uploadFile } from './helpers';
+import { FileStateType, getUploadUrl, uploadFile } from './requests';
 import { StyledEmptyContainer, StyledImgContainer, StyledTitleBox, StyledUploadContainer } from './styles';
 import ErrorMessage from '../ErrorMessage';
 
@@ -22,22 +22,19 @@ interface IImageUpload {
 const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
   const [loading, setLoading] = useState(false);
   const { setValue, watch } = useFormContext();
-  const uploadedImg = watch('img');
+  const uploadedImg = watch(name);
   const [fileData, setFileData] = useState<File | null>(null);
 
-  // TODO: use this function
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const uploadToS3 = async (file: FileStateType) => {
     try {
       setLoading(true);
+      if (file) {
+        const { img, url } = await getUploadUrl({ fileName: file.name });
 
-      const { img, url } = await getUploadUrl();
-
-      await uploadFile({ file: file as File, url });
-
-      setValue(name, img);
-      setFileData(file as File);
+        await uploadFile({ file: file as File, url });
+        setValue(name, img, { shouldValidate: true });
+        setFileData(file as File);
+      }
     } catch { } finally {
       setLoading(false);
     }
@@ -47,7 +44,7 @@ const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
     const file = event.target.files?.[0];
 
     if (file) {
-      // await uploadToS3(file);
+      await uploadToS3(file);
     }
   };
 
@@ -57,7 +54,7 @@ const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
     const file = event.dataTransfer.files[0] as any;
 
     if (file) {
-      // await uploadToS3(file);
+      await uploadToS3(file);
     }
   };
 
@@ -70,6 +67,7 @@ const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
     event.stopPropagation();
 
     setFileData(null);
+    setValue(name, null, { shouldValidate: true });
   };
 
   if (loading) {

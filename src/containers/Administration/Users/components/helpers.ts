@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 import { EmailSchema, PasswordSchema } from '@utils/schemas';
 import { IAddUserPayload, IUserInfo, Permissions } from '@features/users/types';
+import { InputTypes, ValidFieldNames } from '@utils/types';
 
 import { formattedPermissions } from '../helpers';
 
@@ -59,31 +60,31 @@ export const AddUserSchema = yup.object().shape({
   password: PasswordSchema.password,
 });
 
-type ValidInputsNames = {
-  label: string;
-  field: keyof IAddUserForm;
-}
-
-export const inputsRows: ValidInputsNames[] = [
+export const inputsRows: ValidFieldNames[] = [
   {
     label: 'Username',
     field: 'username',
+    type: InputTypes.text,
   },
   {
     label: 'First Name',
     field: 'firstName',
+    type: InputTypes.text,
   },
   {
     label: 'Last Name',
     field: 'lastName',
+    type: InputTypes.text,
   },
   {
     label: 'Password',
     field: 'password',
+    type: InputTypes.text,
   },
   {
     label: 'Email',
     field: 'email',
+    type: InputTypes.text,
   },
 ];
 

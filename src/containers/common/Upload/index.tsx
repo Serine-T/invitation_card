@@ -1,6 +1,6 @@
 import { ChangeEvent, DragEvent, FC, memo, ReactNode } from 'react';
 
-import { StyledInput, StyledInputLabel } from './styled';
+import { StyledInput } from './styled';
 
 interface IUploadProps {
   id: string;
@@ -32,7 +32,7 @@ const Upload: FC<IUploadProps> = ({
   };
 
   return (
-    <StyledInputLabel htmlFor={id}>
+    <>
       <StyledInput
         id={id}
         type="file"
@@ -43,7 +43,7 @@ const Upload: FC<IUploadProps> = ({
         name={name}
       />
       {children}
-    </StyledInputLabel>
+    </>
   );
 };
 

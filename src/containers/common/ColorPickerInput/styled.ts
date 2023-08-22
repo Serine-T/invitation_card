@@ -17,8 +17,11 @@ export const StyledInputBox = styled(Box)(() => ({
   zIndex: '9',
 }));
 
-export const StyledColorPickerContent = styled(Box)({
+export const StyledColorPickerContent = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'error',
+})<{error: boolean}>(({ error }) => ({
   display: 'grid',
   alignItems: 'center',
   gridTemplateColumns: '36px 1fr',
-});
+  marginBottom: error ? '12px' : '',
+}));

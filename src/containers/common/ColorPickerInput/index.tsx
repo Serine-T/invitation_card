@@ -4,20 +4,20 @@ import { useFormContext } from 'react-hook-form';
 import { InputBaseProps } from '@mui/material/InputBase';
 import InputLabel from '@mui/material/InputLabel';
 import toHex from 'colornames';
+import Box from '@mui/material/Box';
 
 import { StyledColorPickerContent, StyledInput, StyledInputBox } from './styled';
 import Input from '../Input';
 import ErrorMessage from '../ErrorMessage';
 
 interface IUploadProps {
-  id: string;
   label?: string;
   inputProps?: InputBaseProps;
   errorMessage?: string;
   name: string;
 }
 
-const ColorPickerInput = ({ id, label, errorMessage, inputProps, name }: IUploadProps) => {
+const ColorPickerInput = ({ label, errorMessage, inputProps, name }: IUploadProps) => {
   const { setValue, watch, register } = useFormContext();
   const filledColorValue = watch(name);
 
@@ -42,12 +42,12 @@ const ColorPickerInput = ({ id, label, errorMessage, inputProps, name }: IUpload
   }, [filledColorValue]);
 
   return (
-    <>
-      {label && <InputLabel shrink htmlFor={id}>{label}</InputLabel>}
-      <StyledColorPickerContent>
+    <Box>
+      {label && <InputLabel shrink htmlFor={name}>{label}</InputLabel>}
+      <StyledColorPickerContent error={!!errorMessage}>
         <StyledInputBox>
           <StyledInput
-            id={id}
+            id={name}
             type="color"
             {...register(name, {
               onChange: onInputChange,
@@ -61,10 +61,12 @@ const ColorPickerInput = ({ id, label, errorMessage, inputProps, name }: IUpload
             onChange: onInputChange,
           })}
           {...inputProps}
+          errorMessage={errorMessage}
+          showError={false}
         />
       </StyledColorPickerContent>
-      {errorMessage && <ErrorMessage message={errorMessage} />}
-    </>
+      {!!errorMessage && <ErrorMessage message={errorMessage} />}
+    </Box>
   );
 };
 

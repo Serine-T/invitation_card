@@ -1,9 +1,6 @@
 import { memo, useState } from 'react';
 
 import TableCell from '@mui/material/TableCell';
-import { StyledTitleBox } from '@containers/common/StyledTitleBox/styled';
-import Typography from '@mui/material/Typography';
-import Button from '@containers/common/Button';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
@@ -16,15 +13,16 @@ import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided,
 } from '@hello-pangea/dnd';
+import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
+import PageTitle from '@containers/common/PageTitle';
 
 import { headBannerCells, headSliderCells, rows } from './helpers';
-import { StyledDraggableRow } from './styled';
 // TODO: DELETE consoles AFTER IMPLEMENTS and make seprate tables
 
 const Homepage = () => {
   const navigate = useNavigate();
   const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_BANNER);
-  const handleEditBanner = (id:string) => navigate(`/cms/homepage/edit-banner/${id}`);
+  const handleEditBanner = (id:string) => navigate(`/cms/homepage/edit/${id}`);
   const deleteAction = () => {
     console.log('deleteAction');
   };
@@ -49,11 +47,7 @@ const Homepage = () => {
 
   return (
     <>
-      <StyledTitleBox>
-        <Typography variant="h2">Homepage</Typography>
-        <Button width="120px" onClick={handleAddBanner}>Add Banner</Button>
-      </StyledTitleBox>
-
+      <PageTitle title="Homepage" btnName="Add Banner" handleAdd={handleAddBanner} />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(providedDroppable: DroppableProvided) => {
@@ -77,6 +71,7 @@ const Homepage = () => {
                             data-snapshot={snapshot}
                             {...providedDraggable.draggableProps}
                             isDraggingOver={!!snapshot.draggingOver}
+                            gridTemplateColumns="auto 227px  148px 68px"
                           >
                             <TableCell>
                               <StyledTypography
@@ -114,11 +109,9 @@ const Homepage = () => {
                       }}
 
                     </Draggable>
-
                   ))}
                 </StyledTable>
               </Box>
-
             );
           }}
 
@@ -148,6 +141,7 @@ const Homepage = () => {
                             data-snapshot={snapshot}
                             {...providedDraggable.draggableProps}
                             isDraggingOver={!!snapshot.draggingOver}
+                            gridTemplateColumns="auto 227px  148px 68px"
                           >
                             <TableCell>
                               <StyledTypography

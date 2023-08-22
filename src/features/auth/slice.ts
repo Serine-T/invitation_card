@@ -2,10 +2,10 @@ import { confirmEmail, forgetPassword, resetPassword, signIn } from '@features/a
 import { createSlice } from '@reduxjs/toolkit';
 import { REQUEST_STATUS } from '@utils/types';
 
-import { IAuthState } from './types';
+import { IState } from './types';
 import { clearLocalStorageData, getAccessToken } from './helpers';
 
-const initialState: IAuthState = {
+const initialState: IState = {
   isLoading: false,
   isAuth: !!getAccessToken(),
   status: null,

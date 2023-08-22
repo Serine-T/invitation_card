@@ -17,9 +17,10 @@ export const ACCESS_TOKEN_KEY = 'access_token';
 export const REFRESH_TOKEN_KEY = 'refresh_token';
 export const USER_KEY = 'user';
 
-const AWS_S3_BUCKET_NAME: string = process.env.REACT_APP_S3_BUCKET_NAME || 'agora-dev';
+const AWS_S3_BUCKET_NAME: string = process.env.REACT_APP_S3_BUCKET_NAME || '';
 
 export const AMAZON_S3_CDN_URL = `https://${AWS_S3_BUCKET_NAME}.s3.amazonaws.com`;
 export const AWS_S3_PREFIX: string = '/s3/url';
+// TODO:  delete if not using
 export const STAGING_URL =
   process.env.REACT_APP_S3_BUCKET_NAME === 'vendofr' ? 'https://vendo.am' : 'https://agora.server.brainstormtech.io';

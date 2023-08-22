@@ -3,9 +3,9 @@ import InputBase from '@mui/material/InputBase';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { FontFamilyNames } from '@customTypes/global/theme/fonts';
-import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 
-export const StyledInputBox = styled(Box, {
+export const StyledInputBox = styled(Stack, {
   shouldForwardProp: (prop) => prop !== 'errorMessage' && prop !== 'marginBottom',
 })<{ marginBottom?: number; errorMessage?: boolean }>(({
   marginBottom = 0, errorMessage,
@@ -34,14 +34,17 @@ export const StyledBaseInput = styled(InputBase)(({ theme }) => ({
 export const StyledInputLabel = styled(InputLabel)(() => ({
   transform: 'unset',
   marginBottom: '6px',
+  fontSize: '12px',
 }));
 
-export const StyledFormControl = styled(FormControl)(({ theme }) => ({
-  width: '100%',
+export const StyledFormControl = styled(FormControl, {
+  shouldForwardProp: (prop) => prop !== 'width',
+})<{width?: string}>(({ theme, width }) => ({
+  width: width ?? '100%',
   borderRadius: 4,
   padding: 0,
   border: `1px solid ${theme.palette.grey[500]}`,
-
+  background: theme.palette.common.white,
   '.MuiInputAdornment-root': {
     paddingRight: 4,
     height: 16,

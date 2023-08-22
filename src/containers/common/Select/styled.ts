@@ -17,15 +17,13 @@ export const StyledSelect = styled(MuiSelect)(() => ({
 }));
 
 // TODO: test it
-export const StyledFormControl = styled(FormControl)(({ theme }) => ({
-  width: '100%',
+export const StyledFormControl = styled(FormControl, {
+  shouldForwardProp: (prop) => prop !== 'width',
+})<{width?: string}>(({ theme, width }) => ({
+  width: width ?? '100%',
   borderRadius: 4,
   padding: 0,
-  transition: theme.transitions.create([
-    'border-color',
-    'background-color',
-    'box-shadow',
-  ]),
+  background: theme.palette.common.white,
 
   'fieldset.MuiOutlinedInput-notchedOutline': {
     border: `1px solid ${theme.palette.grey[500]}`,
@@ -59,10 +57,3 @@ export const StyledFormControl = styled(FormControl)(({ theme }) => ({
     },
   },
 }));
-
-// // TODO: Delete if not using
-
-// export const StyledErrorMessage = styled(Typography)(({ theme }) => ({
-//   color: theme.palette.error.dark,
-//   marginTop: 6,
-// }));
