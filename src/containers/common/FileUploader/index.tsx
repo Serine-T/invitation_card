@@ -25,9 +25,6 @@ const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
   const uploadedImg = watch(name);
   const [fileData, setFileData] = useState<File | null>(null);
 
-  // TODO: use this function
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const uploadToS3 = async (file: FileStateType) => {
     try {
       setLoading(true);

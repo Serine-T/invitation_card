@@ -5,13 +5,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
-import Input from '@containers/common/Input';
-import Checkbox from '@containers/common/Checkbox';
 import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
-import StyledBaseInput from '@containers/common/Textarea';
-import ImageUpload from '@containers/common/FileUploader';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
+import ReusableFields from '@containers/common/ReusableFields';
 
 import {
   AddBannerSchema,
@@ -32,12 +29,9 @@ const InputsTable = ({ hompageData }: IInputsTable) => {
 
   const {
     handleSubmit,
-    register,
-    formState: { errors },
-    watch,
+    // register,
+    // formState: { errors },
   } = methods;
-
-  console.log('watch*****', watch());
   // TODO: add logic, remove consoles
 
   const onSubmit = (data: IAddBannerForm) => {
@@ -52,39 +46,18 @@ const InputsTable = ({ hompageData }: IInputsTable) => {
           component="form"
         >
           <StyledTable tableTitle="BANNER" colSpan={2}>
-            <StyledTableRow>
-              <StyledTableCell>Photo (Desktop):</StyledTableCell>
-              <TableCell>
-                <ImageUpload name="image" errorMessage={errors?.image?.message} />
-              </TableCell>
-            </StyledTableRow>
-            {inputsRows.map(({ label, field }) => (
-              <StyledTableRow key={label}>
-                <StyledTableCell>{`${label}:`}</StyledTableCell>
-                <TableCell>
-                  <Input placeholder={label} {...register(field)} errorMessage={errors?.[field]?.message} />
-                </TableCell>
-              </StyledTableRow>
-            ))}
+            {inputsRows.map((item) => {
+              const { label } = item;
 
-            {/* TODO: check if this field should be textarea */}
-            <StyledTableRow>
-              <StyledTableCell>Description</StyledTableCell>
-              <TableCell>
-                <StyledBaseInput
-                  errorMessage={errors?.description?.message}
-                  placeholder="Description"
-                  {...register('description')}
-                />
-              </TableCell>
-            </StyledTableRow>
-            {/* TODO: HOMEPAGE change checkbox name */}
-            <StyledTableRow>
-              <StyledTableCell>Display on Site</StyledTableCell>
-              <TableCell>
-                <Checkbox name="visibility" />
-              </TableCell>
-            </StyledTableRow>
+              return (
+                <StyledTableRow key={label}>
+                  <StyledTableCell>{`${label}:`}</StyledTableCell>
+                  <TableCell>
+                    <ReusableFields {...item} />
+                  </TableCell>
+                </StyledTableRow>
+              );
+            })}
           </StyledTable>
           <StyledButton type="submit">Submit</StyledButton>
         </StyledStack>

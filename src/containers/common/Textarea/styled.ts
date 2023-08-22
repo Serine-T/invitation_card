@@ -20,6 +20,7 @@ export const StyledTextareaAutosize = styled(TextareaAutosize, {
   border: `1px solid ${error ? theme.palette.error.dark : theme.palette.grey[500]}`,
   fontSize: '12px',
   fontFamily: FontFamilyNames.DmSansRegular,
+  marginBottom: error ? '4px' : '',
 
   '&::placeholder': {
     color: theme.palette.grey[300],

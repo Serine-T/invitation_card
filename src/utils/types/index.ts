@@ -47,6 +47,8 @@ export enum InputTypes {
   textarea = 'textarea',
   checkbox = 'checkbox',
   select = 'select',
+  image = 'image',
+  colorPicker ='colorPicker'
 }
 
 export type ValidFieldNames = {

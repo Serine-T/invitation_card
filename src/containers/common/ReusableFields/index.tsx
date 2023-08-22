@@ -6,6 +6,8 @@ import { useFormContext } from 'react-hook-form';
 import Input from '../Input';
 import Textarea from '../Textarea';
 import Checkbox from '../Checkbox';
+import ImageUpload from '../FileUploader';
+import ColorPickerInput from '../ColorPickerInput';
 
 interface IReusableFields extends ValidFieldNames{}
 
@@ -38,6 +40,14 @@ function ReusableFields({ field, type, label }: IReusableFields) {
 
   if (type === InputTypes.checkbox) {
     return <Checkbox name={field as string} />;
+  }
+
+  if (type === InputTypes.image) {
+    return <ImageUpload name={field as string} errorMessage={errors?.[field]?.message as string} />;
+  }
+
+  if (type === InputTypes.colorPicker) {
+    return <ColorPickerInput name={field} errorMessage={errors?.[field]?.message as string} />;
   }
 
   return null;

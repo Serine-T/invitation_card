@@ -28,6 +28,7 @@ export const StyledEmptyContainer = styled(Box, {
   justifyContent: 'center',
   alignItems: 'center',
   flexWrap: 'wrap',
+  marginBottom: error ? '6px' : '',
 }));
 
 export const StyledImgContainer = styled(Box)(() => ({
