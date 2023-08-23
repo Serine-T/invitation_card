@@ -1,38 +1,46 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
+import Box from '@mui/material/Box';
 import TableCell from '@mui/material/TableCell';
-import { StyledTitleBox } from '@containers/common/PageTitle/styled';
-import Typography from '@mui/material/Typography';
-import Button from '@containers/common/Button';
 import { useNavigate } from 'react-router-dom';
-import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
 import DeleteBtn from '@containers/common/DeleteAction';
 import StyledTable from '@containers/common/Table';
 import DragAndDropIcon from '@containers/common/Icons/DragAndDrop';
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
 import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided,
 } from '@hello-pangea/dnd';
 import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
+import { useAppDispatch, useAppSelector } from '@features/app/hooks';
+import { selectBanners } from '@features/banners/selectors';
+import { setBanners, setSilders } from '@features/banners/slice';
+import Loader from '@containers/common/Loader';
+import { deleteBanner, getAllBanners } from '@features/banners/actions';
 
-import { headSliderCells, rows } from './helpers';
-import SearchSection from './components/SearchSection';
-// TODO: DELETE consoles AFTER IMPLEMENTS and make seprate tables
+import {
+  headBannerCells,
+  headSliderCells,
+} from './helpers';
 
-const ProductCategories = () => {
+interface IBannersProps {
+  isSlider?: boolean;
+}
+
+const Banners = ({ isSlider }: IBannersProps) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_PRODUCT_CATEGORIES);
-  const handleEditBanner = (id:string) => navigate(`/products/product-categories/edit/${id}`);
-  const deleteAction = () => {
-    console.log('deleteAction');
+  const handleEditBanner = (id:string) => navigate(`/cms/homepage/edit/${id}`);
+  const deleteAction = (id: string) => {
+    dispatch(deleteBanner(id)).unwrap().then(() => {
+      dispatch(getAllBanners());
+    }).catch();
   };
 
-  const [items, setItems] = useState(rows);
+  const { banners, sliders, isLoading } = useAppSelector(selectBanners);
 
-  // TODO: add typing
+  const items = isSlider ? sliders : banners;
 
   const onDragEnd = (result: any) => {
     const { destination } = result;
@@ -45,16 +53,15 @@ const ProductCategories = () => {
     const [removed] = newItems.splice(result.source.index, 1);
 
     newItems.splice(result.destination.index, 0, removed);
-    setItems(newItems);
+    dispatch(isSlider ? setBanners(newItems) : setSilders(newItems));
   };
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
-    <>
-      <StyledTitleBox>
-        <Typography variant="h2">Subcategories</Typography>
-        <Button width="130px" onClick={handleAddBanner}>Add Subcategory</Button>
-      </StyledTitleBox>
-      <SearchSection />
+    <Box mt={isSlider ? '' : '40px'}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(providedDroppable: DroppableProvided) => {
@@ -63,8 +70,8 @@ const ProductCategories = () => {
                 {...providedDroppable.droppableProps}
                 ref={providedDroppable.innerRef}
               >
-                <StyledTable headCells={headSliderCells}>
-                  {items.map(({ category, visibility, id }, index) => (
+                <StyledTable headCells={isSlider ? headSliderCells : headBannerCells}>
+                  {items.map(({ title, displayOnSite, id = '' }, index) => (
                     <Draggable
                       key={id}
                       draggableId={id}
@@ -77,20 +84,20 @@ const ProductCategories = () => {
                             data-snapshot={snapshot}
                             {...providedDraggable.draggableProps}
                             isDraggingOver={!!snapshot.draggingOver}
-                            gridTemplateColumns="auto 138px 140px 150px"
+                            gridTemplateColumns="auto 227px  140px 150px"
                           >
                             <TableCell>
                               <StyledTypography
                                 color="blue"
                                 underLine
-                                onClick={() => handleEditBanner('14')}
+                                onClick={() => handleEditBanner(id)}
                                 variant="body3"
                                 cursor="pointer"
                               >
-                                {category}
+                                {title}
                               </StyledTypography>
                             </TableCell>
-                            <TableCell width="138px">{visibility}</TableCell>
+                            <TableCell width="227px">{displayOnSite ? 'Yes' : 'No'}</TableCell>
                             <TableCell width="140px">
                               <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
                                 <DragAndDropIcon />
@@ -106,8 +113,8 @@ const ProductCategories = () => {
                             </TableCell>
                             <TableCell width="150px">
                               <DeleteBtn
-                                deleteAction={deleteAction}
-                                questionText="Are you sure you want to delete this subcategory ?"
+                                deleteAction={() => deleteAction(id)}
+                                questionText="Are you sure you want to delete this banner ?"
                               />
                             </TableCell>
                           </StyledDraggableRow>
@@ -121,8 +128,8 @@ const ProductCategories = () => {
           }}
         </Droppable>
       </DragDropContext>
-    </>
+    </Box>
   );
 };
 
-export default memo(ProductCategories);
+export default memo(Banners);

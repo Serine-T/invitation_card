@@ -1,8 +1,9 @@
+import { BannerCategoryEnum } from '@features/banners/types';
 import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
 
-export type BannerCategoryType = 'slider' | 'banner'
 export interface IAddBannerForm {
+  id?: string;
   title: string;
   description: string;
   desktopPhoto: string;
@@ -12,8 +13,7 @@ export interface IAddBannerForm {
   firstButtonLink: string;
   secondButtonName: string;
   secondButtonLink: string;
-  // category?: BannerCategoryType;
-  category: string;
+  category?: BannerCategoryEnum;
   displayOnSite?: boolean;
 }
 
@@ -27,7 +27,7 @@ export const defaultValues = {
   firstButtonLink: '',
   secondButtonName: '',
   secondButtonLink: '',
-  category: 'banner',
+  category: BannerCategoryEnum.slider,
   displayOnSite: false,
 };
 
@@ -41,7 +41,7 @@ export const AddBannerSchema = yup.object().shape({
   firstButtonLink: yup.string().required('First button link is required'),
   secondButtonName: yup.string().required('Second button name is required'),
   secondButtonLink: yup.string().required('Second button link is required'),
-  category: yup.string().required('Category is required'),
+  // category: yup.string().optional(),
 });
 
 export const inputsRows: ValidFieldNames[] = [
@@ -54,6 +54,11 @@ export const inputsRows: ValidFieldNames[] = [
     label: 'Photo (Mobile)',
     field: 'mobilePhoto',
     type: InputTypes.image,
+  },
+  {
+    label: 'Category',
+    field: 'category',
+    type: InputTypes.select,
   },
   {
     label: 'Background color (HEX)',

@@ -1,6 +1,5 @@
 import { memo, useCallback, useState } from 'react';
 
-import Typography from '@mui/material/Typography';
 import StyledTable from '@containers/common/Table';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
@@ -14,6 +13,7 @@ import Loader from '@containers/common/Loader';
 import StyledSnackbar from '@containers/common/Alert';
 import useMount from '@customHooks/useMount';
 import PageTitle from '@containers/common/PageTitle';
+import EmptyState from '@containers/common/EmptyState';
 
 import { formattedRole, headCells } from './helpers';
 import { StyledStatusBtn, StyledTableCell } from './styles';
@@ -78,7 +78,9 @@ const Users = () => {
             </StyledTableRow>
           ))}
         </StyledTable>
-      ) : <Typography variant="h6">Users do not exist yet</Typography>}
+      ) : (
+        <EmptyState text="You don’t have any users, please add new to proceed" />
+      )}
       { open && (
       <StyledSnackbar
         open={open}
