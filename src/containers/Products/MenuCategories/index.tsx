@@ -11,7 +11,7 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import {
   DragDropContext, Droppable,
-  Draggable, DroppableProvided,
+  Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
 import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
 import useMount from '@customHooks/useMount';
@@ -42,18 +42,18 @@ const MenuCategories = () => {
     dispatch(getAllCategories());
   });
 
-  const onDragEnd = (result: any) => {
+  const onDragEnd = (result: DropResult) => {
     const { destination } = result;
 
     if (!destination) {
-      return;
+
+    } else {
+      const newItems = [...categories];
+      const [removed] = newItems.splice(result.source.index, 1);
+
+      newItems.splice(destination.index, 0, removed);
+      dispatch(setCategories(newItems));
     }
-
-    const newItems = [...categories];
-    const [removed] = newItems.splice(result.source.index, 1);
-
-    newItems.splice(result.destination.index, 0, removed);
-    dispatch(setCategories(newItems));
   };
 
   if (isLoading) {
