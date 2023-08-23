@@ -11,13 +11,15 @@ import Stack from '@mui/material/Stack';
 import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided,
+  DropResult,
 } from '@hello-pangea/dnd';
 import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { selectBanners } from '@features/banners/selectors';
 import { setBanners, setSilders } from '@features/banners/slice';
 import Loader from '@containers/common/Loader';
-import { deleteBanner, getAllBanners } from '@features/banners/actions';
+import { deleteBanner, getAllBanners, reorderBanners } from '@features/banners/actions';
+import { getReorderedArray } from '@utils/helpers';
 
 import {
   headBannerCells,
@@ -35,25 +37,29 @@ const Banners = ({ isSlider }: IBannersProps) => {
   const deleteAction = (id: string) => {
     dispatch(deleteBanner(id)).unwrap().then(() => {
       dispatch(getAllBanners());
-    }).catch();
+    }).catch(() => {});
   };
 
   const { banners, sliders, isLoading } = useAppSelector(selectBanners);
 
-  const items = isSlider ? sliders : banners;
+  const items = isSlider ? [...sliders] : [...banners];
 
-  const onDragEnd = (result: any) => {
+  const onDragEnd = (result:DropResult) => {
     const { destination } = result;
 
     if (!destination) {
-      return;
+
+    } else {
+      const [removed] = items.splice(result.source.index, 1);
+
+      items.splice(destination.index, 0, removed);
+
+      const sortedData = getReorderedArray(items);
+
+      dispatch(reorderBanners(sortedData)).unwrap().then(() => {
+        dispatch(isSlider ? setSilders(items) : setBanners(items));
+      }).catch(() => { });
     }
-
-    const newItems = [...items];
-    const [removed] = newItems.splice(result.source.index, 1);
-
-    newItems.splice(result.destination.index, 0, removed);
-    dispatch(isSlider ? setBanners(newItems) : setSilders(newItems));
   };
 
   if (isLoading) {
@@ -84,7 +90,7 @@ const Banners = ({ isSlider }: IBannersProps) => {
                             data-snapshot={snapshot}
                             {...providedDraggable.draggableProps}
                             isDraggingOver={!!snapshot.draggingOver}
-                            gridTemplateColumns="auto 227px  140px 150px"
+                            gridTemplateColumns="auto 173px  140px 150px"
                           >
                             <TableCell>
                               <StyledTypography
@@ -97,7 +103,7 @@ const Banners = ({ isSlider }: IBannersProps) => {
                                 {title}
                               </StyledTypography>
                             </TableCell>
-                            <TableCell width="227px">{displayOnSite ? 'Yes' : 'No'}</TableCell>
+                            <TableCell width="173px">{displayOnSite ? 'Yes' : 'No'}</TableCell>
                             <TableCell width="140px">
                               <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
                                 <DragAndDropIcon />

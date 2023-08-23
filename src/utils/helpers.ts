@@ -20,3 +20,14 @@ export const camelCaseToSensativeCase = (text: string): string => {
 export const addZeroToOneDigit = (num: number) => {
   return String(num).padStart(2, '0');
 };
+
+interface IItems {
+  id: string;
+  [key: string]: any;
+}
+
+export const getReorderedArray = (items: IItems[]) => {
+  const orders = items.map(({ id }, index) => ({ id, sort: index }));
+
+  return { orders };
+};

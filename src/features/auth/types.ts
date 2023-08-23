@@ -4,7 +4,7 @@ export interface IState {
   isLoading: boolean;
   isAuth: boolean;
   status: REQUEST_STATUS | null;
-  errorMessage: string;
+  errorMessage: null | string;
 }
 
 export interface ISignInPayload {

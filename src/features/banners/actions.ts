@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
-import { AxiosData } from '@utils/types';
+import { AxiosData, IReorderPayload } from '@utils/types';
 
 import {
   IAddBannerPayload, IBannerInfo, IBanners,
@@ -80,6 +80,20 @@ export const deleteBanner = createAsyncThunk<void, string, {
   async (id, thunkAPI) => {
     try {
       await http.delete(`${prefix}/${id}`);
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);
+export const reorderBanners = createAsyncThunk<void, IReorderPayload, {
+  rejectValue: AxiosData;
+}>(
+  'banners/reorder',
+  async (body, thunkAPI) => {
+    try {
+      await http.put<IReorderPayload>(`${prefix}/reorder`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

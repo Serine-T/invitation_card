@@ -3,7 +3,7 @@ export interface IState {
   banners: IBannerInfo[];
   sliders: IBannerInfo[];
   actionLoading: boolean;
-  errorMessage: string;
+  errorMessage: null | string;
 }
 
 export enum BannerCategoryEnum {
@@ -27,7 +27,7 @@ export interface IAddBannerPayload {
 }
 
 export interface IBannerInfo {
-  id?: string;
+  id: string;
   title: string;
   description: string;
   desktopPhoto: string;
