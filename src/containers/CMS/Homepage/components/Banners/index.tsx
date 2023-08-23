@@ -58,7 +58,7 @@ const Banners = ({ isSlider }: IBannersProps) => {
 
       dispatch(reorderBanners(sortedData)).unwrap().then(() => {
         dispatch(isSlider ? setSilders(items) : setBanners(items));
-      }).catch(() => { });
+      }).catch(() => dispatch(getAllBanners()));
     }
   };
 

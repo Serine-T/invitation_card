@@ -38,10 +38,9 @@ export const AddBannerSchema = yup.object().shape({
   description: yup.string().required('Description is required'),
   backgroundColor: yup.string().required('Background color is required'),
   firstButtonName: yup.string().required('First button name is required'),
-  firstButtonLink: yup.string().required('First button link is required'),
+  firstButtonLink: yup.string().url('URL is invalid').required('First button link is required'),
   secondButtonName: yup.string().required('Second button name is required'),
-  secondButtonLink: yup.string().required('Second button link is required'),
-  // category: yup.string().optional(),
+  secondButtonLink: yup.string().url('URL is invalid').required('Second button link is required'),
 });
 
 export const inputsRows: ValidFieldNames[] = [

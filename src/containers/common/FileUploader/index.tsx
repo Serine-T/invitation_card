@@ -24,8 +24,6 @@ const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
   const { setValue, watch } = useFormContext();
   const uploadedImg = watch(name);
 
-  console.log('uploadedImg*****', uploadedImg, getCDNImagePath(uploadedImg));
-
   const [fileData, setFileData] = useState<File | null>(null);
 
   const uploadToS3 = async (file: FileStateType) => {

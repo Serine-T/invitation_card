@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback } from 'react';
 
 import StyledTable from '@containers/common/Table';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,6 @@ import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { deleteUser, getAllUsers } from '@features/users/actions';
 import { selectUsers } from '@features/users/selectors';
 import Loader from '@containers/common/Loader';
-import StyledSnackbar from '@containers/common/Alert';
 import useMount from '@customHooks/useMount';
 import PageTitle from '@containers/common/PageTitle';
 import EmptyState from '@containers/common/EmptyState';
@@ -25,14 +24,12 @@ const Users = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleAddUser = useCallback(() => navigate(PAGE_ROUTES.ADD_USER), []);
   const { data: users, isLoading } = useAppSelector(selectUsers);
-  const [open, setOpen] = useState(false);
 
   const handleEditUser = (id: string) => navigate(`/administration/users/edit-user/${id}`);
   const deleteAction = useCallback((id: string) => {
-    dispatch(deleteUser(id)).unwrap().then(() => {
-      dispatch(getAllUsers());
-    }).catch(() => setOpen(true));
-  }, [dispatch]);
+    dispatch(deleteUser(id)).unwrap().finally(() => dispatch(getAllUsers()));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useMount(() => {
     dispatch(getAllUsers());
@@ -80,14 +77,6 @@ const Users = () => {
         </StyledTable>
       ) : (
         <EmptyState text="You don’t have any users, please add new to proceed" />
-      )}
-      { open && (
-      <StyledSnackbar
-        open={open}
-        setOpen={setOpen}
-        type="error"
-        message="User not found for deletion!"
-      />
       )}
     </>
   );
