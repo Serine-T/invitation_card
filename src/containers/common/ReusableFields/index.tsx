@@ -8,10 +8,14 @@ import Textarea from '../Textarea';
 import Checkbox from '../Checkbox';
 import ImageUpload from '../FileUploader';
 import ColorPickerInput from '../ColorPickerInput';
+import Select from '../Select';
+import { ISelectList } from './helpers';
 
-interface IReusableFields extends ValidFieldNames{}
+interface IReusableFields extends ValidFieldNames{
+  selectList?: ISelectList[];
+}
 
-function ReusableFields({ field, type, label }: IReusableFields) {
+function ReusableFields({ field, type, label, selectList }: IReusableFields) {
   const { formState: { errors }, register } = useFormContext();
 
   if (type === InputTypes.text) {
@@ -48,6 +52,16 @@ function ReusableFields({ field, type, label }: IReusableFields) {
 
   if (type === InputTypes.colorPicker) {
     return <ColorPickerInput name={field} errorMessage={errors?.[field]?.message as string} />;
+  }
+
+  if (type === InputTypes.select) {
+    const selector = selectList?.find((item) => item.field === field);
+
+    if (selector) {
+      const { options } = selector;
+
+      return <Select name={field} options={options} errorMessage={errors?.[field]?.message as string} />;
+    }
   }
 
   return null;

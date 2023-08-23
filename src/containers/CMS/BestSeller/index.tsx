@@ -12,7 +12,7 @@ import Box from '@mui/material/Box';
 import PageTitle from '@containers/common/PageTitle';
 import {
   DragDropContext, Droppable,
-  Draggable, DroppableProvided,
+  Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
 import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
 
@@ -30,20 +30,18 @@ const BestSeller = () => {
 
   const [items, setItems] = useState(rows);
 
-  // TODO: add typing
-
-  const onDragEnd = (result: any) => {
+  const onDragEnd = (result: DropResult) => {
     const { destination } = result;
 
     if (!destination) {
-      return;
+
+    } else {
+      const newItems = [...items];
+      const [removed] = newItems.splice(result.source.index, 1);
+
+      newItems.splice(destination.index, 0, removed);
+      setItems(newItems);
     }
-
-    const newItems = [...items];
-    const [removed] = newItems.splice(result.source.index, 1);
-
-    newItems.splice(result.destination.index, 0, removed);
-    setItems(newItems);
   };
 
   return (

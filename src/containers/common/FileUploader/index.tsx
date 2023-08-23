@@ -23,6 +23,7 @@ const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
   const [loading, setLoading] = useState(false);
   const { setValue, watch } = useFormContext();
   const uploadedImg = watch(name);
+
   const [fileData, setFileData] = useState<File | null>(null);
 
   const uploadToS3 = async (file: FileStateType) => {
@@ -93,20 +94,26 @@ const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
         onChange={handleChange}
       />
       {
-        (uploadedImg && fileData) ? (
+        uploadedImg ? (
           <StyledUploadContainer error={!!errorMessage}>
             <StyledImgContainer>
               <img src={getCDNImagePath(uploadedImg)} alt="" />
             </StyledImgContainer>
             {/* TODO: check format of file size  */}
+
             <StyledTitleBox>
+              { fileData && (
               <StyledEllipsisText variant="body3">
                 {fileData?.name}
               </StyledEllipsisText>
+              )}
+              {fileData && (
               <StyledTypography variant="body3" color="grey" minWidth="65px">
                 {`${(fileData.size / 1024).toFixed(2)} KB`}
               </StyledTypography>
+              )}
             </StyledTitleBox>
+
             <StyledTypography cursor="pointer" onClick={handleDeleteImg}>
               <CloseIcon fontSize="inherit" color="inherit" />
             </StyledTypography>

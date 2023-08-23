@@ -68,3 +68,11 @@ export type ErrorType = {
   message: string;
   statusCode: number;
 }
+
+export interface IReordering {
+    id: string;
+    sort: number;
+}
+export interface IReorderPayload {
+  orders: IReordering[];
+}

@@ -9,7 +9,7 @@ const initialState: IState = {
   isLoading: false,
   isAuth: !!getAccessToken(),
   status: null,
-  errorMessage: '',
+  errorMessage: null,
 };
 
 const authSlice = createSlice({

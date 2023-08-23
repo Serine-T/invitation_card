@@ -1,6 +1,7 @@
 import { styled } from '@mui/material/styles';
 import MuiSelect from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
 
 export const StyledSelect = styled(MuiSelect)(() => ({
   '.MuiSelect-select.MuiOutlinedInput-input': {
@@ -10,13 +11,22 @@ export const StyledSelect = styled(MuiSelect)(() => ({
     fontSize: 14,
     borderRadius: 4,
     lineHeight: '15px',
+    textTransform: 'capitalize',
   },
   'fieldset.MuiOutlinedInput-notchedOutline': {
     borderWidth: '1px',
   },
+  '.MuiMenuItem-root': {
+    textTransform: 'capitalize',
+  },
 }));
 
-// TODO: test it
+export const StyledMenuItem = styled(MenuItem)(() => ({
+  '.MuiTypography-root': {
+    textTransform: 'capitalize',
+  },
+}));
+
 export const StyledFormControl = styled(FormControl, {
   shouldForwardProp: (prop) => prop !== 'width',
 })<{width?: string}>(({ theme, width }) => ({

@@ -1,6 +1,5 @@
 import { memo } from 'react';
 
-import MenuItem from '@mui/material/MenuItem';
 import { useFormContext } from 'react-hook-form';
 import {
   SelectProps,
@@ -8,7 +7,7 @@ import {
 } from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 
-import { StyledFormControl, StyledSelect } from './styled';
+import { StyledFormControl, StyledMenuItem, StyledSelect } from './styled';
 import { StyledInputBox, StyledInputLabel } from '../Input/styled';
 import ErrorMessage from '../ErrorMessage';
 
@@ -54,9 +53,9 @@ const Select = ({
           {options &&
           options.length > 0 &&
             options.map((v) => (
-              <MenuItem key={v} value={v}>
+              <StyledMenuItem key={v} value={v}>
                 <Typography variant="body3">{v}</Typography>
-              </MenuItem>
+              </StyledMenuItem>
             ))}
         </StyledSelect>
       </StyledFormControl>

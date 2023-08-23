@@ -1,21 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
-import { AxiosData } from '@utils/types';
+import { AxiosData, IReorderPayload } from '@utils/types';
 
 import {
-  IAddUserPayload, IUserInfo,
+  IAddBannerPayload, IBannerInfo, IBanners,
 } from './types';
 
-const prefix = '/users';
+const prefix = '/banners';
 
-export const addUser = createAsyncThunk<void, IAddUserPayload, {
+export const addBanner = createAsyncThunk<void, IAddBannerPayload, {
   rejectValue: AxiosData;
 }>(
-  'users/add',
+  'banners/add',
   async (body, thunkAPI) => {
     try {
-      await http.post<IAddUserPayload>(prefix, body);
+      await http.post<IAddBannerPayload>(prefix, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -24,13 +24,13 @@ export const addUser = createAsyncThunk<void, IAddUserPayload, {
   },
 );
 
-export const getAllUsers = createAsyncThunk<IUserInfo[], void, {
+export const getAllBanners = createAsyncThunk<IBanners, void, {
   rejectValue: AxiosData;
 }>(
-  'users/all',
+  'banners/all',
   async (_, thunkAPI) => {
     try {
-      const { data } = await http.get<IUserInfo[]>(prefix);
+      const { data } = await http.get<IBanners>(prefix);
 
       return data;
     } catch (error) {
@@ -41,13 +41,13 @@ export const getAllUsers = createAsyncThunk<IUserInfo[], void, {
   },
 );
 
-export const getUserById = createAsyncThunk<IUserInfo, string, {
+export const getBannerById = createAsyncThunk<IBannerInfo, string, {
   rejectValue: AxiosData;
 }>(
-  'users/get-user',
+  'banners/get-banner',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<IUserInfo>(`${prefix}/${id}`);
+      const { data } = await http.get<IBannerInfo>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {
@@ -58,13 +58,13 @@ export const getUserById = createAsyncThunk<IUserInfo, string, {
   },
 );
 
-export const editUser = createAsyncThunk<void, IAddUserPayload, {
+export const editBanner = createAsyncThunk<void, IAddBannerPayload, {
   rejectValue: AxiosData;
 }>(
-  'users/edit',
+  'banners/edit',
   async (body, thunkAPI) => {
     try {
-      await http.put<IAddUserPayload>(`${prefix}/${body.id}`, body);
+      await http.put<IAddBannerPayload>(`${prefix}/${body.id}`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -73,13 +73,27 @@ export const editUser = createAsyncThunk<void, IAddUserPayload, {
   },
 );
 
-export const deleteUser = createAsyncThunk<void, string, {
+export const deleteBanner = createAsyncThunk<void, string, {
   rejectValue: AxiosData;
 }>(
-  'users/delete',
+  'banners/delete',
   async (id, thunkAPI) => {
     try {
       await http.delete(`${prefix}/${id}`);
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);
+export const reorderBanners = createAsyncThunk<void, IReorderPayload, {
+  rejectValue: AxiosData;
+}>(
+  'banners/reorder',
+  async (body, thunkAPI) => {
+    try {
+      await http.put<IReorderPayload>(`${prefix}/reorder`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

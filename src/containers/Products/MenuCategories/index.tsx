@@ -1,7 +1,6 @@
 import { memo, useCallback } from 'react';
 
 import TableCell from '@mui/material/TableCell';
-import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
@@ -12,7 +11,7 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import {
   DragDropContext, Droppable,
-  Draggable, DroppableProvided,
+  Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
 import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
 import useMount from '@customHooks/useMount';
@@ -22,6 +21,7 @@ import { selectCategories } from '@features/categories/selectors';
 import Loader from '@containers/common/Loader';
 import { setCategories } from '@features/categories/slice';
 import PageTitle from '@containers/common/PageTitle';
+import EmptyState from '@containers/common/EmptyState';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -42,18 +42,18 @@ const MenuCategories = () => {
     dispatch(getAllCategories());
   });
 
-  const onDragEnd = (result: any) => {
+  const onDragEnd = (result: DropResult) => {
     const { destination } = result;
 
     if (!destination) {
-      return;
+
+    } else {
+      const newItems = [...categories];
+      const [removed] = newItems.splice(result.source.index, 1);
+
+      newItems.splice(destination.index, 0, removed);
+      dispatch(setCategories(newItems));
     }
-
-    const newItems = [...categories];
-    const [removed] = newItems.splice(result.source.index, 1);
-
-    newItems.splice(result.destination.index, 0, removed);
-    dispatch(setCategories(newItems));
   };
 
   if (isLoading) {
@@ -118,7 +118,7 @@ const MenuCategories = () => {
                               <TableCell width="150px">
                                 <DeleteBtn
                                   deleteAction={deleteAction}
-                                  questionText="Are you sure you want to delete this banner ?"
+                                  questionText="Are you sure you want to delete this category ?"
                                 />
                               </TableCell>
                             </StyledDraggableRow>
@@ -132,7 +132,7 @@ const MenuCategories = () => {
             }}
           </Droppable>
         </DragDropContext>
-      ) : <Typography>No Categories</Typography>}
+      ) : <EmptyState text="You don’t have any categories, please add new to proceed" />}
     </>
   );
 };

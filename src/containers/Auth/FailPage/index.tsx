@@ -8,10 +8,10 @@ import { StyledTitle } from '../styled';
 const FailPage = () => (
   <AuthComponent>
     <StyledTitle variant="h5">
-      The link has been used
+      Invalid link
     </StyledTitle>
     <Typography variant="body2">
-      The link you are looking for has been used.
+      Token is invalid.
     </Typography>
   </AuthComponent>
 );
