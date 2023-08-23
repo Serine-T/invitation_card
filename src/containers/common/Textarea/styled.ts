@@ -21,9 +21,10 @@ export const StyledTextareaAutosize = styled(TextareaAutosize, {
   fontSize: '12px',
   fontFamily: FontFamilyNames.DmSansRegular,
   marginBottom: error ? '4px' : '',
+  overflow: 'auto  !important',
 
   '&::placeholder': {
-    color: theme.palette.grey[300],
+    color: '#ced5da',
     border: 'none',
   },
 
