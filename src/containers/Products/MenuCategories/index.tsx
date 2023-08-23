@@ -45,9 +45,7 @@ const MenuCategories = () => {
   const onDragEnd = (result: DropResult) => {
     const { destination } = result;
 
-    if (!destination) {
-
-    } else {
+    if (destination) {
       const newItems = [...categories];
       const [removed] = newItems.splice(result.source.index, 1);
 

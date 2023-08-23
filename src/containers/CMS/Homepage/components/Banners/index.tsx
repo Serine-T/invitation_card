@@ -47,9 +47,7 @@ const Banners = ({ isSlider }: IBannersProps) => {
   const onDragEnd = (result:DropResult) => {
     const { destination } = result;
 
-    if (!destination) {
-
-    } else {
+    if (destination) {
       const [removed] = items.splice(result.source.index, 1);
 
       items.splice(destination.index, 0, removed);
