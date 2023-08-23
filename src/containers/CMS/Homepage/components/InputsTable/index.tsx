@@ -43,7 +43,7 @@ const InputsTable = ({ bannersData }: IInputsTable) => {
 
   const onSubmit = async (data: IAddBannerForm) => {
     await dispatch(bannersData ? editBanner(data) : addBanner(data)).unwrap().then(() => {
-      // navigate(PAGE_ROUTES.HOMEPAGE);
+      navigate(PAGE_ROUTES.HOMEPAGE);
     }).catch(() => {});
   };
 
