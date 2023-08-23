@@ -27,7 +27,6 @@ export const StyledMenuItem = styled(MenuItem)(() => ({
   },
 }));
 
-// TODO: test it
 export const StyledFormControl = styled(FormControl, {
   shouldForwardProp: (prop) => prop !== 'width',
 })<{width?: string}>(({ theme, width }) => ({
