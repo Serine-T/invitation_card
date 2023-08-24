@@ -1,5 +1,6 @@
 import { BannerCategoryEnum } from '@features/banners/types';
 import { isHexCodeRegex } from '@utils/regexp';
+import { validateOptionalURL } from '@utils/schemas';
 import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
 
@@ -11,9 +12,9 @@ export interface IAddBannerForm {
   mobilePhoto: string;
   backgroundColor: string;
   firstButtonName?: string;
-  firstButtonLink?: string;
+  firstButtonLink: string;
   secondButtonName?: string;
-  secondButtonLink?: string;
+  secondButtonLink: string;
   category?: BannerCategoryEnum;
   displayOnSite?: boolean;
 }
@@ -41,61 +42,69 @@ export const AddBannerSchema = yup.object().shape({
     isHexCodeRegex,
     'HEX code is invalid',
   ),
+  firstButtonLink: validateOptionalURL,
+  secondButtonLink: validateOptionalURL,
 });
 
 export const inputsRows: ValidFieldNames[] = [
   {
-    label: 'Photo (Desktop): *',
+    label: 'Photo (Desktop)',
     field: 'desktopPhoto',
     type: InputTypes.image,
+    isRequired: true,
   },
   {
-    label: 'Photo (Mobile): *',
+    label: 'Photo (Mobile)',
     field: 'mobilePhoto',
     type: InputTypes.image,
+    isRequired: true,
   },
   {
-    label: 'Category: *',
+    label: 'Category',
     field: 'category',
     type: InputTypes.select,
+    isRequired: true,
   },
   {
-    label: 'Background color (HEX): *',
+    label: 'Background color (HEX)',
     field: 'backgroundColor',
     type: InputTypes.colorPicker,
+    isRequired: true,
   },
   {
-    label: 'Title: *',
+    label: 'Title',
     field: 'title',
     type: InputTypes.text,
+    isRequired: true,
   },
   {
-    label: 'Description: *',
+    label: 'Description',
     field: 'description',
     type: InputTypes.textarea,
+    isRequired: true,
   },
   {
-    label: 'Button Name:',
+    label: 'Button Name',
     field: 'firstButtonName',
     type: InputTypes.text,
   },
   {
-    label: 'Button Link:',
+    label: 'Button Link',
     field: 'firstButtonLink',
     type: InputTypes.text,
   },
   {
-    label: 'Button Name 2:',
+    label: 'Button Name 2',
     field: 'secondButtonName',
     type: InputTypes.text,
   },
   {
-    label: 'Button Link 2:',
+    label: 'Button Link 2',
     field: 'secondButtonLink',
     type: InputTypes.text,
   },
   {
-    label: 'Visible on Site:',
+    label: 'Visible on Site',
     field: 'displayOnSite',
     type: InputTypes.checkbox,
   },

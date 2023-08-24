@@ -55,6 +55,7 @@ export type ValidFieldNames = {
   label: string;
   field:string;
   type: InputTypes;
+  isRequired?: boolean;
 }
 
 export type AxiosData = AxiosResponse['data']

@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { sleep } from '@utils/helpers';
 import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosResponse } from 'axios';
@@ -21,8 +20,6 @@ export const signIn = createAsyncThunk<void, ISignInPayload, {
   'auth/signIn',
   async (body, thunkAPI) => {
     try {
-      await sleep(1000);
-
       const { data } = await http.post<ISignInPayload, AxiosResponse<ISignInResponseType>>(
         `${prefix}/login`,
         body,
@@ -46,8 +43,6 @@ export const forgetPassword = createAsyncThunk<void, IForgetPasswordPayload, {
   'auth/forgetPassword',
   async (body, thunkAPI) => {
     try {
-      await sleep(1000);
-
       await http.post<IForgetPasswordPayload>(
         `${prefix}/forgot-password`,
         body,
@@ -66,8 +61,6 @@ export const resetPassword = createAsyncThunk<void, IResetPasswordPayload, {
   'auth/resetPassword',
   async ({ token, body }, thunkAPI) => {
     try {
-      await sleep(1000);
-
       await http.post<IResetPasswordPayload['body']>(
         `${prefix}/reset-password/${token}`,
         body,
@@ -86,8 +79,6 @@ export const confirmEmail = createAsyncThunk<void, string, {
   'auth/confirmEmail',
   async (token, thunkAPI) => {
     try {
-      await sleep(1000);
-
       const { data } = await http.get<ISignInResponseType>(
         `${prefix}/confirm-email/${token}`,
       );

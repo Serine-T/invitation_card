@@ -23,3 +23,15 @@ export const EmailSchema = {
     )
     .max(255, 'Must be less than 255 characters'),
 };
+
+export const validateOptionalURL = yup.string().optional().test(
+  'url-validation',
+  'URL is invalid',
+  (value: string | undefined) => {
+    if (!value) {
+      return true;
+    }
+
+    return yup.string().url().isValidSync(value);
+  },
+);

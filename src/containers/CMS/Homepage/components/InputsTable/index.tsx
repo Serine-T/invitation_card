@@ -32,7 +32,7 @@ const InputsTable = ({ bannersData }: IInputsTable) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const methods = useForm<IAddBannerForm>({
-    resolver: yupResolver(AddBannerSchema),
+    resolver: yupResolver(AddBannerSchema as any), // TODO: change any
     defaultValues: bannersData ?? defaultValues,
   });
 
@@ -57,12 +57,14 @@ const InputsTable = ({ bannersData }: IInputsTable) => {
         >
           <StyledTable tableTitle="BANNER" colSpan={2}>
             {inputsRows.map((item) => {
-              const { field, label } = item;
+              const { field, label, isRequired } = item;
 
               return (
                 (field !== 'category' || !bannersData) ? (
                   <StyledTableRow key={label}>
-                    <StyledTableCell>{label}</StyledTableCell>
+                    <StyledTableCell>
+                      {`${label}: ${isRequired ? '*' : ''}`}
+                    </StyledTableCell>
                     <TableCell>
                       <ReusableFields {...item} selectList={[{ field, options: bannersTypeList }]} />
                     </TableCell>

@@ -14,9 +14,10 @@ interface IUploadProps {
   inputProps?: InputBaseProps;
   errorMessage?: string;
   name: string;
+  placeholder: string;
 }
 
-const ColorPickerInput = ({ label, errorMessage, inputProps, name }: IUploadProps) => {
+const ColorPickerInput = ({ label, errorMessage, inputProps, name, placeholder }: IUploadProps) => {
   const { setValue, watch, register } = useFormContext();
   const filledColorValue = watch(name);
 
@@ -55,7 +56,7 @@ const ColorPickerInput = ({ label, errorMessage, inputProps, name }: IUploadProp
         </StyledInputBox>
         <Input
           type="text"
-          placeholder="Color"
+          placeholder={placeholder}
           {...register(name, {
             onChange: onInputChange,
           })}
