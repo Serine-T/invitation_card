@@ -35,9 +35,7 @@ const ProductCategories = () => {
   const onDragEnd = (result: DropResult) => {
     const { destination } = result;
 
-    if (!destination) {
-
-    } else {
+    if (destination) {
       const newItems = [...items];
       const [removed] = newItems.splice(result.source.index, 1);
 

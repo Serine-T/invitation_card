@@ -55,16 +55,20 @@ const InputsTable = ({ bannersData }: IInputsTable) => {
           component="form"
         >
           <StyledTable tableTitle="BANNER" colSpan={2}>
-            {inputsRows.map((item) => (
-              (item.field !== 'category' || !bannersData) ? (
-                <StyledTableRow key={item.label}>
-                  <StyledTableCell>{`${item.label}:`}</StyledTableCell>
-                  <TableCell>
-                    <ReusableFields {...item} selectList={[{ field: item.field, options: ['slider', 'banner'] }]} />
-                  </TableCell>
-                </StyledTableRow>
-              ) : null
-            ))}
+            {inputsRows.map((item) => {
+              const { field, label } = item;
+
+              return (
+                (field !== 'category' || !bannersData) ? (
+                  <StyledTableRow key={label}>
+                    <StyledTableCell>{label}</StyledTableCell>
+                    <TableCell>
+                      <ReusableFields {...item} selectList={[{ field, options: ['slider', 'banner'] }]} />
+                    </TableCell>
+                  </StyledTableRow>
+                ) : null
+              );
+            })}
           </StyledTable>
           { !!errorMessage && <ErrorMessage message={errorMessage} />}
           <StyledButton

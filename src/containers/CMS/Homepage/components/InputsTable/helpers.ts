@@ -1,4 +1,5 @@
 import { BannerCategoryEnum } from '@features/banners/types';
+import { isHexCodeRegex } from '@utils/regexp';
 import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
 
@@ -9,10 +10,10 @@ export interface IAddBannerForm {
   desktopPhoto: string;
   mobilePhoto: string;
   backgroundColor: string;
-  firstButtonName: string;
-  firstButtonLink: string;
-  secondButtonName: string;
-  secondButtonLink: string;
+  firstButtonName?: string;
+  firstButtonLink?: string;
+  secondButtonName?: string;
+  secondButtonLink?: string;
   category?: BannerCategoryEnum;
   displayOnSite?: boolean;
 }
@@ -36,66 +37,65 @@ export const AddBannerSchema = yup.object().shape({
   mobilePhoto: yup.string().required('Moblie photo  is required'),
   title: yup.string().required('Title is required'),
   description: yup.string().required('Description is required'),
-  backgroundColor: yup.string().required('Background color is required'),
-  firstButtonName: yup.string().required('First button name is required'),
-  firstButtonLink: yup.string().url('URL is invalid').required('First button link is required'),
-  secondButtonName: yup.string().required('Second button name is required'),
-  secondButtonLink: yup.string().url('URL is invalid').required('Second button link is required'),
+  backgroundColor: yup.string().required('Background color is required').matches(
+    isHexCodeRegex,
+    'HEX code is invalid',
+  ),
 });
 
 export const inputsRows: ValidFieldNames[] = [
   {
-    label: 'Photo (Desktop)',
+    label: 'Photo (Desktop): *',
     field: 'desktopPhoto',
     type: InputTypes.image,
   },
   {
-    label: 'Photo (Mobile)',
+    label: 'Photo (Mobile): *',
     field: 'mobilePhoto',
     type: InputTypes.image,
   },
   {
-    label: 'Category',
+    label: 'Category: *',
     field: 'category',
     type: InputTypes.select,
   },
   {
-    label: 'Background color (HEX)',
+    label: 'Background color (HEX): *',
     field: 'backgroundColor',
     type: InputTypes.colorPicker,
   },
   {
-    label: 'Title',
+    label: 'Title: *',
     field: 'title',
     type: InputTypes.text,
   },
   {
-    label: 'Description',
+    label: 'Description: *',
     field: 'description',
     type: InputTypes.textarea,
   },
   {
-    label: 'Button Name',
+    label: 'Button Name:',
     field: 'firstButtonName',
     type: InputTypes.text,
   },
   {
-    label: 'Button Link',
+    label: 'Button Link:',
     field: 'firstButtonLink',
     type: InputTypes.text,
   },
   {
-    label: 'Button Name 2',
+    label: 'Button Name 2:',
     field: 'secondButtonName',
     type: InputTypes.text,
   },
   {
-    label: 'Button Link 2',
+    label: 'Button Link 2:',
     field: 'secondButtonLink',
     type: InputTypes.text,
   },
   {
-    label: 'Visible on Site',
+    label: 'Visible on Site:',
     field: 'displayOnSite',
     type: InputTypes.checkbox,
   },

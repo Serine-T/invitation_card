@@ -8,7 +8,6 @@ import Box from '@mui/material/Box';
 
 import { StyledColorPickerContent, StyledInput, StyledInputBox } from './styled';
 import Input from '../Input';
-import ErrorMessage from '../ErrorMessage';
 
 interface IUploadProps {
   label?: string;
@@ -62,10 +61,8 @@ const ColorPickerInput = ({ label, errorMessage, inputProps, name }: IUploadProp
           })}
           {...inputProps}
           errorMessage={errorMessage}
-          showError={false}
         />
       </StyledColorPickerContent>
-      {!!errorMessage && <ErrorMessage message={errorMessage} />}
     </Box>
   );
 };

@@ -18,10 +18,10 @@ export interface IAddBannerPayload {
   desktopPhoto: string;
   mobilePhoto: string;
   backgroundColor: string;
-  firstButtonName: string;
-  firstButtonLink: string;
-  secondButtonName: string;
-  secondButtonLink: string;
+  firstButtonName?: string;
+  firstButtonLink?: string;
+  secondButtonName?: string;
+  secondButtonLink?: string;
   category?: BannerCategoryEnum;
   displayOnSite?: boolean;
 }
@@ -33,10 +33,10 @@ export interface IBannerInfo {
   desktopPhoto: string;
   mobilePhoto: string;
   backgroundColor: string;
-  firstButtonName: string;
-  firstButtonLink: string;
-  secondButtonName: string;
-  secondButtonLink: string;
+  firstButtonName?: string;
+  firstButtonLink?: string;
+  secondButtonName?: string;
+  secondButtonLink?: string;
   category?: BannerCategoryEnum;
   displayOnSite?: boolean;
 }
