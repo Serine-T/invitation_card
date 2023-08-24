@@ -9,22 +9,25 @@ import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/S
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
-import Select from '@containers/common/Select';
 
 import {
-  AddBannerSchema,
-  IAddBannerForm,
+  AddSubcategorySchema,
+  IAddSubcategoryForm,
   defaultValues,
-  inputsRows,
+  inputsRows1,
+  inputsRows2,
+  printTypeValues,
 } from './helpers';
+import StaticShipping from './StaticShipping';
+import SEO from './SEO';
 
 interface IInputsTable{
   productCategoriesData?: any;
 }
 
 const InputsTable = ({ productCategoriesData }: IInputsTable) => {
-  const methods = useForm<IAddBannerForm>({
-    resolver: yupResolver(AddBannerSchema),
+  const methods = useForm<IAddSubcategoryForm>({
+    resolver: yupResolver(AddSubcategorySchema),
     defaultValues,
   });
 
@@ -32,9 +35,7 @@ const InputsTable = ({ productCategoriesData }: IInputsTable) => {
     handleSubmit,
   } = methods;
 
-  // TODO: add logic, remove consoles
-
-  const onSubmit = (data: IAddBannerForm) => {
+  const onSubmit = (data: IAddSubcategoryForm) => {
     console.log('data', data);
   };
 
@@ -50,24 +51,35 @@ const InputsTable = ({ productCategoriesData }: IInputsTable) => {
         >
 
           <StyledTable tableTitle="SUBCATEGORY" colSpan={2}>
-            <StyledTableRow>
-              <StyledTableCell>Category:</StyledTableCell>
-              <TableCell>
-                <Select name="categoryId" options={['Marketing Products', 'Grand Format']} />
-              </TableCell>
-            </StyledTableRow>
-            <StyledTableRow>
-              <StyledTableCell>Print type:</StyledTableCell>
-              <TableCell>
-                <Select name="printType" options={['Marketing Products', 'Grand Format']} />
-              </TableCell>
-            </StyledTableRow>
-            {inputsRows.map((item) => {
+            {inputsRows1.map((item) => {
               const { label } = item;
 
               return (
                 <StyledTableRow key={label}>
-                  <StyledTableCell>{`${label}:`}</StyledTableCell>
+                  <StyledTableCell>{label}</StyledTableCell>
+                  <TableCell>
+                    <ReusableFields
+                      {...item}
+                      selectList={[{
+                        field: 'categoryId',
+                        options: ['Marketing Products', 'Grand Format'],
+                      }, {
+                        field: 'printType',
+                        options: printTypeValues,
+                      }]}
+                    />
+                  </TableCell>
+                </StyledTableRow>
+              );
+            })}
+            <StaticShipping />
+
+            {inputsRows2.map((item) => {
+              const { label } = item;
+
+              return (
+                <StyledTableRow key={label}>
+                  <StyledTableCell>{label}</StyledTableCell>
                   <TableCell>
                     <ReusableFields {...item} />
                   </TableCell>
@@ -75,6 +87,7 @@ const InputsTable = ({ productCategoriesData }: IInputsTable) => {
               );
             })}
           </StyledTable>
+          <SEO />
           <StyledButton type="submit">Submit</StyledButton>
         </StyledStack>
       </FormProvider>
