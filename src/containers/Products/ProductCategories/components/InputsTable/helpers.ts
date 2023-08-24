@@ -130,18 +130,18 @@ export enum PrintType {
   PROMO_PRODUCTS = 'promo_products',
 }
 // TODO: should be returned
-export const printTypeValues: string[] = Object.values(PrintType);
-// export const printTypeValues: any[] = [
-//   {
-//     id: PrintType.OFFSET_PRODUCTS,
-//     name: 'Offset production',
-//   },
-//   {
-//     id: PrintType.GRAND_FORMAT_PRODUCTS,
-//     name: 'Offset production',
-//   },
-//   {
-//     id: PrintType.PROMO_PRODUCTS,
-//     name: 'Offset production',
-//   },
-// ];
+// export const printTypeValues: string[] = Object.values(PrintType);
+export const printTypeValues = [
+  {
+    value: PrintType.OFFSET_PRODUCTS,
+    optionName: 'Offset production',
+  },
+  {
+    value: PrintType.GRAND_FORMAT_PRODUCTS,
+    optionName: 'Grand format products',
+  },
+  {
+    value: PrintType.PROMO_PRODUCTS,
+    optionName: 'Promo Products',
+  },
+];

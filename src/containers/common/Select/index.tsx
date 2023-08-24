@@ -1,21 +1,22 @@
 import { memo } from 'react';
 
+import MenuItem from '@mui/material/MenuItem';
 import { useFormContext } from 'react-hook-form';
 import {
   SelectProps,
   SelectChangeEvent,
 } from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
+import { SelectOptions } from '@utils/types';
 
-import { StyledFormControl, StyledMenuItem, StyledSelect } from './styled';
+import { StyledFormControl, StyledSelect } from './styled';
 import { StyledInputBox, StyledInputLabel } from '../Input/styled';
 import ErrorMessage from '../ErrorMessage';
 
-// TODO: ADD error handling
 interface ISelectProps extends SelectProps {
   errors?: any;
   label?: string;
-  options?: string[];
+  options?: SelectOptions[];
   width?: string;
   name: string;
   errorMessage?: string;
@@ -52,10 +53,10 @@ const Select = ({
         >
           {options &&
           options.length > 0 &&
-            options.map((v) => (
-              <StyledMenuItem key={v} value={v}>
-                <Typography variant="body3">{v}</Typography>
-              </StyledMenuItem>
+            options.map(({ optionName, value }) => (
+              <MenuItem key={value} value={value}>
+                <Typography variant="body3">{optionName}</Typography>
+              </MenuItem>
             ))}
         </StyledSelect>
       </StyledFormControl>

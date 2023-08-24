@@ -62,7 +62,7 @@ const InputsTable = ({ productCategoriesData }: IInputsTable) => {
                       {...item}
                       selectList={[{
                         field: 'categoryId',
-                        options: ['Marketing Products', 'Grand Format'],
+                        options: [],
                       }, {
                         field: 'printType',
                         options: printTypeValues,

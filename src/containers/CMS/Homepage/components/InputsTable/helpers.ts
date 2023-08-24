@@ -100,3 +100,14 @@ export const inputsRows: ValidFieldNames[] = [
     type: InputTypes.checkbox,
   },
 ];
+
+export const bannersTypeList = [
+  {
+    optionName: 'Banner',
+    value: BannerCategoryEnum.banner,
+  },
+  {
+    optionName: 'Slider',
+    value: BannerCategoryEnum.slider,
+  },
+];

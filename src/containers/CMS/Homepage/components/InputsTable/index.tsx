@@ -21,6 +21,7 @@ import {
   IAddBannerForm,
   inputsRows,
   defaultValues,
+  bannersTypeList,
 } from './helpers';
 
 interface IInputsTable {
@@ -63,7 +64,7 @@ const InputsTable = ({ bannersData }: IInputsTable) => {
                   <StyledTableRow key={label}>
                     <StyledTableCell>{label}</StyledTableCell>
                     <TableCell>
-                      <ReusableFields {...item} selectList={[{ field, options: ['slider', 'banner'] }]} />
+                      <ReusableFields {...item} selectList={[{ field, options: bannersTypeList }]} />
                     </TableCell>
                   </StyledTableRow>
                 ) : null

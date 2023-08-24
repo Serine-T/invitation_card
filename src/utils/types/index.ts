@@ -76,3 +76,8 @@ export interface IReordering {
 export interface IReorderPayload {
   orders: IReordering[];
 }
+
+export interface SelectOptions {
+  optionName: string;
+  value: string | number;
+}
