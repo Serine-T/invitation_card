@@ -7,7 +7,7 @@ import {
   SelectChangeEvent,
 } from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
-import { SelectOptions } from '@utils/types';
+import { ISelectOptions } from '@utils/types';
 
 import { StyledFormControl, StyledSelect } from './styled';
 import { StyledInputBox, StyledInputLabel } from '../Input/styled';
@@ -16,7 +16,7 @@ import ErrorMessage from '../ErrorMessage';
 interface ISelectProps extends SelectProps {
   errors?: any;
   label?: string;
-  options?: SelectOptions[];
+  options: ISelectOptions[];
   width?: string;
   name: string;
   errorMessage?: string;

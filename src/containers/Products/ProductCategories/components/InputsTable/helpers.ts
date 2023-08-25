@@ -3,12 +3,17 @@ import * as yup from 'yup';
 
 import { StaticShippingFacility } from './StaticShipping/helpers';
 
+export enum PrintType {
+  OFFSET_PRODUCTS = 'offset_products',
+  GRAND_FORMAT_PRODUCTS = 'grand_format_products',
+  PROMO_PRODUCTS = 'promo_products',
+}
 export interface IAddSubcategoryForm {
   title: string;
   description: string;
   photo: string;
   categoryId: string;
-  printType: string;
+  printType: PrintType;
   displayInCategory?: boolean;
   displayAsCardInHeader?: boolean;
   staticShippingFacilityAll?: boolean;
@@ -32,7 +37,7 @@ export const defaultValues = {
   description: '',
   photo: '',
   categoryId: '',
-  printType: '',
+  printType: PrintType.OFFSET_PRODUCTS,
   displayInCategory: false,
   displayAsCardInHeader: false,
   staticShippingFacilityAll: false,
@@ -52,85 +57,85 @@ export const defaultValues = {
 };
 
 export const AddSubcategorySchema = yup.object().shape({
-  title: yup.string().required('Username is required'),
-  description: yup.string().required('Username is required'),
-  photo: yup.string().required('Username is required'),
-  categoryId: yup.string().required('Username is required'),
-  printType: yup.string().required('Username is required'),
+  title: yup.string().required('Title is required'),
+  description: yup.string().required('Description is required'),
+  photo: yup.string().required('Photo is required'),
+  categoryId: yup.string().required('Category is required'),
+  printType: yup.string()
+    .oneOf(Object.values(PrintType), 'Print type is invalid')
+    .required('Print type is required'),
 });
 
 export const inputsRows1: ValidFieldNames[] = [
   {
-    label: 'Category: *',
+    label: 'Category',
     field: 'categoryId',
     type: InputTypes.select,
+    isRequired: true,
   },
   {
-    label: 'Print type: *',
+    label: 'Print type',
     field: 'printType',
     type: InputTypes.select,
+    isRequired: true,
   },
   {
-    label: 'Use Grand Format SQ. Ft. Template:',
+    label: 'Use Grand Format SQ. Ft. Template',
     field: 'useGrandFormatSQFtTemplate',
     type: InputTypes.checkbox,
   },
   {
-    label: 'Mark as new:',
+    label: 'Mark as new',
     field: 'isNew',
     type: InputTypes.checkbox,
   },
   {
-    label: 'Mark as sale:',
+    label: 'Mark as sale',
     field: 'isSale',
     type: InputTypes.checkbox,
   },
   {
-    label: 'Category Discount off MSRP:',
+    label: 'Category Discount off MSRP',
     field: 'categoryDiscountOffMSRP',
     type: InputTypes.text,
   },
   {
-    label: 'Default Ink in Estimator:',
+    label: 'Default Ink in Estimator',
     field: 'defaultInkInEstimator',
     type: InputTypes.text,
   },
 ];
 export const inputsRows2: ValidFieldNames[] = [
   {
-    label: 'Photo (Desktop): *',
+    label: 'Photo',
     field: 'photo',
     type: InputTypes.image,
+    isRequired: true,
   },
   {
-    label: 'Title: *',
+    label: 'Title',
     field: 'title',
     type: InputTypes.text,
+    isRequired: true,
   },
   {
-    label: 'Description: *',
+    label: 'Description',
     field: 'description',
     type: InputTypes.textarea,
+    isRequired: true,
   },
   {
-    label: 'Visible On Site:',
+    label: 'Visible On Site',
     field: 'displayInCategory',
     type: InputTypes.checkbox,
   },
   {
-    label: 'Display as Card in Header:',
+    label: 'Display as Card in Header',
     field: 'displayAsCardInHeader',
     type: InputTypes.checkbox,
   },
 ];
 
-export enum PrintType {
-  OFFSET_PRODUCTS = 'offset_products',
-  GRAND_FORMAT_PRODUCTS = 'grand_format_products',
-  PROMO_PRODUCTS = 'promo_products',
-}
-// TODO: should be returned
-// export const printTypeValues: string[] = Object.values(PrintType);
 export const printTypeValues = [
   {
     value: PrintType.OFFSET_PRODUCTS,

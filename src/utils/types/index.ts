@@ -78,7 +78,7 @@ export interface IReorderPayload {
   orders: IReordering[];
 }
 
-export interface SelectOptions {
+export interface ISelectOptions {
   optionName: string;
   value: string | number;
 }

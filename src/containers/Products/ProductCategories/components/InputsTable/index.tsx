@@ -9,6 +9,9 @@ import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/S
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
+import { useAppSelector } from '@features/app/hooks';
+import { selectCategories } from '@features/categories/selectors';
+import { getOptionsArray } from '@utils/helpers';
 
 import {
   AddSubcategorySchema,
@@ -26,9 +29,12 @@ interface IInputsTable{
 }
 
 const InputsTable = ({ productCategoriesData }: IInputsTable) => {
+  const { data: categories } = useAppSelector(selectCategories);
+  const categoriesList = getOptionsArray(categories);
+
   const methods = useForm<IAddSubcategoryForm>({
     resolver: yupResolver(AddSubcategorySchema),
-    defaultValues,
+    defaultValues: { ...defaultValues, categoryId: categories[0]?.id },
   });
 
   const {
@@ -52,17 +58,19 @@ const InputsTable = ({ productCategoriesData }: IInputsTable) => {
 
           <StyledTable tableTitle="SUBCATEGORY" colSpan={2}>
             {inputsRows1.map((item) => {
-              const { label } = item;
+              const { label, isRequired } = item;
 
               return (
                 <StyledTableRow key={label}>
-                  <StyledTableCell>{label}</StyledTableCell>
+                  <StyledTableCell>
+                    {`${label}: ${isRequired ? '*' : ''}`}
+                  </StyledTableCell>
                   <TableCell>
                     <ReusableFields
                       {...item}
                       selectList={[{
                         field: 'categoryId',
-                        options: [],
+                        options: categoriesList,
                       }, {
                         field: 'printType',
                         options: printTypeValues,
@@ -75,11 +83,13 @@ const InputsTable = ({ productCategoriesData }: IInputsTable) => {
             <StaticShipping />
 
             {inputsRows2.map((item) => {
-              const { label } = item;
+              const { label, isRequired } = item;
 
               return (
                 <StyledTableRow key={label}>
-                  <StyledTableCell>{label}</StyledTableCell>
+                  <StyledTableCell>
+                    {`${label}: ${isRequired ? '*' : ''}`}
+                  </StyledTableCell>
                   <TableCell>
                     <ReusableFields {...item} />
                   </TableCell>
@@ -91,6 +101,7 @@ const InputsTable = ({ productCategoriesData }: IInputsTable) => {
           <StyledButton type="submit">Submit</StyledButton>
         </StyledStack>
       </FormProvider>
+
     </TitlesWithBackButton>
   );
 };

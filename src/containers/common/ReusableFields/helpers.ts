@@ -1,6 +1,6 @@
-import { SelectOptions } from '@utils/types';
+import { ISelectOptions } from '@utils/types';
 
 export interface ISelectList {
     field: string;
-    options: SelectOptions[];
+    options: ISelectOptions[];
 }

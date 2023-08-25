@@ -1,6 +1,7 @@
 import {
   AMAZON_S3_CDN_URL,
 } from './constants';
+import { ISelectOptions } from './types';
 
 export const sleep = (delay = 0) =>
   new Promise((resolve) => {
@@ -31,3 +32,7 @@ export const getReorderedArray = (items: IItems[]) => {
 
   return { orders };
 };
+
+export const getOptionsArray = (items: IItems[]): ISelectOptions[] => (items.map(({ id, title }) => ({
+  value: id, optionName: title,
+})));
