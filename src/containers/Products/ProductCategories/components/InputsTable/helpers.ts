@@ -247,8 +247,6 @@ export const formattedShippingFacility = (list: string[]) => {
     }
   });
 
-  console.log('helppp***', { ...staticShippingFacility, staticShippingFacilityAll });
-
   return { staticShippingFacility, staticShippingFacilityAll };
 };
 
