@@ -44,7 +44,7 @@ export const UserSchema = {
 export const EditUserSchema = yup.object().shape({
   ...UserSchema,
   password: yup.string().optional().test({
-    test(value) {
+    test(value: string | undefined) {
       if (!value) {
         return true;
       }
@@ -52,7 +52,6 @@ export const EditUserSchema = yup.object().shape({
       return PasswordSchema.password.isValidSync(value);
     },
   }),
-
 });
 
 export const AddUserSchema = yup.object().shape({

@@ -10,13 +10,17 @@ const initialState: IState = {
   isLoading: true,
   actionLoading: false,
   errorMessage: null,
-  data: null,
+  data: [],
 };
 
 const subcategoriesSlice = createSlice({
-  name: 'banners',
+  name: 'subcategories',
   initialState,
-  reducers: { },
+  reducers: {
+    setSubcategories: (state, { payload }) => {
+      state.data = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllSubcategories.pending, (state) => {
       state.isLoading = true;
@@ -78,4 +82,7 @@ const subcategoriesSlice = createSlice({
   },
 });
 
+export const {
+  setSubcategories,
+} = subcategoriesSlice.actions;
 export default subcategoriesSlice.reducer;

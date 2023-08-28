@@ -51,7 +51,7 @@ function ReusableFields({ field, type, label, selectList }: IReusableFields) {
   }
 
   if (type === InputTypes.colorPicker) {
-    return <ColorPickerInput name={field} errorMessage={errors?.[field]?.message as string} />;
+    return <ColorPickerInput placeholder={label} name={field} errorMessage={errors?.[field]?.message as string} />;
   }
 
   if (type === InputTypes.select) {

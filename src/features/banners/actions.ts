@@ -93,7 +93,7 @@ export const reorderBanners = createAsyncThunk<void, IReorderPayload, {
   'banners/reorder',
   async (body, thunkAPI) => {
     try {
-      await http.put<IReorderPayload>(`${prefix}/reorder`, body);
+      await http.patch<IReorderPayload>(`${prefix}/reorder`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

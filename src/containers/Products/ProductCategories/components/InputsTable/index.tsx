@@ -9,11 +9,21 @@ import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/S
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
+import { useAppDispatch, useAppSelector } from '@features/app/hooks';
+import { selectCategories } from '@features/categories/selectors';
+import { getOptionsArray } from '@utils/helpers';
+import { addSubcategory, editSubcategory } from '@features/subcategories/actions';
+import { useNavigate } from 'react-router-dom';
+import { selectSubcategories } from '@features/subcategories/selectors';
+import { ISubcategoriesInfo } from '@features/subcategories/types';
 
 import {
   AddSubcategorySchema,
   IAddSubcategoryForm,
+  defaultInkInEstimatorValues,
   defaultValues,
+  formattedData,
+  formattingPayload,
   inputsRows1,
   inputsRows2,
   printTypeValues,
@@ -22,50 +32,71 @@ import StaticShipping from './StaticShipping';
 import SEO from './SEO';
 
 interface IInputsTable{
-  productCategoriesData?: any;
+  subcategoriesData?: ISubcategoriesInfo;
 }
 
-const InputsTable = ({ productCategoriesData }: IInputsTable) => {
+const InputsTable = ({ subcategoriesData }: IInputsTable) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { data: categories } = useAppSelector(selectCategories);
+  const { actionLoading } = useAppSelector(selectSubcategories);
+  const categoriesList = getOptionsArray(categories);
+
   const methods = useForm<IAddSubcategoryForm>({
-    resolver: yupResolver(AddSubcategorySchema),
-    defaultValues,
+    resolver: yupResolver(AddSubcategorySchema as any), // TODO: add typing
+    defaultValues: subcategoriesData ? formattedData(subcategoriesData) : defaultValues,
   });
 
   const {
     handleSubmit,
+    setError,
   } = methods;
 
-  const onSubmit = (data: IAddSubcategoryForm) => {
-    console.log('data', data);
+  const onSubmit = async (data: IAddSubcategoryForm) => {
+    const payload = formattingPayload(data);
+
+    await dispatch(subcategoriesData ? editSubcategory(payload) : addSubcategory(payload)).unwrap().then(() => {
+      navigate(PAGE_ROUTES.PRODUCT_CATEGORIES);
+    }).catch((e) => {
+      if (e.message === 'Subcategory with the provided title already exists in this category!') {
+        setError('title', { message: e.message });
+      } else {
+        navigate(PAGE_ROUTES.PRODUCT_CATEGORIES);
+      }
+    });
   };
 
   return (
     <TitlesWithBackButton
-      title={productCategoriesData ? 'Edit Subcategory' : 'Add Subcategory'}
-      path={PAGE_ROUTES.MENU_CATEGORIES}
+      title={subcategoriesData ? 'Edit Subcategory' : 'Add Subcategory'}
+      path={PAGE_ROUTES.PRODUCT_CATEGORIES}
     >
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}
           component="form"
         >
-
           <StyledTable tableTitle="SUBCATEGORY" colSpan={2}>
             {inputsRows1.map((item) => {
-              const { label } = item;
+              const { label, isRequired } = item;
 
               return (
                 <StyledTableRow key={label}>
-                  <StyledTableCell>{label}</StyledTableCell>
+                  <StyledTableCell>
+                    {`${label}: ${isRequired ? '*' : ''}`}
+                  </StyledTableCell>
                   <TableCell>
                     <ReusableFields
                       {...item}
                       selectList={[{
                         field: 'categoryId',
-                        options: ['Marketing Products', 'Grand Format'],
+                        options: categoriesList,
                       }, {
                         field: 'printType',
                         options: printTypeValues,
+                      }, {
+                        field: 'defaultInkInEstimator',
+                        options: defaultInkInEstimatorValues,
                       }]}
                     />
                   </TableCell>
@@ -75,11 +106,13 @@ const InputsTable = ({ productCategoriesData }: IInputsTable) => {
             <StaticShipping />
 
             {inputsRows2.map((item) => {
-              const { label } = item;
+              const { label, isRequired } = item;
 
               return (
                 <StyledTableRow key={label}>
-                  <StyledTableCell>{label}</StyledTableCell>
+                  <StyledTableCell>
+                    {`${label}: ${isRequired ? '*' : ''}`}
+                  </StyledTableCell>
                   <TableCell>
                     <ReusableFields {...item} />
                   </TableCell>
@@ -88,7 +121,13 @@ const InputsTable = ({ productCategoriesData }: IInputsTable) => {
             })}
           </StyledTable>
           <SEO />
-          <StyledButton type="submit">Submit</StyledButton>
+          <StyledButton
+            type="submit"
+            disabled={actionLoading}
+            isLoading={actionLoading}
+          >
+            Submit
+          </StyledButton>
         </StyledStack>
       </FormProvider>
     </TitlesWithBackButton>

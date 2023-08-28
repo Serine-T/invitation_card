@@ -55,6 +55,7 @@ export type ValidFieldNames = {
   label: string;
   field:string;
   type: InputTypes;
+  isRequired?: boolean;
 }
 
 export type AxiosData = AxiosResponse['data']
@@ -75,4 +76,9 @@ export interface IReordering {
 }
 export interface IReorderPayload {
   orders: IReordering[];
+}
+
+export interface ISelectOptions {
+  optionName: string;
+  value: any;
 }

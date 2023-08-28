@@ -3,6 +3,7 @@ import authReducer from '@features/auth/slice';
 import usersReducer from '@features/users/slice';
 import categoriesReducer from '@features/categories/slice';
 import bannersReducer from '@features/banners/slice';
+import subcategoriesReducer from '@features/subcategories/slice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     users: usersReducer,
     categories: categoriesReducer,
     bannersSlice: bannersReducer,
+    subcategories: subcategoriesReducer,
   },
 });
 

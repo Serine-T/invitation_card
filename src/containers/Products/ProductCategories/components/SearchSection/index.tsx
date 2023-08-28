@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@containers/common/Button';
 import StyledTypography from '@containers/common/StyledTypography';
 
-import { FiltersSchema, IFiltersForm, defaultValues } from './helpers';
+import { FiltersSchema, IFiltersForm, defaultValues, visibilityOptions } from './helpers';
 
 const SearchSection = () => {
   const methods = useForm<IFiltersForm>({
@@ -55,7 +55,7 @@ const SearchSection = () => {
               id="visibleOnSite"
               name="visibleOnSite"
               errorMessage={errors?.visibleOnSite?.message}
-              options={['All', 'Visible', 'Not visible']}
+              options={visibilityOptions}
             />
           </StyledSearchRows>
           <Stack direction="row" gap="16px" alignItems="center">

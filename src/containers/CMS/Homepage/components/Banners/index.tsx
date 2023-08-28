@@ -33,7 +33,7 @@ interface IBannersProps {
 const Banners = ({ isSlider }: IBannersProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const handleEditBanner = (id:string) => navigate(`/cms/homepage/edit/${id}`);
+  const handleEdit = (id:string) => navigate(`/cms/homepage/edit/${id}`);
   const deleteAction = (id: string) => {
     dispatch(deleteBanner(id)).unwrap().then(() => {
       dispatch(getAllBanners());
@@ -94,7 +94,7 @@ const Banners = ({ isSlider }: IBannersProps) => {
                               <StyledTypography
                                 color="blue"
                                 underLine
-                                onClick={() => handleEditBanner(id)}
+                                onClick={() => handleEdit(id)}
                                 variant="body3"
                                 cursor="pointer"
                               >

@@ -30,8 +30,8 @@ const MenuCategories = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleAddCategory = useCallback(() => navigate(PAGE_ROUTES.ADD_MENU_CATEGORY), []);
-  const handleEditCategory = (id:string) => navigate(`/products/menu-categories/edit/${id}`);
+  const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_MENU_CATEGORY), []);
+  const handleEdit = (id:string) => navigate(`/products/menu-categories/edit/${id}`);
   const deleteAction = () => {
     console.log('deleteAction');
   };
@@ -60,7 +60,7 @@ const MenuCategories = () => {
 
   return (
     <>
-      <PageTitle title="Menu Categories" btnName="Add Category" handleAdd={handleAddCategory} />
+      <PageTitle title="Menu Categories" btnName="Add Category" handleAdd={handleAdd} />
       { !!categories.length && <SearchSection />}
 
       {categories.length ? (
@@ -92,7 +92,7 @@ const MenuCategories = () => {
                                 <StyledTypography
                                   color="blue"
                                   underLine
-                                  onClick={() => handleEditCategory(id)}
+                                  onClick={() => handleEdit(id)}
                                   variant="body3"
                                   cursor="pointer"
                                 >
