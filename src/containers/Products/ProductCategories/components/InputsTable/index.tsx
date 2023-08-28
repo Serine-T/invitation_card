@@ -49,6 +49,7 @@ const InputsTable = ({ subcategoriesData }: IInputsTable) => {
 
   const {
     handleSubmit,
+    setError,
   } = methods;
 
   const onSubmit = async (data: IAddSubcategoryForm) => {
@@ -56,7 +57,12 @@ const InputsTable = ({ subcategoriesData }: IInputsTable) => {
 
     await dispatch(subcategoriesData ? editSubcategory(payload) : addSubcategory(payload)).unwrap().then(() => {
       navigate(PAGE_ROUTES.PRODUCT_CATEGORIES);
-    }).catch(() => { });
+    }).catch((e) => {
+      console.log('eeee****', e);
+      if (e.message === 'Subcategory with the provided title already exists in this category!') {
+        setError('title', { message: e.message });
+      }
+    });
   };
 
   return (
