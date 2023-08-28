@@ -42,8 +42,8 @@ const InputsTable = ({ bannersData }: IInputsTable) => {
     handleSubmit,
   } = methods;
 
-  const onSubmit = async (data: IAddBannerForm) => {
-    await dispatch(bannersData ? editBanner(data) : addBanner(data)).unwrap().then(() => {
+  const onSubmit = (data: IAddBannerForm) => {
+    dispatch(bannersData ? editBanner(data) : addBanner(data)).unwrap().then(() => {
       navigate(PAGE_ROUTES.HOMEPAGE);
     }).catch(() => {});
   };

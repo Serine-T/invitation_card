@@ -1,1 +1,1 @@
-export const selectDefaultValue = null;
+export const selectDefaultValue = '';

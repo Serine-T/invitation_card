@@ -28,7 +28,7 @@ interface IItems {
 }
 
 export const getReorderedArray = (items: IItems[]) => {
-  const orders = items.map(({ id }, index) => ({ id, sort: index }));
+  const orders = items.map(({ id }, index) => ({ id, sort: index + 1 }));
 
   return { orders };
 };

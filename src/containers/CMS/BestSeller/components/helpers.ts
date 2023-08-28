@@ -1,45 +1,69 @@
+import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
 
-export interface IAddBannerForm {
+export interface IAddBestSellerForm {
+  id?: string;
   title: string;
   description: string;
-  buttonName: string;
-  buttonLink: string;
-  image: string;
+  desktopPhoto: string;
+  mobilePhoto: string;
+  displayOnSite: boolean;
+  subCategory: string;
 }
 
 export const defaultValues = {
+  id: '',
   title: '',
   description: '',
-  buttonName: '',
-  buttonLink: '',
-  image: '',
+  desktopPhoto: '',
+  mobilePhoto: '',
+  displayOnSite: false,
+  subCategory: '',
 };
 
-export const AddBannerSchema = yup.object().shape({
-  image: yup.string().required('Username is required'),
-  title: yup.string().required('Username is required'),
-  description: yup.string().required('Username is required'),
-  buttonName: yup.string().required('Username is required'),
-  buttonLink: yup.string().required('Username is required'),
+export const AddBestSellerSchema = yup.object().shape({
+  title: yup.string().required('Title is required'),
+  description: yup.string().required('Description is required'),
+  desktopPhoto: yup.string().required('Desktop photo is required'),
+  mobilePhoto: yup.string().required('Mobile photo is required'),
+  displayOnSite: yup.boolean().defined(),
+  subCategory: yup.string().required('Subcategory is required'),
 });
-
-type ValidFieldNames = {
-  label: string;
-  field: keyof IAddBannerForm;
-}
 
 export const inputsRows: ValidFieldNames[] = [
   {
+    label: 'Photo (Desktop)',
+    field: 'desktopPhoto',
+    type: InputTypes.image,
+  },
+  {
+    label: 'Photo (Mobile)',
+    field: 'mobilePhoto',
+    type: InputTypes.image,
+  },
+  {
     label: 'Title',
     field: 'title',
+    type: InputTypes.text,
   },
   {
-    label: 'Button Name',
-    field: 'buttonName',
+    label: 'Subcategory',
+    field: 'subCategory',
+    type: InputTypes.select,
   },
   {
-    label: 'Button Link',
-    field: 'buttonLink',
+    label: 'Product',
+    field: 'product',
+    type: InputTypes.select,
+  },
+  {
+    label: 'Description',
+    field: 'description',
+    type: InputTypes.textarea,
+  },
+  {
+    label: 'Visible in category',
+    field: 'displayOnSite',
+    type: InputTypes.checkbox,
   },
 ];

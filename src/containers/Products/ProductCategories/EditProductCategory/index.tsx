@@ -9,7 +9,6 @@ import PAGE_ROUTES from '@routes/routingEnum';
 import { selectSubcategories } from '@features/subcategories/selectors';
 import { ISubcategoriesInfo } from '@features/subcategories/types';
 import { getAllCategories } from '@features/categories/actions';
-import { useForm } from 'react-hook-form';
 import { selectCategories } from '@features/categories/selectors';
 import EmptyState from '@containers/common/EmptyState';
 
@@ -23,16 +22,13 @@ const EditProductCategory = () => {
   const { id } = useParams();
   const [subcategoriesData, setSubcategoriesData] = useState<ISubcategoriesInfo | null>(null);
   const { isLoading } = useAppSelector(selectSubcategories);
-  const { setValue } = useForm();
 
   useMount(() => {
     dispatch(getSubcategoryById(id as string)).unwrap().then((data) => {
       setSubcategoriesData(data);
     }).catch(() => navigate(PAGE_ROUTES.PRODUCT_CATEGORIES));
 
-    dispatch(getAllCategories()).unwrap().then(() => {
-      setValue('categoryId', id);
-    });
+    dispatch(getAllCategories());
   });
 
   if (isLoading || categoriesLoading) {
