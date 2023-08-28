@@ -12,6 +12,7 @@ import { ISelectOptions } from '@utils/types';
 import { StyledFormControl, StyledSelect } from './styled';
 import { StyledInputBox, StyledInputLabel } from '../Input/styled';
 import ErrorMessage from '../ErrorMessage';
+import { selectDefaultValue } from './helpers';
 
 interface ISelectProps extends SelectProps {
   errors?: any;
@@ -36,9 +37,14 @@ const Select = ({
   const { watch, setValue } = useFormContext();
   const handleSelectChange = (e: SelectChangeEvent<unknown>) => {
     if (name) {
-      setValue(name, e.target.value);
+      setValue(name, e.target.value, { shouldValidate: true });
     }
   };
+
+  const optionsList = [{
+    value: selectDefaultValue,
+    optionName: 'Select...',
+  }, ...options];
 
   return (
     <StyledInputBox marginBottom={marginBottom} errorMessage={!!errorMessage}>
@@ -50,14 +56,13 @@ const Select = ({
           value={watch(name)}
           onChange={handleSelectChange}
           {...restProps}
+          displayEmpty
         >
-          {options &&
-          options.length > 0 &&
-            options.map(({ optionName, value }) => (
-              <MenuItem key={value} value={value}>
-                <Typography variant="body3">{optionName}</Typography>
-              </MenuItem>
-            ))}
+          {optionsList.map(({ optionName, value }) => (
+            <MenuItem key={value} value={value}>
+              <Typography variant="body3">{optionName}</Typography>
+            </MenuItem>
+          ))}
         </StyledSelect>
       </StyledFormControl>
       {errorMessage && <ErrorMessage message={errorMessage} />}

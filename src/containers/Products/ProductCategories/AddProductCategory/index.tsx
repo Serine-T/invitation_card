@@ -14,6 +14,8 @@ const AddProductCategory = () => {
 
   const { setValue } = useForm();
 
+  console.log('isLoading****', isLoading);
+
   useMount(() => {
     dispatch(getAllCategories()).unwrap().then(() => {
       setValue('categoryId', categories[0]?.id);

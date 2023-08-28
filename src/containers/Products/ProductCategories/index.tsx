@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
 import TableCell from '@mui/material/TableCell';
 import { StyledTitleBox } from '@containers/common/PageTitle/styled';
@@ -17,106 +17,134 @@ import {
   Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
 import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
+import useMount from '@customHooks/useMount';
+import { useAppDispatch, useAppSelector } from '@features/app/hooks';
+import { deleteSubcategory, getAllSubcategories, reorderSubcategories } from '@features/subcategories/actions';
+import Loader from '@containers/common/Loader';
+import { selectSubcategories } from '@features/subcategories/selectors';
+import EmptyState from '@containers/common/EmptyState';
+import { getReorderedArray } from '@utils/helpers';
+import { setSubcategories } from '@features/subcategories/slice';
 
-import { headSliderCells, rows } from './helpers';
+import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
-// TODO: DELETE consoles AFTER IMPLEMENTS and make seprate tables
 
 const ProductCategories = () => {
   const navigate = useNavigate();
-  const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_PRODUCT_CATEGORIES);
-  const handleEditBanner = (id:string) => navigate(`/products/product-categories/edit/${id}`);
-  const deleteAction = () => {
-    console.log('deleteAction');
+  const dispatch = useAppDispatch();
+  const { data: subcategories, isLoading } = useAppSelector(selectSubcategories);
+
+  const handleAdd = () => navigate(PAGE_ROUTES.ADD_PRODUCT_CATEGORIES);
+  const handleEdit = (id:string) => navigate(`/products/product-categories/edit/${id}`);
+  const deleteAction = (id: string) => {
+    dispatch(deleteSubcategory(id)).unwrap().then(() => {
+      dispatch(getAllSubcategories());
+    }).catch(() => {});
   };
 
-  const [items, setItems] = useState(rows);
+  const items = [...subcategories];
 
   const onDragEnd = (result: DropResult) => {
     const { destination } = result;
 
     if (destination) {
-      const newItems = [...items];
-      const [removed] = newItems.splice(result.source.index, 1);
+      const [removed] = items.splice(result.source.index, 1);
 
-      newItems.splice(destination.index, 0, removed);
-      setItems(newItems);
+      items.splice(destination.index, 0, removed);
+
+      const sortedData = getReorderedArray(items);
+
+      dispatch(reorderSubcategories(sortedData)).unwrap().then(() => {
+        dispatch(setSubcategories(items));
+      }).catch(() => dispatch(getAllSubcategories()));
     }
   };
+
+  useMount(() => {
+    dispatch(getAllSubcategories());
+  });
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
       <StyledTitleBox>
         <Typography variant="h2">Subcategories</Typography>
-        <Button width="130px" onClick={handleAddBanner}>Add Subcategory</Button>
+        <Button width="130px" onClick={handleAdd}>Add Subcategory</Button>
       </StyledTitleBox>
-      <SearchSection />
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="droppable">
-          {(providedDroppable: DroppableProvided) => {
-            return (
-              <Box
-                {...providedDroppable.droppableProps}
-                ref={providedDroppable.innerRef}
-              >
-                <StyledTable headCells={headSliderCells}>
-                  {items.map(({ category, visibility, id }, index) => (
-                    <Draggable
-                      key={id}
-                      draggableId={id}
-                      index={index}
-                    >
-                      {(providedDraggable, snapshot) => {
-                        return (
-                          <StyledDraggableRow
-                            ref={providedDraggable.innerRef}
-                            data-snapshot={snapshot}
-                            {...providedDraggable.draggableProps}
-                            isDraggingOver={!!snapshot.draggingOver}
-                            gridTemplateColumns="auto 138px 140px 150px"
-                          >
-                            <TableCell>
-                              <StyledTypography
-                                color="blue"
-                                underLine
-                                onClick={() => handleEditBanner('14')}
-                                variant="body3"
-                                cursor="pointer"
-                              >
-                                {category}
-                              </StyledTypography>
-                            </TableCell>
-                            <TableCell width="138px">{visibility}</TableCell>
-                            <TableCell width="140px">
-                              <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
-                                <DragAndDropIcon />
+      { !!subcategories?.length && <SearchSection />}
+      {subcategories?.length ? (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable">
+            {(providedDroppable: DroppableProvided) => {
+              return (
+                <Box
+                  {...providedDroppable.droppableProps}
+                  ref={providedDroppable.innerRef}
+                >
+                  <StyledTable headCells={headSliderCells}>
+                    {items.map(({ title, visibleOnSite, id }, index) => (
+                      <Draggable
+                        key={id}
+                        draggableId={id}
+                        index={index}
+                      >
+                        {(providedDraggable, snapshot) => {
+                          return (
+                            <StyledDraggableRow
+                              ref={providedDraggable.innerRef}
+                              data-snapshot={snapshot}
+                              {...providedDraggable.draggableProps}
+                              isDraggingOver={!!snapshot.draggingOver}
+                              gridTemplateColumns="auto 138px 140px 150px"
+                            >
+                              <TableCell>
                                 <StyledTypography
                                   color="blue"
+                                  underLine
+                                  onClick={() => handleEdit(id)}
                                   variant="body3"
-                                  cursor="grab"
-                                  ml="8px"
+                                  cursor="pointer"
                                 >
-                                  Drag to Reorder
+                                  {title}
                                 </StyledTypography>
-                              </Stack>
-                            </TableCell>
-                            <TableCell width="150px">
-                              <DeleteBtn
-                                deleteAction={deleteAction}
-                                questionText="Are you sure you want to delete this subcategory ?"
-                              />
-                            </TableCell>
-                          </StyledDraggableRow>
-                        );
-                      }}
-                    </Draggable>
-                  ))}
-                </StyledTable>
-              </Box>
-            );
-          }}
-        </Droppable>
-      </DragDropContext>
+                              </TableCell>
+                              <TableCell width="138px">{visibleOnSite ? 'Yes' : 'No'}</TableCell>
+                              <TableCell width="140px">
+                                <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
+                                  <DragAndDropIcon />
+                                  <StyledTypography
+                                    color="blue"
+                                    variant="body3"
+                                    cursor="grab"
+                                    ml="8px"
+                                  >
+                                    Drag to Reorder
+                                  </StyledTypography>
+                                </Stack>
+                              </TableCell>
+                              <TableCell width="150px">
+                                <DeleteBtn
+                                  deleteAction={() => deleteAction(id)}
+                                  questionText="Are you sure you want to delete this subcategory ?"
+                                />
+                              </TableCell>
+                            </StyledDraggableRow>
+                          );
+                        }}
+                      </Draggable>
+                    ))}
+                  </StyledTable>
+                </Box>
+              );
+            }}
+          </Droppable>
+        </DragDropContext>
+      ) : (
+        <EmptyState text="You don’t have any categories, please add new to proceed" />
+      )}
     </>
   );
 };

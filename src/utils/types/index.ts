@@ -80,5 +80,5 @@ export interface IReorderPayload {
 
 export interface ISelectOptions {
   optionName: string;
-  value: string | number;
+  value: any;
 }

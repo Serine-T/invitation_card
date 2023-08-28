@@ -10,9 +10,10 @@ import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '@features/app/hooks';
+import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { addCategory, editCategory } from '@features/categories/actions';
 import { ICategories } from '@features/categories/types';
+import { selectCategories } from '@features/categories/selectors';
 
 import {
   AddBannerSchema,
@@ -28,6 +29,7 @@ interface IInputsTable{
 const InputsTable = ({ categoriesData }: IInputsTable) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { actionLoading } = useAppSelector(selectCategories);
   const methods = useForm<IAddBannerForm>({
     resolver: yupResolver(AddBannerSchema),
     defaultValues: categoriesData ?? defaultValues,
@@ -69,7 +71,13 @@ const InputsTable = ({ categoriesData }: IInputsTable) => {
               );
             })}
           </StyledTable>
-          <StyledButton type="submit">Submit</StyledButton>
+          <StyledButton
+            type="submit"
+            disabled={actionLoading}
+            isLoading={actionLoading}
+          >
+            Submit
+          </StyledButton>
         </StyledStack>
       </FormProvider>
     </TitlesWithBackButton>

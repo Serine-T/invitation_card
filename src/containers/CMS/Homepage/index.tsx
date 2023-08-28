@@ -15,7 +15,7 @@ import Banners from './components/Banners';
 const Homepage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const handleAddBanner = () => navigate(PAGE_ROUTES.ADD_BANNER);
+  const handleAdd = () => navigate(PAGE_ROUTES.ADD_BANNER);
 
   const { isLoading, banners, sliders } = useAppSelector(selectBanners);
 
@@ -29,7 +29,7 @@ const Homepage = () => {
 
   return (
     <>
-      <PageTitle title="Homepage" btnName="Add Banner" handleAdd={handleAddBanner} />
+      <PageTitle title="Homepage" btnName="Add Banner" handleAdd={handleAdd} />
       {!!sliders.length && <Banners isSlider />}
       {!!banners.length && <Banners />}
       {!sliders.length && !banners.length && (

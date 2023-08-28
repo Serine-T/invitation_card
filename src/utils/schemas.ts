@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { EMAIL_REGEXP, PASSWORD_REGEXP } from '@utils/regexp';
+import { EMAIL_REGEXP, PASSWORD_REGEXP, isIntagerRegex } from '@utils/regexp';
 
 export const PasswordSchema = {
   password: yup
@@ -33,5 +33,31 @@ export const validateOptionalURL = yup.string().optional().test(
     }
 
     return yup.string().url().isValidSync(value);
+  },
+);
+
+export const textWidthValidation = yup.string().optional().test(
+  'text-length-validation',
+  'The maximum length is 250 characters.',
+  (value: string | undefined) => {
+    if (!value) {
+      return true;
+    }
+
+    return yup.string().max(250).isValidSync(value);
+  },
+);
+export const intagerValidation = yup.string().optional().test(
+  'valid-intager',
+  'Number is not intager',
+  (value: string | undefined) => {
+    if (!value) {
+      return true;
+    }
+
+    return yup.string().matches(
+      isIntagerRegex,
+    )
+      .isValidSync(value);
   },
 );

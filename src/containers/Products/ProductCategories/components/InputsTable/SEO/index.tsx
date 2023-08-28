@@ -14,11 +14,13 @@ const SEO = () => {
     <Box mt="24px">
       <StyledTable tableTitle="SEARCH ENGINE OPTIMIZATION" colSpan={2}>
         {seoFields.map((item) => {
-          const { label } = item;
+          const { label, isRequired } = item;
 
           return (
             <StyledTableRow key={label}>
-              <StyledTableCell>{label}</StyledTableCell>
+              <StyledTableCell>
+                {`${label}: ${isRequired ? '*' : ''}`}
+              </StyledTableCell>
               <TableCell>
                 <ReusableFields {...item} />
               </TableCell>

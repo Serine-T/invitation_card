@@ -1,16 +1,4 @@
-export enum StaticShippingFacility {
-  ARIZONA = 'Arizona',
-  CALIFORNIA = 'California',
-  FLORIDA = 'Florida',
-  MICHIGAN = 'Michigan',
-  NEW_JERSEY = 'New Jersey',
-  NEW_YORK = 'New York',
-  NORTH_CAROLINA = 'North Carolina',
-  OHIO = 'Ohio',
-  TEXAS = 'Texas',
-  UPSTATE_NEW_YORK = 'Upstate New York',
-  WISCONSIN = 'Wisconsin',
-}
+import { StaticShippingFacility } from '@features/subcategories/enums';
 
 export const staticShippingFacilityFields = [
   {
