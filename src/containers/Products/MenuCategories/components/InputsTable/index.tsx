@@ -40,8 +40,8 @@ const InputsTable = ({ categoriesData }: IInputsTable) => {
     setError,
   } = methods;
 
-  const onSubmit = async (data: IAddBannerForm) => {
-    await dispatch(categoriesData ? editCategory(data) : addCategory(data)).unwrap().then(() => {
+  const onSubmit = (data: IAddBannerForm) => {
+    dispatch(categoriesData ? editCategory(data) : addCategory(data)).unwrap().then(() => {
       navigate(PAGE_ROUTES.MENU_CATEGORIES);
     }).catch((e) => {
       if (e.message === 'Category with the provided title already exists!') {

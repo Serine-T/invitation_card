@@ -5,41 +5,52 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
-import Input from '@containers/common/Input';
-import Checkbox from '@containers/common/Checkbox';
 import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
-import StyledBaseInput from '@containers/common/Textarea';
-import ImageUpload from '@containers/common/FileUploader';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
+import { IBestSellerInfo } from '@features/bestSellers/types';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '@features/app/hooks';
+import { addBestSeller, editBestSeller } from '@features/bestSellers/actions';
+import ReusableFields from '@containers/common/ReusableFields';
+import { selectBestSellers } from '@features/bestSellers/selectors';
+import { selectSubcategories } from '@features/subcategories/selectors';
+import { getOptionsArray } from '@utils/helpers';
 
 import {
-  AddBannerSchema,
-  IAddBannerForm,
+  AddBestSellerSchema,
+  IAddBestSellerForm,
   inputsRows,
   defaultValues,
 } from './helpers';
 
-interface IInputsTable{
-  bestSellerData?: any;
+interface IInputsTable {
+  bestSellerData?: IBestSellerInfo;
 }
 
 const InputsTable = ({ bestSellerData }: IInputsTable) => {
-  const methods = useForm<IAddBannerForm>({
-    resolver: yupResolver(AddBannerSchema),
-    defaultValues,
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const {
+    actionLoading,
+  } = useAppSelector(selectBestSellers);
+
+  const { data: subcategories } = useAppSelector(selectSubcategories);
+  const subcategoriesList = getOptionsArray(subcategories);
+
+  const methods = useForm<IAddBestSellerForm>({
+    resolver: yupResolver(AddBestSellerSchema),
+    defaultValues: bestSellerData ?? defaultValues,
   });
 
   const {
     handleSubmit,
-    register,
-    formState: { errors },
   } = methods;
 
-  // TODO: add logic, remove consoles
-
-  const onSubmit = (data: IAddBannerForm) => {
-    console.log('data', data);
+  const onSubmit = (data: IAddBestSellerForm) => {
+    dispatch(bestSellerData ? editBestSeller(data) : addBestSeller(data)).unwrap().then(() => {
+      navigate(PAGE_ROUTES.BEST_SELLER);
+    }).catch(() => {});
   };
 
   return (
@@ -49,44 +60,39 @@ const InputsTable = ({ bestSellerData }: IInputsTable) => {
           onSubmit={handleSubmit(onSubmit)}
           component="form"
         >
-
           <StyledTable tableTitle="SECTION" colSpan={2}>
-            <StyledTableRow>
-              <StyledTableCell>Photo:</StyledTableCell>
-              <TableCell>
-                <ImageUpload name="image" errorMessage={errors?.image?.message} />
-              </TableCell>
-            </StyledTableRow>
-            {inputsRows.map(({ label, field }) => (
-              <StyledTableRow key={label}>
-                <StyledTableCell>{`${label}:`}</StyledTableCell>
-                <TableCell>
-                  <Input placeholder={label} {...register(field)} errorMessage={errors?.[field]?.message} />
-                </TableCell>
-              </StyledTableRow>
-            ))}
+            {inputsRows.map((item) => {
+              const { label } = item;
 
-            {/* TODO: check if this field should be textarea */}
-            <StyledTableRow>
-              <StyledTableCell>Description</StyledTableCell>
-              <TableCell>
-                <StyledBaseInput
-                  errorMessage={errors?.description?.message}
-                  placeholder="Description"
-                  {...register('description')}
-                />
-              </TableCell>
-            </StyledTableRow>
-            {/* TODO: HOMEPAGE change checkbox name */}
-            <StyledTableRow>
-              <StyledTableCell>Display on Site</StyledTableCell>
-              <TableCell>
-                <Checkbox name="visibility" />
-              </TableCell>
-            </StyledTableRow>
-
+              return (
+                <StyledTableRow key={label}>
+                  <StyledTableCell>
+                    {`${label}:`}
+                  </StyledTableCell>
+                  <TableCell>
+                    <ReusableFields
+                      {...item}
+                      selectList={[
+                        {
+                          field: 'subCategory',
+                          options: subcategoriesList,
+                        }, {
+                          field: 'product',
+                          options: [],
+                        }]}
+                    />
+                  </TableCell>
+                </StyledTableRow>
+              );
+            })}
           </StyledTable>
-          <StyledButton type="submit">Submit</StyledButton>
+          <StyledButton
+            type="submit"
+            disabled={actionLoading}
+            isLoading={actionLoading}
+          >
+            Submit
+          </StyledButton>
         </StyledStack>
       </FormProvider>
     </TitlesWithBackButton>

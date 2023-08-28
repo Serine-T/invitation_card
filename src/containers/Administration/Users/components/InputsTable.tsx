@@ -46,10 +46,10 @@ const InputsTable = ({ userInfo }: IInputsTable) => {
     setError,
   } = methods;
 
-  const onSubmit = async (data: IAddUserForm) => {
+  const onSubmit = (data: IAddUserForm) => {
     const payload = formattingPayload(data);
 
-    await dispatch(userInfo ? editUser(payload) : addUser(payload)).unwrap().then(() => {
+    dispatch(userInfo ? editUser(payload) : addUser(payload)).unwrap().then(() => {
       navigate(PAGE_ROUTES.USERS);
     }).catch((e) => {
       setError('email', { message: e.message });

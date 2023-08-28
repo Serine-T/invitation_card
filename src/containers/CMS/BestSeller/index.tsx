@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback } from 'react';
 
 import TableCell from '@mui/material/TableCell';
 import { useNavigate } from 'react-router-dom';
@@ -15,38 +15,58 @@ import {
   Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
 import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
+import Loader from '@containers/common/Loader';
+import useMount from '@customHooks/useMount';
+import { deleteBestSeller, getAllBestSellers, reorderBestSellers } from '@features/bestSellers/actions';
+import { useAppDispatch, useAppSelector } from '@features/app/hooks';
+import { selectBestSellers } from '@features/bestSellers/selectors';
+import { getReorderedArray } from '@utils/helpers';
+import { setBestSellers } from '@features/bestSellers/slice';
 
-import { headSliderCells, rows } from './helpers';
-// TODO: DELETE consoles AFTER IMPLEMENTS and make seprate tables
+import { headSliderCells } from './helpers';
 
 const BestSeller = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { isLoading, data: bestSellers } = useAppSelector(selectBestSellers);
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleAddSection = useCallback(() => navigate(PAGE_ROUTES.ADD_BEST_SELLER), []);
-  const handleEditSection = (id:string) => navigate(`/cms/best-seller/edit/${id}`);
-  const deleteAction = () => {
-    console.log('deleteAction');
+  const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_BEST_SELLER), []);
+  const handleEdit = (id:string) => navigate(`/cms/best-seller/edit/${id}`);
+  const deleteAction = (id: string) => {
+    dispatch(deleteBestSeller(id)).unwrap().then(() => {
+      dispatch(getAllBestSellers());
+    }).catch(() => {});
   };
 
-  const [items, setItems] = useState(rows);
+  useMount(() => {
+    dispatch(getAllBestSellers());
+  });
 
+  const items = [...bestSellers];
   const onDragEnd = (result: DropResult) => {
     const { destination } = result;
 
-    if (!destination) {
+    if (destination) {
+      const [removed] = items.splice(result.source.index, 1);
 
-    } else {
-      const newItems = [...items];
-      const [removed] = newItems.splice(result.source.index, 1);
+      items.splice(destination.index, 0, removed);
 
-      newItems.splice(destination.index, 0, removed);
-      setItems(newItems);
+      const sortedData = getReorderedArray(items);
+
+      dispatch(reorderBestSellers(sortedData)).unwrap().then(() => {
+        dispatch(setBestSellers(items));
+      }).catch(() => dispatch(getAllBestSellers()));
     }
   };
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <>
-      <PageTitle title="Best Sellers" btnName="Add Section" handleAdd={handleAddSection} />
+      <PageTitle title="Best Sellers" btnName="Add Section" handleAdd={handleAdd} />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(providedDroppable: DroppableProvided) => {
@@ -56,7 +76,7 @@ const BestSeller = () => {
                 ref={providedDroppable.innerRef}
               >
                 <StyledTable headCells={headSliderCells}>
-                  {items.map(({ category, visibility, id }, index) => (
+                  {items.map(({ title, displayOnSite, id }, index) => (
 
                     <Draggable
                       key={id}
@@ -70,21 +90,21 @@ const BestSeller = () => {
                             data-snapshot={snapshot}
                             {...providedDraggable.draggableProps}
                             isDraggingOver={!!snapshot.draggingOver}
-                            gridTemplateColumns="auto 174px  84px 246px 68px"
+                            gridTemplateColumns="auto 173px  140px 150px"
                           >
                             <TableCell>
                               <StyledTypography
                                 color="blue"
                                 underLine
-                                onClick={() => handleEditSection('14')}
+                                onClick={() => handleEdit(id)}
                                 variant="body3"
                                 cursor="pointer"
                               >
-                                {category}
+                                {title}
                               </StyledTypography>
                             </TableCell>
-                            <TableCell width="174px">{visibility}</TableCell>
-                            <TableCell width="246px">
+                            <TableCell width="173px">{displayOnSite ? 'Yes' : 'No'}</TableCell>
+                            <TableCell width="140px">
                               <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
                                 <DragAndDropIcon />
                                 <StyledTypography
@@ -97,9 +117,9 @@ const BestSeller = () => {
                                 </StyledTypography>
                               </Stack>
                             </TableCell>
-                            <TableCell width="68px">
+                            <TableCell width="150px">
                               <DeleteBtn
-                                deleteAction={deleteAction}
+                                deleteAction={() => deleteAction(id)}
                                 questionText="Are you sure you want to delete this banner ?"
                               />
                             </TableCell>

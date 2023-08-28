@@ -4,6 +4,7 @@ import usersReducer from '@features/users/slice';
 import categoriesReducer from '@features/categories/slice';
 import bannersReducer from '@features/banners/slice';
 import subcategoriesReducer from '@features/subcategories/slice';
+import bestSellersReducer from '@features/bestSellers/slice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     categories: categoriesReducer,
     bannersSlice: bannersReducer,
     subcategories: subcategoriesReducer,
+    bestSellersSlice: bestSellersReducer,
   },
 });
 
