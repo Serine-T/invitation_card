@@ -23,12 +23,12 @@ export interface IAddSubcategoryForm {
   title: string;
   description: string;
   photo: string;
-  categoryId: string | null;
-  printType: PrintType | null;
+  categoryId: string | string;
+  printType: PrintType | string;
   isNew: boolean;
   isSale: boolean;
   useGrandFormatSQFtTemplate: boolean;
-  defaultInkInEstimator: DefaultInkInEstimator | null;
+  defaultInkInEstimator: DefaultInkInEstimator | string;
   visibleOnSite: boolean;
   displayAsCardInHeader: boolean;
   categoryDiscountOffMSRP: string;
