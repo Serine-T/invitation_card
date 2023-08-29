@@ -22,3 +22,8 @@ export interface ICategories {
   sort: number;
   displayInHeader: boolean;
 }
+
+export interface ISearchCategories {
+  searchTerm?: string;
+  displayInHeader?: string;
+}

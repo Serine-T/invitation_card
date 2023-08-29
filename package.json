@@ -24,6 +24,7 @@
 		"date-fns": "^2.30.0",
 		"lodash": "^4.17.21",
 		"material-ui-confirm": "^3.0.9",
+		"query-string": "^8.1.0",
 		"react": "^18.2.0",
 		"react-beautiful-dnd": "^13.1.1",
 		"react-datepicker": "^4.16.0",

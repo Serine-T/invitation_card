@@ -2,9 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData, IReorderPayload } from '@utils/types';
+import { constructQueryString } from '@utils/helpers';
 
 import {
-  IAddCategoryPayload, ICategories,
+  IAddCategoryPayload, ICategories, ISearchCategories,
 } from './types';
 
 const prefix = '/categories';
@@ -95,6 +96,31 @@ export const reorderCategories = createAsyncThunk<void, IReorderPayload, {
   async (body, thunkAPI) => {
     try {
       await http.patch<IReorderPayload>(`${prefix}/reorder`, body);
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);
+
+export const searchCategories = createAsyncThunk<ICategories[], ISearchCategories, {
+  rejectValue: AxiosData;
+}>(
+  'categories/search',
+  async (searchingData, thunkAPI) => {
+    try {
+      const { searchTerm, displayInHeader } = searchingData;
+      const queryParams = constructQueryString({
+        searchTerm,
+        displayInHeader,
+      });
+
+      const { data } = await http.get<ICategories[]>(
+        `${prefix}/search?${queryParams}`,
+      );
+
+      return data;
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

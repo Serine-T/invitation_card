@@ -36,3 +36,14 @@ export const getReorderedArray = (items: IItems[]) => {
 export const getOptionsArray = (items: IItems[]): ISelectOptions[] => (items.map(({ id, title }) => ({
   value: id, optionName: title,
 })));
+
+interface Filters {
+  [key: string]: string | undefined;
+}
+
+export const constructQueryString = (filters: Filters): string => {
+  return Object.entries(filters)
+    .map(([key, value]) => value && `${key}=${value}`)
+    .filter(Boolean)
+    .join('&');
+};

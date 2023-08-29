@@ -255,7 +255,7 @@ export const formattedData = (data: ISubcategoriesInfo): IAddSubcategoryForm => 
 
   const newData = {
     ...data,
-    categoryDiscountOffMSRP: data.categoryDiscountOffMSRP.toString(),
+    categoryDiscountOffMSRP: data.categoryDiscountOffMSRP?.toString(),
     staticShippingFacility,
     staticShippingFacilityAll,
   } as IAddSubcategoryForm;

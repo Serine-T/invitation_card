@@ -9,28 +9,47 @@ import Select from '@containers/common/Select';
 import Stack from '@mui/material/Stack';
 import Button from '@containers/common/Button';
 import StyledTypography from '@containers/common/StyledTypography';
+import { useNavigate } from 'react-router-dom';
+import queryString from 'query-string';
+import PAGE_ROUTES from '@routes/routingEnum';
+import { constructQueryString } from '@utils/helpers';
 
-import { FiltersSchema, IFiltersForm, defaultValues, visibilityOptions } from './helpers';
+import {
+  FiltersSchema, IFiltersForm,
+  visibilityOptions,
+} from './helpers';
 
 const SearchSection = () => {
+  const navigate = useNavigate();
+  const params = queryString.parse(window.location.search);
+
+  const { searchTerm = '', displayInHeader = '' } = params;
+
   const methods = useForm<IFiltersForm>({
     resolver: yupResolver(FiltersSchema),
-    defaultValues,
+    defaultValues: {
+      searchTerm: searchTerm as string,
+      displayInHeader: displayInHeader as string,
+    },
   });
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-    reset,
   } = methods;
 
   const onSubmit = (data: IFiltersForm) => {
-    console.log('data****', data);
+    const queryParams = constructQueryString({
+      searchTerm: data.searchTerm,
+      displayInHeader: data.displayInHeader,
+    });
+
+    navigate(`${PAGE_ROUTES.MENU_CATEGORIES}?${queryParams}`);
   };
 
   const handleReset = () => {
-    reset();
+    navigate(`${PAGE_ROUTES.MENU_CATEGORIES}`);
   };
 
   return (
@@ -43,18 +62,17 @@ const SearchSection = () => {
         >
           <StyledSearchRows>
             <Input
-              {...register('search')}
+              {...register('searchTerm')}
               width="200px"
               label="Search"
               placeholder="Search"
-              errorMessage={errors?.search?.message}
+              errorMessage={errors?.searchTerm?.message}
             />
             <Select
               label="Visible on site"
               width="200px"
-              id="visibleOnSite"
-              name="visibleOnSite"
-              errorMessage={errors?.visibleOnSite?.message}
+              name="displayInHeader"
+              errorMessage={errors?.displayInHeader?.message}
               options={visibilityOptions}
             />
           </StyledSearchRows>

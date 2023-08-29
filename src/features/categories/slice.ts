@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { IState } from './types';
-import { addCategory, getAllCategories, getCategoryById, reorderCategories } from './actions';
+import { addCategory, getAllCategories, getCategoryById, reorderCategories, searchCategories } from './actions';
 
 const initialState: IState = {
   isLoading: true,
@@ -59,6 +59,19 @@ const categoriesSlice = createSlice({
     });
     builder.addCase(reorderCategories.rejected, (state, { payload }) => {
       state.actionLoading = false;
+      state.errorMessage = payload.message;
+    });
+
+    builder.addCase(searchCategories.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(searchCategories.fulfilled, (state, { payload }) => {
+      state.data = payload;
+      state.isLoading = false;
+      state.errorMessage = null;
+    });
+    builder.addCase(searchCategories.rejected, (state, { payload }) => {
+      state.isLoading = false;
       state.errorMessage = payload.message;
     });
   },
