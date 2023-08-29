@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
-import { AxiosData } from '@utils/types';
+import { AxiosData, IReorderPayload } from '@utils/types';
 
 import {
   IAddCategoryPayload, ICategories,
@@ -64,7 +64,7 @@ export const editCategory = createAsyncThunk<void, IAddCategoryPayload, {
   'categories/edit',
   async (body, thunkAPI) => {
     try {
-      await http.put<IAddCategoryPayload>(`${prefix}/${body.id}`, body);
+      await http.patch<IAddCategoryPayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -80,6 +80,21 @@ export const deleteCategory = createAsyncThunk<void, string, {
   async (id, thunkAPI) => {
     try {
       await http.delete(`${prefix}/${id}`);
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);
+
+export const reorderCategories = createAsyncThunk<void, IReorderPayload, {
+  rejectValue: AxiosData;
+}>(
+  'categories/reorder',
+  async (body, thunkAPI) => {
+    try {
+      await http.patch<IReorderPayload>(`${prefix}/reorder`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

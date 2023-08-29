@@ -16,12 +16,13 @@ import {
 import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
 import useMount from '@customHooks/useMount';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
-import { getAllCategories } from '@features/categories/actions';
+import { deleteCategory, getAllCategories, reorderCategories } from '@features/categories/actions';
 import { selectCategories } from '@features/categories/selectors';
 import Loader from '@containers/common/Loader';
 import { setCategories } from '@features/categories/slice';
 import PageTitle from '@containers/common/PageTitle';
 import EmptyState from '@containers/common/EmptyState';
+import { getReorderedArray } from '@utils/helpers';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -32,11 +33,15 @@ const MenuCategories = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_MENU_CATEGORY), []);
   const handleEdit = (id:string) => navigate(`/products/menu-categories/edit/${id}`);
-  const deleteAction = () => {
-    console.log('deleteAction');
+  const deleteAction = (id: string) => {
+    dispatch(deleteCategory(id)).unwrap().then(() => {
+      dispatch(getAllCategories());
+    }).catch(() => {});
   };
 
   const { data: categories, isLoading } = useAppSelector(selectCategories);
+
+  const items = [...categories];
 
   useMount(() => {
     dispatch(getAllCategories());
@@ -46,11 +51,15 @@ const MenuCategories = () => {
     const { destination } = result;
 
     if (destination) {
-      const newItems = [...categories];
-      const [removed] = newItems.splice(result.source.index, 1);
+      const [removed] = items.splice(result.source.index, 1);
 
-      newItems.splice(destination.index, 0, removed);
-      dispatch(setCategories(newItems));
+      items.splice(destination.index, 0, removed);
+
+      const sortedData = getReorderedArray(items);
+
+      dispatch(reorderCategories(sortedData)).unwrap().then(() => {
+        dispatch(setCategories(items));
+      }).catch(() => dispatch(getAllCategories()));
     }
   };
 
@@ -115,7 +124,7 @@ const MenuCategories = () => {
                               </TableCell>
                               <TableCell width="150px">
                                 <DeleteBtn
-                                  deleteAction={deleteAction}
+                                  deleteAction={() => deleteAction(id)}
                                   questionText="Are you sure you want to delete this category ?"
                                 />
                               </TableCell>

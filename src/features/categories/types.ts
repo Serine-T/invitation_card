@@ -2,6 +2,7 @@ export interface IState {
   isLoading: boolean;
   actionLoading: boolean;
   data: ICategories[];
+  errorMessage: string | null;
 }
 
 export interface IAddCategoryPayload {
