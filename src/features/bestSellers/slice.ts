@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { IState } from './types';
-import { addBestSeller, editBestSeller, getAllBestSellers, getBestSellerById, reorderBestSellers } from './actions';
+import { addBestSeller, editBestSeller, getAllBestSellers, getBestSellerById } from './actions';
 
 const initialState: IState = {
   isLoading: true,
@@ -62,18 +62,6 @@ const bestSellersSlice = createSlice({
       state.errorMessage = null;
     });
     builder.addCase(addBestSeller.rejected, (state, { payload }) => {
-      state.actionLoading = false;
-      state.errorMessage = payload.message;
-    });
-
-    builder.addCase(reorderBestSellers.pending, (state) => {
-      state.actionLoading = true;
-    });
-    builder.addCase(reorderBestSellers.fulfilled, (state) => {
-      state.actionLoading = false;
-      state.errorMessage = null;
-    });
-    builder.addCase(reorderBestSellers.rejected, (state, { payload }) => {
       state.actionLoading = false;
       state.errorMessage = payload.message;
     });
