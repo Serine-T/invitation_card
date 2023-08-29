@@ -35,21 +35,25 @@ export const inputsRows: ValidFieldNames[] = [
     label: 'Photo (Desktop)',
     field: 'desktopPhoto',
     type: InputTypes.image,
+    isRequired: true,
   },
   {
     label: 'Photo (Mobile)',
     field: 'mobilePhoto',
     type: InputTypes.image,
+    isRequired: true,
   },
   {
     label: 'Title',
     field: 'title',
     type: InputTypes.text,
+    isRequired: true,
   },
   {
     label: 'Subcategory',
     field: 'subCategory',
     type: InputTypes.select,
+    isRequired: true,
   },
   {
     label: 'Product',
@@ -60,6 +64,7 @@ export const inputsRows: ValidFieldNames[] = [
     label: 'Description',
     field: 'description',
     type: InputTypes.textarea,
+    isRequired: true,
   },
   {
     label: 'Visible in category',
