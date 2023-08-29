@@ -8,14 +8,15 @@ import Button from '../Button';
 interface IStyledPageTitle {
     title: string;
     btnName: string;
-    handleAdd: () => void;
+  handleAdd: () => void;
+  isShowBtn?: boolean;
 }
 
-const PageTitle = ({ title, btnName, handleAdd }: IStyledPageTitle) => {
+const PageTitle = ({ title, btnName, handleAdd, isShowBtn = true }: IStyledPageTitle) => {
   return (
     <StyledTitleBox>
       <Typography variant="h2">{title}</Typography>
-      <Button width="120px" onClick={handleAdd}>{ btnName}</Button>
+      { isShowBtn && <Button width="120px" onClick={handleAdd}>{ btnName}</Button>}
     </StyledTitleBox>
   );
 };

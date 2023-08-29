@@ -2,6 +2,7 @@ export interface IState {
   isLoading: boolean;
   actionLoading: boolean;
   data: ICategories[];
+  errorMessage: string | null;
 }
 
 export interface IAddCategoryPayload {
@@ -20,4 +21,9 @@ export interface ICategories {
   description: string;
   sort: number;
   displayInHeader: boolean;
+}
+
+export interface ISearchCategories {
+  searchTerm?: string;
+  displayInHeader?: string;
 }

@@ -44,7 +44,7 @@ export const getAllBestSellers = createAsyncThunk<IBestSellerInfo[], void, {
 export const getBestSellerById = createAsyncThunk<IBestSellerInfo, string, {
   rejectValue: AxiosData;
 }>(
-  'bestSellers/get-banner',
+  'bestSellers/get-bestSeller',
   async (id, thunkAPI) => {
     try {
       const { data } = await http.get<IBestSellerInfo>(`${prefix}/${id}`);

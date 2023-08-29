@@ -62,12 +62,12 @@ const InputsTable = ({ bestSellerData }: IInputsTable) => {
         >
           <StyledTable tableTitle="SECTION" colSpan={2}>
             {inputsRows.map((item) => {
-              const { label } = item;
+              const { label, isRequired } = item;
 
               return (
                 <StyledTableRow key={label}>
                   <StyledTableCell>
-                    {`${label}:`}
+                    {`${label}: ${isRequired ? '*' : ''}`}
                   </StyledTableCell>
                   <TableCell>
                     <ReusableFields
