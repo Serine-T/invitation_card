@@ -13,6 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { FileStateType, getUploadUrl, uploadFile } from './requests';
 import { StyledEmptyContainer, StyledImgContainer, StyledTitleBox, StyledUploadContainer } from './styles';
 import ErrorMessage from '../ErrorMessage';
+import { acceptedExtensions } from './helpers';
 
 interface IImageUpload {
   name: string;
@@ -53,6 +54,11 @@ const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
     event.preventDefault();
 
     const file = event.dataTransfer.files[0] as any;
+    const fileExtension = `.${file.name.split('.').pop()}`;
+
+    if (!acceptedExtensions.includes(fileExtension.toLowerCase())) {
+      return;
+    }
 
     if (file) {
       await uploadToS3(file);
@@ -89,7 +95,7 @@ const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
       <input
         id="fileInput"
         type="file"
-        accept=".jpg, .jpeg, .png"
+        accept={acceptedExtensions.join(', ')}
         style={{ display: 'none' }}
         onChange={handleChange}
       />

@@ -45,7 +45,11 @@ const InputsTable = ({ bannersData }: IInputsTable) => {
   const onSubmit = (data: IAddBannerForm) => {
     dispatch(bannersData ? editBanner(data) : addBanner(data)).unwrap().then(() => {
       navigate(PAGE_ROUTES.HOMEPAGE);
-    }).catch(() => {});
+    }).catch((e) => {
+      if (e.message === 'Banner does not exist!') {
+        navigate(PAGE_ROUTES.HOMEPAGE);
+      }
+    });
   };
 
   return (
