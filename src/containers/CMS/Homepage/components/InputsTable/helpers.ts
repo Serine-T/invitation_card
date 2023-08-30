@@ -37,7 +37,7 @@ export const AddBannerSchema = yup.object().shape({
   desktopPhoto: yup.string().required('Desktop photo is required'),
   mobilePhoto: yup.string().required('Moblie photo  is required'),
   title: yup.string().required('Title is required'),
-  description: yup.string().required('Description is required'),
+  description: yup.string().required('Description is required').max(500, 'The maximum length is 500 characters'),
   backgroundColor: yup.string().required('Background color is required').matches(
     isHexCodeRegex,
     'HEX code is invalid',

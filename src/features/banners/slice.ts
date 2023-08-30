@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { IState } from './types';
-import { addBanner, editBanner, getAllBanners, getBannerById, reorderBanners } from './actions';
+import { addBanner, editBanner, getAllBanners, getBannerById } from './actions';
 
 const initialState: IState = {
   isLoading: true,
@@ -69,18 +69,6 @@ const bannersSlice = createSlice({
       state.errorMessage = null;
     });
     builder.addCase(addBanner.rejected, (state, { payload }) => {
-      state.actionLoading = false;
-      state.errorMessage = payload.message;
-    });
-
-    builder.addCase(reorderBanners.pending, (state) => {
-      state.actionLoading = true;
-    });
-    builder.addCase(reorderBanners.fulfilled, (state) => {
-      state.actionLoading = false;
-      state.errorMessage = null;
-    });
-    builder.addCase(reorderBanners.rejected, (state, { payload }) => {
       state.actionLoading = false;
       state.errorMessage = payload.message;
     });

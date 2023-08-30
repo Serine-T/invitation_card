@@ -156,8 +156,8 @@ const MenuCategories = () => {
         </DragDropContext>
       ) : (
         <EmptyState
-          text={(isSearchTerm)
-            ? 'No search results found' : 'You don’t have any categories, please add new to proceed'}
+          text={isSearchTerm ? 'No search results found'
+            : 'You don’t have any categories, please add new to proceed'}
         />
       )}
     </>

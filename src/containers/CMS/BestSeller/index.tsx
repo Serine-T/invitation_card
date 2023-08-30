@@ -142,7 +142,14 @@ const BestSeller = () => {
 
           </Droppable>
         </DragDropContext>
-      ) : <EmptyState text="You don’t have any bestseller, please add new to proceed" />}
+      ) : (
+        <EmptyState
+          text={
+          subcategories.length ? 'You don’t have any bestseller, please add new to proceed'
+            : 'You don’t have any subcategory, please add new to proceed'
+      }
+        />
+      )}
     </>
   );
 };

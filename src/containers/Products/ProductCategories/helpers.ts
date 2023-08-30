@@ -1,14 +1,14 @@
 export const headSliderCells = [
   {
-    id: '1',
-    label: 'Subcategory',
+    label: 'SUBCATEGORY',
   },
   {
-    id: '2',
+    label: 'PRINT CATEGORY',
+  },
+  {
     label: 'VISIBLE ON SITE',
   },
   {
-    id: '3',
     label: 'ACTIONS',
     colSpan: 2,
   },

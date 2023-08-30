@@ -75,7 +75,7 @@ export const defaultValues = {
 
 export const AddSubcategorySchema = yup.object().shape({
   title: yup.string().required('Title is required'),
-  description: yup.string().required('Description is required'),
+  description: yup.string().required('Description is required').max(500, 'The maximum length is 500 characters'),
   photo: yup.string().required('Photo is required'),
   categoryId: yup.string().required('Category is required'),
   printType: yup.string()
@@ -156,20 +156,20 @@ export const inputsRows2: ValidFieldNames[] = [
   },
 ];
 
-export const printTypeValues = [
-  {
-    value: PrintType.OFFSET_PRODUCTS,
-    optionName: 'Offset production',
-  },
-  {
-    value: PrintType.GRAND_FORMAT_PRODUCTS,
-    optionName: 'Grand format products',
-  },
-  {
-    value: PrintType.PROMO_PRODUCTS,
-    optionName: 'Promo Products',
-  },
-];
+export const printTypeNames: { [key in PrintType]: string } = {
+  [PrintType.OFFSET_PRODUCTS]: 'Offset production',
+  [PrintType.GRAND_FORMAT_PRODUCTS]: 'Grand format products',
+  [PrintType.PROMO_PRODUCTS]: 'Promo products',
+};
+
+export const printTypeName = (name: PrintType | null) => {
+  return name && printTypeNames[name];
+};
+
+export const printTypeValues = Object.entries(printTypeNames).map(([key, optionName]) => ({
+  value: key as PrintType,
+  optionName,
+}));
 
 export const defaultInkInEstimatorValues = Object.values(DefaultInkInEstimator).map((v) => ({
   value: v,
