@@ -5,11 +5,6 @@ export interface IFiltersForm {
   displayInHeader?: string;
 }
 
-export const defaultValues = {
-  searchTerm: '',
-  displayInHeader: '',
-};
-
 export const FiltersSchema = yup.object().shape({
 });
 

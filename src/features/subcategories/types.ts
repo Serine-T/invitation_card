@@ -50,3 +50,9 @@ export interface ISubcategoriesInfo {
   metaTagDescription: string;
   metaTagKeywords: string;
 }
+
+export interface ISearchSubcategories {
+  searchTerm?: string;
+  visibleOnSite?: string;
+  category?:string;
+}

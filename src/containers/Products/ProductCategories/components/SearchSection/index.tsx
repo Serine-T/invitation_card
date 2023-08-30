@@ -9,28 +9,48 @@ import Select from '@containers/common/Select';
 import Stack from '@mui/material/Stack';
 import Button from '@containers/common/Button';
 import StyledTypography from '@containers/common/StyledTypography';
+import PAGE_ROUTES from '@routes/routingEnum';
+import { useNavigate } from 'react-router-dom';
+import queryString from 'query-string';
+import { constructQueryString, getOptionsArray } from '@utils/helpers';
+import { useAppSelector } from '@features/app/hooks';
+import { selectCategories } from '@features/categories/selectors';
 
-import { FiltersSchema, IFiltersForm, defaultValues, visibilityOptions } from './helpers';
+import { FiltersSchema, IFiltersForm, visibilityOptions } from './helpers';
 
 const SearchSection = () => {
+  const navigate = useNavigate();
+  const params = queryString.parse(window.location.search);
+  const { searchTerm = '', visibleOnSite = '', category = '' } = params;
+  const { data: categories } = useAppSelector(selectCategories);
+  const categoriesList = getOptionsArray(categories);
   const methods = useForm<IFiltersForm>({
     resolver: yupResolver(FiltersSchema),
-    defaultValues,
+    defaultValues: {
+      searchTerm: searchTerm as string,
+      visibleOnSite: visibleOnSite as string,
+      category: category as string,
+    },
   });
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-    reset,
   } = methods;
 
   const onSubmit = (data: IFiltersForm) => {
-    console.log('data****', data);
+    const queryParams = constructQueryString({
+      searchTerm: data.searchTerm,
+      visibleOnSite: data.visibleOnSite,
+      category: data.category,
+    });
+
+    navigate(`${PAGE_ROUTES.PRODUCT_CATEGORIES}?${queryParams}`);
   };
 
   const handleReset = () => {
-    reset();
+    navigate(`${PAGE_ROUTES.PRODUCT_CATEGORIES}`);
   };
 
   return (
@@ -43,16 +63,22 @@ const SearchSection = () => {
         >
           <StyledSearchRows>
             <Input
-              {...register('search')}
+              {...register('searchTerm')}
               width="200px"
               label="Search"
               placeholder="Search"
-              errorMessage={errors?.search?.message}
+              errorMessage={errors?.searchTerm?.message}
+            />
+            <Select
+              label="Category"
+              width="200px"
+              name="category"
+              errorMessage={errors?.category?.message}
+              options={categoriesList}
             />
             <Select
               label="Visible on site"
               width="200px"
-              id="visibleOnSite"
               name="visibleOnSite"
               errorMessage={errors?.visibleOnSite?.message}
               options={visibilityOptions}

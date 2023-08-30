@@ -2,9 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData, IReorderPayload } from '@utils/types';
+import { constructQueryString } from '@utils/helpers';
 
 import {
-  IAddSubcategoriesPayload, ISubcategoriesInfo,
+  IAddSubcategoriesPayload, ISearchSubcategories, ISubcategoriesInfo,
 } from './types';
 
 const prefix = '/sub-categories';
@@ -64,7 +65,7 @@ export const editSubcategory = createAsyncThunk<void, IAddSubcategoriesPayload, 
   'subcategories/edit',
   async (body, thunkAPI) => {
     try {
-      await http.put<IAddSubcategoriesPayload>(`${prefix}/${body.id}`, body);
+      await http.patch<IAddSubcategoriesPayload>(`${prefix}/${body.id}`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -94,6 +95,31 @@ export const reorderSubcategories = createAsyncThunk<void, IReorderPayload, {
   async (body, thunkAPI) => {
     try {
       await http.patch<IReorderPayload>(`${prefix}/reorder`, body);
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);
+export const searchSubcategories = createAsyncThunk<ISubcategoriesInfo[], ISearchSubcategories, {
+  rejectValue: AxiosData;
+}>(
+  'subcategories/search',
+  async (searchingData, thunkAPI) => {
+    try {
+      const { searchTerm, visibleOnSite, category } = searchingData;
+      const queryParams = constructQueryString({
+        searchTerm,
+        visibleOnSite,
+        category,
+      });
+
+      const { data } = await http.get<ISubcategoriesInfo[]>(
+        `${prefix}/search?${queryParams}`,
+      );
+
+      return data;
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

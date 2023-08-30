@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { IState } from './types';
 import {
   addSubcategory, editSubcategory, getAllSubcategories,
-  getSubcategoryById, reorderSubcategories,
+  getSubcategoryById, reorderSubcategories, searchSubcategories,
 } from './actions';
 
 const initialState: IState = {
@@ -77,6 +77,19 @@ const subcategoriesSlice = createSlice({
     });
     builder.addCase(reorderSubcategories.rejected, (state, { payload }) => {
       state.actionLoading = false;
+      state.errorMessage = payload.message;
+    });
+
+    builder.addCase(searchSubcategories.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(searchSubcategories.fulfilled, (state, { payload }) => {
+      state.data = payload;
+      state.isLoading = false;
+      state.errorMessage = null;
+    });
+    builder.addCase(searchSubcategories.rejected, (state, { payload }) => {
+      state.isLoading = false;
       state.errorMessage = payload.message;
     });
   },
