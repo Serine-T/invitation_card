@@ -133,7 +133,7 @@ const ProductCategories = () => {
                                     data-snapshot={snapshot}
                                     {...providedDraggable.draggableProps}
                                     isDraggingOver={!!snapshot.draggingOver}
-                                    gridTemplateColumns="auto 138px 140px 150px"
+                                    gridTemplateColumns="auto 282px 138px 140px 150px"
                                   >
                                     <TableCell>
                                       <StyledTypography
