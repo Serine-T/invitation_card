@@ -60,6 +60,9 @@ const InputsTable = ({ subcategoriesData }: IInputsTable) => {
     }).catch((e) => {
       if (e.message === 'Subcategory with the provided title already exists in this category!') {
         setError('title', { message: e.message });
+      // eslint-disable-next-line max-len
+      } else if (e.message === 'You have already chose the banners in the category, please disable one of them to proceed.') {
+        setError('displayAsCardInHeader', { message: e.message });
       } else {
         navigate(PAGE_ROUTES.PRODUCT_CATEGORIES);
       }

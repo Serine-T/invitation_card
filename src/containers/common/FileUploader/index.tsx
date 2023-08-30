@@ -18,9 +18,10 @@ import { acceptedExtensions } from './helpers';
 interface IImageUpload {
   name: string;
   errorMessage?: string;
+  width?:number;
 }
 
-const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
+const ImageUpload = ({ name, errorMessage, width }: IImageUpload) => {
   const [loading, setLoading] = useState(false);
   const { setValue, watch } = useFormContext();
   const uploadedImg = watch(name);
@@ -31,6 +32,18 @@ const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
     try {
       setLoading(true);
       if (file) {
+        console.log('widddtttt****', width);
+        // if (width) {
+        //   const img = new Image();
+
+        //   img.onload = async () => {
+        //     if (img.width !== width) {
+        //       // Handle the width error (e.g., show an error message)
+        //       console.error('The image width exceeds 500px');
+        //     }
+        //   };
+        // }
+
         const { img, url } = await getUploadUrl({ fileName: file.name });
 
         await uploadFile({ file: file as File, url });

@@ -1,15 +1,18 @@
 import { ChangeEvent } from 'react';
 
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import { useFormContext } from 'react-hook-form';
+import Stack from '@mui/material/Stack';
+
+import ErrorMessage from '../ErrorMessage';
+import { StyledCheckbox, StyledFormControlLabel } from './styles';
 
 interface ICheckbox {
   name: string;
   label?: string;
+  errorMessage?: string;
 }
 
-const StyledCheckbox = ({ name, label }:ICheckbox) => {
+const CustomCheckbox = ({ name, label, errorMessage }:ICheckbox) => {
   const { setValue, watch } = useFormContext();
 
   const handleCheckboxChange = (event:ChangeEvent<HTMLInputElement>) => {
@@ -17,17 +20,22 @@ const StyledCheckbox = ({ name, label }:ICheckbox) => {
   };
 
   return (
-    <FormControlLabel
-      control={(
-        <Checkbox
-          disableRipple
-          checked={watch(name)}
-          onChange={handleCheckboxChange}
-        />
+    <Stack>
+      <StyledFormControlLabel
+        control={(
+          <StyledCheckbox
+            disableRipple
+            checked={watch(name)}
+            onChange={handleCheckboxChange}
+            sx={{ padding: '0' }}
+          />
 )}
-      label={label ?? label}
-    />
+        label={label ?? label}
+      />
+      {!!errorMessage && <ErrorMessage message={errorMessage} />}
+    </Stack>
+
   );
 };
 
-export default StyledCheckbox;
+export default CustomCheckbox;
