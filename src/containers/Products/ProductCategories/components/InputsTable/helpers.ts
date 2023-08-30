@@ -208,7 +208,7 @@ export const formattingPayload = (data: IAddSubcategoryForm) => {
     isNew,
     isSale,
     useGrandFormatSQFtTemplate,
-    defaultInkInEstimator,
+    defaultInkInEstimator: defaultInkInEstimator || null,
     visibleOnSite,
     displayAsCardInHeader,
     categoryDiscountOffMSRP: +categoryDiscountOffMSRP || null,

@@ -17,7 +17,7 @@ export interface IAddSubcategoriesPayload {
   isNew: boolean;
   isSale: boolean;
   useGrandFormatSQFtTemplate: boolean;
-  defaultInkInEstimator: DefaultInkInEstimator | string;
+  defaultInkInEstimator: DefaultInkInEstimator | string | null;
   visibleOnSite: boolean;
   displayAsCardInHeader: boolean;
   categoryDiscountOffMSRP: number | null;
