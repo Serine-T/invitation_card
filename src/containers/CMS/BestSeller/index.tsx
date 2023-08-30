@@ -24,6 +24,7 @@ import { getReorderedArray } from '@utils/helpers';
 import { setBestSellers } from '@features/bestSellers/slice';
 import EmptyState from '@containers/common/EmptyState';
 import { getAllSubcategories } from '@features/subcategories/actions';
+import { selectSubcategories } from '@features/subcategories/selectors';
 
 import { headSliderCells } from './helpers';
 
@@ -31,7 +32,7 @@ const BestSeller = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isLoading, data: bestSellers } = useAppSelector(selectBestSellers);
-  const { isLoading: subcategoriesLoading, data: subcategories } = useAppSelector(selectBestSellers);
+  const { isLoading: subcategoriesLoading, data: subcategories } = useAppSelector(selectSubcategories);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_BEST_SELLER), []);
   const handleEdit = (id:string) => navigate(`/cms/best-seller/edit/${id}`);
