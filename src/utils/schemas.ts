@@ -21,7 +21,7 @@ export const EmailSchema = {
       EMAIL_REGEXP,
       'Email must be a valid email',
     )
-    .max(255, 'Must be less than 255 characters'),
+    .max(255, 'The maximum length is 255 characters'),
 };
 
 export const validateOptionalURL = yup.string().optional().test(
@@ -38,7 +38,7 @@ export const validateOptionalURL = yup.string().optional().test(
 
 export const textWidthValidation = yup.string().optional().test(
   'text-length-validation',
-  'The maximum length is 250 characters.',
+  'The maximum length is 250 characters',
   (value: string | undefined) => {
     if (!value) {
       return true;

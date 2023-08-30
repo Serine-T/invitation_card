@@ -10,7 +10,7 @@ export const StyledTitleBox = styled(Box)(() => ({
   height: 'calc(100vh - 240px)',
 
   '.MuiTypography-root': {
-    maxWidth: '350px',
+    maxWidth: '400px',
     textAlign: 'center',
   },
 }));

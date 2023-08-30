@@ -75,7 +75,7 @@ export const defaultValues = {
 
 export const AddSubcategorySchema = yup.object().shape({
   title: yup.string().required('Title is required'),
-  description: yup.string().required('Description is required'),
+  description: yup.string().required('Description is required').max(500, 'The maximum length is 500 characters'),
   photo: yup.string().required('Photo is required'),
   categoryId: yup.string().required('Category is required'),
   printType: yup.string()
