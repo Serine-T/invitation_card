@@ -22,7 +22,7 @@ export interface IAddBannerPayload {
   firstButtonLink?: string;
   secondButtonName?: string;
   secondButtonLink?: string;
-  category?: BannerCategoryEnum;
+  category?: BannerCategoryEnum | string;
   displayOnSite?: boolean;
 }
 

@@ -11,8 +11,9 @@ interface IEllipsisTextProps extends TypographyProps {
 const EllipsisText: FC<IEllipsisTextProps> = ({
   children,
   line,
+  ...restProps
 }) => (
-  <StyledEllipsisText line={line}>{children}</StyledEllipsisText>
+  <StyledEllipsisText line={line} {...restProps}>{children}</StyledEllipsisText>
 );
 
 export default memo(EllipsisText);

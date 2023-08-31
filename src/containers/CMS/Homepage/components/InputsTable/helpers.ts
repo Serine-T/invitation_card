@@ -15,7 +15,7 @@ export interface IAddBannerForm {
   firstButtonLink: string;
   secondButtonName?: string;
   secondButtonLink: string;
-  category?: BannerCategoryEnum;
+  category?: BannerCategoryEnum | string;
   displayOnSite?: boolean;
 }
 
@@ -29,7 +29,7 @@ export const defaultValues = {
   firstButtonLink: '',
   secondButtonName: '',
   secondButtonLink: '',
-  category: BannerCategoryEnum.slider,
+  category: '',
   displayOnSite: false,
 };
 
@@ -44,6 +44,7 @@ export const AddBannerSchema = yup.object().shape({
   ),
   firstButtonLink: validateOptionalURL,
   secondButtonLink: validateOptionalURL,
+  category: yup.string().required('Category  is required'),
 });
 
 export const inputsRows: ValidFieldNames[] = [

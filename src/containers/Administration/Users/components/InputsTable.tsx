@@ -52,7 +52,11 @@ const InputsTable = ({ userInfo }: IInputsTable) => {
     dispatch(userInfo ? editUser(payload) : addUser(payload)).unwrap().then(() => {
       navigate(PAGE_ROUTES.USERS);
     }).catch((e) => {
-      setError('email', { message: e.message });
+      if (e.message === 'User does not exist!') {
+        navigate(PAGE_ROUTES.USERS);
+      } else {
+        setError('email', { message: e.message });
+      }
     });
   };
 

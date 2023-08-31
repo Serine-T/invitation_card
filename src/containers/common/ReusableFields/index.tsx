@@ -43,11 +43,16 @@ function ReusableFields({ field, type, label, selectList }: IReusableFields) {
   }
 
   if (type === InputTypes.checkbox) {
-    return <Checkbox name={field as string} />;
+    return <Checkbox name={field as string} errorMessage={errors?.[field]?.message as string} />;
   }
 
   if (type === InputTypes.image) {
-    return <ImageUpload name={field as string} errorMessage={errors?.[field]?.message as string} />;
+    return (
+      <ImageUpload
+        name={field as string}
+        errorMessage={errors?.[field]?.message as string}
+      />
+    );
   }
 
   if (type === InputTypes.colorPicker) {

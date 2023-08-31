@@ -46,6 +46,8 @@ const InputsTable = ({ categoriesData }: IInputsTable) => {
     }).catch((e) => {
       if (e.message === 'Category with the provided title already exists!') {
         setError('title', { message: e.message });
+      } else {
+        navigate(PAGE_ROUTES.MENU_CATEGORIES);
       }
     });
   };

@@ -50,7 +50,11 @@ const InputsTable = ({ bestSellerData }: IInputsTable) => {
   const onSubmit = (data: IAddBestSellerForm) => {
     dispatch(bestSellerData ? editBestSeller(data) : addBestSeller(data)).unwrap().then(() => {
       navigate(PAGE_ROUTES.BEST_SELLER);
-    }).catch(() => {});
+    }).catch((e) => {
+      if (e.message === 'Bestseller section does not exist!') {
+        navigate(PAGE_ROUTES.BEST_SELLER);
+      }
+    });
   };
 
   return (

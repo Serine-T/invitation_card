@@ -79,7 +79,6 @@ export const AddSubcategorySchema = yup.object().shape({
   photo: yup.string().required('Photo is required'),
   categoryId: yup.string().required('Category is required'),
   printType: yup.string()
-    .oneOf(Object.values(PrintType), 'print')
     .required('Print type is required'),
   metaTagDescription: textWidthValidation,
   metaTagTitle: textWidthValidation,
@@ -208,7 +207,7 @@ export const formattingPayload = (data: IAddSubcategoryForm) => {
     isNew,
     isSale,
     useGrandFormatSQFtTemplate,
-    defaultInkInEstimator,
+    defaultInkInEstimator: defaultInkInEstimator || null,
     visibleOnSite,
     displayAsCardInHeader,
     categoryDiscountOffMSRP: +categoryDiscountOffMSRP || null,
