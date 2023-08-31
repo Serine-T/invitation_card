@@ -12,7 +12,7 @@ interface ICheckbox {
   errorMessage?: string;
 }
 
-const CustomCheckbox = ({ name, label, errorMessage }:ICheckbox) => {
+const Checkbox = ({ name, label, errorMessage }:ICheckbox) => {
   const { setValue, watch } = useFormContext();
 
   const handleCheckboxChange = (event:ChangeEvent<HTMLInputElement>) => {
@@ -38,4 +38,4 @@ const CustomCheckbox = ({ name, label, errorMessage }:ICheckbox) => {
   );
 };
 
-export default CustomCheckbox;
+export default Checkbox;
