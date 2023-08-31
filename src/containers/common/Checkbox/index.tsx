@@ -27,7 +27,6 @@ const Checkbox = ({ name, label, errorMessage }:ICheckbox) => {
             disableRipple
             checked={watch(name)}
             onChange={handleCheckboxChange}
-            sx={{ padding: '0' }}
           />
 )}
         label={label ?? label}
