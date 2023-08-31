@@ -43,7 +43,6 @@ export const StyledImgContainer = styled(Box)(() => ({
   },
 }));
 export const StyledTitleBox = styled(Box)(() => ({
-  width: '100%',
   display: 'flex',
   justifyContent: 'flex-start',
   alignItems: 'center',

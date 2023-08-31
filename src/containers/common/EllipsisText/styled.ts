@@ -1,12 +1,11 @@
 import styled from '@emotion/styled';
-
-import StyledTypography from '../StyledTypography';
+import MuiTypography from '@mui/material/Typography';
 
 interface StyledEllipsisTextProps{
   line?: number;
 }
 
-export const StyledEllipsisText = styled(StyledTypography, {
+export const StyledEllipsisText = styled(MuiTypography, {
   shouldForwardProp: (prop) => prop !== 'line',
 })<StyledEllipsisTextProps>(({ line = 2 }) => ({
   display: '-webkit-box',
@@ -14,4 +13,5 @@ export const StyledEllipsisText = styled(StyledTypography, {
   WebkitLineClamp: line,
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 }));

@@ -7,7 +7,7 @@ import { useFormContext } from 'react-hook-form';
 import StyledTypography from '@containers/common/StyledTypography';
 import UploadIcon from '@containers/common/Icons/UploadIcon';
 import { getCDNImagePath } from '@utils/helpers';
-import { StyledEllipsisText } from '@containers/common/EllipsisText/styled';
+import EllipsisText from '@containers/common/EllipsisText';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { FileStateType, getUploadUrl, uploadFile } from './requests';
@@ -109,9 +109,9 @@ const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
 
             <StyledTitleBox>
               { fileData && (
-              <StyledEllipsisText variant="body3">
+              <EllipsisText variant="body3" width={210} line={2}>
                 {fileData?.name}
-              </StyledEllipsisText>
+              </EllipsisText>
               )}
               {fileData && (
               <StyledTypography variant="body3" color="grey" minWidth="65px">
@@ -120,9 +120,12 @@ const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
               )}
             </StyledTitleBox>
 
-            <StyledTypography cursor="pointer" onClick={handleDeleteImg}>
-              <CloseIcon fontSize="inherit" color="inherit" />
-            </StyledTypography>
+            <Box>
+              <StyledTypography cursor="pointer" onClick={handleDeleteImg}>
+                <CloseIcon fontSize="inherit" color="inherit" />
+              </StyledTypography>
+            </Box>
+
           </StyledUploadContainer>
         ) : (
           <StyledEmptyContainer error={!!errorMessage}>
