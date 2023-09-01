@@ -52,7 +52,7 @@ const Attribute = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_ATTRIBUTE), []);
-  const handleEdit = (id:string) => navigate(`/products/attribute/edit/${id}`);
+  const handleEdit = (id:string) => navigate(`/products/attributes/edit/${id}`);
 
   const deleteAction = (id: string) => {
     dispatch(deleteAttribute(id)).unwrap().then(() => {
