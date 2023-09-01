@@ -52,6 +52,8 @@ import EditProductCategory from '@containers/Products/ProductCategories/EditProd
 import AttributeCategories from '@containers/Products/AttributeCategories';
 import AddAttributeCategory from '@containers/Products/AttributeCategories/AddAttributeCategory';
 import EditAttributeCategory from '@containers/Products/AttributeCategories/EditAttributeCategory';
+import AddAttribute from '@containers/Products/Attributes/AddAttribute';
+import EditAttribute from '@containers/Products/Attributes/EditAttribute';
 
 export type CustomRouteObject = RouteObject & {
   isPublic?: boolean;
@@ -114,7 +116,14 @@ export const routingArray: CustomRouteObject[] = [
               { path: PAGE_ROUTES.EDIT_ATTRIBUTE_CATEGORIES, element: <EditAttributeCategory /> },
             ],
           },
-          { path: PAGE_ROUTES.ATTRIBUTES, element: <Attributes /> },
+          {
+            path: PAGE_ROUTES.ATTRIBUTES,
+            children: [
+              { element: <Attributes />, index: true },
+              { path: PAGE_ROUTES.ADD_ATTRIBUTE, element: <AddAttribute /> },
+              { path: PAGE_ROUTES.EDIT_ATTRIBUTE, element: <EditAttribute /> },
+            ],
+          },
           { path: PAGE_ROUTES.MAILING_SERVICE_FEES, element: <MailingServiceFees /> },
           { path: PAGE_ROUTES.IMPORT_PRODUCT_PRICING, element: <ImportProductPricing /> },
           { path: PAGE_ROUTES.TEMPLATES, element: <Templates /> },

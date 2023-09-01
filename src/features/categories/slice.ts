@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { IState } from './types';
-import { addCategory, getAllCategories, getCategoryById, searchCategories } from './actions';
+import { addCategory, editCategory, getAllCategories, getCategoryById, searchCategories } from './actions';
 
 const initialState: IState = {
   isLoading: true,
@@ -20,13 +20,23 @@ const categoriesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(addCategory.pending, (state) => {
-      state.isLoading = true;
+      state.actionLoading = true;
     });
     builder.addCase(addCategory.fulfilled, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
     builder.addCase(addCategory.rejected, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
+    });
+
+    builder.addCase(editCategory.pending, (state) => {
+      state.actionLoading = true;
+    });
+    builder.addCase(editCategory.fulfilled, (state) => {
+      state.actionLoading = false;
+    });
+    builder.addCase(editCategory.rejected, (state) => {
+      state.actionLoading = false;
     });
 
     builder.addCase(getAllCategories.pending, (state) => {

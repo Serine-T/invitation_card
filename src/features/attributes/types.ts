@@ -1,18 +1,18 @@
 export interface IState {
   isLoading: boolean;
   actionLoading: boolean;
-  data: IAttributeCategory[];
+  data: IAttribute[];
   errorMessage: string | null;
 }
 
-export interface IAddAttributeCategoryPayload {
+export interface IAddAttributePayload {
   id?: string;
   title: string;
   description: string;
   displayInHeader?: boolean;
 }
 
-export interface IAttributeCategory {
+export interface IAttribute {
   id: string;
   created: string;
   updated: string;
@@ -23,7 +23,7 @@ export interface IAttributeCategory {
   displayInHeader: boolean;
 }
 
-export interface ISearchAttributeCategories {
+export interface ISearchAttributes {
   searchTerm?: string;
   displayInHeader?: string;
 }

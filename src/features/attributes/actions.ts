@@ -5,18 +5,18 @@ import { AxiosData, IReorderPayload } from '@utils/types';
 import { constructQueryString } from '@utils/helpers';
 
 import {
-  IAddAttributeCategoryPayload, IAttributeCategory, ISearchAttributeCategories,
+  IAddAttributePayload, IAttribute, ISearchAttributes,
 } from './types';
 
 const prefix = '/categories';
 
-export const addAttributeCategory = createAsyncThunk<void, IAddAttributeCategoryPayload, {
+export const addAttribute = createAsyncThunk<void, IAddAttributePayload, {
   rejectValue: AxiosData;
 }>(
-  'attributeCategories/add',
+  'attributes/add',
   async (body, thunkAPI) => {
     try {
-      await http.post<IAddAttributeCategoryPayload>(prefix, body);
+      await http.post<IAddAttributePayload>(prefix, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -25,13 +25,13 @@ export const addAttributeCategory = createAsyncThunk<void, IAddAttributeCategory
   },
 );
 
-export const getAllAttributeCategories = createAsyncThunk<IAttributeCategory[], void, {
+export const getAllAttributes = createAsyncThunk<IAttribute[], void, {
   rejectValue: AxiosData;
 }>(
-  'attributeCategories/all',
+  'attributes/all',
   async (_, thunkAPI) => {
     try {
-      const { data } = await http.get<IAttributeCategory[]>(prefix);
+      const { data } = await http.get<IAttribute[]>(prefix);
 
       return data;
     } catch (error) {
@@ -42,13 +42,13 @@ export const getAllAttributeCategories = createAsyncThunk<IAttributeCategory[], 
   },
 );
 
-export const getAttributeCategoryById = createAsyncThunk<IAttributeCategory, string, {
+export const getAttributeById = createAsyncThunk<IAttribute, string, {
   rejectValue: AxiosData;
 }>(
-  'attributeCategories/get-attributeCategories',
+  'attributes/get-attribute',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<IAttributeCategory>(`${prefix}/${id}`);
+      const { data } = await http.get<IAttribute>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {
@@ -59,13 +59,13 @@ export const getAttributeCategoryById = createAsyncThunk<IAttributeCategory, str
   },
 );
 
-export const editAttributeCategory = createAsyncThunk<void, IAddAttributeCategoryPayload, {
+export const editAttribute = createAsyncThunk<void, IAddAttributePayload, {
   rejectValue: AxiosData;
 }>(
-  'attributeCategories/edit',
+  'attributes/edit',
   async (body, thunkAPI) => {
     try {
-      await http.patch<IAddAttributeCategoryPayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
+      await http.patch<IAddAttributePayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -74,10 +74,10 @@ export const editAttributeCategory = createAsyncThunk<void, IAddAttributeCategor
   },
 );
 
-export const deleteAttributeCategory = createAsyncThunk<void, string, {
+export const deleteAttribute = createAsyncThunk<void, string, {
   rejectValue: AxiosData;
 }>(
-  'attributeCategories/delete',
+  'attributes/delete',
   async (id, thunkAPI) => {
     try {
       await http.delete(`${prefix}/${id}`);
@@ -89,10 +89,10 @@ export const deleteAttributeCategory = createAsyncThunk<void, string, {
   },
 );
 
-export const reorderAttributeCategories = createAsyncThunk<void, IReorderPayload, {
+export const reorderAttributes = createAsyncThunk<void, IReorderPayload, {
   rejectValue: AxiosData;
 }>(
-  'attributeCategories/reorder',
+  'attributes/reorder',
   async (body, thunkAPI) => {
     try {
       await http.patch<IReorderPayload>(`${prefix}/reorder`, body);
@@ -104,10 +104,10 @@ export const reorderAttributeCategories = createAsyncThunk<void, IReorderPayload
   },
 );
 
-export const searchAttributeCategories = createAsyncThunk<IAttributeCategory[], ISearchAttributeCategories, {
+export const searchAttributes = createAsyncThunk<IAttribute[], ISearchAttributes, {
   rejectValue: AxiosData;
 }>(
-  'attributeCategories/search',
+  'attributes/search',
   async (searchingData, thunkAPI) => {
     try {
       const { searchTerm, displayInHeader } = searchingData;
@@ -116,7 +116,7 @@ export const searchAttributeCategories = createAsyncThunk<IAttributeCategory[], 
         displayInHeader,
       });
 
-      const { data } = await http.get<IAttributeCategory[]>(
+      const { data } = await http.get<IAttribute[]>(
         `${prefix}/search?${queryParams}`,
       );
 

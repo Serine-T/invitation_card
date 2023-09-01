@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { IState } from './types';
 import {
-  addAttributeCategory, getAllAttributeCategories, getAttributeCategoryById, searchAttributeCategories,
+  addAttributeCategory,
+  editAttributeCategory, getAllAttributeCategories,
+  getAttributeCategoryById, searchAttributeCategories,
 } from './actions';
 
 const initialState: IState = {
@@ -28,6 +30,16 @@ const attributeCategoriesSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(addAttributeCategory.rejected, (state) => {
+      state.isLoading = false;
+    });
+
+    builder.addCase(editAttributeCategory.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(editAttributeCategory.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(editAttributeCategory.rejected, (state) => {
       state.isLoading = false;
     });
 

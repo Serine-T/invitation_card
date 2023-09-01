@@ -6,6 +6,7 @@ import bannersReducer from '@features/banners/slice';
 import subcategoriesReducer from '@features/subcategories/slice';
 import bestSellersReducer from '@features/bestSellers/slice';
 import attributeCategoriesReducer from '@features/attributeCategories/slice';
+import attributesReducer from '@features/attributes/slice';
 
 export const store = configureStore({
   reducer: {
@@ -16,7 +17,7 @@ export const store = configureStore({
     subcategories: subcategoriesReducer,
     bestSellers: bestSellersReducer,
     attributeCategories: attributeCategoriesReducer,
-
+    attributes: attributesReducer,
   },
 });
 
