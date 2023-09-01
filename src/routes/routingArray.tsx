@@ -6,7 +6,6 @@ import SuccessPage from '@containers/Auth/SuccessPage';
 import Home from '@containers/Home';
 import Dashboard from '@containers/Dashboard';
 import NotFound from '@containers/NotFound';
-import AttributeCategories from '@containers/Products/AttributeCategories';
 import Attributes from '@containers/Products/Attributes';
 import ImportProductPricing from '@containers/Products/ImportProductPricing';
 import MailingServiceFees from '@containers/Products/MailingServiceFees';
@@ -50,6 +49,9 @@ import AddBestSeller from '@containers/CMS/BestSeller/AddBestSeller';
 import EditBestSeller from '@containers/CMS/BestSeller/EditBestSeller';
 import AddProductCategory from '@containers/Products/ProductCategories/AddProductCategory';
 import EditProductCategory from '@containers/Products/ProductCategories/EditProductCategory';
+import AttributeCategories from '@containers/Products/AttributeCategories';
+import AddAttributeCategory from '@containers/Products/AttributeCategories/AddAttributeCategory';
+import EditAttributeCategory from '@containers/Products/AttributeCategories/EditAttributeCategory';
 
 export type CustomRouteObject = RouteObject & {
   isPublic?: boolean;
@@ -104,7 +106,14 @@ export const routingArray: CustomRouteObject[] = [
               { path: PAGE_ROUTES.EDIT_MENU_CATEGORY, element: <EditMenuCategory /> },
             ],
           },
-          { path: PAGE_ROUTES.ATTRIBUTE_CATEGORIES, element: <AttributeCategories /> },
+          {
+            path: PAGE_ROUTES.ATTRIBUTE_CATEGORIES,
+            children: [
+              { element: <AttributeCategories />, index: true },
+              { path: PAGE_ROUTES.ADD_ATTRIBUTE_CATEGORIES, element: <AddAttributeCategory /> },
+              { path: PAGE_ROUTES.EDIT_ATTRIBUTE_CATEGORIES, element: <EditAttributeCategory /> },
+            ],
+          },
           { path: PAGE_ROUTES.ATTRIBUTES, element: <Attributes /> },
           { path: PAGE_ROUTES.MAILING_SERVICE_FEES, element: <MailingServiceFees /> },
           { path: PAGE_ROUTES.IMPORT_PRODUCT_PRICING, element: <ImportProductPricing /> },

@@ -16,7 +16,7 @@ const PageTitle = ({ title, btnName, handleAdd, isShowBtn = true }: IStyledPageT
   return (
     <StyledTitleBox>
       <Typography variant="h2">{title}</Typography>
-      { isShowBtn && <Button width="120px" onClick={handleAdd}>{ btnName}</Button>}
+      { isShowBtn && <Button width="auto" onClick={handleAdd}>{ btnName}</Button>}
     </StyledTitleBox>
   );
 };

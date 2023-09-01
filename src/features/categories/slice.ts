@@ -11,7 +11,7 @@ const initialState: IState = {
 };
 
 const categoriesSlice = createSlice({
-  name: 'users',
+  name: 'categories',
   initialState,
   reducers: {
     setCategories: (state, { payload }) => {

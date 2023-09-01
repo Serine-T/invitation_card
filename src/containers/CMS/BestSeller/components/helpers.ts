@@ -23,7 +23,7 @@ export const defaultValues = {
 
 export const AddBestSellerSchema = yup.object().shape({
   title: yup.string().required('Title is required'),
-  description: yup.string().required('Description is required'),
+  description: yup.string().required('Description is required').max(500, 'The maximum length is 500 characters'),
   desktopPhoto: yup.string().required('Desktop photo is required'),
   mobilePhoto: yup.string().required('Mobile photo is required'),
   displayOnSite: yup.boolean().defined(),

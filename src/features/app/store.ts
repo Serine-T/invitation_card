@@ -5,15 +5,18 @@ import categoriesReducer from '@features/categories/slice';
 import bannersReducer from '@features/banners/slice';
 import subcategoriesReducer from '@features/subcategories/slice';
 import bestSellersReducer from '@features/bestSellers/slice';
+import attributeCategoriesReducer from '@features/attributeCategories/slice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     users: usersReducer,
     categories: categoriesReducer,
-    bannersSlice: bannersReducer,
+    banners: bannersReducer,
     subcategories: subcategoriesReducer,
-    bestSellersSlice: bestSellersReducer,
+    bestSellers: bestSellersReducer,
+    attributeCategories: attributeCategoriesReducer,
+
   },
 });
 
