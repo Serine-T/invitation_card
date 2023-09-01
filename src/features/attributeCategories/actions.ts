@@ -8,7 +8,7 @@ import {
   IAddAttributeCategoryPayload, IAttributeCategory, ISearchAttributeCategories,
 } from './types';
 
-const prefix = '/categories';
+const prefix = '/attributeCategory';
 
 export const addAttributeCategory = createAsyncThunk<void, IAddAttributeCategoryPayload, {
   rejectValue: AxiosData;
@@ -65,7 +65,7 @@ export const editAttributeCategory = createAsyncThunk<void, IAddAttributeCategor
   'attributeCategories/edit',
   async (body, thunkAPI) => {
     try {
-      await http.patch<IAddAttributeCategoryPayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
+      await http.put<IAddAttributeCategoryPayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -110,10 +110,9 @@ export const searchAttributeCategories = createAsyncThunk<IAttributeCategory[], 
   'attributeCategories/search',
   async (searchingData, thunkAPI) => {
     try {
-      const { searchTerm, displayInHeader } = searchingData;
+      const { searchTerm } = searchingData;
       const queryParams = constructQueryString({
         searchTerm,
-        displayInHeader,
       });
 
       const { data } = await http.get<IAttributeCategory[]>(

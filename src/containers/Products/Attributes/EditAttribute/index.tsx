@@ -6,8 +6,8 @@ import useMount from '@customHooks/useMount';
 import Loader from '@containers/common/Loader';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { selectAttributeCategories } from '@features/attributeCategories/selectors';
-import { IAttributeCategory } from '@features/attributeCategories/types';
 import { getAttributeById } from '@features/attributes/actions';
+import { IAttribute } from '@features/attributes/types';
 
 import InputsTable from '../components/InputsTable';
 
@@ -15,7 +15,7 @@ const EditAttribute = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const [attributesData, setAttributesData] = useState<IAttributeCategory | null>(null);
+  const [attributesData, setAttributesData] = useState<IAttribute | null>(null);
   const { isLoading } = useAppSelector(selectAttributeCategories);
 
   useMount(() => {

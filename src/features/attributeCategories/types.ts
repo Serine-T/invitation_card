@@ -7,9 +7,8 @@ export interface IState {
 
 export interface IAddAttributeCategoryPayload {
   id?: string;
-  title: string;
+  name: string;
   description: string;
-  displayInHeader?: boolean;
 }
 
 export interface IAttributeCategory {
@@ -17,13 +16,11 @@ export interface IAttributeCategory {
   created: string;
   updated: string;
   deleted: string;
-  title: string;
+  name: string;
   description: string;
   sort: number;
-  displayInHeader: boolean;
 }
 
 export interface ISearchAttributeCategories {
   searchTerm?: string;
-  displayInHeader?: string;
 }

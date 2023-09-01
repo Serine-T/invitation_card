@@ -44,8 +44,8 @@ const InputsTable = ({ attributeCategoriesData }: IInputsTable) => {
     dispatch(attributeCategoriesData ? editAttributeCategory(data) : addAttributeCategory(data)).unwrap().then(() => {
       navigate(PAGE_ROUTES.ATTRIBUTE_CATEGORIES);
     }).catch((e) => {
-      if (e.message === 'Category with the provided title already exists!') {
-        setError('title', { message: e.message });
+      if (e.message === 'Attribute category with provided name already exists!') {
+        setError('name', { message: e.message });
       } else {
         navigate(PAGE_ROUTES.ATTRIBUTE_CATEGORIES);
       }

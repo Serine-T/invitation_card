@@ -2,36 +2,29 @@ import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
 
 export interface IAddDataForm {
-  title: string;
+  name: string;
   description: string;
-  displayInHeader?: boolean;
 }
 
 export const defaultValues = {
-  title: '',
+  name: '',
   description: '',
-  displayInHeader: false,
 };
 
 export const AddDataSchema = yup.object().shape({
-  title: yup.string().required('Title is required'),
+  name: yup.string().required('Name is required'),
   description: yup.string().required('Description is required').max(500, 'The maximum length is 500 characters'),
 });
 
 export const inputsRows: ValidFieldNames[] = [
   {
-    label: 'Title',
-    field: 'title',
+    label: 'Name',
+    field: 'name',
     type: InputTypes.text,
   },
   {
     label: 'Description',
     field: 'description',
     type: InputTypes.textarea,
-  },
-  {
-    label: 'Display in Header',
-    field: 'displayInHeader',
-    type: InputTypes.checkbox,
   },
 ];

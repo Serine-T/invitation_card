@@ -4,7 +4,6 @@ import TableCell from '@mui/material/TableCell';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
-import DeleteBtn from '@containers/common/DeleteAction';
 import StyledTable from '@containers/common/Table';
 import DragAndDropIcon from '@containers/common/Icons/DragAndDrop';
 import Stack from '@mui/material/Stack';
@@ -21,7 +20,6 @@ import EmptyState from '@containers/common/EmptyState';
 import { getReorderedArray } from '@utils/helpers';
 import queryString from 'query-string';
 import {
-  deleteAttributeCategory,
   getAllAttributeCategories, reorderAttributeCategories, searchAttributeCategories,
 } from '@features/attributeCategories/actions';
 import { selectAttributeCategories } from '@features/attributeCategories/selectors';
@@ -56,12 +54,6 @@ const AttributeCategories = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_ATTRIBUTE_CATEGORIES), []);
   const handleEdit = (id:string) => navigate(`/products/attribute-categories/edit/${id}`);
-
-  const deleteAction = (id: string) => {
-    dispatch(deleteAttributeCategory(id)).unwrap().then(() => {
-      dispatch(getAllAttributeCategories());
-    }).catch(() => {});
-  };
 
   const { data: attributeCategories, isLoading } = useAppSelector(selectAttributeCategories);
 
@@ -101,7 +93,7 @@ const AttributeCategories = () => {
                   ref={providedDroppable.innerRef}
                 >
                   <StyledTable headCells={headSliderCells}>
-                    {attributeCategories.map(({ title, displayInHeader, id }, index) => (
+                    {attributeCategories.map(({ name, id }, index) => (
                       <Draggable
                         key={id}
                         draggableId={id}
@@ -114,7 +106,7 @@ const AttributeCategories = () => {
                               data-snapshot={snapshot}
                               {...providedDraggable.draggableProps}
                               isDraggingOver={!!snapshot.draggingOver}
-                              gridTemplateColumns="auto 138px 140px 150px"
+                              gridTemplateColumns="auto 140px"
                             >
                               <TableCell>
                                 <StyledTypography
@@ -124,10 +116,9 @@ const AttributeCategories = () => {
                                   variant="body3"
                                   cursor="pointer"
                                 >
-                                  {title}
+                                  {name}
                                 </StyledTypography>
                               </TableCell>
-                              <TableCell width="138px">{displayInHeader ? 'Yes' : 'No'}</TableCell>
                               <TableCell width="140px">
                                 <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
                                   <DragAndDropIcon />
@@ -140,12 +131,6 @@ const AttributeCategories = () => {
                                     Drag to Reorder
                                   </StyledTypography>
                                 </Stack>
-                              </TableCell>
-                              <TableCell width="150px">
-                                <DeleteBtn
-                                  deleteAction={() => deleteAction(id)}
-                                  questionText="Are you sure you want to delete this attribute category ?"
-                                />
                               </TableCell>
                             </StyledDraggableRow>
                           );
