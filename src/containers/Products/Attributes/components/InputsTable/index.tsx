@@ -11,9 +11,9 @@ import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
-import { addCategory, editCategory } from '@features/categories/actions';
-import { ICategories } from '@features/categories/types';
-import { selectCategories } from '@features/categories/selectors';
+import { IAttribute } from '@features/attributes/types';
+import { selectAttributes } from '@features/attributes/selectors';
+import { addAttribute, editAttribute } from '@features/attributes/actions';
 
 import {
   AddDataSchema,
@@ -23,16 +23,16 @@ import {
 } from './helpers';
 
 interface IInputsTable{
-  categoriesData?: ICategories;
+  attributesData?: IAttribute;
 }
 
-const InputsTable = ({ categoriesData }: IInputsTable) => {
+const InputsTable = ({ attributesData }: IInputsTable) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { actionLoading } = useAppSelector(selectCategories);
+  const { actionLoading } = useAppSelector(selectAttributes);
   const methods = useForm<IAddDataForm>({
     resolver: yupResolver(AddDataSchema),
-    defaultValues: categoriesData ?? defaultValues,
+    defaultValues: attributesData ?? defaultValues,
   });
 
   const {
@@ -41,25 +41,28 @@ const InputsTable = ({ categoriesData }: IInputsTable) => {
   } = methods;
 
   const onSubmit = (data: IAddDataForm) => {
-    dispatch(categoriesData ? editCategory(data) : addCategory(data)).unwrap().then(() => {
-      navigate(PAGE_ROUTES.MENU_CATEGORIES);
+    dispatch(attributesData ? editAttribute(data) : addAttribute(data)).unwrap().then(() => {
+      navigate(PAGE_ROUTES.ATTRIBUTES);
     }).catch((e) => {
       if (e.message === 'Category with the provided title already exists!') {
         setError('title', { message: e.message });
       } else {
-        navigate(PAGE_ROUTES.MENU_CATEGORIES);
+        navigate(PAGE_ROUTES.ATTRIBUTES);
       }
     });
   };
 
   return (
-    <TitlesWithBackButton title={categoriesData ? 'Edit Category' : 'Add Category'} path={PAGE_ROUTES.MENU_CATEGORIES}>
+    <TitlesWithBackButton
+      title={attributesData ? 'Edit Attribute' : 'Add Attribute'}
+      path={PAGE_ROUTES.ATTRIBUTES}
+    >
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}
           component="form"
         >
-          <StyledTable tableTitle="CATEGORY" colSpan={2}>
+          <StyledTable tableTitle="ATTRIBUTE" colSpan={2}>
             {inputsRows.map((item) => {
               const { label } = item;
 

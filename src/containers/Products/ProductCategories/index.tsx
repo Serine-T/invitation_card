@@ -1,9 +1,6 @@
 import { memo, useCallback, useEffect } from 'react';
 
 import TableCell from '@mui/material/TableCell';
-import { StyledTitleBox } from '@containers/common/PageTitle/styled';
-import Typography from '@mui/material/Typography';
-import Button from '@containers/common/Button';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
@@ -33,6 +30,7 @@ import queryString from 'query-string';
 import useMount from '@customHooks/useMount';
 import { getAllCategories } from '@features/categories/actions';
 import { selectCategories } from '@features/categories/selectors';
+import PageTitle from '@containers/common/PageTitle';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -57,7 +55,7 @@ const ProductCategories = () => {
   const { searchTerm = '', visibleOnSite: visibleOnSiteQuery = '', category = '' } = params as IFiltersForm;
   const isSearchTerm = searchTerm || visibleOnSiteQuery || category;
 
-  const fetchSubcategories = useCallback(() => {
+  const fetchData = useCallback(() => {
     const query = {
       searchTerm: searchTerm as string,
       visibleOnSite: visibleOnSiteQuery as string,
@@ -68,7 +66,7 @@ const ProductCategories = () => {
   }, [isSearchTerm, searchTerm, visibleOnSiteQuery, category, dispatch]);
 
   useEffect(
-    () => fetchSubcategories(),
+    () => fetchData(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [isSearchTerm, searchTerm, visibleOnSiteQuery, category],
   );
@@ -101,10 +99,12 @@ const ProductCategories = () => {
 
   return (
     <>
-      <StyledTitleBox>
-        <Typography variant="h2">Subcategories</Typography>
-        {!!categories.length && <Button width="130px" onClick={handleAdd}>Add Subcategory</Button>}
-      </StyledTitleBox>
+      <PageTitle
+        title="Product Categories"
+        btnName="Add Subcategory"
+        handleAdd={handleAdd}
+        isShowBtn={!!categories.length}
+      />
 
       {
         categories.length ? (

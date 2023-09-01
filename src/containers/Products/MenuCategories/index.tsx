@@ -35,7 +35,7 @@ const MenuCategories = () => {
   const { searchTerm = '', displayInHeader: displayInHeaderQuery = '' } = params as IFiltersForm;
   const isSearchTerm = searchTerm || displayInHeaderQuery;
 
-  const fetchCategories = useCallback(() => {
+  const fetchData = useCallback(() => {
     const query = {
       searchTerm: searchTerm as string,
       displayInHeader: displayInHeaderQuery as string,
@@ -45,7 +45,7 @@ const MenuCategories = () => {
   }, [isSearchTerm, searchTerm, displayInHeaderQuery, dispatch]);
 
   useEffect(
-    () => fetchCategories(),
+    () => fetchData(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [isSearchTerm, searchTerm, displayInHeaderQuery],
   );
