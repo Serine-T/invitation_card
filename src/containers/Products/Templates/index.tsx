@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { memo, useCallback, useEffect } from 'react';
 
 import TableCell from '@mui/material/TableCell';
@@ -80,7 +81,7 @@ const Templates = () => {
   return (
     <>
       <PageTitle title="Templates" btnName="Add Template" handleAdd={handleAdd} />
-      { (searchTerm || !!templates.length) && <SearchSection /> }
+      {(searchTerm || !!templates.length) && <SearchSection />}
       {templates.length ? (
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
