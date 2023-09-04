@@ -33,22 +33,20 @@ const AttributeCategories = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = queryString.parse(window.location.search);
-  const { searchTerm = '', displayInHeader: displayInHeaderQuery = '' } = params as IFiltersForm;
-  const isSearchTerm = searchTerm || displayInHeaderQuery;
+  const { searchTerm = '' } = params as IFiltersForm;
 
   const fetchData = useCallback(() => {
     const query = {
       searchTerm: searchTerm as string,
-      displayInHeader: displayInHeaderQuery as string,
     };
 
-    isSearchTerm ? dispatch(searchAttributeCategories(query)) : dispatch(getAllAttributeCategories());
-  }, [isSearchTerm, searchTerm, displayInHeaderQuery, dispatch]);
+    searchTerm ? dispatch(searchAttributeCategories(query)) : dispatch(getAllAttributeCategories());
+  }, [searchTerm, dispatch]);
 
   useEffect(
     () => fetchData(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isSearchTerm, searchTerm, displayInHeaderQuery],
+    [searchTerm],
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -82,7 +80,7 @@ const AttributeCategories = () => {
   return (
     <>
       <PageTitle title="Attribute Categories" btnName="Add Attribute Category" handleAdd={handleAdd} />
-      { (isSearchTerm || !!attributeCategories.length) && <SearchSection /> }
+      { (searchTerm || !!attributeCategories.length) && <SearchSection /> }
       {attributeCategories.length ? (
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
@@ -145,7 +143,7 @@ const AttributeCategories = () => {
         </DragDropContext>
       ) : (
         <EmptyState
-          text={isSearchTerm ? 'No search results found'
+          text={searchTerm ? 'No search results found'
             : 'You don’t have any attribute categories, please add new to proceed'}
         />
       )}

@@ -7,13 +7,3 @@ export interface IFiltersForm {
 
 export const FiltersSchema = yup.object().shape({
 });
-
-export const visibilityOptions = [
-  {
-    optionName: 'Visible',
-    value: 'true',
-  }, {
-    optionName: 'Not visible',
-    value: 'false',
-  },
-];

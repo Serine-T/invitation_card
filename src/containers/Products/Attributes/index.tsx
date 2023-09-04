@@ -32,22 +32,20 @@ const Attribute = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = queryString.parse(window.location.search);
-  const { searchTerm = '', displayInHeader: displayInHeaderQuery = '' } = params as IFiltersForm;
-  const isSearchTerm = searchTerm || displayInHeaderQuery;
+  const { searchTerm = '' } = params as IFiltersForm;
 
   const fetchData = useCallback(() => {
     const query = {
       searchTerm: searchTerm as string,
-      displayInHeader: displayInHeaderQuery as string,
     };
 
-    isSearchTerm ? dispatch(searchAttributes(query)) : dispatch(getAllAttributes());
-  }, [isSearchTerm, searchTerm, displayInHeaderQuery, dispatch]);
+    searchTerm ? dispatch(searchAttributes(query)) : dispatch(getAllAttributes());
+  }, [searchTerm, dispatch]);
 
   useEffect(
     () => fetchData(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isSearchTerm, searchTerm, displayInHeaderQuery],
+    [searchTerm, searchTerm],
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,7 +85,7 @@ const Attribute = () => {
   return (
     <>
       <PageTitle title="Attributes" btnName="Add Attribute" handleAdd={handleAdd} />
-      { (isSearchTerm || !!attributes.length) && <SearchSection /> }
+      { (searchTerm || !!attributes.length) && <SearchSection /> }
       {attributes.length ? (
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
@@ -157,7 +155,7 @@ const Attribute = () => {
         </DragDropContext>
       ) : (
         <EmptyState
-          text={isSearchTerm ? 'No search results found'
+          text={searchTerm ? 'No search results found'
             : 'You don’t have any attribute, please add new to proceed'}
         />
       )}

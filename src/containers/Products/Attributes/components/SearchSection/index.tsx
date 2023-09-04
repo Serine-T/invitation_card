@@ -5,7 +5,6 @@ import Input from '@containers/common/Input';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { StyledSearchRows } from '@containers/common/StyledSearchContainer/styled';
-import Select from '@containers/common/Select';
 import Stack from '@mui/material/Stack';
 import Button from '@containers/common/Button';
 import StyledTypography from '@containers/common/StyledTypography';
@@ -16,7 +15,6 @@ import { constructQueryString } from '@utils/helpers';
 
 import {
   FiltersSchema, IFiltersForm,
-  visibilityOptions,
 } from './helpers';
 
 const SearchSection = () => {
@@ -67,13 +65,6 @@ const SearchSection = () => {
               label="Search"
               placeholder="Search"
               errorMessage={errors?.searchTerm?.message}
-            />
-            <Select
-              label="Visible on site"
-              width="200px"
-              name="displayInHeader"
-              errorMessage={errors?.displayInHeader?.message}
-              options={visibilityOptions}
             />
           </StyledSearchRows>
           <Stack direction="row" gap="16px" alignItems="center">
