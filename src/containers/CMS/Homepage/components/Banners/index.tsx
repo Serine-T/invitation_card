@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import TableCell from '@mui/material/TableCell';
 import { useNavigate } from 'react-router-dom';
 import StyledTypography from '@containers/common/StyledTypography';
-import DeleteBtn from '@containers/common/DeleteAction';
+import DeleteBtn from '@containers/common/Table/TablesActions/DeleteAction';
 import StyledTable from '@containers/common/Table';
 import DragAndDropIcon from '@containers/common/Icons/DragAndDrop';
 import Stack from '@mui/material/Stack';
@@ -13,7 +13,7 @@ import {
   Draggable, DroppableProvided,
   DropResult,
 } from '@hello-pangea/dnd';
-import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
+import { StyledDraggableRow } from '@containers/common/Table/TablesActions/DraggableRow/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { selectBanners } from '@features/banners/selectors';
 import { setBanners, setSilders } from '@features/banners/slice';

@@ -41,5 +41,4 @@ export interface IAttribute {
 
 export interface ISearchAttributes {
   searchTerm?: string;
-  displayInHeader?: string;
 }

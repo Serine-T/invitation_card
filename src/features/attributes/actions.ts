@@ -25,23 +25,6 @@ export const addAttribute = createAsyncThunk<void, IAddAttributePayload, {
   },
 );
 
-export const getAllAttributes = createAsyncThunk<IAttribute[], void, {
-  rejectValue: AxiosData;
-}>(
-  'attributes/all',
-  async (_, thunkAPI) => {
-    try {
-      const { data } = await http.get<IAttribute[]>(prefix);
-
-      return data;
-    } catch (error) {
-      const errorInfo = customErrorHandling(error);
-
-      return thunkAPI.rejectWithValue(errorInfo);
-    }
-  },
-);
-
 export const getAttributeById = createAsyncThunk<IAttribute, string, {
   rejectValue: AxiosData;
 }>(
@@ -65,7 +48,7 @@ export const editAttribute = createAsyncThunk<void, IAddAttributePayload, {
   'attributes/edit',
   async (body, thunkAPI) => {
     try {
-      await http.patch<IAddAttributePayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
+      await http.put<IAddAttributePayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -110,10 +93,9 @@ export const searchAttributes = createAsyncThunk<IAttribute[], ISearchAttributes
   'attributes/search',
   async (searchingData, thunkAPI) => {
     try {
-      const { searchTerm, displayInHeader } = searchingData;
+      const { searchTerm } = searchingData;
       const queryParams = constructQueryString({
         searchTerm,
-        displayInHeader,
       });
 
       const { data } = await http.get<IAttribute[]>(

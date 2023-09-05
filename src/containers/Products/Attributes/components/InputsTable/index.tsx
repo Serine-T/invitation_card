@@ -17,6 +17,8 @@ import { addAttribute, editAttribute } from '@features/attributes/actions';
 import { selectAttributeCategories } from '@features/attributeCategories/selectors';
 import { getOptionsArray } from '@utils/helpers';
 import Input from '@containers/common/Input';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
 
 import {
   AddDataSchema,
@@ -98,12 +100,17 @@ const InputsTable = ({ attributesData }: IInputsTable) => {
             <StyledTableRow>
               <StyledTableCell>Default Price:</StyledTableCell>
               <TableCell>
-                <Input
-                  type="text"
-                  placeholder="Default Price"
-                  {...register('defaultPrice')}
-                  errorMessage={errors?.defaultPrice?.message as string}
-                />
+                <Stack direction="row" alignItems="center" gap="8px">
+                  <Typography>$</Typography>
+                  <Input
+                    width="80px"
+                    type="text"
+                    placeholder="00.00"
+                    {...register('defaultPrice')}
+                    errorMessage={errors?.defaultPrice?.message as string}
+                  />
+                </Stack>
+
               </TableCell>
             </StyledTableRow>
             <StyledTableRow>

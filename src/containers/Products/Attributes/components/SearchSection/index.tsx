@@ -21,13 +21,12 @@ const SearchSection = () => {
   const navigate = useNavigate();
   const params = queryString.parse(window.location.search);
 
-  const { searchTerm = '', displayInHeader = '' } = params;
+  const { searchTerm = '' } = params;
 
   const methods = useForm<IFiltersForm>({
     resolver: yupResolver(FiltersSchema),
     defaultValues: {
       searchTerm: searchTerm as string,
-      displayInHeader: displayInHeader as string,
     },
   });
 
@@ -40,14 +39,13 @@ const SearchSection = () => {
   const onSubmit = (data: IFiltersForm) => {
     const queryParams = constructQueryString({
       searchTerm: data.searchTerm,
-      displayInHeader: data.displayInHeader,
     });
 
-    navigate(`${PAGE_ROUTES.ATTRIBUTE_CATEGORIES}?${queryParams}`);
+    navigate(`${PAGE_ROUTES.ATTRIBUTES}?${queryParams}`);
   };
 
   const handleReset = () => {
-    navigate(`${PAGE_ROUTES.ATTRIBUTE_CATEGORIES}`);
+    navigate(`${PAGE_ROUTES.ATTRIBUTES}`);
   };
 
   return (

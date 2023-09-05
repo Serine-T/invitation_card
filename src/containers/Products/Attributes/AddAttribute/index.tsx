@@ -15,7 +15,6 @@ const AddAttribute = () => {
     dispatch(getAllAttributeCategories());
   });
 
-  console.log('attributeCategories**', attributeCategories);
   if (!attributeCategories.length && isLoading) {
     return <Loader />;
   }

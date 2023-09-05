@@ -6,12 +6,12 @@ import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
 import StyledTable from '@containers/common/Table';
 import Box from '@mui/material/Box';
-import DndBtn from '@containers/common/DndAction';
+import DndBtn from '@containers/common/Table/TablesActions/DndAction';
 import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
-import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
+import { StyledDraggableRow } from '@containers/common/Table/TablesActions/DraggableRow/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import Loader from '@containers/common/Loader';
 import PageTitle from '@containers/common/PageTitle';
@@ -20,7 +20,6 @@ import { getReorderedArray } from '@utils/helpers';
 import queryString from 'query-string';
 import { reorderAttributes, searchAttributes } from '@features/attributes/actions';
 import { selectAttributes } from '@features/attributes/selectors';
-import { setAttributes } from '@features/attributes/slice';
 
 import { IFiltersForm } from './components/SearchSection/helpers';
 import SearchSection from './components/SearchSection';
@@ -51,23 +50,21 @@ const Attribute = () => {
 
   const { data: attributesList, isLoading } = useAppSelector(selectAttributes);
 
-  const items = [...attributesList];
-
   const onDragEnd = (result: DropResult) => {
-    console.log('ejhfuhref', result);
+    const items = [...attributesList];
+    const { destination, draggableId } = result;
 
-    const { destination } = result;
+    const draggableItem = items.find((item) => item.attributes.find((i) => i.id === draggableId));
 
-    if (destination) {
-      const [removed] = items.splice(result.source.index, 1);
+    if (destination && draggableItem) {
+      const draggableAttributes = [...draggableItem.attributes];
+      const [removed] = draggableAttributes.splice(result.source.index, 1);
 
-      items.splice(destination.index, 0, removed);
+      draggableAttributes.splice(destination.index, 0, removed);
 
-      const sortedData = getReorderedArray(items);
+      const sortedData = getReorderedArray(draggableAttributes);
 
-      dispatch(reorderAttributes(sortedData)).unwrap().then(() => {
-        dispatch(setAttributes(items));
-      }).catch(() => dispatch(searchAttributes(query)));
+      dispatch(reorderAttributes(sortedData)).unwrap().finally(() => fetchData());
     }
   };
 
@@ -81,55 +78,57 @@ const Attribute = () => {
       { (searchTerm || !!attributesList.length) && <SearchSection /> }
       {attributesList.length ? attributesList.map(({ id: attributeId, name: attributeName, attributes }) => {
         return (
-          <DragDropContext onDragEnd={onDragEnd} key={attributeId}>
-            <Droppable droppableId="droppable">
-              {(providedDroppable: DroppableProvided) => {
-                return (
-                  <Box
-                    {...providedDroppable.droppableProps}
-                    ref={providedDroppable.innerRef}
-                  >
-                    <StyledTable headCells={[{ label: attributeName }, { label: 'ACTIONS' }]}>
-                      {attributes.map(({ name, id }, index) => (
-                        <Draggable
-                          key={id}
-                          draggableId={id}
-                          index={index}
-                        >
-                          {(providedDraggable, snapshot) => {
-                            return (
-                              <StyledDraggableRow
-                                ref={providedDraggable.innerRef}
-                                data-snapshot={snapshot}
-                                {...providedDraggable.draggableProps}
-                                isDraggingOver={!!snapshot.draggingOver}
-                                gridTemplateColumns="auto 260px"
-                              >
-                                <TableCell>
-                                  <StyledTypography
-                                    color="blue"
-                                    underLine
-                                    onClick={() => handleEdit(id)}
-                                    variant="body3"
-                                    cursor="pointer"
-                                  >
-                                    {name}
-                                  </StyledTypography>
-                                </TableCell>
-                                <TableCell width="260px">
-                                  <DndBtn providedDraggable={providedDraggable} />
-                                </TableCell>
-                              </StyledDraggableRow>
-                            );
-                          }}
-                        </Draggable>
-                      ))}
-                    </StyledTable>
-                  </Box>
-                );
-              }}
-            </Droppable>
-          </DragDropContext>
+          <Box mb="24px">
+            <DragDropContext onDragEnd={onDragEnd} key={attributeId}>
+              <Droppable droppableId="droppable">
+                {(providedDroppable: DroppableProvided) => {
+                  return (
+                    <Box
+                      {...providedDroppable.droppableProps}
+                      ref={providedDroppable.innerRef}
+                    >
+                      <StyledTable headCells={[{ label: attributeName }, { label: 'ACTIONS' }]}>
+                        {attributes.map(({ name, id }, index) => (
+                          <Draggable
+                            key={id}
+                            draggableId={id}
+                            index={index}
+                          >
+                            {(providedDraggable, snapshot) => {
+                              return (
+                                <StyledDraggableRow
+                                  ref={providedDraggable.innerRef}
+                                  data-snapshot={snapshot}
+                                  {...providedDraggable.draggableProps}
+                                  isDraggingOver={!!snapshot.draggingOver}
+                                  gridTemplateColumns="auto 260px"
+                                >
+                                  <TableCell>
+                                    <StyledTypography
+                                      color="blue"
+                                      underLine
+                                      onClick={() => handleEdit(id)}
+                                      variant="body3"
+                                      cursor="pointer"
+                                    >
+                                      {name}
+                                    </StyledTypography>
+                                  </TableCell>
+                                  <TableCell width="260px">
+                                    <DndBtn providedDraggable={providedDraggable} />
+                                  </TableCell>
+                                </StyledDraggableRow>
+                              );
+                            }}
+                          </Draggable>
+                        ))}
+                      </StyledTable>
+                    </Box>
+                  );
+                }}
+              </Droppable>
+            </DragDropContext>
+          </Box>
         );
       })
         : (

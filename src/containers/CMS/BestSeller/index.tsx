@@ -4,7 +4,7 @@ import TableCell from '@mui/material/TableCell';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
-import DeleteBtn from '@containers/common/DeleteAction';
+import DeleteBtn from '@containers/common/Table/TablesActions/DeleteAction';
 import StyledTable from '@containers/common/Table';
 import DragAndDropIcon from '@containers/common/Icons/DragAndDrop';
 import Stack from '@mui/material/Stack';
@@ -14,7 +14,7 @@ import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
-import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
+import { StyledDraggableRow } from '@containers/common/Table/TablesActions/DraggableRow/styled';
 import Loader from '@containers/common/Loader';
 import useMount from '@customHooks/useMount';
 import { deleteBestSeller, getAllBestSellers, reorderBestSellers } from '@features/bestSellers/actions';

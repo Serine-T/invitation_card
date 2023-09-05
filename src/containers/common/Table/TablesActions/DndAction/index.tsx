@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import { DraggableProvided } from '@hello-pangea/dnd';
 import DragAndDropIcon from '@containers/common/Icons/DragAndDrop';
 
-import StyledTypography from '../StyledTypography';
+import StyledTypography from '../../../StyledTypography';
 
 interface IDeleteAction {
   providedDraggable: DraggableProvided;

@@ -4,7 +4,7 @@ import TableCell from '@mui/material/TableCell';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
-import DeleteBtn from '@containers/common/DeleteAction';
+import DeleteBtn from '@containers/common/Table/TablesActions/DeleteAction';
 import StyledTable from '@containers/common/Table';
 import DragAndDropIcon from '@containers/common/Icons/DragAndDrop';
 import Stack from '@mui/material/Stack';
@@ -13,7 +13,7 @@ import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
-import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
+import { StyledDraggableRow } from '@containers/common/Table/TablesActions/DraggableRow/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { deleteCategory, getAllCategories, reorderCategories, searchCategories } from '@features/categories/actions';
 import { selectCategories } from '@features/categories/selectors';

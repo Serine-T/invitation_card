@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { IState } from './types';
 import {
-  addAttribute, editAttribute, getAllAttributes, getAttributeById, searchAttributes,
+  addAttribute, editAttribute, getAttributeById, searchAttributes,
 } from './actions';
 
 const initialState: IState = {
@@ -39,17 +39,6 @@ const attributesSlice = createSlice({
     });
     builder.addCase(editAttribute.rejected, (state) => {
       state.actionLoading = false;
-    });
-
-    builder.addCase(getAllAttributes.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(getAllAttributes.fulfilled, (state, { payload }) => {
-      state.data = payload;
-      state.isLoading = false;
-    });
-    builder.addCase(getAllAttributes.rejected, (state) => {
-      state.isLoading = false;
     });
 
     builder.addCase(getAttributeById.pending, (state) => {
