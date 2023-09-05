@@ -1,35 +1,29 @@
 import { memo } from 'react';
 
-import { useConfirm } from 'material-ui-confirm';
+import Stack from '@mui/material/Stack';
+import { DraggableProvided } from '@hello-pangea/dnd';
+import DragAndDropIcon from '@containers/common/Icons/DragAndDrop';
 
 import StyledTypography from '../StyledTypography';
-import confirmOptionsDialog from '../Confirm';
 
 interface IDeleteAction {
-  questionText: string;
-  deleteAction: ()=> void;
+  providedDraggable: DraggableProvided;
 }
 
-const DeleteBtn = ({ questionText, deleteAction }: IDeleteAction) => {
-  const confirm = useConfirm();
-  const handleDelete = async () => {
-    try {
-      await confirm(confirmOptionsDialog({ questionText }));
-      await deleteAction();
-    } catch { }
-  };
-
+const DndButton = ({ providedDraggable }: IDeleteAction) => {
   return (
-    <StyledTypography
-      aria-disabled
-      onClick={handleDelete}
-      color="blue"
-      cursor="pointer"
-      variant="body3"
-    >
-      Delete
-    </StyledTypography>
+    <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
+      <DragAndDropIcon />
+      <StyledTypography
+        color="blue"
+        variant="body3"
+        cursor="grab"
+        ml="8px"
+      >
+        Drag to Reorder
+      </StyledTypography>
+    </Stack>
   );
 };
 
-export default memo(DeleteBtn);
+export default memo(DndButton);

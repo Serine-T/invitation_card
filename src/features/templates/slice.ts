@@ -24,23 +24,23 @@ const templateCategoriesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(addTemplate.pending, (state) => {
-      state.isLoading = true;
+      state.actionLoading = true;
     });
     builder.addCase(addTemplate.fulfilled, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
     builder.addCase(addTemplate.rejected, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
 
     builder.addCase(editTemplate.pending, (state) => {
-      state.isLoading = true;
+      state.actionLoading = true;
     });
     builder.addCase(editTemplate.fulfilled, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
     builder.addCase(editTemplate.rejected, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
 
     builder.addCase(getAllTemplates.pending, (state) => {

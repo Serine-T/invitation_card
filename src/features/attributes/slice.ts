@@ -22,23 +22,23 @@ const attributesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(addAttribute.pending, (state) => {
-      state.isLoading = true;
+      state.actionLoading = true;
     });
     builder.addCase(addAttribute.fulfilled, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
     builder.addCase(addAttribute.rejected, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
 
     builder.addCase(editAttribute.pending, (state) => {
-      state.isLoading = true;
+      state.actionLoading = true;
     });
     builder.addCase(editAttribute.fulfilled, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
     builder.addCase(editAttribute.rejected, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
 
     builder.addCase(getAllAttributes.pending, (state) => {
