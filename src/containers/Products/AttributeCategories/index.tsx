@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
 import StyledTable from '@containers/common/Table';
-import DragAndDropIcon from '@containers/common/Icons/DragAndDrop';
-import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import {
   DragDropContext, Droppable,
@@ -24,6 +22,7 @@ import {
 } from '@features/attributeCategories/actions';
 import { selectAttributeCategories } from '@features/attributeCategories/selectors';
 import { setAttributeCategories } from '@features/attributeCategories/slice';
+import DndBtn from '@containers/common/Table/TablesActions/DndAction';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -118,17 +117,7 @@ const AttributeCategories = () => {
                                 </StyledTypography>
                               </TableCell>
                               <TableCell width="260px">
-                                <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
-                                  <DragAndDropIcon />
-                                  <StyledTypography
-                                    color="blue"
-                                    variant="body3"
-                                    cursor="grab"
-                                    ml="8px"
-                                  >
-                                    Drag to Reorder
-                                  </StyledTypography>
-                                </Stack>
+                                <DndBtn providedDraggable={providedDraggable} />
                               </TableCell>
                             </StyledDraggableRow>
                           );

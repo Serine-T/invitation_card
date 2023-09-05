@@ -6,13 +6,12 @@ import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
 import DeleteBtn from '@containers/common/Table/TablesActions/DeleteAction';
 import StyledTable from '@containers/common/Table';
-import DragAndDropIcon from '@containers/common/Icons/DragAndDrop';
-import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
+import DndBtn from '@containers/common/Table/TablesActions/DndAction';
 import { StyledDraggableRow } from '@containers/common/Table/TablesActions/DraggableRow/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import {
@@ -149,17 +148,8 @@ const ProductCategories = () => {
                                     <TableCell width="282px">{printTypeName(printType)}</TableCell>
                                     <TableCell width="138px">{visibleOnSite ? 'Yes' : 'No'}</TableCell>
                                     <TableCell width="140px">
-                                      <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
-                                        <DragAndDropIcon />
-                                        <StyledTypography
-                                          color="blue"
-                                          variant="body3"
-                                          cursor="grab"
-                                          ml="8px"
-                                        >
-                                          Drag to Reorder
-                                        </StyledTypography>
-                                      </Stack>
+                                      <DndBtn providedDraggable={providedDraggable} />
+
                                     </TableCell>
                                     <TableCell width="150px">
                                       <DeleteBtn

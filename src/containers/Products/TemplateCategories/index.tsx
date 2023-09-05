@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
 import StyledTable from '@containers/common/Table';
-import DragAndDropIcon from '@containers/common/Icons/DragAndDrop';
-import Stack from '@mui/material/Stack';
+import DndBtn from '@containers/common/Table/TablesActions/DndAction';
 import Box from '@mui/material/Box';
 import {
   DragDropContext, Droppable,
@@ -118,17 +117,7 @@ const TemplateCategories = () => {
                                 </StyledTypography>
                               </TableCell>
                               <TableCell width="140px">
-                                <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
-                                  <DragAndDropIcon />
-                                  <StyledTypography
-                                    color="blue"
-                                    variant="body3"
-                                    cursor="grab"
-                                    ml="8px"
-                                  >
-                                    Drag to Reorder
-                                  </StyledTypography>
-                                </Stack>
+                                <DndBtn providedDraggable={providedDraggable} />
                               </TableCell>
                             </StyledDraggableRow>
                           );
