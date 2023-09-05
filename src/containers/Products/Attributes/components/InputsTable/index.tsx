@@ -14,12 +14,16 @@ import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { IAttribute } from '@features/attributes/types';
 import { selectAttributes } from '@features/attributes/selectors';
 import { addAttribute, editAttribute } from '@features/attributes/actions';
+import { selectAttributeCategories } from '@features/attributeCategories/selectors';
+import { getOptionsArray } from '@utils/helpers';
+import Input from '@containers/common/Input';
 
 import {
   AddDataSchema,
   IAddDataForm,
   inputsRows,
   defaultValues,
+  formattedPayload,
 } from './helpers';
 
 interface IInputsTable{
@@ -27,6 +31,10 @@ interface IInputsTable{
 }
 
 const InputsTable = ({ attributesData }: IInputsTable) => {
+  const { data: attributeCategories } = useAppSelector(selectAttributeCategories);
+
+  const categoriesList = getOptionsArray(attributeCategories, 'name');
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { actionLoading } = useAppSelector(selectAttributes);
@@ -38,14 +46,20 @@ const InputsTable = ({ attributesData }: IInputsTable) => {
   const {
     handleSubmit,
     setError,
+    register,
+    formState: { errors },
   } = methods;
 
   const onSubmit = (data: IAddDataForm) => {
-    dispatch(attributesData ? editAttribute(data) : addAttribute(data)).unwrap().then(() => {
+    const payload = formattedPayload(data);
+
+    dispatch(attributesData ? editAttribute(payload) : addAttribute(payload)).unwrap().then(() => {
       navigate(PAGE_ROUTES.ATTRIBUTES);
     }).catch((e) => {
-      if (e.message === 'Category with the provided title already exists!') {
-        setError('title', { message: e.message });
+      if (e.message === 'Attribute with the provided name already exists in this attribute category!') {
+        setError('name', { message: e.message });
+      } else if (e.message === 'Attribute with the provided nickname already exists in this attribute category!') {
+        setError('nickname', { message: e.message });
       } else {
         navigate(PAGE_ROUTES.ATTRIBUTES);
       }
@@ -70,11 +84,40 @@ const InputsTable = ({ attributesData }: IInputsTable) => {
                 <StyledTableRow key={label}>
                   <StyledTableCell>{`${label}:`}</StyledTableCell>
                   <TableCell>
-                    <ReusableFields {...item} />
+                    <ReusableFields
+                      {...item}
+                      selectList={[{
+                        field: 'attributeCategory',
+                        options: categoriesList,
+                      }]}
+                    />
                   </TableCell>
                 </StyledTableRow>
               );
             })}
+            <StyledTableRow>
+              <StyledTableCell>Default Price:</StyledTableCell>
+              <TableCell>
+                <Input
+                  type="text"
+                  placeholder="Default Price"
+                  {...register('defaultPrice')}
+                  errorMessage={errors?.defaultPrice?.message as string}
+                />
+              </TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <StyledTableCell>4over Code:</StyledTableCell>
+              <TableCell>
+                <Input
+                  type="text"
+                  placeholder="4over Code"
+                  {...register('fouroverCode')}
+                  errorMessage={errors?.fouroverCode?.message as string}
+                />
+              </TableCell>
+            </StyledTableRow>
+
           </StyledTable>
           <StyledButton
             type="submit"

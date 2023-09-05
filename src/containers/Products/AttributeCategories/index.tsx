@@ -104,7 +104,7 @@ const AttributeCategories = () => {
                               data-snapshot={snapshot}
                               {...providedDraggable.draggableProps}
                               isDraggingOver={!!snapshot.draggingOver}
-                              gridTemplateColumns="auto 140px"
+                              gridTemplateColumns="auto 260px"
                             >
                               <TableCell>
                                 <StyledTypography
@@ -117,7 +117,7 @@ const AttributeCategories = () => {
                                   {name}
                                 </StyledTypography>
                               </TableCell>
-                              <TableCell width="140px">
+                              <TableCell width="260px">
                                 <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
                                   <DragAndDropIcon />
                                   <StyledTypography

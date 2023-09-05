@@ -7,20 +7,36 @@ export interface IState {
 
 export interface IAddAttributePayload {
   id?: string;
-  title: string;
-  description: string;
-  displayInHeader?: boolean;
+  name: string;
+  attributeCategory: string;
+  nickname: string;
+  showInCustomEstimates?: boolean;
+  defaultPrice: number;
+  fouroverCode: string;
+}
+export interface Attribute {
+  id: string;
+  created: string;
+  updated: string;
+  deleted: any;
+  name: string;
+  nickname: string;
+  showInCustomEstimates: boolean;
+  defaultPrice: number;
+  fouroverCode: string;
+  sort: number;
+  attributeCategory: string;
 }
 
 export interface IAttribute {
   id: string;
   created: string;
   updated: string;
-  deleted: string;
-  title: string;
+  deleted: any;
+  name: string;
   description: string;
   sort: number;
-  displayInHeader: boolean;
+  attributes: Attribute[];
 }
 
 export interface ISearchAttributes {
