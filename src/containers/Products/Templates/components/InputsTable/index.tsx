@@ -55,7 +55,7 @@ const InputsTable = ({ templatesData }: IInputsTable) => {
     dispatch(templatesData ? editTemplate(payload) : addTemplate(payload)).unwrap().then(() => {
       navigate(PAGE_ROUTES.TEMPLATES);
     }).catch((e) => {
-      if (e.message === 'Template with provided name already exists!') {
+      if (e.message === 'Template with the provided name, categoryId and templateId already exists!') {
         setError('name', { message: e.message });
       } else {
         navigate(PAGE_ROUTES.TEMPLATES);

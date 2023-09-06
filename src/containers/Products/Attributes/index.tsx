@@ -41,7 +41,7 @@ const Attribute = () => {
   useEffect(
     () => fetchData(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [searchTerm, searchTerm],
+    [searchTerm],
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

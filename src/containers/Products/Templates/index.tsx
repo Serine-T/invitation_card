@@ -21,7 +21,7 @@ import { getReorderedArray } from '@utils/helpers';
 import queryString from 'query-string';
 import {
   deleteTemplate,
-  getAllTemplates, reorderTemplates, searchTemplates,
+  reorderTemplates, searchTemplates,
 } from '@features/templates/actions';
 import { selectTemplates } from '@features/templates/selectors';
 import { Typography } from '@mui/material';
@@ -35,14 +35,14 @@ const Templates = () => {
   const navigate = useNavigate();
   const params = queryString.parse(window.location.search);
   const { searchTerm = '' } = params as IFiltersForm;
+  const query = {
+    searchTerm: searchTerm as string,
+  };
 
   const fetchData = useCallback(() => {
-    const query = {
-      searchTerm: searchTerm as string,
-    };
-
-    searchTerm ? dispatch(searchTemplates(query)) : dispatch(getAllTemplates());
-  }, [searchTerm, dispatch]);
+    dispatch(searchTemplates(query));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm]);
 
   useEffect(
     () => fetchData(),
@@ -55,7 +55,7 @@ const Templates = () => {
   const handleEdit = (id:string) => navigate(`/products/templates/edit/${id}`);
   const deleteAction = (id: string) => {
     dispatch(deleteTemplate(id)).unwrap().then(() => {
-      dispatch(getAllTemplates());
+      fetchData();
     }).catch(() => {});
   };
 
@@ -88,7 +88,7 @@ const Templates = () => {
       {(searchTerm || !!templatesList.length) && <SearchSection />}
       {templatesList.length ? templatesList.map(({ id: templateId, title, templates }) => (
         <Box mb="32px" key={templateId}>
-          <Typography>{ title}</Typography>
+          <Typography variant="h5" mb="16px">{ title}</Typography>
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="droppable">
               {(providedDroppable: DroppableProvided) => {
