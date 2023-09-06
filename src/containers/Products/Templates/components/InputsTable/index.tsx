@@ -14,12 +14,16 @@ import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { ITemplate } from '@features/templates/types';
 import { selectTemplates } from '@features/templates/selectors';
 import { addTemplate, editTemplate } from '@features/templates/actions';
+import { selectSubcategories } from '@features/subcategories/selectors';
+import { getOptionsArray } from '@utils/helpers';
+import { selectTemplateCategories } from '@features/templateCategories/selectors';
 
 import {
   AddDataSchema,
   IAddDataForm,
   inputsRows,
   defaultValues,
+  formattedPayload,
 } from './helpers';
 
 interface IInputsTable{
@@ -30,6 +34,11 @@ const InputsTable = ({ templatesData }: IInputsTable) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { actionLoading } = useAppSelector(selectTemplates);
+  const { data: subcategories } = useAppSelector(selectSubcategories);
+  const { data: templateCategories } = useAppSelector(selectTemplateCategories);
+
+  const subcategoriesList = getOptionsArray(subcategories);
+  const templateCategoriesList = getOptionsArray(templateCategories);
   const methods = useForm<IAddDataForm>({
     resolver: yupResolver(AddDataSchema),
     defaultValues: templatesData ?? defaultValues,
@@ -41,7 +50,9 @@ const InputsTable = ({ templatesData }: IInputsTable) => {
   } = methods;
 
   const onSubmit = (data: IAddDataForm) => {
-    dispatch(templatesData ? editTemplate(data) : addTemplate(data)).unwrap().then(() => {
+    const payload = formattedPayload(data);
+
+    dispatch(templatesData ? editTemplate(payload) : addTemplate(payload)).unwrap().then(() => {
       navigate(PAGE_ROUTES.TEMPLATES);
     }).catch((e) => {
       if (e.message === 'Template with provided name already exists!') {
@@ -70,7 +81,16 @@ const InputsTable = ({ templatesData }: IInputsTable) => {
                 <StyledTableRow key={label}>
                   <StyledTableCell>{`${label}:`}</StyledTableCell>
                   <TableCell>
-                    <ReusableFields {...item} />
+                    <ReusableFields
+                      {...item}
+                      selectList={[{
+                        field: 'subCategoryId',
+                        options: subcategoriesList,
+                      }, {
+                        field: 'templateCategoryId',
+                        options: templateCategoriesList,
+                      }]}
+                    />
                   </TableCell>
                 </StyledTableRow>
               );

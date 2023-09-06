@@ -88,7 +88,7 @@ const Attribute = () => {
                       ref={providedDroppable.innerRef}
                     >
                       <StyledTable headCells={[{ label: attributeName }, { label: 'ACTIONS' }]}>
-                        {attributes.map(({ name, id }, index) => (
+                        {attributes.map(({ name, id, nickname }, index) => (
                           <Draggable
                             key={id}
                             draggableId={id}
@@ -111,7 +111,7 @@ const Attribute = () => {
                                       variant="body3"
                                       cursor="pointer"
                                     >
-                                      {name}
+                                      {`${name} / ${nickname}`}
                                     </StyledTypography>
                                   </TableCell>
                                   <TableCell width="260px">

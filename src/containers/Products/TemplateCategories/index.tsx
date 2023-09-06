@@ -130,7 +130,7 @@ const TemplateCategories = () => {
                               <TableCell width="150px">
                                 <DeleteBtn
                                   deleteAction={() => deleteAction(id)}
-                                  questionText="Are you sure you want to delete this category ?"
+                                  questionText="Are you sure you want to delete this template category ?"
                                 />
                               </TableCell>
                             </StyledDraggableRow>

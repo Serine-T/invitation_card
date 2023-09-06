@@ -50,7 +50,7 @@ const Templates = () => {
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_TEMPLATE_CATEGORY), []);
+  const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_TEMPLATE), []);
   const handleEdit = (id:string) => navigate(`/products/templates/edit/${id}`);
 
   const { data: templates, isLoading } = useAppSelector(selectTemplates);

@@ -37,6 +37,8 @@ enum PAGE_ROUTES {
   MAILING_SERVICE_FEES = '/products/mailing-service-fees',
   IMPORT_PRODUCT_PRICING = '/products/import-product-pricing',
   TEMPLATES = '/products/templates',
+  ADD_TEMPLATE = '/products/templates/add',
+  EDIT_TEMPLATE = '/products/templates/edit/:id',
   TEMPLATE_CATEGORIES = '/products/template-categories',
   ADD_TEMPLATE_CATEGORY = '/products/template-categories/add',
   EDIT_TEMPLATE_CATEGORY = '/products/template-categories/edit/:id',

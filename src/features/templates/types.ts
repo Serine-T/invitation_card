@@ -8,7 +8,9 @@ export interface IState {
 export interface IAddTemplatePayload {
   id?: string;
   name: string;
-  description: string;
+  photo: string;
+  subCategoryId:string ;
+  templateCategoryId?:string | null;
 }
 
 export interface ITemplate {
