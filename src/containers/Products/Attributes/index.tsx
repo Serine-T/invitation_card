@@ -3,15 +3,14 @@ import { memo, useCallback, useEffect } from 'react';
 import TableCell from '@mui/material/TableCell';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
-import StyledTypography from '@containers/common/StyledTypography';
 import StyledTable from '@containers/common/Table';
 import Box from '@mui/material/Box';
-import DndBtn from '@containers/common/Table/TablesActions/DndAction';
+import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
 import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
-import { StyledDraggableRow } from '@containers/common/Table/TablesActions/DraggableRow/styled';
+import { StyledDraggableRow } from '@containers/common/Table/components/TablesActions/DraggableRow/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import Loader from '@containers/common/Loader';
 import PageTitle from '@containers/common/PageTitle';
@@ -20,6 +19,7 @@ import { getReorderedArray } from '@utils/helpers';
 import queryString from 'query-string';
 import { reorderAttributes, searchAttributes } from '@features/attributes/actions';
 import { selectAttributes } from '@features/attributes/selectors';
+import RowTitle from '@containers/common/Table/components/RowTitle';
 
 import { IFiltersForm } from './components/SearchSection/helpers';
 import SearchSection from './components/SearchSection';
@@ -46,7 +46,6 @@ const Attribute = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_ATTRIBUTE), []);
-  const handleEdit = (id:string) => navigate(`/products/attributes/edit/${id}`);
 
   const { data: attributesList, isLoading } = useAppSelector(selectAttributes);
 
@@ -103,15 +102,7 @@ const Attribute = () => {
                                 gridTemplateColumns="auto 260px"
                               >
                                 <TableCell>
-                                  <StyledTypography
-                                    color="blue"
-                                    underLine
-                                    onClick={() => handleEdit(id)}
-                                    variant="body3"
-                                    cursor="pointer"
-                                  >
-                                    {`${name} / ${nickname}`}
-                                  </StyledTypography>
+                                  <RowTitle title={`${name} / ${nickname}`} path={`/products/attributes/edit/${id}`} />
                                 </TableCell>
                                 <TableCell width="260px">
                                   <DndBtn providedDraggable={providedDraggable} />

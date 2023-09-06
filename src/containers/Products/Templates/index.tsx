@@ -1,18 +1,17 @@
 import { memo, useCallback, useEffect } from 'react';
 
-import DeleteBtn from '@containers/common/Table/TablesActions/DeleteAction';
+import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 import TableCell from '@mui/material/TableCell';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
-import StyledTypography from '@containers/common/StyledTypography';
 import StyledTable from '@containers/common/Table';
-import DndBtn from '@containers/common/Table/TablesActions/DndAction';
+import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
 import Box from '@mui/material/Box';
 import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
-import { StyledDraggableRow } from '@containers/common/Table/TablesActions/DraggableRow/styled';
+import { StyledDraggableRow } from '@containers/common/Table/components/TablesActions/DraggableRow/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import Loader from '@containers/common/Loader';
 import PageTitle from '@containers/common/PageTitle';
@@ -25,6 +24,7 @@ import {
 } from '@features/templates/actions';
 import { selectTemplates } from '@features/templates/selectors';
 import { Typography } from '@mui/material';
+import RowTitle from '@containers/common/Table/components/RowTitle';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -52,7 +52,6 @@ const Templates = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_TEMPLATE), []);
-  const handleEdit = (id:string) => navigate(`/products/templates/edit/${id}`);
   const deleteAction = (id: string) => {
     dispatch(deleteTemplate(id)).unwrap().then(() => {
       fetchData();
@@ -114,15 +113,7 @@ const Templates = () => {
                                 gridTemplateColumns="auto 282px  140px 150px"
                               >
                                 <TableCell>
-                                  <StyledTypography
-                                    color="blue"
-                                    underLine
-                                    onClick={() => handleEdit(id)}
-                                    variant="body3"
-                                    cursor="pointer"
-                                  >
-                                    {name}
-                                  </StyledTypography>
+                                  <RowTitle title={name} path={`/products/templates/edit/${id}`} />
                                 </TableCell>
                                 <TableCell width="282px">
                                   {templateCategory ? templateCategory.name : 'None'}

@@ -3,16 +3,15 @@ import { memo, useCallback, useEffect } from 'react';
 import TableCell from '@mui/material/TableCell';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
-import StyledTypography from '@containers/common/StyledTypography';
-import DeleteBtn from '@containers/common/Table/TablesActions/DeleteAction';
+import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 import StyledTable from '@containers/common/Table';
 import Box from '@mui/material/Box';
 import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
-import DndBtn from '@containers/common/Table/TablesActions/DndAction';
-import { StyledDraggableRow } from '@containers/common/Table/TablesActions/DraggableRow/styled';
+import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
+import { StyledDraggableRow } from '@containers/common/Table/components/TablesActions/DraggableRow/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import {
   deleteSubcategory,
@@ -30,6 +29,7 @@ import useMount from '@customHooks/useMount';
 import { getAllCategories } from '@features/categories/actions';
 import { selectCategories } from '@features/categories/selectors';
 import PageTitle from '@containers/common/PageTitle';
+import RowTitle from '@containers/common/Table/components/RowTitle';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -42,7 +42,6 @@ const ProductCategories = () => {
   const { data: subcategories, isLoading } = useAppSelector(selectSubcategories);
   const { data: categories, isLoading: categoryLoading } = useAppSelector(selectCategories);
   const handleAdd = () => navigate(PAGE_ROUTES.ADD_PRODUCT_CATEGORIES);
-  const handleEdit = (id:string) => navigate(`/products/product-categories/edit/${id}`);
   const deleteAction = (id: string) => {
     dispatch(deleteSubcategory(id)).unwrap().then(() => {
       dispatch(getAllSubcategories());
@@ -135,15 +134,7 @@ const ProductCategories = () => {
                                     gridTemplateColumns="auto 282px 138px 140px 150px"
                                   >
                                     <TableCell>
-                                      <StyledTypography
-                                        color="blue"
-                                        underLine
-                                        onClick={() => handleEdit(id)}
-                                        variant="body3"
-                                        cursor="pointer"
-                                      >
-                                        {title}
-                                      </StyledTypography>
+                                      <RowTitle title={title} path={`/products/product-categories/edit/${id}`} />
                                     </TableCell>
                                     <TableCell width="282px">{printTypeName(printType)}</TableCell>
                                     <TableCell width="138px">{visibleOnSite ? 'Yes' : 'No'}</TableCell>

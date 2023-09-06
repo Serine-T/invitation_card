@@ -1,11 +1,10 @@
 import { memo, useCallback } from 'react';
 
-import DndBtn from '@containers/common/Table/TablesActions/DndAction';
+import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
 import TableCell from '@mui/material/TableCell';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
-import StyledTypography from '@containers/common/StyledTypography';
-import DeleteBtn from '@containers/common/Table/TablesActions/DeleteAction';
+import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 import StyledTable from '@containers/common/Table';
 import Box from '@mui/material/Box';
 import PageTitle from '@containers/common/PageTitle';
@@ -13,7 +12,7 @@ import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
-import { StyledDraggableRow } from '@containers/common/Table/TablesActions/DraggableRow/styled';
+import { StyledDraggableRow } from '@containers/common/Table/components/TablesActions/DraggableRow/styled';
 import Loader from '@containers/common/Loader';
 import useMount from '@customHooks/useMount';
 import { deleteBestSeller, getAllBestSellers, reorderBestSellers } from '@features/bestSellers/actions';
@@ -24,6 +23,7 @@ import { setBestSellers } from '@features/bestSellers/slice';
 import EmptyState from '@containers/common/EmptyState';
 import { getAllSubcategories } from '@features/subcategories/actions';
 import { selectSubcategories } from '@features/subcategories/selectors';
+import RowTitle from '@containers/common/Table/components/RowTitle';
 
 import { headSliderCells } from './helpers';
 
@@ -34,7 +34,6 @@ const BestSeller = () => {
   const { isLoading: subcategoriesLoading, data: subcategories } = useAppSelector(selectSubcategories);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_BEST_SELLER), []);
-  const handleEdit = (id:string) => navigate(`/cms/best-seller/edit/${id}`);
   const deleteAction = (id: string) => {
     dispatch(deleteBestSeller(id)).unwrap().then(() => {
       dispatch(getAllBestSellers());
@@ -97,15 +96,7 @@ const BestSeller = () => {
                               gridTemplateColumns="auto 173px  140px 150px"
                             >
                               <TableCell>
-                                <StyledTypography
-                                  color="blue"
-                                  underLine
-                                  onClick={() => handleEdit(id)}
-                                  variant="body3"
-                                  cursor="pointer"
-                                >
-                                  {title}
-                                </StyledTypography>
+                                <RowTitle title={title} path={`/cms/best-seller/edit/${id}`} />
                               </TableCell>
                               <TableCell width="173px">{displayOnSite ? 'Yes' : 'No'}</TableCell>
                               <TableCell width="140px">
