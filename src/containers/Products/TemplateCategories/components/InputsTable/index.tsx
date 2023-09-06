@@ -44,7 +44,7 @@ const InputsTable = ({ templateCategoriesData }: IInputsTable) => {
     dispatch(templateCategoriesData ? editTemplateCategory(data) : addTemplateCategory(data)).unwrap().then(() => {
       navigate(PAGE_ROUTES.TEMPLATE_CATEGORIES);
     }).catch((e) => {
-      if (e.message === 'Template category with provided name already exists!') {
+      if (e.message === 'Template category with the provided name already exists!') {
         setError('name', { message: e.message });
       } else {
         navigate(PAGE_ROUTES.TEMPLATE_CATEGORIES);

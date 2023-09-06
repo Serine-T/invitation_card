@@ -8,7 +8,7 @@ import {
   IAddTemplateCategoryPayload, ITemplateCategory, ISearchTemplateCategories,
 } from './types';
 
-const prefix = '/templateCategories';
+const prefix = '/template-categories';
 
 export const addTemplateCategory = createAsyncThunk<void, IAddTemplateCategoryPayload, {
   rejectValue: AxiosData;
