@@ -24,23 +24,23 @@ const attributeCategoriesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(addAttributeCategory.pending, (state) => {
-      state.isLoading = true;
+      state.actionLoading = true;
     });
     builder.addCase(addAttributeCategory.fulfilled, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
     builder.addCase(addAttributeCategory.rejected, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
 
     builder.addCase(editAttributeCategory.pending, (state) => {
-      state.isLoading = true;
+      state.actionLoading = true;
     });
     builder.addCase(editAttributeCategory.fulfilled, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
     builder.addCase(editAttributeCategory.rejected, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
 
     builder.addCase(getAllAttributeCategories.pending, (state) => {

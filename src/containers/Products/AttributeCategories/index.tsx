@@ -5,14 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTypography from '@containers/common/StyledTypography';
 import StyledTable from '@containers/common/Table';
-import DragAndDropIcon from '@containers/common/Icons/DragAndDrop';
-import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
-import { StyledDraggableRow } from '@containers/common/DraggableRow/styled';
+import { StyledDraggableRow } from '@containers/common/Table/TablesActions/DraggableRow/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import Loader from '@containers/common/Loader';
 import PageTitle from '@containers/common/PageTitle';
@@ -24,6 +22,7 @@ import {
 } from '@features/attributeCategories/actions';
 import { selectAttributeCategories } from '@features/attributeCategories/selectors';
 import { setAttributeCategories } from '@features/attributeCategories/slice';
+import DndBtn from '@containers/common/Table/TablesActions/DndAction';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -33,22 +32,20 @@ const AttributeCategories = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = queryString.parse(window.location.search);
-  const { searchTerm = '', displayInHeader: displayInHeaderQuery = '' } = params as IFiltersForm;
-  const isSearchTerm = searchTerm || displayInHeaderQuery;
+  const { searchTerm = '' } = params as IFiltersForm;
 
   const fetchData = useCallback(() => {
     const query = {
       searchTerm: searchTerm as string,
-      displayInHeader: displayInHeaderQuery as string,
     };
 
-    isSearchTerm ? dispatch(searchAttributeCategories(query)) : dispatch(getAllAttributeCategories());
-  }, [isSearchTerm, searchTerm, displayInHeaderQuery, dispatch]);
+    searchTerm ? dispatch(searchAttributeCategories(query)) : dispatch(getAllAttributeCategories());
+  }, [searchTerm, dispatch]);
 
   useEffect(
     () => fetchData(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isSearchTerm, searchTerm, displayInHeaderQuery],
+    [searchTerm],
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -82,7 +79,7 @@ const AttributeCategories = () => {
   return (
     <>
       <PageTitle title="Attribute Categories" btnName="Add Attribute Category" handleAdd={handleAdd} />
-      { (isSearchTerm || !!attributeCategories.length) && <SearchSection /> }
+      { (searchTerm || !!attributeCategories.length) && <SearchSection /> }
       {attributeCategories.length ? (
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
@@ -106,7 +103,7 @@ const AttributeCategories = () => {
                               data-snapshot={snapshot}
                               {...providedDraggable.draggableProps}
                               isDraggingOver={!!snapshot.draggingOver}
-                              gridTemplateColumns="auto 140px"
+                              gridTemplateColumns="auto 260px"
                             >
                               <TableCell>
                                 <StyledTypography
@@ -119,18 +116,8 @@ const AttributeCategories = () => {
                                   {name}
                                 </StyledTypography>
                               </TableCell>
-                              <TableCell width="140px">
-                                <Stack direction="row" alignItems="center" {...providedDraggable.dragHandleProps}>
-                                  <DragAndDropIcon />
-                                  <StyledTypography
-                                    color="blue"
-                                    variant="body3"
-                                    cursor="grab"
-                                    ml="8px"
-                                  >
-                                    Drag to Reorder
-                                  </StyledTypography>
-                                </Stack>
+                              <TableCell width="260px">
+                                <DndBtn providedDraggable={providedDraggable} />
                               </TableCell>
                             </StyledDraggableRow>
                           );
@@ -145,7 +132,7 @@ const AttributeCategories = () => {
         </DragDropContext>
       ) : (
         <EmptyState
-          text={isSearchTerm ? 'No search results found'
+          text={searchTerm ? 'No search results found'
             : 'You don’t have any attribute categories, please add new to proceed'}
         />
       )}

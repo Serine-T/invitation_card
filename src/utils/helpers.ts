@@ -33,9 +33,15 @@ export const getReorderedArray = (items: IItems[]) => {
   return { orders };
 };
 
-export const getOptionsArray = (items: IItems[]): ISelectOptions[] => (items.map(({ id, title }) => ({
-  value: id, optionName: title,
-})));
+export const getOptionsArray = (
+  items: IItems[],
+  fieldName?: string,
+): ISelectOptions[] => {
+  return items.map((item) => ({
+    value: item.id,
+    optionName: fieldName ? item[fieldName] : undefined,
+  }));
+};
 
 interface Filters {
   [key: string]: string | undefined;

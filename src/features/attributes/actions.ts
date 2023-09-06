@@ -8,7 +8,7 @@ import {
   IAddAttributePayload, IAttribute, ISearchAttributes,
 } from './types';
 
-const prefix = '/categories';
+const prefix = '/attributes';
 
 export const addAttribute = createAsyncThunk<void, IAddAttributePayload, {
   rejectValue: AxiosData;
@@ -17,23 +17,6 @@ export const addAttribute = createAsyncThunk<void, IAddAttributePayload, {
   async (body, thunkAPI) => {
     try {
       await http.post<IAddAttributePayload>(prefix, body);
-    } catch (error) {
-      const errorInfo = customErrorHandling(error);
-
-      return thunkAPI.rejectWithValue(errorInfo);
-    }
-  },
-);
-
-export const getAllAttributes = createAsyncThunk<IAttribute[], void, {
-  rejectValue: AxiosData;
-}>(
-  'attributes/all',
-  async (_, thunkAPI) => {
-    try {
-      const { data } = await http.get<IAttribute[]>(prefix);
-
-      return data;
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -65,7 +48,7 @@ export const editAttribute = createAsyncThunk<void, IAddAttributePayload, {
   'attributes/edit',
   async (body, thunkAPI) => {
     try {
-      await http.patch<IAddAttributePayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
+      await http.put<IAddAttributePayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -110,10 +93,9 @@ export const searchAttributes = createAsyncThunk<IAttribute[], ISearchAttributes
   'attributes/search',
   async (searchingData, thunkAPI) => {
     try {
-      const { searchTerm, displayInHeader } = searchingData;
+      const { searchTerm } = searchingData;
       const queryParams = constructQueryString({
         searchTerm,
-        displayInHeader,
       });
 
       const { data } = await http.get<IAttribute[]>(

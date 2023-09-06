@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import StyledTypography from '@containers/common/StyledTypography';
-import DeleteBtn from '@containers/common/DeleteAction';
+import DeleteBtn from '@containers/common/Table/TablesActions/DeleteAction';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { deleteUser, getAllUsers } from '@features/users/actions';
 import { selectUsers } from '@features/users/selectors';

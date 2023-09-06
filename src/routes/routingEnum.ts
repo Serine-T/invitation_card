@@ -38,6 +38,8 @@ enum PAGE_ROUTES {
   IMPORT_PRODUCT_PRICING = '/products/import-product-pricing',
   TEMPLATES = '/products/templates',
   TEMPLATE_CATEGORIES = '/products/template-categories',
+  ADD_TEMPLATE_CATEGORY = '/products/template-categories/add',
+  EDIT_TEMPLATE_CATEGORY = '/products/template-categories/edit/:id',
   CUSTOMERS_CUSTOMERS = '/customers/customers',
   RESELLERS_PENDING = '/customers/resellers-pending',
   NON_PROFIT_PENDING = '/customers/non-profit-pending',

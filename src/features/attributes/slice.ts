@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { IState } from './types';
 import {
-  addAttribute, editAttribute, getAllAttributes, getAttributeById, searchAttributes,
+  addAttribute, editAttribute, getAttributeById, searchAttributes,
 } from './actions';
 
 const initialState: IState = {
@@ -15,41 +15,26 @@ const initialState: IState = {
 const attributesSlice = createSlice({
   name: 'attributes',
   initialState,
-  reducers: {
-    setAttributes: (state, { payload }) => {
-      state.data = payload;
-    },
-  },
+  reducers: { },
   extraReducers: (builder) => {
     builder.addCase(addAttribute.pending, (state) => {
-      state.isLoading = true;
+      state.actionLoading = true;
     });
     builder.addCase(addAttribute.fulfilled, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
     builder.addCase(addAttribute.rejected, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
 
     builder.addCase(editAttribute.pending, (state) => {
-      state.isLoading = true;
+      state.actionLoading = true;
     });
     builder.addCase(editAttribute.fulfilled, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
     builder.addCase(editAttribute.rejected, (state) => {
-      state.isLoading = false;
-    });
-
-    builder.addCase(getAllAttributes.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(getAllAttributes.fulfilled, (state, { payload }) => {
-      state.data = payload;
-      state.isLoading = false;
-    });
-    builder.addCase(getAllAttributes.rejected, (state) => {
-      state.isLoading = false;
+      state.actionLoading = false;
     });
 
     builder.addCase(getAttributeById.pending, (state) => {
@@ -76,9 +61,5 @@ const attributesSlice = createSlice({
     });
   },
 });
-
-export const {
-  setAttributes,
-} = attributesSlice.actions;
 
 export default attributesSlice.reducer;

@@ -1,6 +1,6 @@
 export const headSliderCells = [
   {
-    label: 'Attribute Category name',
+    label: 'Attribute Category',
   },
   {
     label: 'ACTIONS',

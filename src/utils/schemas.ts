@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { EMAIL_REGEXP, PASSWORD_REGEXP, isIntagerRegex } from '@utils/regexp';
+import { EMAIL_REGEXP, PASSWORD_REGEXP, isIntagerRegex, isNumberRegex } from '@utils/regexp';
 
 export const PasswordSchema = {
   password: yup
@@ -57,6 +57,21 @@ export const intagerValidation = yup.string().optional().test(
 
     return yup.string().matches(
       isIntagerRegex,
+    )
+      .isValidSync(value);
+  },
+);
+
+export const numberValidation = yup.string().optional().test(
+  'valid-number',
+  'Number is invalid',
+  (value: string | undefined) => {
+    if (!value) {
+      return true;
+    }
+
+    return yup.string().matches(
+      isNumberRegex,
     )
       .isValidSync(value);
   },
