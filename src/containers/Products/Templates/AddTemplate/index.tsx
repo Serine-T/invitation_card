@@ -13,6 +13,7 @@ import EmptyState from '@containers/common/EmptyState';
 import useMount from '@customHooks/useMount';
 import { selectSubcategories } from '@features/subcategories/selectors';
 import { getAllSubcategories } from '@features/subcategories/actions';
+import { getAllTemplateCategories } from '@features/templateCategories/actions';
 
 import InputsTable from '../components/InputsTable';
 
@@ -22,6 +23,7 @@ const AddTemplate = () => {
 
   useMount(() => {
     dispatch(getAllSubcategories());
+    dispatch(getAllTemplateCategories());
   });
 
   if (!subCategories.length && isLoading) {

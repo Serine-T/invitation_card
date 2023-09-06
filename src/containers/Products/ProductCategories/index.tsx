@@ -149,7 +149,6 @@ const ProductCategories = () => {
                                     <TableCell width="138px">{visibleOnSite ? 'Yes' : 'No'}</TableCell>
                                     <TableCell width="140px">
                                       <DndBtn providedDraggable={providedDraggable} />
-
                                     </TableCell>
                                     <TableCell width="150px">
                                       <DeleteBtn

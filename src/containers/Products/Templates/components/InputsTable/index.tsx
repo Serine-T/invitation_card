@@ -38,7 +38,7 @@ const InputsTable = ({ templatesData }: IInputsTable) => {
   const { data: templateCategories } = useAppSelector(selectTemplateCategories);
 
   const subcategoriesList = getOptionsArray(subcategories);
-  const templateCategoriesList = getOptionsArray(templateCategories);
+  const templateCategoriesList = getOptionsArray(templateCategories, 'name');
   const methods = useForm<IAddDataForm>({
     resolver: yupResolver(AddDataSchema),
     defaultValues: templatesData ?? defaultValues,

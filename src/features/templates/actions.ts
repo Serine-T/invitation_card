@@ -65,7 +65,7 @@ export const editTemplate = createAsyncThunk<void, IAddTemplatePayload, {
   'templates/edit',
   async (body, thunkAPI) => {
     try {
-      await http.put<IAddTemplatePayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
+      await http.patch<IAddTemplatePayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

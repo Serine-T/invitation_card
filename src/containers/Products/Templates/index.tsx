@@ -1,6 +1,6 @@
-/* eslint-disable max-len */
 import { memo, useCallback, useEffect } from 'react';
 
+import DeleteBtn from '@containers/common/Table/TablesActions/DeleteAction';
 import TableCell from '@mui/material/TableCell';
 import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
@@ -20,10 +20,11 @@ import EmptyState from '@containers/common/EmptyState';
 import { getReorderedArray } from '@utils/helpers';
 import queryString from 'query-string';
 import {
+  deleteTemplate,
   getAllTemplates, reorderTemplates, searchTemplates,
 } from '@features/templates/actions';
 import { selectTemplates } from '@features/templates/selectors';
-import { setTemplates } from '@features/templates/slice';
+import { Typography } from '@mui/material';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -52,24 +53,28 @@ const Templates = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_TEMPLATE), []);
   const handleEdit = (id:string) => navigate(`/products/templates/edit/${id}`);
+  const deleteAction = (id: string) => {
+    dispatch(deleteTemplate(id)).unwrap().then(() => {
+      dispatch(getAllTemplates());
+    }).catch(() => {});
+  };
 
-  const { data: templates, isLoading } = useAppSelector(selectTemplates);
-
-  const items = [...templates];
+  const { data: templatesList, isLoading } = useAppSelector(selectTemplates);
 
   const onDragEnd = (result: DropResult) => {
-    const { destination } = result;
+    const items = [...templatesList];
+    const { destination, draggableId } = result;
+    const draggableItem = items.find((item) => item.templates.find((i) => i.id === draggableId));
 
-    if (destination) {
-      const [removed] = items.splice(result.source.index, 1);
+    if (destination && draggableItem) {
+      const draggableTemplates = [...draggableItem.templates];
+      const [removed] = draggableTemplates.splice(result.source.index, 1);
 
-      items.splice(destination.index, 0, removed);
+      draggableTemplates.splice(destination.index, 0, removed);
 
-      const sortedData = getReorderedArray(items);
+      const sortedData = getReorderedArray(draggableTemplates);
 
-      dispatch(reorderTemplates(sortedData)).unwrap().then(() => {
-        dispatch(setTemplates(items));
-      }).catch(() => dispatch(getAllTemplates()));
+      dispatch(reorderTemplates(sortedData)).unwrap().finally(() => fetchData());
     }
   };
 
@@ -80,59 +85,71 @@ const Templates = () => {
   return (
     <>
       <PageTitle title="Templates" btnName="Add Template" handleAdd={handleAdd} />
-      {(searchTerm || !!templates.length) && <SearchSection />}
-      {templates.length ? (
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="droppable">
-            {(providedDroppable: DroppableProvided) => {
-              return (
-                <Box
-                  {...providedDroppable.droppableProps}
-                  ref={providedDroppable.innerRef}
-                >
-                  <StyledTable headCells={headSliderCells}>
-                    {templates.map(({ name, id }, index) => (
-                      <Draggable
-                        key={id}
-                        draggableId={id}
-                        index={index}
-                      >
-                        {(providedDraggable, snapshot) => {
-                          return (
-                            <StyledDraggableRow
-                              ref={providedDraggable.innerRef}
-                              data-snapshot={snapshot}
-                              {...providedDraggable.draggableProps}
-                              isDraggingOver={!!snapshot.draggingOver}
-                              gridTemplateColumns="auto 140px"
-                            >
-                              <TableCell>
-                                <StyledTypography
-                                  color="blue"
-                                  underLine
-                                  onClick={() => handleEdit(id)}
-                                  variant="body3"
-                                  cursor="pointer"
-                                >
-                                  {name}
-                                </StyledTypography>
-                              </TableCell>
-                              <TableCell width="140px">
-                                <DndBtn providedDraggable={providedDraggable} />
+      {(searchTerm || !!templatesList.length) && <SearchSection />}
+      {templatesList.length ? templatesList.map(({ id: templateId, title, templates }) => (
+        <Box mb="32px" key={templateId}>
+          <Typography>{ title}</Typography>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="droppable">
+              {(providedDroppable: DroppableProvided) => {
+                return (
+                  <Box
+                    {...providedDroppable.droppableProps}
+                    ref={providedDroppable.innerRef}
+                  >
+                    <StyledTable headCells={headSliderCells}>
+                      {templates.map(({ name, id, templateCategory }, index) => (
+                        <Draggable
+                          key={id}
+                          draggableId={id}
+                          index={index}
+                        >
+                          {(providedDraggable, snapshot) => {
+                            return (
+                              <StyledDraggableRow
+                                ref={providedDraggable.innerRef}
+                                data-snapshot={snapshot}
+                                {...providedDraggable.draggableProps}
+                                isDraggingOver={!!snapshot.draggingOver}
+                                gridTemplateColumns="auto 282px  140px 150px"
+                              >
+                                <TableCell>
+                                  <StyledTypography
+                                    color="blue"
+                                    underLine
+                                    onClick={() => handleEdit(id)}
+                                    variant="body3"
+                                    cursor="pointer"
+                                  >
+                                    {name}
+                                  </StyledTypography>
+                                </TableCell>
+                                <TableCell width="282px">
+                                  {templateCategory ? templateCategory.name : 'None'}
+                                </TableCell>
 
-                              </TableCell>
-                            </StyledDraggableRow>
-                          );
-                        }}
-                      </Draggable>
-                    ))}
-                  </StyledTable>
-                </Box>
-              );
-            }}
-          </Droppable>
-        </DragDropContext>
-      ) : (
+                                <TableCell width="140px">
+                                  <DndBtn providedDraggable={providedDraggable} />
+                                </TableCell>
+                                <TableCell width="150px">
+                                  <DeleteBtn
+                                    deleteAction={() => deleteAction(id)}
+                                    questionText="Are you sure you want to delete this template ?"
+                                  />
+                                </TableCell>
+                              </StyledDraggableRow>
+                            );
+                          }}
+                        </Draggable>
+                      ))}
+                    </StyledTable>
+                  </Box>
+                );
+              }}
+            </Droppable>
+          </DragDropContext>
+        </Box>
+      )) : (
         <EmptyState
           text={searchTerm ? 'No search results found'
             : 'You don’t have any template, please add new to proceed'}
