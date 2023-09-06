@@ -109,7 +109,7 @@ const MenuCategories = () => {
                               data-snapshot={snapshot}
                               {...providedDraggable.draggableProps}
                               isDraggingOver={!!snapshot.draggingOver}
-                              gridTemplateColumns="auto 138px 140px 150px"
+                              gridTemplateColumns="auto 225px 140px 150px"
                             >
                               <TableCell>
                                 <StyledTypography
@@ -122,7 +122,7 @@ const MenuCategories = () => {
                                   {title}
                                 </StyledTypography>
                               </TableCell>
-                              <TableCell width="138px">{displayInHeader ? 'Yes' : 'No'}</TableCell>
+                              <TableCell width="225px">{displayInHeader ? 'Yes' : 'No'}</TableCell>
                               <TableCell width="140px">
                                 <DndBtn providedDraggable={providedDraggable} />
                               </TableCell>
