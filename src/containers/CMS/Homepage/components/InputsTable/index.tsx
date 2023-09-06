@@ -13,7 +13,6 @@ import { IBannerInfo } from '@features/banners/types';
 import { addBanner, editBanner } from '@features/banners/actions';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
-import ErrorMessage from '@containers/common/ErrorMessage';
 import { selectBanners } from '@features/banners/selectors';
 
 import {
@@ -36,10 +35,11 @@ const InputsTable = ({ bannersData }: IInputsTable) => {
     defaultValues: bannersData ?? defaultValues,
   });
 
-  const { errorMessage, actionLoading } = useAppSelector(selectBanners);
+  const { actionLoading } = useAppSelector(selectBanners);
 
   const {
     handleSubmit,
+    setError,
   } = methods;
 
   const onSubmit = (data: IAddBannerForm) => {
@@ -48,6 +48,13 @@ const InputsTable = ({ bannersData }: IInputsTable) => {
     }).catch((e) => {
       if (e.message === 'Banner does not exist!') {
         navigate(PAGE_ROUTES.HOMEPAGE);
+      }
+
+      if (e.message === 'Banner limit exceeded') {
+        setError(
+          'category',
+          { message: 'You can not add more than two Banners. Please choose a Slider or remove one of the Banners' },
+        );
       }
     });
   };
@@ -77,7 +84,6 @@ const InputsTable = ({ bannersData }: IInputsTable) => {
               );
             })}
           </StyledTable>
-          { !!errorMessage && <ErrorMessage message={errorMessage} />}
           <StyledButton
             disabled={actionLoading}
             isLoading={actionLoading}
