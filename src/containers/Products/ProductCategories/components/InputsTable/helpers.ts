@@ -93,7 +93,7 @@ export const inputsRows1: ValidFieldNames[] = [
     isRequired: true,
   },
   {
-    label: 'Print type',
+    label: 'Print Type',
     field: 'printType',
     type: InputTypes.select,
     isRequired: true,
@@ -104,12 +104,12 @@ export const inputsRows1: ValidFieldNames[] = [
     type: InputTypes.checkbox,
   },
   {
-    label: 'Mark as new',
+    label: 'Mark as New',
     field: 'isNew',
     type: InputTypes.checkbox,
   },
   {
-    label: 'Mark as sale',
+    label: 'Mark as Sale',
     field: 'isSale',
     type: InputTypes.checkbox,
   },
