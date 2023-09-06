@@ -8,7 +8,6 @@ export interface IState {
 export interface IAddTemplateCategoryPayload {
   id?: string;
   name: string;
-  description: string;
 }
 
 export interface ITemplateCategory {
@@ -17,7 +16,6 @@ export interface ITemplateCategory {
   updated: string;
   deleted: string;
   name: string;
-  description: string;
   sort: number;
 }
 

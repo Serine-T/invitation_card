@@ -7,6 +7,7 @@ import StyledTypography from '@containers/common/StyledTypography';
 import StyledTable from '@containers/common/Table';
 import DndBtn from '@containers/common/Table/TablesActions/DndAction';
 import Box from '@mui/material/Box';
+import DeleteBtn from '@containers/common/Table/TablesActions/DeleteAction';
 import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided, DropResult,
@@ -19,6 +20,7 @@ import EmptyState from '@containers/common/EmptyState';
 import { getReorderedArray } from '@utils/helpers';
 import queryString from 'query-string';
 import {
+  deleteTemplateCategory,
   getAllTemplateCategories, reorderTemplateCategories, searchTemplateCategories,
 } from '@features/templateCategories/actions';
 import { selectTemplateCategories } from '@features/templateCategories/selectors';
@@ -51,6 +53,12 @@ const TemplateCategories = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_TEMPLATE_CATEGORY), []);
   const handleEdit = (id:string) => navigate(`/products/template-categories/edit/${id}`);
+
+  const deleteAction = (id: string) => {
+    dispatch(deleteTemplateCategory(id)).unwrap().then(() => {
+      dispatch(getAllTemplateCategories());
+    }).catch(() => {});
+  };
 
   const { data: templateCategories, isLoading } = useAppSelector(selectTemplateCategories);
 
@@ -118,6 +126,12 @@ const TemplateCategories = () => {
                               </TableCell>
                               <TableCell width="140px">
                                 <DndBtn providedDraggable={providedDraggable} />
+                              </TableCell>
+                              <TableCell width="150px">
+                                <DeleteBtn
+                                  deleteAction={() => deleteAction(id)}
+                                  questionText="Are you sure you want to delete this category ?"
+                                />
                               </TableCell>
                             </StyledDraggableRow>
                           );
