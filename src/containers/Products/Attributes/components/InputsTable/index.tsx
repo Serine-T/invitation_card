@@ -11,7 +11,7 @@ import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
-import { IAttribute } from '@features/attributes/types';
+import { IAddAttributePayload } from '@features/attributes/types';
 import { selectAttributes } from '@features/attributes/selectors';
 import { addAttribute, editAttribute } from '@features/attributes/actions';
 import { selectAttributeCategories } from '@features/attributeCategories/selectors';
@@ -29,7 +29,7 @@ import {
 } from './helpers';
 
 interface IInputsTable{
-  attributesData?: IAttribute;
+  attributesData?: IAddAttributePayload;
 }
 
 const InputsTable = ({ attributesData }: IInputsTable) => {

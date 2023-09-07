@@ -8,7 +8,7 @@ export interface IAddDataForm {
   attributeCategory: string;
   nickname: string;
   showInCustomEstimates?: boolean;
-  defaultPrice: string;
+  defaultPrice: string | null;
   fouroverCode?: string;
 }
 
@@ -56,7 +56,7 @@ export const inputsRows: ValidFieldNames[] = [
 ];
 
 export const formattedPayload = (data: IAddDataForm) => {
-  const payload = { ...data, defaultPrice: +data.defaultPrice };
+  const payload = { ...data, defaultPrice: data.defaultPrice ? data.defaultPrice : null };
 
   return payload;
 };
