@@ -8,17 +8,23 @@ export interface IState {
 export interface IAddTemplatePayload {
   id?: string;
   name: string;
-  description: string;
+  photo: string;
+  subCategoryId:string ;
+  templateCategoryId?:string | null;
 }
-
+export interface Template {
+  id: string;
+  name: string;
+  sort: number;
+  templateCategory: {
+    id: string;
+    name: string;
+  } | null;
+}
 export interface ITemplate {
   id: string;
-  created: string;
-  updated: string;
-  deleted: string;
-  name: string;
-  description: string;
-  sort: number;
+  title: string;
+  templates: Template[];
 }
 
 export interface ISearchTemplates {

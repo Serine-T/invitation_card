@@ -11,8 +11,8 @@ export interface IAddAttributePayload {
   attributeCategory: string;
   nickname: string;
   showInCustomEstimates?: boolean;
-  defaultPrice: number;
-  fouroverCode: string;
+  defaultPrice?: number;
+  fouroverCode?: string;
 }
 export interface Attribute {
   id: string;

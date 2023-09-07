@@ -1,24 +1,23 @@
 import { memo } from 'react';
 
-import DndBtn from '@containers/common/Table/TablesActions/DndAction';
+import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
 import Box from '@mui/material/Box';
 import TableCell from '@mui/material/TableCell';
-import { useNavigate } from 'react-router-dom';
-import StyledTypography from '@containers/common/StyledTypography';
-import DeleteBtn from '@containers/common/Table/TablesActions/DeleteAction';
+import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 import StyledTable from '@containers/common/Table';
 import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided,
   DropResult,
 } from '@hello-pangea/dnd';
-import { StyledDraggableRow } from '@containers/common/Table/TablesActions/DraggableRow/styled';
+import { StyledDraggableRow } from '@containers/common/Table/components/TablesActions/DraggableRow/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { selectBanners } from '@features/banners/selectors';
 import { setBanners, setSilders } from '@features/banners/slice';
 import Loader from '@containers/common/Loader';
 import { deleteBanner, getAllBanners, reorderBanners } from '@features/banners/actions';
 import { getReorderedArray } from '@utils/helpers';
+import RowTitle from '@containers/common/Table/components/RowTitle';
 
 import {
   headBannerCells,
@@ -31,8 +30,6 @@ interface IBannersProps {
 
 const Banners = ({ isSlider }: IBannersProps) => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const handleEdit = (id:string) => navigate(`/cms/homepage/edit/${id}`);
   const deleteAction = (id: string) => {
     dispatch(deleteBanner(id)).unwrap().then(() => {
       dispatch(getAllBanners());
@@ -90,15 +87,7 @@ const Banners = ({ isSlider }: IBannersProps) => {
                             gridTemplateColumns="auto 173px  140px 150px"
                           >
                             <TableCell>
-                              <StyledTypography
-                                color="blue"
-                                underLine
-                                onClick={() => handleEdit(id)}
-                                variant="body3"
-                                cursor="pointer"
-                              >
-                                {title}
-                              </StyledTypography>
+                              <RowTitle title={title} path={`/cms/homepage/edit/${id}`} />
                             </TableCell>
                             <TableCell width="173px">{displayOnSite ? 'Yes' : 'No'}</TableCell>
                             <TableCell width="140px">

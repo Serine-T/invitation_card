@@ -19,6 +19,8 @@ import Templates from '@containers/Products/Templates';
 import PAGE_ROUTES from '@routes/routingEnum';
 import AddTemplateCategory from '@containers/Products/TemplateCategories/AddTemplateCategory';
 import EditTemplateCategory from '@containers/Products/TemplateCategories/EditTemplateCategory';
+import AddTemplate from '@containers/Products/Templates/AddTemplate';
+import EditTemplate from '@containers/Products/Templates/EditTemplate';
 
 const ProductsRoutes = {
   path: PAGE_ROUTES.PRODUCTS,
@@ -59,7 +61,14 @@ const ProductsRoutes = {
     },
     { path: PAGE_ROUTES.MAILING_SERVICE_FEES, element: <MailingServiceFees /> },
     { path: PAGE_ROUTES.IMPORT_PRODUCT_PRICING, element: <ImportProductPricing /> },
-    { path: PAGE_ROUTES.TEMPLATES, element: <Templates /> },
+    {
+      path: PAGE_ROUTES.TEMPLATES,
+      children: [
+        { element: <Templates />, index: true },
+        { path: PAGE_ROUTES.ADD_TEMPLATE, element: <AddTemplate /> },
+        { path: PAGE_ROUTES.EDIT_TEMPLATE, element: <EditTemplate /> },
+      ],
+    },
     {
       path: PAGE_ROUTES.TEMPLATE_CATEGORIES,
       children: [

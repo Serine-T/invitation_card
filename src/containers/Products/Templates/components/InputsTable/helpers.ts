@@ -2,29 +2,49 @@ import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
 
 export interface IAddDataForm {
+  id?: string;
   name: string;
-  description: string;
+  photo: string;
+  subCategoryId:string;
+  templateCategoryId?:string;
 }
 
 export const defaultValues = {
   name: '',
-  description: '',
+  photo: '',
+  subCategoryId: '',
+  templateCategoryId: '',
 };
 
 export const AddDataSchema = yup.object().shape({
   name: yup.string().required('Name is required'),
-  description: yup.string().required('Description is required').max(500, 'The maximum length is 500 characters'),
+  subCategoryId: yup.string().required('Subcategory is required'),
+  photo: yup.string().required('Photo is required'),
 });
 
 export const inputsRows: ValidFieldNames[] = [
   {
-    label: 'Name',
+    label: 'Subcategory',
+    field: 'subCategoryId',
+    type: InputTypes.select,
+  },
+  {
+    label: 'Template Category',
+    field: 'templateCategoryId',
+    type: InputTypes.select,
+  },
+  {
+    label: 'Template Name',
     field: 'name',
     type: InputTypes.text,
   },
   {
-    label: 'Description',
-    field: 'description',
-    type: InputTypes.textarea,
+    label: 'File',
+    field: 'photo',
+    type: InputTypes.image,
   },
 ];
+
+export const formattedPayload = (data: IAddDataForm) => ({
+  ...data, templateCategoryId: data.templateCategoryId || null,
+});

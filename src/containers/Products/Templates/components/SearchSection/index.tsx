@@ -41,11 +41,11 @@ const SearchSection = () => {
       searchTerm: data.searchTerm,
     });
 
-    navigate(`${PAGE_ROUTES.TEMPLATE_CATEGORIES}?${queryParams}`);
+    navigate(`${PAGE_ROUTES.TEMPLATES}?${queryParams}`);
   };
 
   const handleReset = () => {
-    navigate(`${PAGE_ROUTES.TEMPLATE_CATEGORIES}`);
+    navigate(`${PAGE_ROUTES.TEMPLATES}`);
   };
 
   return (

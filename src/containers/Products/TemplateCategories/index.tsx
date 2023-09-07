@@ -1,18 +1,16 @@
 import { memo, useCallback, useEffect } from 'react';
 
 import TableCell from '@mui/material/TableCell';
-import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
-import StyledTypography from '@containers/common/StyledTypography';
 import StyledTable from '@containers/common/Table';
-import DndBtn from '@containers/common/Table/TablesActions/DndAction';
+import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
 import Box from '@mui/material/Box';
-import DeleteBtn from '@containers/common/Table/TablesActions/DeleteAction';
+import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided, DropResult,
 } from '@hello-pangea/dnd';
-import { StyledDraggableRow } from '@containers/common/Table/TablesActions/DraggableRow/styled';
+import { StyledDraggableRow } from '@containers/common/Table/components/TablesActions/DraggableRow/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import Loader from '@containers/common/Loader';
 import PageTitle from '@containers/common/PageTitle';
@@ -25,6 +23,7 @@ import {
 } from '@features/templateCategories/actions';
 import { selectTemplateCategories } from '@features/templateCategories/selectors';
 import { setTemplateCategories } from '@features/templateCategories/slice';
+import RowTitle from '@containers/common/Table/components/RowTitle';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -32,7 +31,6 @@ import { IFiltersForm } from './components/SearchSection/helpers';
 
 const TemplateCategories = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const params = queryString.parse(window.location.search);
   const { searchTerm = '' } = params as IFiltersForm;
 
@@ -49,10 +47,6 @@ const TemplateCategories = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchTerm],
   );
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_TEMPLATE_CATEGORY), []);
-  const handleEdit = (id:string) => navigate(`/products/template-categories/edit/${id}`);
 
   const deleteAction = (id: string) => {
     dispatch(deleteTemplateCategory(id)).unwrap().then(() => {
@@ -86,7 +80,7 @@ const TemplateCategories = () => {
 
   return (
     <>
-      <PageTitle title="Template Categories" btnName="Add Template Category" handleAdd={handleAdd} />
+      <PageTitle title="Template Categories" btnName="Add Template Category" path={PAGE_ROUTES.ADD_TEMPLATE_CATEGORY} />
       { (searchTerm || !!templateCategories.length) && <SearchSection /> }
       {templateCategories.length ? (
         <DragDropContext onDragEnd={onDragEnd}>
@@ -114,15 +108,7 @@ const TemplateCategories = () => {
                               gridTemplateColumns="auto 140px"
                             >
                               <TableCell>
-                                <StyledTypography
-                                  color="blue"
-                                  underLine
-                                  onClick={() => handleEdit(id)}
-                                  variant="body3"
-                                  cursor="pointer"
-                                >
-                                  {name}
-                                </StyledTypography>
+                                <RowTitle title={name} path={`/products/template-categories/edit/${id}`} />
                               </TableCell>
                               <TableCell width="140px">
                                 <DndBtn providedDraggable={providedDraggable} />
@@ -130,7 +116,7 @@ const TemplateCategories = () => {
                               <TableCell width="150px">
                                 <DeleteBtn
                                   deleteAction={() => deleteAction(id)}
-                                  questionText="Are you sure you want to delete this category ?"
+                                  questionText="Are you sure you want to delete this template category ?"
                                 />
                               </TableCell>
                             </StyledDraggableRow>

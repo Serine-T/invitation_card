@@ -1,8 +1,13 @@
 export const headSliderCells = [
   {
-    label: 'Attribute Category name',
+    label: 'Template',
+  },
+
+  {
+    label: 'Template Category',
   },
   {
     label: 'ACTIONS',
+    colSpan: 2,
   },
 ];

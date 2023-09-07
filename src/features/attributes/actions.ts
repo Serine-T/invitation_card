@@ -10,6 +10,23 @@ import {
 
 const prefix = '/attributes';
 
+export const getAllAttributes = createAsyncThunk<IAttribute[], void, {
+  rejectValue: AxiosData;
+}>(
+  'attributes/all',
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await http.get<IAttribute[]>(prefix);
+
+      return data;
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);
+
 export const addAttribute = createAsyncThunk<void, IAddAttributePayload, {
   rejectValue: AxiosData;
 }>(

@@ -13,9 +13,10 @@ import { ISelectList } from './helpers';
 
 interface IReusableFields extends ValidFieldNames{
   selectList?: ISelectList[];
+  fileList?: string[];
 }
 
-function ReusableFields({ field, type, label, selectList }: IReusableFields) {
+function ReusableFields({ field, type, label, selectList, fileList }: IReusableFields) {
   const { formState: { errors }, register } = useFormContext();
 
   if (type === InputTypes.text) {
@@ -47,10 +48,13 @@ function ReusableFields({ field, type, label, selectList }: IReusableFields) {
   }
 
   if (type === InputTypes.image) {
+    const isFile = !!fileList?.includes(field);
+
     return (
       <ImageUpload
         name={field as string}
         errorMessage={errors?.[field]?.message as string}
+        isFile={isFile}
       />
     );
   }

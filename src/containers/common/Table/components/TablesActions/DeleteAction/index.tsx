@@ -2,8 +2,8 @@ import { memo } from 'react';
 
 import { useConfirm } from 'material-ui-confirm';
 
-import StyledTypography from '../../../StyledTypography';
-import confirmOptionsDialog from '../../../Confirm';
+import StyledTypography from '../../../../StyledTypography';
+import confirmOptionsDialog from '../../../../Confirm';
 
 interface IDeleteAction {
   questionText: string;

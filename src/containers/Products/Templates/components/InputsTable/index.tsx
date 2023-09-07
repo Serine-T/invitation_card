@@ -11,28 +11,40 @@ import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
-import { ITemplate } from '@features/templates/types';
+import { IAddTemplatePayload } from '@features/templates/types';
 import { selectTemplates } from '@features/templates/selectors';
 import { addTemplate, editTemplate } from '@features/templates/actions';
+import { selectSubcategories } from '@features/subcategories/selectors';
+import { getOptionsArray } from '@utils/helpers';
+import { selectTemplateCategories } from '@features/templateCategories/selectors';
 
 import {
   AddDataSchema,
   IAddDataForm,
   inputsRows,
   defaultValues,
+  formattedPayload,
 } from './helpers';
 
 interface IInputsTable{
-  templatesData?: ITemplate;
+  templatesData?: IAddTemplatePayload;
 }
 
 const InputsTable = ({ templatesData }: IInputsTable) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { actionLoading } = useAppSelector(selectTemplates);
+  const { data: subcategories } = useAppSelector(selectSubcategories);
+  const { data: templateCategories } = useAppSelector(selectTemplateCategories);
+
+  const subcategoriesList = getOptionsArray(subcategories);
+  const templateCategoriesList = getOptionsArray(templateCategories, 'name');
   const methods = useForm<IAddDataForm>({
     resolver: yupResolver(AddDataSchema),
-    defaultValues: templatesData ?? defaultValues,
+    defaultValues: templatesData ? {
+      ...templatesData,
+      templateCategoryId: templatesData.templateCategoryId || '',
+    } : defaultValues,
   });
 
   const {
@@ -41,10 +53,12 @@ const InputsTable = ({ templatesData }: IInputsTable) => {
   } = methods;
 
   const onSubmit = (data: IAddDataForm) => {
-    dispatch(templatesData ? editTemplate(data) : addTemplate(data)).unwrap().then(() => {
+    const payload = formattedPayload(data);
+
+    dispatch(templatesData ? editTemplate(payload) : addTemplate(payload)).unwrap().then(() => {
       navigate(PAGE_ROUTES.TEMPLATES);
     }).catch((e) => {
-      if (e.message === 'Template with provided name already exists!') {
+      if (e.message === 'Template with the provided name, categoryId and templateId already exists!') {
         setError('name', { message: e.message });
       } else {
         navigate(PAGE_ROUTES.TEMPLATES);
@@ -70,7 +84,17 @@ const InputsTable = ({ templatesData }: IInputsTable) => {
                 <StyledTableRow key={label}>
                   <StyledTableCell>{`${label}:`}</StyledTableCell>
                   <TableCell>
-                    <ReusableFields {...item} />
+                    <ReusableFields
+                      {...item}
+                      selectList={[{
+                        field: 'subCategoryId',
+                        options: subcategoriesList,
+                      }, {
+                        field: 'templateCategoryId',
+                        options: templateCategoriesList,
+                      }]}
+                      fileList={['photo']}
+                    />
                   </TableCell>
                 </StyledTableRow>
               );

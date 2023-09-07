@@ -17,11 +17,7 @@ const initialState: IState = {
 const templateCategoriesSlice = createSlice({
   name: 'templateCategories',
   initialState,
-  reducers: {
-    setTemplates: (state, { payload }) => {
-      state.data = payload;
-    },
-  },
+  reducers: { },
   extraReducers: (builder) => {
     builder.addCase(addTemplate.pending, (state) => {
       state.actionLoading = true;
@@ -78,9 +74,5 @@ const templateCategoriesSlice = createSlice({
     });
   },
 });
-
-export const {
-  setTemplates,
-} = templateCategoriesSlice.actions;
 
 export default templateCategoriesSlice.reducer;

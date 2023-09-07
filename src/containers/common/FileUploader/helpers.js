@@ -1,1 +1,2 @@
-export const acceptedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
+export const imgExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
+export const fileExtensions = [...imgExtensions, '.pdf'];

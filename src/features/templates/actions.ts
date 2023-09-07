@@ -42,13 +42,13 @@ export const getAllTemplates = createAsyncThunk<ITemplate[], void, {
   },
 );
 
-export const getTemplateById = createAsyncThunk<ITemplate, string, {
+export const getTemplateById = createAsyncThunk<IAddTemplatePayload, string, {
   rejectValue: AxiosData;
 }>(
   'templates/get-templates',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<ITemplate>(`${prefix}/${id}`);
+      const { data } = await http.get<IAddTemplatePayload>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {
@@ -65,7 +65,7 @@ export const editTemplate = createAsyncThunk<void, IAddTemplatePayload, {
   'templates/edit',
   async (body, thunkAPI) => {
     try {
-      await http.put<IAddTemplatePayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
+      await http.patch<IAddTemplatePayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

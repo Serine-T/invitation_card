@@ -1,6 +1,5 @@
 import { memo } from 'react';
 
-import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import PageTitle from '@containers/common/PageTitle';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
@@ -14,9 +13,6 @@ import Banners from './components/Banners';
 
 const Homepage = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const handleAdd = () => navigate(PAGE_ROUTES.ADD_BANNER);
-
   const { isLoading, banners, sliders } = useAppSelector(selectBanners);
 
   useMount(() => {
@@ -29,7 +25,7 @@ const Homepage = () => {
 
   return (
     <>
-      <PageTitle title="Homepage" btnName="Add Banner" handleAdd={handleAdd} />
+      <PageTitle title="Homepage" btnName="Add Banner" path={PAGE_ROUTES.ADD_BANNER} />
       {!!sliders.length && <Banners isSlider />}
       {!!banners.length && <Banners />}
       {!sliders.length && !banners.length && (
