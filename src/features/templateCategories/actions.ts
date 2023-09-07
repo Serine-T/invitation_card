@@ -65,7 +65,7 @@ export const editTemplateCategory = createAsyncThunk<void, IAddTemplateCategoryP
   'templateCategories/edit',
   async (body, thunkAPI) => {
     try {
-      await http.put<IAddTemplateCategoryPayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
+      await http.patch<IAddTemplateCategoryPayload>(`${prefix}/${body.id}`, body); // TODO: maybe change patch
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

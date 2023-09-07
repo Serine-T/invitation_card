@@ -6,7 +6,7 @@ import useMount from '@customHooks/useMount';
 import Loader from '@containers/common/Loader';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { selectTemplates } from '@features/templates/selectors';
-import { ITemplate } from '@features/templates/types';
+import { IAddTemplatePayload } from '@features/templates/types';
 import { getTemplateById } from '@features/templates/actions';
 import { getAllSubcategories } from '@features/subcategories/actions';
 import { selectSubcategories } from '@features/subcategories/selectors';
@@ -20,7 +20,7 @@ const EditTemplate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const [templatesData, setTemplatesData] = useState<ITemplate | null>(null);
+  const [templatesData, setTemplatesData] = useState<IAddTemplatePayload | null>(null);
   const { isLoading } = useAppSelector(selectTemplates);
   const { isLoading: subcategoriesLoading, data: subcategories } = useAppSelector(selectSubcategories);
   const { isLoading: templateCategoriesLoading } = useAppSelector(selectTemplateCategories);

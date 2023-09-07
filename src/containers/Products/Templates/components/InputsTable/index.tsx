@@ -11,7 +11,7 @@ import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
-import { ITemplate } from '@features/templates/types';
+import { IAddTemplatePayload } from '@features/templates/types';
 import { selectTemplates } from '@features/templates/selectors';
 import { addTemplate, editTemplate } from '@features/templates/actions';
 import { selectSubcategories } from '@features/subcategories/selectors';
@@ -27,7 +27,7 @@ import {
 } from './helpers';
 
 interface IInputsTable{
-  templatesData?: ITemplate;
+  templatesData?: IAddTemplatePayload;
 }
 
 const InputsTable = ({ templatesData }: IInputsTable) => {
@@ -41,7 +41,10 @@ const InputsTable = ({ templatesData }: IInputsTable) => {
   const templateCategoriesList = getOptionsArray(templateCategories, 'name');
   const methods = useForm<IAddDataForm>({
     resolver: yupResolver(AddDataSchema),
-    defaultValues: templatesData ?? defaultValues,
+    defaultValues: templatesData ? {
+      ...templatesData,
+      templateCategoryId: templatesData.templateCategoryId || '',
+    } : defaultValues,
   });
 
   const {
