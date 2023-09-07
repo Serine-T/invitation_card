@@ -42,13 +42,13 @@ export const addAttribute = createAsyncThunk<void, IAddAttributePayload, {
   },
 );
 
-export const getAttributeById = createAsyncThunk<IAttribute, string, {
+export const getAttributeById = createAsyncThunk<IAddAttributePayload, string, {
   rejectValue: AxiosData;
 }>(
   'attributes/get-attribute',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<IAttribute>(`${prefix}/${id}`);
+      const { data } = await http.get<IAddAttributePayload>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {
