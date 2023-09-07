@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect } from 'react';
 
 import TableCell from '@mui/material/TableCell';
-import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTable from '@containers/common/Table';
 import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
@@ -32,7 +31,6 @@ import { IFiltersForm } from './components/SearchSection/helpers';
 
 const TemplateCategories = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const params = queryString.parse(window.location.search);
   const { searchTerm = '' } = params as IFiltersForm;
 
@@ -49,9 +47,6 @@ const TemplateCategories = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchTerm],
   );
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_TEMPLATE_CATEGORY), []);
 
   const deleteAction = (id: string) => {
     dispatch(deleteTemplateCategory(id)).unwrap().then(() => {
@@ -85,7 +80,7 @@ const TemplateCategories = () => {
 
   return (
     <>
-      <PageTitle title="Template Categories" btnName="Add Template Category" handleAdd={handleAdd} />
+      <PageTitle title="Template Categories" btnName="Add Template Category" path={PAGE_ROUTES.ADD_TEMPLATE_CATEGORY} />
       { (searchTerm || !!templateCategories.length) && <SearchSection /> }
       {templateCategories.length ? (
         <DragDropContext onDragEnd={onDragEnd}>

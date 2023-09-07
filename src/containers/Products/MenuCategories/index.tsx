@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect } from 'react';
 
 import TableCell from '@mui/material/TableCell';
-import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 import StyledTable from '@containers/common/Table';
@@ -29,7 +28,6 @@ import { IFiltersForm } from './components/SearchSection/helpers';
 
 const MenuCategories = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const params = queryString.parse(window.location.search);
   const { searchTerm = '', displayInHeader: displayInHeaderQuery = '' } = params as IFiltersForm;
   const isSearchTerm = searchTerm || displayInHeaderQuery;
@@ -49,8 +47,6 @@ const MenuCategories = () => {
     [isSearchTerm, searchTerm, displayInHeaderQuery],
   );
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_MENU_CATEGORY), []);
   const deleteAction = (id: string) => {
     dispatch(deleteCategory(id)).unwrap().then(() => {
       dispatch(getAllCategories());
@@ -83,7 +79,7 @@ const MenuCategories = () => {
 
   return (
     <>
-      <PageTitle title="Menu Categories" btnName="Add Category" handleAdd={handleAdd} />
+      <PageTitle title="Menu Categories" btnName="Add Category" path={PAGE_ROUTES.ADD_MENU_CATEGORY} />
       { (isSearchTerm || !!categories.length) && <SearchSection /> }
       {categories.length ? (
         <DragDropContext onDragEnd={onDragEnd}>

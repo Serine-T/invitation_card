@@ -2,7 +2,6 @@ import { memo, useCallback, useEffect } from 'react';
 
 import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 import TableCell from '@mui/material/TableCell';
-import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTable from '@containers/common/Table';
 import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
@@ -32,7 +31,6 @@ import { IFiltersForm } from './components/SearchSection/helpers';
 
 const Templates = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const params = queryString.parse(window.location.search);
   const { searchTerm = '' } = params as IFiltersForm;
   const query = {
@@ -50,8 +48,6 @@ const Templates = () => {
     [searchTerm],
   );
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_TEMPLATE), []);
   const deleteAction = (id: string) => {
     dispatch(deleteTemplate(id)).unwrap().then(() => {
       fetchData();
@@ -83,7 +79,7 @@ const Templates = () => {
 
   return (
     <>
-      <PageTitle title="Templates" btnName="Add Template" handleAdd={handleAdd} />
+      <PageTitle title="Templates" btnName="Add Template" path={PAGE_ROUTES.ADD_TEMPLATE} />
       {(searchTerm || !!templatesList.length) && <SearchSection />}
       {templatesList.length ? templatesList.map(({ id: templateId, title, templates }) => (
         <Box mb="32px" key={templateId}>

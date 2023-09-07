@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect } from 'react';
 
 import TableCell from '@mui/material/TableCell';
-import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTable from '@containers/common/Table';
 import Box from '@mui/material/Box';
@@ -30,7 +29,6 @@ import { IFiltersForm } from './components/SearchSection/helpers';
 
 const AttributeCategories = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const params = queryString.parse(window.location.search);
   const { searchTerm = '' } = params as IFiltersForm;
 
@@ -47,9 +45,6 @@ const AttributeCategories = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchTerm],
   );
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_ATTRIBUTE_CATEGORIES), []);
 
   const { data: attributeCategories, isLoading } = useAppSelector(selectAttributeCategories);
 
@@ -77,7 +72,11 @@ const AttributeCategories = () => {
 
   return (
     <>
-      <PageTitle title="Attribute Categories" btnName="Add Attribute Category" handleAdd={handleAdd} />
+      <PageTitle
+        title="Attribute Categories"
+        btnName="Add Attribute Category"
+        path={PAGE_ROUTES.ADD_ATTRIBUTE_CATEGORIES}
+      />
       { (searchTerm || !!attributeCategories.length) && <SearchSection /> }
       {attributeCategories.length ? (
         <DragDropContext onDragEnd={onDragEnd}>

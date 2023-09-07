@@ -1,7 +1,6 @@
 import { memo, useCallback } from 'react';
 
 import StyledTable from '@containers/common/Table';
-import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
@@ -18,11 +17,8 @@ import { formattedRole, headCells } from './helpers';
 import { StyledStatusBtn, StyledTableCell } from './styles';
 
 const Users = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleAddUser = useCallback(() => navigate(PAGE_ROUTES.ADD_USER), []);
   const { data: users, isLoading } = useAppSelector(selectUsers);
   const deleteAction = useCallback((id: string) => {
     dispatch(deleteUser(id)).unwrap().finally(() => dispatch(getAllUsers()));
@@ -39,14 +35,14 @@ const Users = () => {
 
   return (
     <>
-      <PageTitle title="Users" btnName="Add User" handleAdd={handleAddUser} />
+      <PageTitle title="Users" btnName="Add User" path={PAGE_ROUTES.ADD_USER} />
 
       {users.length ? (
         <StyledTable headCells={headCells}>
           { users.map(({ id, email, firstName, lastName, username, isVerified, permissions }) => (
             <StyledTableRow key={id}>
               <StyledTableCell>
-                <RowTitle title={username} path={`/administration/users/edit-user/${id}`} />
+                <RowTitle title={username} path={`/administration/users/edit/${id}`} />
               </StyledTableCell>
               <StyledTableCell>{`${firstName} ${lastName}`}</StyledTableCell>
               <StyledTableCell>{email}</StyledTableCell>

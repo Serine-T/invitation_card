@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect } from 'react';
 
 import TableCell from '@mui/material/TableCell';
-import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 import StyledTable from '@containers/common/Table';
@@ -37,11 +36,9 @@ import { IFiltersForm } from './components/SearchSection/helpers';
 import { printTypeName } from './components/InputsTable/helpers';
 
 const ProductCategories = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data: subcategories, isLoading } = useAppSelector(selectSubcategories);
   const { data: categories, isLoading: categoryLoading } = useAppSelector(selectCategories);
-  const handleAdd = () => navigate(PAGE_ROUTES.ADD_PRODUCT_CATEGORIES);
   const deleteAction = (id: string) => {
     dispatch(deleteSubcategory(id)).unwrap().then(() => {
       dispatch(getAllSubcategories());
@@ -100,7 +97,7 @@ const ProductCategories = () => {
       <PageTitle
         title="Product Categories"
         btnName="Add Subcategory"
-        handleAdd={handleAdd}
+        path={PAGE_ROUTES.ADD_PRODUCT_CATEGORIES}
         isShowBtn={!!categories.length}
       />
 

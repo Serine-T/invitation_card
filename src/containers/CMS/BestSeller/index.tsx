@@ -1,8 +1,7 @@
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 
 import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
 import TableCell from '@mui/material/TableCell';
-import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 import StyledTable from '@containers/common/Table';
@@ -29,11 +28,8 @@ import { headSliderCells } from './helpers';
 
 const BestSeller = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { isLoading, data: bestSellers } = useAppSelector(selectBestSellers);
   const { isLoading: subcategoriesLoading, data: subcategories } = useAppSelector(selectSubcategories);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_BEST_SELLER), []);
   const deleteAction = (id: string) => {
     dispatch(deleteBestSeller(id)).unwrap().then(() => {
       dispatch(getAllBestSellers());
@@ -68,7 +64,12 @@ const BestSeller = () => {
 
   return (
     <>
-      <PageTitle title="Best Sellers" btnName="Add Section" handleAdd={handleAdd} isShowBtn={!!subcategories.length} />
+      <PageTitle
+        title="Best Sellers"
+        btnName="Add Section"
+        path={PAGE_ROUTES.ADD_BEST_SELLER}
+        isShowBtn={!!subcategories.length}
+      />
       {bestSellers.length ? (
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">

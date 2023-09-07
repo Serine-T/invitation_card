@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect } from 'react';
 
 import TableCell from '@mui/material/TableCell';
-import { useNavigate } from 'react-router-dom';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTable from '@containers/common/Table';
 import Box from '@mui/material/Box';
@@ -26,7 +25,6 @@ import SearchSection from './components/SearchSection';
 
 const Attribute = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const params = queryString.parse(window.location.search);
   const { searchTerm = '' } = params as IFiltersForm;
   const query = {
@@ -43,9 +41,6 @@ const Attribute = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchTerm],
   );
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleAdd = useCallback(() => navigate(PAGE_ROUTES.ADD_ATTRIBUTE), []);
 
   const { data: attributesList, isLoading } = useAppSelector(selectAttributes);
 
@@ -73,7 +68,7 @@ const Attribute = () => {
 
   return (
     <>
-      <PageTitle title="Attributes" btnName="Add Attribute" handleAdd={handleAdd} />
+      <PageTitle title="Attributes" btnName="Add Attribute" path={PAGE_ROUTES.ADD_ATTRIBUTE} />
       { (searchTerm || !!attributesList.length) && <SearchSection /> }
       {attributesList.length ? attributesList.map(({ id: attributeId, name: attributeName, attributes }) => (
         <Box mb="24px" key={attributeId}>
