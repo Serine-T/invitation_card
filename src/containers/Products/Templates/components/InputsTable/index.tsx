@@ -93,6 +93,7 @@ const InputsTable = ({ templatesData }: IInputsTable) => {
                         field: 'templateCategoryId',
                         options: templateCategoriesList,
                       }]}
+                      fileList={['photo']}
                     />
                   </TableCell>
                 </StyledTableRow>

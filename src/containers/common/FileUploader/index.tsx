@@ -13,14 +13,16 @@ import CloseIcon from '@mui/icons-material/Close';
 import { FileStateType, getUploadUrl, uploadFile } from './requests';
 import { StyledEmptyContainer, StyledImgContainer, StyledTitleBox, StyledUploadContainer } from './styles';
 import ErrorMessage from '../ErrorMessage';
-import { acceptedExtensions } from './helpers';
+import { fileExtensions, imgExtensions } from './helpers';
 
 interface IImageUpload {
   name: string;
   errorMessage?: string;
+  isFile?: boolean;
 }
 
-const ImageUpload = ({ name, errorMessage }: IImageUpload) => {
+const ImageUpload = ({ name, errorMessage, isFile = false }: IImageUpload) => {
+  const acceptedExtensions = isFile ? fileExtensions : imgExtensions;
   const [loading, setLoading] = useState(false);
   const { setValue, watch } = useFormContext();
   const uploadedImg = watch(name);
