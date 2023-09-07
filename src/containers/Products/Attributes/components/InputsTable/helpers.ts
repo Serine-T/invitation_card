@@ -8,7 +8,7 @@ export interface IAddDataForm {
   attributeCategory: string;
   nickname: string;
   showInCustomEstimates?: boolean;
-  defaultPrice: string | null;
+  defaultPrice?: string | null;
   fouroverCode?: string;
 }
 

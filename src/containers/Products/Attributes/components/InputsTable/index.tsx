@@ -41,7 +41,7 @@ const InputsTable = ({ attributesData }: IInputsTable) => {
   const navigate = useNavigate();
   const { actionLoading } = useAppSelector(selectAttributes);
   const methods = useForm<IAddDataForm>({
-    resolver: yupResolver(AddDataSchema),
+    resolver: yupResolver(AddDataSchema) as any, // TODO: change any
     defaultValues: attributesData ?? defaultValues,
   });
 
