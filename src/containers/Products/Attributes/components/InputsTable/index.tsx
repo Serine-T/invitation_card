@@ -80,11 +80,13 @@ const InputsTable = ({ attributesData }: IInputsTable) => {
         >
           <StyledTable tableTitle="ATTRIBUTE" colSpan={2}>
             {inputsRows.map((item) => {
-              const { label } = item;
+              const { label, isRequired } = item;
 
               return (
                 <StyledTableRow key={label}>
-                  <StyledTableCell>{`${label}:`}</StyledTableCell>
+                  <StyledTableCell>
+                    {`${label}: ${isRequired ? '*' : ''}`}
+                  </StyledTableCell>
                   <TableCell>
                     <ReusableFields
                       {...item}
