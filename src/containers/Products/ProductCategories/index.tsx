@@ -28,6 +28,7 @@ import { getAllCategories } from '@features/categories/actions';
 import { selectCategories } from '@features/categories/selectors';
 import PageTitle from '@containers/common/PageTitle';
 import RowTitle from '@containers/common/Table/components/RowTitle';
+import { useLocation } from 'react-router-dom';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -44,7 +45,8 @@ const ProductCategories = () => {
     }).catch(() => {});
   };
 
-  const params = queryString.parse(window.location.search);
+  const location = useLocation();
+  const params = queryString.parse(location.search);
 
   const { searchTerm = '', visibleOnSite: visibleOnSiteQuery = '', category = '' } = params as IFiltersForm;
   const isSearchTerm = searchTerm || visibleOnSiteQuery || category;

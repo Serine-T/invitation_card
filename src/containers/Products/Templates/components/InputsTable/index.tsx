@@ -79,11 +79,13 @@ const InputsTable = ({ templatesData }: IInputsTable) => {
         >
           <StyledTable tableTitle="TEMPLATE" colSpan={2}>
             {inputsRows.map((item) => {
-              const { label } = item;
+              const { label, isRequired } = item;
 
               return (
                 <StyledTableRow key={label}>
-                  <StyledTableCell>{`${label}:`}</StyledTableCell>
+                  <StyledTableCell>
+                    {`${label}: ${isRequired ? '*' : ''}`}
+                  </StyledTableCell>
                   <TableCell>
                     <ReusableFields
                       {...item}

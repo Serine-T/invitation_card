@@ -27,21 +27,25 @@ export const inputsRows: ValidFieldNames[] = [
     label: 'Subcategory',
     field: 'subCategoryId',
     type: InputTypes.select,
+    isRequired: true,
   },
   {
     label: 'Template Category',
     field: 'templateCategoryId',
     type: InputTypes.select,
+    isRequired: false,
   },
   {
     label: 'Template Name',
     field: 'name',
     type: InputTypes.text,
+    isRequired: true,
   },
   {
     label: 'File',
     field: 'photo',
     type: InputTypes.image,
+    isRequired: true,
   },
 ];
 
