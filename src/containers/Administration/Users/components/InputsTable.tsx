@@ -7,7 +7,7 @@ import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import Checkbox from '@containers/common/Checkbox';
-import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { addUser, editUser } from '@features/users/actions';
 import PAGE_ROUTES from '@routes/routingEnum';
@@ -15,6 +15,7 @@ import { IUserInfo } from '@features/users/types';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import { selectUsers } from '@features/users/selectors';
 import ReusableFields from '@containers/common/ReusableFields';
+import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 
 import {
   AddUserSchema,
@@ -93,13 +94,7 @@ const InputsTable = ({ userInfo }: IInputsTable) => {
               </StyledTableRow>
             ))}
           </StyledTable>
-          <StyledButton
-            type="submit"
-            disabled={actionLoading}
-            isLoading={actionLoading}
-          >
-            Submit
-          </StyledButton>
+          <SubmitBtn actionLoading={actionLoading} />
         </StyledStack>
       </FormProvider>
     </TitlesWithBackButton>
