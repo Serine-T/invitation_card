@@ -50,9 +50,7 @@ const Banners = ({ isSlider }: IBannersProps) => {
 
   return (
     <DndContainer reordingData={reordingData}>
-      <StyledTable
-        headCells={isSlider ? headSliderCells : headBannerCells}
-      >
+      <StyledTable headCells={isSlider ? headSliderCells : headBannerCells}>
         {items.map(({ title, displayOnSite, id = '' }, index) => (
           <ReusableDragRow id={id} index={index} gridTemplateColumns="auto 173px  140px 150px">
             {({ providedDraggable }) => {
