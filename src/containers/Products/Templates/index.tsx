@@ -86,53 +86,46 @@ const Templates = () => {
           <Typography variant="h5" mb="16px">{ title}</Typography>
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="droppable">
-              {(providedDroppable: DroppableProvided) => {
-                return (
-                  <Box
-                    {...providedDroppable.droppableProps}
-                    ref={providedDroppable.innerRef}
-                  >
-                    <StyledTable headCells={headSliderCells}>
-                      {templates.map(({ name, id, templateCategory }, index) => (
-                        <Draggable
-                          key={id}
-                          draggableId={id}
-                          index={index}
-                        >
-                          {(providedDraggable, snapshot) => {
-                            return (
-                              <StyledDraggableRow
-                                ref={providedDraggable.innerRef}
-                                data-snapshot={snapshot}
-                                {...providedDraggable.draggableProps}
-                                isDraggingOver={!!snapshot.draggingOver}
-                                gridTemplateColumns="auto 282px  140px 150px"
-                              >
-                                <TableCell>
-                                  <RowTitle title={name} path={`/products/templates/edit/${id}`} />
-                                </TableCell>
-                                <TableCell width="282px">
-                                  {templateCategory ? templateCategory.name : 'None'}
-                                </TableCell>
+              {(providedDroppable: DroppableProvided) => (
+                <StyledTable headCells={headSliderCells} providedDroppable={providedDroppable}>
+                  {templates.map(({ name, id, templateCategory }, index) => (
+                    <Draggable
+                      key={id}
+                      draggableId={id}
+                      index={index}
+                    >
+                      {(providedDraggable, snapshot) => {
+                        return (
+                          <StyledDraggableRow
+                            ref={providedDraggable.innerRef}
+                            data-snapshot={snapshot}
+                            {...providedDraggable.draggableProps}
+                            isDraggingOver={!!snapshot.draggingOver}
+                            gridTemplateColumns="auto 282px  140px 150px"
+                          >
+                            <TableCell>
+                              <RowTitle title={name} path={`/products/templates/edit/${id}`} />
+                            </TableCell>
+                            <TableCell width="282px">
+                              {templateCategory ? templateCategory.name : 'None'}
+                            </TableCell>
 
-                                <TableCell width="140px">
-                                  <DndBtn providedDraggable={providedDraggable} />
-                                </TableCell>
-                                <TableCell width="150px">
-                                  <DeleteBtn
-                                    deleteAction={() => deleteAction(id)}
-                                    questionText="Are you sure you want to delete this template ?"
-                                  />
-                                </TableCell>
-                              </StyledDraggableRow>
-                            );
-                          }}
-                        </Draggable>
-                      ))}
-                    </StyledTable>
-                  </Box>
-                );
-              }}
+                            <TableCell width="140px">
+                              <DndBtn providedDraggable={providedDraggable} />
+                            </TableCell>
+                            <TableCell width="150px">
+                              <DeleteBtn
+                                deleteAction={() => deleteAction(id)}
+                                questionText="Are you sure you want to delete this template ?"
+                              />
+                            </TableCell>
+                          </StyledDraggableRow>
+                        );
+                      }}
+                    </Draggable>
+                  ))}
+                </StyledTable>
+              )}
             </Droppable>
           </DragDropContext>
         </Box>

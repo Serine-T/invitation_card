@@ -4,7 +4,6 @@ import TableCell from '@mui/material/TableCell';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTable from '@containers/common/Table';
 import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
-import Box from '@mui/material/Box';
 import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 import {
   DragDropContext, Droppable,
@@ -85,49 +84,42 @@ const TemplateCategories = () => {
       {templateCategories.length ? (
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
-            {(providedDroppable: DroppableProvided) => {
-              return (
-                <Box
-                  {...providedDroppable.droppableProps}
-                  ref={providedDroppable.innerRef}
-                >
-                  <StyledTable headCells={headSliderCells}>
-                    {templateCategories.map(({ name, id }, index) => (
-                      <Draggable
-                        key={id}
-                        draggableId={id}
-                        index={index}
-                      >
-                        {(providedDraggable, snapshot) => {
-                          return (
-                            <StyledDraggableRow
-                              ref={providedDraggable.innerRef}
-                              data-snapshot={snapshot}
-                              {...providedDraggable.draggableProps}
-                              isDraggingOver={!!snapshot.draggingOver}
-                              gridTemplateColumns="auto 140px"
-                            >
-                              <TableCell>
-                                <RowTitle title={name} path={`/products/template-categories/edit/${id}`} />
-                              </TableCell>
-                              <TableCell width="140px">
-                                <DndBtn providedDraggable={providedDraggable} />
-                              </TableCell>
-                              <TableCell width="150px">
-                                <DeleteBtn
-                                  deleteAction={() => deleteAction(id)}
-                                  questionText="Are you sure you want to delete this template category ?"
-                                />
-                              </TableCell>
-                            </StyledDraggableRow>
-                          );
-                        }}
-                      </Draggable>
-                    ))}
-                  </StyledTable>
-                </Box>
-              );
-            }}
+            {(providedDroppable: DroppableProvided) => (
+              <StyledTable headCells={headSliderCells} providedDroppable={providedDroppable}>
+                {templateCategories.map(({ name, id }, index) => (
+                  <Draggable
+                    key={id}
+                    draggableId={id}
+                    index={index}
+                  >
+                    {(providedDraggable, snapshot) => {
+                      return (
+                        <StyledDraggableRow
+                          ref={providedDraggable.innerRef}
+                          data-snapshot={snapshot}
+                          {...providedDraggable.draggableProps}
+                          isDraggingOver={!!snapshot.draggingOver}
+                          gridTemplateColumns="auto 140px"
+                        >
+                          <TableCell>
+                            <RowTitle title={name} path={`/products/template-categories/edit/${id}`} />
+                          </TableCell>
+                          <TableCell width="140px">
+                            <DndBtn providedDraggable={providedDraggable} />
+                          </TableCell>
+                          <TableCell width="150px">
+                            <DeleteBtn
+                              deleteAction={() => deleteAction(id)}
+                              questionText="Are you sure you want to delete this template category ?"
+                            />
+                          </TableCell>
+                        </StyledDraggableRow>
+                      );
+                    }}
+                  </Draggable>
+                ))}
+              </StyledTable>
+            )}
           </Droppable>
         </DragDropContext>
       ) : (

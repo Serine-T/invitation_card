@@ -3,7 +3,6 @@ import { memo, useCallback, useEffect } from 'react';
 import TableCell from '@mui/material/TableCell';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTable from '@containers/common/Table';
-import Box from '@mui/material/Box';
 import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided, DropResult,
@@ -81,43 +80,36 @@ const AttributeCategories = () => {
       {attributeCategories.length ? (
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
-            {(providedDroppable: DroppableProvided) => {
-              return (
-                <Box
-                  {...providedDroppable.droppableProps}
-                  ref={providedDroppable.innerRef}
-                >
-                  <StyledTable headCells={headSliderCells}>
-                    {attributeCategories.map(({ name, id }, index) => (
-                      <Draggable
-                        key={id}
-                        draggableId={id}
-                        index={index}
-                      >
-                        {(providedDraggable, snapshot) => {
-                          return (
-                            <StyledDraggableRow
-                              ref={providedDraggable.innerRef}
-                              data-snapshot={snapshot}
-                              {...providedDraggable.draggableProps}
-                              isDraggingOver={!!snapshot.draggingOver}
-                              gridTemplateColumns="auto 260px"
-                            >
-                              <TableCell>
-                                <RowTitle title={name} path={`/products/attribute-categories/edit/${id}`} />
-                              </TableCell>
-                              <TableCell width="260px">
-                                <DndBtn providedDraggable={providedDraggable} />
-                              </TableCell>
-                            </StyledDraggableRow>
-                          );
-                        }}
-                      </Draggable>
-                    ))}
-                  </StyledTable>
-                </Box>
-              );
-            }}
+            {(providedDroppable: DroppableProvided) => (
+              <StyledTable headCells={headSliderCells} providedDroppable={providedDroppable}>
+                {attributeCategories.map(({ name, id }, index) => (
+                  <Draggable
+                    key={id}
+                    draggableId={id}
+                    index={index}
+                  >
+                    {(providedDraggable, snapshot) => {
+                      return (
+                        <StyledDraggableRow
+                          ref={providedDraggable.innerRef}
+                          data-snapshot={snapshot}
+                          {...providedDraggable.draggableProps}
+                          isDraggingOver={!!snapshot.draggingOver}
+                          gridTemplateColumns="auto 260px"
+                        >
+                          <TableCell>
+                            <RowTitle title={name} path={`/products/attribute-categories/edit/${id}`} />
+                          </TableCell>
+                          <TableCell width="260px">
+                            <DndBtn providedDraggable={providedDraggable} />
+                          </TableCell>
+                        </StyledDraggableRow>
+                      );
+                    }}
+                  </Draggable>
+                ))}
+              </StyledTable>
+            )}
           </Droppable>
         </DragDropContext>
       ) : (

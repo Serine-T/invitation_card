@@ -74,43 +74,39 @@ const Attribute = () => {
         <Box mb="24px" key={attributeId}>
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="droppable">
-              {(providedDroppable: DroppableProvided) => {
-                return (
-                  <Box
-                    {...providedDroppable.droppableProps}
-                    ref={providedDroppable.innerRef}
-                  >
-                    <StyledTable headCells={[{ label: attributeName }, { label: 'ACTIONS' }]}>
-                      {attributes.map(({ name, id, nickname }, index) => (
-                        <Draggable
-                          key={id}
-                          draggableId={id}
-                          index={index}
-                        >
-                          {(providedDraggable, snapshot) => {
-                            return (
-                              <StyledDraggableRow
-                                ref={providedDraggable.innerRef}
-                                data-snapshot={snapshot}
-                                {...providedDraggable.draggableProps}
-                                isDraggingOver={!!snapshot.draggingOver}
-                                gridTemplateColumns="auto 260px"
-                              >
-                                <TableCell>
-                                  <RowTitle title={`${name} / ${nickname}`} path={`/products/attributes/edit/${id}`} />
-                                </TableCell>
-                                <TableCell width="260px">
-                                  <DndBtn providedDraggable={providedDraggable} />
-                                </TableCell>
-                              </StyledDraggableRow>
-                            );
-                          }}
-                        </Draggable>
-                      ))}
-                    </StyledTable>
-                  </Box>
-                );
-              }}
+              {(providedDroppable: DroppableProvided) => (
+                <StyledTable
+                  providedDroppable={providedDroppable}
+                  headCells={[{ label: attributeName }, { label: 'ACTIONS' }]}
+                >
+                  {attributes.map(({ name, id, nickname }, index) => (
+                    <Draggable
+                      key={id}
+                      draggableId={id}
+                      index={index}
+                    >
+                      {(providedDraggable, snapshot) => {
+                        return (
+                          <StyledDraggableRow
+                            ref={providedDraggable.innerRef}
+                            data-snapshot={snapshot}
+                            {...providedDraggable.draggableProps}
+                            isDraggingOver={!!snapshot.draggingOver}
+                            gridTemplateColumns="auto 260px"
+                          >
+                            <TableCell>
+                              <RowTitle title={`${name} / ${nickname}`} path={`/products/attributes/edit/${id}`} />
+                            </TableCell>
+                            <TableCell width="260px">
+                              <DndBtn providedDraggable={providedDraggable} />
+                            </TableCell>
+                          </StyledDraggableRow>
+                        );
+                      }}
+                    </Draggable>
+                  ))}
+                </StyledTable>
+              ) }
             </Droppable>
           </DragDropContext>
         </Box>

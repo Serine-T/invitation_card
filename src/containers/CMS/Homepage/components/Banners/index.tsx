@@ -64,50 +64,46 @@ const Banners = ({ isSlider }: IBannersProps) => {
     <Box mt={isSlider ? '' : '40px'}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
-          {(providedDroppable: DroppableProvided) => {
-            return (
-              <Box
-                {...providedDroppable.droppableProps}
-                ref={providedDroppable.innerRef}
-              >
-                <StyledTable headCells={isSlider ? headSliderCells : headBannerCells}>
-                  {items.map(({ title, displayOnSite, id = '' }, index) => (
-                    <Draggable
-                      key={id}
-                      draggableId={id}
-                      index={index}
-                    >
-                      {(providedDraggable, snapshot) => {
-                        return (
-                          <StyledDraggableRow
-                            ref={providedDraggable.innerRef}
-                            data-snapshot={snapshot}
-                            {...providedDraggable.draggableProps}
-                            isDraggingOver={!!snapshot.draggingOver}
-                            gridTemplateColumns="auto 173px  140px 150px"
-                          >
-                            <TableCell>
-                              <RowTitle title={title} path={`/cms/homepage/edit/${id}`} />
-                            </TableCell>
-                            <TableCell width="173px">{displayOnSite ? 'Yes' : 'No'}</TableCell>
-                            <TableCell width="140px">
-                              <DndBtn providedDraggable={providedDraggable} />
-                            </TableCell>
-                            <TableCell width="150px">
-                              <DeleteBtn
-                                deleteAction={() => deleteAction(id)}
-                                questionText="Are you sure you want to delete this banner ?"
-                              />
-                            </TableCell>
-                          </StyledDraggableRow>
-                        );
-                      }}
-                    </Draggable>
-                  ))}
-                </StyledTable>
-              </Box>
-            );
-          }}
+          {(providedDroppable: DroppableProvided) => (
+            <StyledTable
+              headCells={isSlider ? headSliderCells : headBannerCells}
+              providedDroppable={providedDroppable}
+            >
+              {items.map(({ title, displayOnSite, id = '' }, index) => (
+                <Draggable
+                  key={id}
+                  draggableId={id}
+                  index={index}
+                >
+                  {(providedDraggable, snapshot) => {
+                    return (
+                      <StyledDraggableRow
+                        ref={providedDraggable.innerRef}
+                        data-snapshot={snapshot}
+                        {...providedDraggable.draggableProps}
+                        isDraggingOver={!!snapshot.draggingOver}
+                        gridTemplateColumns="auto 173px  140px 150px"
+                      >
+                        <TableCell>
+                          <RowTitle title={title} path={`/cms/homepage/edit/${id}`} />
+                        </TableCell>
+                        <TableCell width="173px">{displayOnSite ? 'Yes' : 'No'}</TableCell>
+                        <TableCell width="140px">
+                          <DndBtn providedDraggable={providedDraggable} />
+                        </TableCell>
+                        <TableCell width="150px">
+                          <DeleteBtn
+                            deleteAction={() => deleteAction(id)}
+                            questionText="Are you sure you want to delete this banner ?"
+                          />
+                        </TableCell>
+                      </StyledDraggableRow>
+                    );
+                  }}
+                </Draggable>
+              ))}
+            </StyledTable>
+          )}
         </Droppable>
       </DragDropContext>
     </Box>

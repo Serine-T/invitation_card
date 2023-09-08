@@ -1,9 +1,11 @@
 import { memo } from 'react';
 
+import { Typography } from '@mui/material';
+
 const MailingServiceFees = () => {
   return (
     <>
-      MailingServiceFees
+      <Typography variant="h2">Mailing Service Fees</Typography>
     </>
   );
 };
