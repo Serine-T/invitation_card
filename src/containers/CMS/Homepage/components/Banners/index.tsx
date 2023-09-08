@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 
 import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
 import TableCell from '@mui/material/TableCell';
@@ -36,13 +36,14 @@ const Banners = ({ isSlider }: IBannersProps) => {
 
   const items = isSlider ? [...sliders] : [...banners];
 
-  const reordingData = (result: DropResult) => {
+  const reordingData = useCallback((result: DropResult) => {
     const sortedData = dragSort(result, items);
 
     dispatch(reorderBanners(sortedData)).unwrap().then(() => {
       dispatch(isSlider ? setSilders(items) : setBanners(items));
     }).catch(() => dispatch(getAllBanners()));
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSlider, items]);
 
   if (isLoading) {
     return <Loader />;
@@ -55,7 +56,7 @@ const Banners = ({ isSlider }: IBannersProps) => {
           <ReusableDragRow id={id} index={index} gridTemplateColumns="auto 173px  140px 150px">
             {({ providedDraggable }) => {
               return (
-                < >
+                <>
                   <TableCell>
                     <RowTitle title={title} path={`/cms/homepage/edit/${id}`} />
                   </TableCell>
