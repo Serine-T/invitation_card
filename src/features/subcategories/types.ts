@@ -2,7 +2,7 @@ import { DefaultInkInEstimator, PrintType, StaticShippingFacility } from './enum
 
 export interface IState {
   isLoading: boolean;
-  data: ISubcategoriesInfo[];
+  data: ISubcategoriesInfo[] | ISubcategoriesSearchInfo[];
   actionLoading: boolean;
   errorMessage: null | string;
 }
@@ -55,4 +55,18 @@ export interface ISearchSubcategories {
   searchTerm?: string;
   visibleOnSite?: string;
   category?:string;
+}
+
+export interface SubCategory {
+  id: string;
+  title: string;
+  sort: number;
+  visibleOnSite: boolean;
+  printType: PrintType | null;
+}
+
+export interface ISubcategoriesSearchInfo {
+  id: string;
+  title: string;
+  subCategory: SubCategory[];
 }
