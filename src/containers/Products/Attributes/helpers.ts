@@ -1,9 +1,8 @@
 export const headCells = [
   {
-    label: 'Template category',
+    label: 'Attribute NAME',
   },
   {
     label: 'ACTIONS',
-    colSpan: 2,
   },
 ];

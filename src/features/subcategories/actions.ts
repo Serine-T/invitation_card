@@ -5,7 +5,7 @@ import { AxiosData, IReorderPayload } from '@utils/types';
 import { constructQueryString } from '@utils/helpers';
 
 import {
-  IAddSubcategoriesPayload, ISearchSubcategories, ISubcategoriesInfo,
+  IAddSubcategoriesPayload, ISearchSubcategories, ISubcategoriesInfo, ISubcategoriesSearchInfo,
 } from './types';
 
 const prefix = '/sub-categories';
@@ -102,7 +102,7 @@ export const reorderSubcategories = createAsyncThunk<void, IReorderPayload, {
     }
   },
 );
-export const searchSubcategories = createAsyncThunk<ISubcategoriesInfo[], ISearchSubcategories, {
+export const searchSubcategories = createAsyncThunk<ISubcategoriesSearchInfo[], ISearchSubcategories, {
   rejectValue: AxiosData;
 }>(
   'subcategories/search',
@@ -115,7 +115,7 @@ export const searchSubcategories = createAsyncThunk<ISubcategoriesInfo[], ISearc
         category,
       });
 
-      const { data } = await http.get<ISubcategoriesInfo[]>(
+      const { data } = await http.get<ISubcategoriesSearchInfo[]>(
         `${prefix}/search?${queryParams}`,
       );
 

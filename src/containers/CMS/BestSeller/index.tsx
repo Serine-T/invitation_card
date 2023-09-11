@@ -21,7 +21,7 @@ import DndContainer from '@containers/common/Table/components/DndContainer';
 import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
 import { setBestSellers } from '@features/bestSellers/slice';
 
-import { headSliderCells } from './helpers';
+import { headCells } from './helpers';
 
 const BestSeller = () => {
   const dispatch = useAppDispatch();
@@ -61,7 +61,7 @@ const BestSeller = () => {
       />
       {bestSellers.length ? (
         <DndContainer reordingData={reordingData}>
-          <StyledTable headCells={headSliderCells}>
+          <StyledTable headCells={headCells}>
             {bestSellers.map(({ title, displayOnSite, id }, index) => (
               <ReusableDragRow id={id} index={index} gridTemplateColumns="auto 173px  140px 150px">
                 {({ providedDraggable }) => (

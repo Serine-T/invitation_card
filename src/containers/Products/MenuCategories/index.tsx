@@ -20,7 +20,7 @@ import DndContainer from '@containers/common/Table/components/DndContainer';
 import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
 import { setCategories } from '@features/categories/slice';
 
-import { headSliderCells } from './helpers';
+import { headCells } from './helpers';
 import SearchSection from './components/SearchSection';
 import { IFiltersForm } from './components/SearchSection/helpers';
 
@@ -73,7 +73,7 @@ const MenuCategories = () => {
       { (isSearchTerm || !!categories.length) && <SearchSection /> }
       {categories.length ? (
         <DndContainer reordingData={reordingData}>
-          <StyledTable headCells={headSliderCells}>
+          <StyledTable headCells={headCells}>
             {categories.map(({ title, displayInHeader, id }, index) => (
               <ReusableDragRow key={id} id={id} index={index} gridTemplateColumns="auto 225px 140px 150px">
                 {({ providedDraggable }) => (

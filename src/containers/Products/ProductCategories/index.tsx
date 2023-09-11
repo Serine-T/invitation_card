@@ -4,23 +4,17 @@ import TableCell from '@mui/material/TableCell';
 import PAGE_ROUTES from '@routes/routingEnum';
 import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 import StyledTable from '@containers/common/Table';
-import {
-  DragDropContext, Droppable,
-  Draggable, DroppableProvided, DropResult,
-} from '@hello-pangea/dnd';
+import { DropResult } from '@hello-pangea/dnd';
 import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
-import { StyledDraggableRow } from '@containers/common/Table/components/TablesActions/DraggableRow/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import {
   deleteSubcategory,
-  getAllSubcategories,
   reorderSubcategories,
   searchSubcategories,
 } from '@features/subcategories/actions';
 import Loader from '@containers/common/Loader';
 import { selectSubcategories } from '@features/subcategories/selectors';
 import EmptyState from '@containers/common/EmptyState';
-import { getReorderedArray } from '@utils/helpers';
 import { setSubcategories } from '@features/subcategories/slice';
 import queryString from 'query-string';
 import useMount from '@customHooks/useMount';
@@ -29,8 +23,14 @@ import { selectCategories } from '@features/categories/selectors';
 import PageTitle from '@containers/common/PageTitle';
 import RowTitle from '@containers/common/Table/components/RowTitle';
 import { useLocation } from 'react-router-dom';
+import { nestedDragSort } from '@containers/common/Table/components/DndContainer/helpers';
+import DndContainer from '@containers/common/Table/components/DndContainer';
+import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
+import { ISubcategoriesSearchInfo } from '@features/subcategories/types';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
-import { headSliderCells } from './helpers';
+import { headCells } from './helpers';
 import SearchSection from './components/SearchSection';
 import { IFiltersForm } from './components/SearchSection/helpers';
 import { printTypeName } from './components/InputsTable/helpers';
@@ -39,11 +39,6 @@ const ProductCategories = () => {
   const dispatch = useAppDispatch();
   const { data: subcategories, isLoading } = useAppSelector(selectSubcategories);
   const { data: categories, isLoading: categoryLoading } = useAppSelector(selectCategories);
-  const deleteAction = (id: string) => {
-    dispatch(deleteSubcategory(id)).unwrap().then(() => {
-      dispatch(getAllSubcategories());
-    }).catch(() => {});
-  };
 
   const location = useLocation();
   const params = queryString.parse(location.search);
@@ -58,35 +53,31 @@ const ProductCategories = () => {
       category,
     };
 
-    isSearchTerm ? dispatch(searchSubcategories(query)) : dispatch(getAllSubcategories());
-  }, [isSearchTerm, searchTerm, visibleOnSiteQuery, category, dispatch]);
+    dispatch(searchSubcategories(query));
+  }, [searchTerm, visibleOnSiteQuery, category, dispatch]);
+
+  const deleteAction = (id: string) => {
+    dispatch(deleteSubcategory(id)).unwrap().then(() => {
+      fetchData();
+    }).catch(() => {});
+  };
 
   useEffect(
     () => fetchData(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isSearchTerm, searchTerm, visibleOnSiteQuery, category],
+    [isSearchTerm],
   );
 
   useMount(() => {
     dispatch(getAllCategories());
   });
 
-  const items = [...subcategories];
+  const reordingData = (result: DropResult) => {
+    const { sortedData, items } = nestedDragSort(result, subcategories as ISubcategoriesSearchInfo[], 'subCategory');
 
-  const onDragEnd = (result: DropResult) => {
-    const { destination } = result;
-
-    if (destination) {
-      const [removed] = items.splice(result.source.index, 1);
-
-      items.splice(destination.index, 0, removed);
-
-      const sortedData = getReorderedArray(items);
-
-      dispatch(reorderSubcategories(sortedData)).unwrap().then(() => {
-        dispatch(setSubcategories(items));
-      }).catch(() => dispatch(getAllSubcategories()));
-    }
+    dispatch(reorderSubcategories(sortedData)).unwrap().then(() => {
+      dispatch(setSubcategories(items));
+    }).catch(() => fetchData());
   };
 
   if (isLoading || categoryLoading) {
@@ -101,55 +92,47 @@ const ProductCategories = () => {
         path={PAGE_ROUTES.ADD_PRODUCT_CATEGORIES}
         isShowBtn={!!categories.length}
       />
-
       {
         categories.length ? (
           <>
             {(isSearchTerm || !!subcategories?.length) && <SearchSection />}
-            {subcategories?.length ? (
-              <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="droppable">
-                  {(providedDroppable: DroppableProvided) => (
-                    <StyledTable headCells={headSliderCells} providedDroppable={providedDroppable}>
-                      {items.map(({ title, visibleOnSite, id, printType }, index) => (
-                        <Draggable
+            {subcategories?.length ? (subcategories as ISubcategoriesSearchInfo[]).map(({
+              id: catId, subCategory, title: catTitle }) => (
+                <Box key={catId}>
+                  <Typography variant="h5" mb="16px">{catTitle}</Typography>
+                  <DndContainer reordingData={reordingData}>
+                    <StyledTable headCells={headCells}>
+                      {subCategory.map(({ title, visibleOnSite, id, printType }, index) => (
+                        <ReusableDragRow
                           key={id}
-                          draggableId={id}
+                          id={id}
                           index={index}
+                          gridTemplateColumns="auto 282px 138px 140px 150px"
                         >
-                          {(providedDraggable, snapshot) => {
-                            return (
-                              <StyledDraggableRow
-                                ref={providedDraggable.innerRef}
-                                data-snapshot={snapshot}
-                                {...providedDraggable.draggableProps}
-                                isDraggingOver={!!snapshot.draggingOver}
-                                gridTemplateColumns="auto 282px 138px 140px 150px"
-                              >
-                                <TableCell>
-                                  <RowTitle title={title} path={`/products/product-categories/edit/${id}`} />
-                                </TableCell>
-                                <TableCell width="282px">{printTypeName(printType)}</TableCell>
-                                <TableCell width="138px">{visibleOnSite ? 'Yes' : 'No'}</TableCell>
-                                <TableCell width="140px">
-                                  <DndBtn providedDraggable={providedDraggable} />
-                                </TableCell>
-                                <TableCell width="150px">
-                                  <DeleteBtn
-                                    deleteAction={() => deleteAction(id)}
-                                    questionText="Are you sure you want to delete this subcategory ?"
-                                  />
-                                </TableCell>
-                              </StyledDraggableRow>
-                            );
-                          }}
-                        </Draggable>
+                          {({ providedDraggable }) => (
+                            < >
+                              <TableCell>
+                                <RowTitle title={title} path={`/products/product-categories/edit/${id}`} />
+                              </TableCell>
+                              <TableCell width="282px">{printTypeName(printType)}</TableCell>
+                              <TableCell width="138px">{visibleOnSite ? 'Yes' : 'No'}</TableCell>
+                              <TableCell width="140px">
+                                <DndBtn providedDraggable={providedDraggable} />
+                              </TableCell>
+                              <TableCell width="150px">
+                                <DeleteBtn
+                                  deleteAction={() => deleteAction(id)}
+                                  questionText="Are you sure you want to delete this subcategory ?"
+                                />
+                              </TableCell>
+                            </>
+                          )}
+                        </ReusableDragRow>
                       ))}
                     </StyledTable>
-                  ) }
-                </Droppable>
-              </DragDropContext>
-            ) : (
+                  </DndContainer>
+                </Box>
+            )) : (
               <EmptyState
                 text={isSearchTerm ? 'No search results found'
                   : 'You don’t have any subcategories, please add new to proceed'}
@@ -162,7 +145,6 @@ const ProductCategories = () => {
           />
         )
       }
-
     </>
   );
 };
