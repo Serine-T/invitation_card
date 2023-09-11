@@ -30,7 +30,7 @@ import { ISubcategoriesSearchInfo } from '@features/subcategories/types';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { headSliderCells } from './helpers';
+import { headCells } from './helpers';
 import SearchSection from './components/SearchSection';
 import { IFiltersForm } from './components/SearchSection/helpers';
 import { printTypeName } from './components/InputsTable/helpers';
@@ -101,7 +101,7 @@ const ProductCategories = () => {
                 <Box key={catId}>
                   <Typography variant="h5" mb="16px">{catTitle}</Typography>
                   <DndContainer reordingData={reordingData}>
-                    <StyledTable headCells={headSliderCells}>
+                    <StyledTable headCells={headCells}>
                       {subCategory.map(({ title, visibleOnSite, id, printType }, index) => (
                         <ReusableDragRow
                           key={id}

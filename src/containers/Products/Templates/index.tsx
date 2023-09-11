@@ -25,7 +25,7 @@ import ReusableDragRow from '@containers/common/Table/components/DndContainer/Re
 import { useLocation } from 'react-router-dom';
 import { setTemplates } from '@features/templates/slice';
 
-import { headSliderCells } from './helpers';
+import { headCells } from './helpers';
 import SearchSection from './components/SearchSection';
 import { IFiltersForm } from './components/SearchSection/helpers';
 
@@ -80,7 +80,7 @@ const Templates = () => {
         <Box mb="32px" key={templateId}>
           <Typography variant="h5" mb="16px">{ title}</Typography>
           <DndContainer reordingData={reordingData}>
-            <StyledTable headCells={headSliderCells}>
+            <StyledTable headCells={headCells}>
               {templates.map(({ name, id, templateCategory }, index) => (
                 <ReusableDragRow key={id} id={id} index={index} gridTemplateColumns="auto 282px  140px 150px">
                   {({ providedDraggable }) => (

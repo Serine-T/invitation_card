@@ -1,4 +1,4 @@
-export const headSliderCells = [
+export const headCells = [
   {
     label: 'Attribute Category',
   },

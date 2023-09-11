@@ -23,7 +23,7 @@ import Typography from '@mui/material/Typography';
 
 import { IFiltersForm } from './components/SearchSection/helpers';
 import SearchSection from './components/SearchSection';
-import { headSliderCells } from './helpers';
+import { headCells } from './helpers';
 
 const Attribute = () => {
   const dispatch = useAppDispatch();
@@ -64,7 +64,7 @@ const Attribute = () => {
         <Box key={attributeId}>
           <Typography variant="h5" mb="16px">{attributeName}</Typography>
           <DndContainer reordingData={reordingData}>
-            <StyledTable headCells={headSliderCells}>
+            <StyledTable headCells={headCells}>
               {attributes.map(({ name, id, nickname }, index) => (
                 <ReusableDragRow key={id} id={id} index={index} gridTemplateColumns="auto 260px">
                   {({ providedDraggable }) => (

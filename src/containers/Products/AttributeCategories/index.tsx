@@ -21,7 +21,7 @@ import { dragSort } from '@containers/common/Table/components/DndContainer/helpe
 import { useLocation } from 'react-router-dom';
 import { setAttributeCategories } from '@features/attributeCategories/slice';
 
-import { headSliderCells } from './helpers';
+import { headCells } from './helpers';
 import SearchSection from './components/SearchSection';
 import { IFiltersForm } from './components/SearchSection/helpers';
 
@@ -69,7 +69,7 @@ const AttributeCategories = () => {
       { (searchTerm || !!attributeCategories.length) && <SearchSection /> }
       {attributeCategories.length ? (
         <DndContainer reordingData={reordingData}>
-          <StyledTable headCells={headSliderCells}>
+          <StyledTable headCells={headCells}>
             {attributeCategories.map(({ name, id }, index) => (
               <ReusableDragRow key={id} id={id} index={index} gridTemplateColumns="auto 260px">
                 {({ providedDraggable }) => (
