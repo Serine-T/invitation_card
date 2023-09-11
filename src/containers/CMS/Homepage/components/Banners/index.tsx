@@ -37,7 +37,7 @@ const Banners = ({ isSlider }: IBannersProps) => {
   const items = isSlider ? [...sliders] : [...banners];
 
   const reordingData = useCallback((result: DropResult) => {
-    const sortedData = dragSort(result, items);
+    const { sortedData } = dragSort(result, items);
 
     dispatch(reorderBanners(sortedData)).unwrap().then(() => {
       dispatch(isSlider ? setSilders(items) : setBanners(items));
@@ -54,25 +54,23 @@ const Banners = ({ isSlider }: IBannersProps) => {
       <StyledTable headCells={isSlider ? headSliderCells : headBannerCells}>
         {items.map(({ title, displayOnSite, id = '' }, index) => (
           <ReusableDragRow id={id} index={index} gridTemplateColumns="auto 173px  140px 150px">
-            {({ providedDraggable }) => {
-              return (
-                <>
-                  <TableCell>
-                    <RowTitle title={title} path={`/cms/homepage/edit/${id}`} />
-                  </TableCell>
-                  <TableCell width="173px">{displayOnSite ? 'Yes' : 'No'}</TableCell>
-                  <TableCell width="140px">
-                    <DndBtn providedDraggable={providedDraggable} />
-                  </TableCell>
-                  <TableCell width="150px">
-                    <DeleteBtn
-                      deleteAction={() => deleteAction(id)}
-                      questionText="Are you sure you want to delete this banner ?"
-                    />
-                  </TableCell>
-                </>
-              );
-            }}
+            {({ providedDraggable }) => (
+              <>
+                <TableCell>
+                  <RowTitle title={title} path={`/cms/homepage/edit/${id}`} />
+                </TableCell>
+                <TableCell width="173px">{displayOnSite ? 'Yes' : 'No'}</TableCell>
+                <TableCell width="140px">
+                  <DndBtn providedDraggable={providedDraggable} />
+                </TableCell>
+                <TableCell width="150px">
+                  <DeleteBtn
+                    deleteAction={() => deleteAction(id)}
+                    questionText="Are you sure you want to delete this banner ?"
+                  />
+                </TableCell>
+              </>
+            ) }
           </ReusableDragRow>
         ))}
       </StyledTable>

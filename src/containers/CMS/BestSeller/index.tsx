@@ -19,6 +19,7 @@ import RowTitle from '@containers/common/Table/components/RowTitle';
 import { dragSort } from '@containers/common/Table/components/DndContainer/helpers';
 import DndContainer from '@containers/common/Table/components/DndContainer';
 import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
+import { setBestSellers } from '@features/bestSellers/slice';
 
 import { headSliderCells } from './helpers';
 
@@ -38,10 +39,10 @@ const BestSeller = () => {
   });
 
   const reordingData = useCallback((result: DropResult) => {
-    const sortedData = dragSort(result, bestSellers);
+    const { sortedData, items } = dragSort(result, bestSellers);
 
     dispatch(reorderBestSellers(sortedData)).unwrap().then(() => {
-      dispatch(getAllBestSellers());
+      dispatch(setBestSellers(items));
     }).catch(() => dispatch(getAllBestSellers()));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bestSellers]);

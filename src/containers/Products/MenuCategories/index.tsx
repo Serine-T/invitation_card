@@ -18,6 +18,7 @@ import { useLocation } from 'react-router-dom';
 import { dragSort } from '@containers/common/Table/components/DndContainer/helpers';
 import DndContainer from '@containers/common/Table/components/DndContainer';
 import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
+import { setCategories } from '@features/categories/slice';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -55,10 +56,10 @@ const MenuCategories = () => {
   const { data: categories, isLoading } = useAppSelector(selectCategories);
 
   const reordingData = (result: DropResult) => {
-    const sortedData = dragSort(result, categories);
+    const { sortedData, items } = dragSort(result, categories);
 
     dispatch(reorderCategories(sortedData)).unwrap().then(() => {
-      dispatch(getAllCategories());
+      dispatch(setCategories(items));
     }).catch(() => dispatch(getAllCategories()));
   };
 

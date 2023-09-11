@@ -19,6 +19,7 @@ import DndContainer from '@containers/common/Table/components/DndContainer';
 import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
 import { dragSort } from '@containers/common/Table/components/DndContainer/helpers';
 import { useLocation } from 'react-router-dom';
+import { setAttributeCategories } from '@features/attributeCategories/slice';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -47,10 +48,10 @@ const AttributeCategories = () => {
   const { data: attributeCategories, isLoading } = useAppSelector(selectAttributeCategories);
 
   const reordingData = (result: DropResult) => {
-    const sortedData = dragSort(result, attributeCategories);
+    const { sortedData, items } = dragSort(result, attributeCategories);
 
     dispatch(reorderAttributeCategories(sortedData)).unwrap().then(() => {
-      dispatch(getAllAttributeCategories());
+      dispatch(setAttributeCategories(items));
     }).catch(() => dispatch(getAllAttributeCategories()));
   };
 

@@ -23,6 +23,7 @@ import { nestedDragSort } from '@containers/common/Table/components/DndContainer
 import DndContainer from '@containers/common/Table/components/DndContainer';
 import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
 import { useLocation } from 'react-router-dom';
+import { setTemplates } from '@features/templates/slice';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -57,10 +58,11 @@ const Templates = () => {
   const { data: templatesList, isLoading } = useAppSelector(selectTemplates);
 
   const reordingData = useCallback((result: DropResult) => {
-    const sortedData = nestedDragSort(result, templatesList, 'templates');
+    const { sortedData, items } = nestedDragSort(result, templatesList, 'templates');
 
     if (sortedData) {
-      dispatch(reorderTemplates(sortedData)).unwrap().finally(() => fetchData());
+      dispatch(reorderTemplates(sortedData)).unwrap().then(() => setTemplates(items))
+        .catch(() => fetchData());
     }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

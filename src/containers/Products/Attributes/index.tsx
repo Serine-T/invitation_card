@@ -17,6 +17,7 @@ import RowTitle from '@containers/common/Table/components/RowTitle';
 import { nestedDragSort } from '@containers/common/Table/components/DndContainer/helpers';
 import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
 import { useLocation } from 'react-router-dom';
+import { setAttributes } from '@features/attributes/slice';
 
 import { IFiltersForm } from './components/SearchSection/helpers';
 import SearchSection from './components/SearchSection';
@@ -42,9 +43,10 @@ const Attribute = () => {
   const { data: attributesList, isLoading } = useAppSelector(selectAttributes);
 
   const reordingData = (result: DropResult) => {
-    const sortedData = nestedDragSort(result, attributesList, 'attributes');
+    const { sortedData, items } = nestedDragSort(result, attributesList, 'attributes');
 
-    dispatch(reorderAttributes(sortedData)).unwrap().finally(() => fetchData());
+    dispatch(reorderAttributes(sortedData)).unwrap()
+      .then(() => dispatch(setAttributes(items))).catch(() => fetchData());
   };
 
   if (isLoading) {

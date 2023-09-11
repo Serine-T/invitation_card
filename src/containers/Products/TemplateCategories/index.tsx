@@ -21,6 +21,7 @@ import { dragSort } from '@containers/common/Table/components/DndContainer/helpe
 import DndContainer from '@containers/common/Table/components/DndContainer';
 import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
 import { useLocation } from 'react-router-dom';
+import { setTemplateCategories } from '@features/templateCategories/slice';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -54,10 +55,10 @@ const TemplateCategories = () => {
   };
 
   const reordingData = (result: DropResult) => {
-    const sortedData = dragSort(result, templateCategories);
+    const { sortedData, items } = dragSort(result, templateCategories);
 
     dispatch(reorderTemplateCategories(sortedData)).unwrap().then(() => {
-      dispatch(getAllTemplateCategories());
+      dispatch(setTemplateCategories(items));
     }).catch(() => dispatch(getAllTemplateCategories()));
   };
 

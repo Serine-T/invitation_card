@@ -18,10 +18,10 @@ export const nestedDragSort = <T extends IDraggableItem>(
 
     draggableData.splice(destination.index, 0, removed);
 
-    return getReorderedArray(draggableData);
+    return { sortedData: getReorderedArray(draggableData), items };
   }
 
-  return { orders: [] };
+  return { sortedData: { orders: [] }, items };
 };
 
 export const dragSort = (result: DropResult, data: any) => {
@@ -33,8 +33,8 @@ export const dragSort = (result: DropResult, data: any) => {
 
     items.splice(destination.index, 0, removed);
 
-    return getReorderedArray(items);
+    return { sortedData: getReorderedArray(items), items };
   }
 
-  return { orders: [] };
+  return { sortedData: { orders: [] }, items };
 };
