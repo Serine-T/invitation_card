@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
-import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
@@ -19,6 +19,7 @@ import { getOptionsArray } from '@utils/helpers';
 import Input from '@containers/common/Input';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 
 import {
   AddDataSchema,
@@ -126,15 +127,8 @@ const InputsTable = ({ attributesData }: IInputsTable) => {
                 />
               </TableCell>
             </StyledTableRow>
-
           </StyledTable>
-          <StyledButton
-            type="submit"
-            disabled={actionLoading}
-            isLoading={actionLoading}
-          >
-            Submit
-          </StyledButton>
+          <SubmitBtn actionLoading={actionLoading} />
         </StyledStack>
       </FormProvider>
     </TitlesWithBackButton>

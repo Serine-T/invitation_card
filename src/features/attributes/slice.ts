@@ -15,7 +15,11 @@ const initialState: IState = {
 const attributesSlice = createSlice({
   name: 'attributes',
   initialState,
-  reducers: { },
+  reducers: {
+    setAttributes: (state, { payload }) => {
+      state.data = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllAttributes.pending, (state) => {
       state.isLoading = true;
@@ -71,5 +75,9 @@ const attributesSlice = createSlice({
     });
   },
 });
+
+export const {
+  setAttributes,
+} = attributesSlice.actions;
 
 export default attributesSlice.reducer;

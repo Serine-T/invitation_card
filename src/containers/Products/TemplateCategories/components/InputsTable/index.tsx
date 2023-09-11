@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
-import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { ITemplateCategory } from '@features/templateCategories/types';
 import { selectTemplateCategories } from '@features/templateCategories/selectors';
 import { addTemplateCategory, editTemplateCategory } from '@features/templateCategories/actions';
+import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 
 import {
   AddDataSchema,
@@ -76,13 +77,7 @@ const InputsTable = ({ templateCategoriesData }: IInputsTable) => {
               );
             })}
           </StyledTable>
-          <StyledButton
-            type="submit"
-            disabled={actionLoading}
-            isLoading={actionLoading}
-          >
-            Submit
-          </StyledButton>
+          <SubmitBtn actionLoading={actionLoading} />
         </StyledStack>
       </FormProvider>
     </TitlesWithBackButton>

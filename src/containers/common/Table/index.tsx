@@ -3,6 +3,7 @@ import { ReactNode, memo } from 'react';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
+import { DroppableProvided } from '@hello-pangea/dnd';
 
 import { StyledMuiTable, StyledPagination, StyledTableContainer, StyledTableRow } from './styled';
 import { ITableHeadCell } from './helpers';
@@ -13,12 +14,18 @@ interface IStyledTable {
   tableTitle?: string;
   colSpan?: number;
   hasPagination?: boolean;
+  providedDroppable?: DroppableProvided;
  }
 
-const StyledTable = ({ headCells, children, tableTitle, colSpan, hasPagination = false }: IStyledTable) => {
+const StyledTable = ({
+  headCells, children, tableTitle, colSpan, hasPagination = false, providedDroppable,
+}: IStyledTable) => {
   return (
     <>
-      <StyledTableContainer>
+      <StyledTableContainer
+        {...providedDroppable?.droppableProps}
+        ref={providedDroppable?.innerRef}
+      >
         <StyledMuiTable>
           <TableHead>
             <StyledTableRow>

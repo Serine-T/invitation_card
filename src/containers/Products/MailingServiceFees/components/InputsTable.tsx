@@ -24,7 +24,6 @@ import {
   inputsRows,
   defaultValues,
   formattingPayload,
-  formattingDefaultValue,
   EditUserSchema,
 } from './helpers';
 
@@ -39,7 +38,7 @@ const InputsTable = ({ userInfo }: IInputsTable) => {
   const ValidationSchema = userInfo ? EditUserSchema : AddUserSchema;
   const methods = useForm<IAddUserForm>({
     resolver: yupResolver(ValidationSchema as any),
-    defaultValues: userInfo ? formattingDefaultValue(userInfo) : defaultValues,
+    defaultValues,
   });
 
   const {

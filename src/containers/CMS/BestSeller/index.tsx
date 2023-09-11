@@ -1,28 +1,25 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 
 import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
 import TableCell from '@mui/material/TableCell';
 import PAGE_ROUTES from '@routes/routingEnum';
 import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 import StyledTable from '@containers/common/Table';
-import Box from '@mui/material/Box';
 import PageTitle from '@containers/common/PageTitle';
-import {
-  DragDropContext, Droppable,
-  Draggable, DroppableProvided, DropResult,
-} from '@hello-pangea/dnd';
-import { StyledDraggableRow } from '@containers/common/Table/components/TablesActions/DraggableRow/styled';
+import { DropResult } from '@hello-pangea/dnd';
 import Loader from '@containers/common/Loader';
 import useMount from '@customHooks/useMount';
 import { deleteBestSeller, getAllBestSellers, reorderBestSellers } from '@features/bestSellers/actions';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { selectBestSellers } from '@features/bestSellers/selectors';
-import { getReorderedArray } from '@utils/helpers';
-import { setBestSellers } from '@features/bestSellers/slice';
 import EmptyState from '@containers/common/EmptyState';
 import { getAllSubcategories } from '@features/subcategories/actions';
 import { selectSubcategories } from '@features/subcategories/selectors';
 import RowTitle from '@containers/common/Table/components/RowTitle';
+import { dragSort } from '@containers/common/Table/components/DndContainer/helpers';
+import DndContainer from '@containers/common/Table/components/DndContainer';
+import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
+import { setBestSellers } from '@features/bestSellers/slice';
 
 import { headSliderCells } from './helpers';
 
@@ -41,22 +38,14 @@ const BestSeller = () => {
     dispatch(getAllBestSellers());
   });
 
-  const items = [...bestSellers];
-  const onDragEnd = (result: DropResult) => {
-    const { destination } = result;
+  const reordingData = useCallback((result: DropResult) => {
+    const { sortedData, items } = dragSort(result, bestSellers);
 
-    if (destination) {
-      const [removed] = items.splice(result.source.index, 1);
-
-      items.splice(destination.index, 0, removed);
-
-      const sortedData = getReorderedArray(items);
-
-      dispatch(reorderBestSellers(sortedData)).unwrap().then(() => {
-        dispatch(setBestSellers(items));
-      }).catch(() => dispatch(getAllBestSellers()));
-    }
-  };
+    dispatch(reorderBestSellers(sortedData)).unwrap().then(() => {
+      dispatch(setBestSellers(items));
+    }).catch(() => dispatch(getAllBestSellers()));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bestSellers]);
 
   if (isLoading || subcategoriesLoading) {
     return <Loader />;
@@ -71,59 +60,31 @@ const BestSeller = () => {
         isShowBtn={!!subcategories.length}
       />
       {bestSellers.length ? (
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="droppable">
-            {(providedDroppable: DroppableProvided) => {
-              return (
-                <Box
-                  {...providedDroppable.droppableProps}
-                  ref={providedDroppable.innerRef}
-                >
-                  <StyledTable headCells={headSliderCells}>
-                    {items.map(({ title, displayOnSite, id }, index) => (
-
-                      <Draggable
-                        key={id}
-                        draggableId={id}
-                        index={index}
-                      >
-                        {(providedDraggable, snapshot) => {
-                          return (
-                            <StyledDraggableRow
-                              ref={providedDraggable.innerRef}
-                              data-snapshot={snapshot}
-                              {...providedDraggable.draggableProps}
-                              isDraggingOver={!!snapshot.draggingOver}
-                              gridTemplateColumns="auto 173px  140px 150px"
-                            >
-                              <TableCell>
-                                <RowTitle title={title} path={`/cms/best-seller/edit/${id}`} />
-                              </TableCell>
-                              <TableCell width="173px">{displayOnSite ? 'Yes' : 'No'}</TableCell>
-                              <TableCell width="140px">
-                                <DndBtn providedDraggable={providedDraggable} />
-                              </TableCell>
-                              <TableCell width="150px">
-                                <DeleteBtn
-                                  deleteAction={() => deleteAction(id)}
-                                  questionText="Are you sure you want to delete this banner ?"
-                                />
-                              </TableCell>
-                            </StyledDraggableRow>
-                          );
-                        }}
-
-                      </Draggable>
-
-                    ))}
-                  </StyledTable>
-                </Box>
-
-              );
-            }}
-
-          </Droppable>
-        </DragDropContext>
+        <DndContainer reordingData={reordingData}>
+          <StyledTable headCells={headSliderCells}>
+            {bestSellers.map(({ title, displayOnSite, id }, index) => (
+              <ReusableDragRow id={id} index={index} gridTemplateColumns="auto 173px  140px 150px">
+                {({ providedDraggable }) => (
+                  <>
+                    <TableCell>
+                      <RowTitle title={title} path={`/cms/best-seller/edit/${id}`} />
+                    </TableCell>
+                    <TableCell width="173px">{displayOnSite ? 'Yes' : 'No'}</TableCell>
+                    <TableCell width="140px">
+                      <DndBtn providedDraggable={providedDraggable} />
+                    </TableCell>
+                    <TableCell width="150px">
+                      <DeleteBtn
+                        deleteAction={() => deleteAction(id)}
+                        questionText="Are you sure you want to delete this banner ?"
+                      />
+                    </TableCell>
+                  </>
+                )}
+              </ReusableDragRow>
+            ))}
+          </StyledTable>
+        </DndContainer>
       ) : (
         <EmptyState
           text={

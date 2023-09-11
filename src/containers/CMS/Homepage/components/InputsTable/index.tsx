@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
-import { StyledButton, StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
@@ -14,6 +14,7 @@ import { addBanner, editBanner } from '@features/banners/actions';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { selectBanners } from '@features/banners/selectors';
+import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 
 import {
   AddBannerSchema,
@@ -84,13 +85,7 @@ const InputsTable = ({ bannersData }: IInputsTable) => {
               );
             })}
           </StyledTable>
-          <StyledButton
-            disabled={actionLoading}
-            isLoading={actionLoading}
-            type="submit"
-          >
-            Submit
-          </StyledButton>
+          <SubmitBtn actionLoading={actionLoading} />
         </StyledStack>
       </FormProvider>
     </TitlesWithBackButton>

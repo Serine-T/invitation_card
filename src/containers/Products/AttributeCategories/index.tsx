@@ -3,25 +3,23 @@ import { memo, useCallback, useEffect } from 'react';
 import TableCell from '@mui/material/TableCell';
 import PAGE_ROUTES from '@routes/routingEnum';
 import StyledTable from '@containers/common/Table';
-import Box from '@mui/material/Box';
-import {
-  DragDropContext, Droppable,
-  Draggable, DroppableProvided, DropResult,
-} from '@hello-pangea/dnd';
-import { StyledDraggableRow } from '@containers/common/Table/components/TablesActions/DraggableRow/styled';
+import { DropResult } from '@hello-pangea/dnd';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import Loader from '@containers/common/Loader';
 import PageTitle from '@containers/common/PageTitle';
 import EmptyState from '@containers/common/EmptyState';
-import { getReorderedArray } from '@utils/helpers';
 import queryString from 'query-string';
 import {
   getAllAttributeCategories, reorderAttributeCategories, searchAttributeCategories,
 } from '@features/attributeCategories/actions';
 import { selectAttributeCategories } from '@features/attributeCategories/selectors';
-import { setAttributeCategories } from '@features/attributeCategories/slice';
 import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
 import RowTitle from '@containers/common/Table/components/RowTitle';
+import DndContainer from '@containers/common/Table/components/DndContainer';
+import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
+import { dragSort } from '@containers/common/Table/components/DndContainer/helpers';
+import { useLocation } from 'react-router-dom';
+import { setAttributeCategories } from '@features/attributeCategories/slice';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -29,7 +27,8 @@ import { IFiltersForm } from './components/SearchSection/helpers';
 
 const AttributeCategories = () => {
   const dispatch = useAppDispatch();
-  const params = queryString.parse(window.location.search);
+  const location = useLocation();
+  const params = queryString.parse(location.search);
   const { searchTerm = '' } = params as IFiltersForm;
 
   const fetchData = useCallback(() => {
@@ -48,22 +47,12 @@ const AttributeCategories = () => {
 
   const { data: attributeCategories, isLoading } = useAppSelector(selectAttributeCategories);
 
-  const items = [...attributeCategories];
+  const reordingData = (result: DropResult) => {
+    const { sortedData, items } = dragSort(result, attributeCategories);
 
-  const onDragEnd = (result: DropResult) => {
-    const { destination } = result;
-
-    if (destination) {
-      const [removed] = items.splice(result.source.index, 1);
-
-      items.splice(destination.index, 0, removed);
-
-      const sortedData = getReorderedArray(items);
-
-      dispatch(reorderAttributeCategories(sortedData)).unwrap().then(() => {
-        dispatch(setAttributeCategories(items));
-      }).catch(() => dispatch(getAllAttributeCategories()));
-    }
+    dispatch(reorderAttributeCategories(sortedData)).unwrap().then(() => {
+      dispatch(setAttributeCategories(items));
+    }).catch(() => dispatch(getAllAttributeCategories()));
   };
 
   if (isLoading) {
@@ -79,47 +68,24 @@ const AttributeCategories = () => {
       />
       { (searchTerm || !!attributeCategories.length) && <SearchSection /> }
       {attributeCategories.length ? (
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="droppable">
-            {(providedDroppable: DroppableProvided) => {
-              return (
-                <Box
-                  {...providedDroppable.droppableProps}
-                  ref={providedDroppable.innerRef}
-                >
-                  <StyledTable headCells={headSliderCells}>
-                    {attributeCategories.map(({ name, id }, index) => (
-                      <Draggable
-                        key={id}
-                        draggableId={id}
-                        index={index}
-                      >
-                        {(providedDraggable, snapshot) => {
-                          return (
-                            <StyledDraggableRow
-                              ref={providedDraggable.innerRef}
-                              data-snapshot={snapshot}
-                              {...providedDraggable.draggableProps}
-                              isDraggingOver={!!snapshot.draggingOver}
-                              gridTemplateColumns="auto 260px"
-                            >
-                              <TableCell>
-                                <RowTitle title={name} path={`/products/attribute-categories/edit/${id}`} />
-                              </TableCell>
-                              <TableCell width="260px">
-                                <DndBtn providedDraggable={providedDraggable} />
-                              </TableCell>
-                            </StyledDraggableRow>
-                          );
-                        }}
-                      </Draggable>
-                    ))}
-                  </StyledTable>
-                </Box>
-              );
-            }}
-          </Droppable>
-        </DragDropContext>
+        <DndContainer reordingData={reordingData}>
+          <StyledTable headCells={headSliderCells}>
+            {attributeCategories.map(({ name, id }, index) => (
+              <ReusableDragRow id={id} index={index} gridTemplateColumns="auto 260px">
+                {({ providedDraggable }) => (
+                  <>
+                    <TableCell>
+                      <RowTitle title={name} path={`/products/attribute-categories/edit/${id}`} />
+                    </TableCell>
+                    <TableCell width="260px">
+                      <DndBtn providedDraggable={providedDraggable} />
+                    </TableCell>
+                  </>
+                )}
+              </ReusableDragRow>
+            ))}
+          </StyledTable>
+        </DndContainer>
       ) : (
         <EmptyState
           text={searchTerm ? 'No search results found'

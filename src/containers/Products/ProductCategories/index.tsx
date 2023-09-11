@@ -4,7 +4,6 @@ import TableCell from '@mui/material/TableCell';
 import PAGE_ROUTES from '@routes/routingEnum';
 import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 import StyledTable from '@containers/common/Table';
-import Box from '@mui/material/Box';
 import {
   DragDropContext, Droppable,
   Draggable, DroppableProvided, DropResult,
@@ -29,6 +28,7 @@ import { getAllCategories } from '@features/categories/actions';
 import { selectCategories } from '@features/categories/selectors';
 import PageTitle from '@containers/common/PageTitle';
 import RowTitle from '@containers/common/Table/components/RowTitle';
+import { useLocation } from 'react-router-dom';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -45,7 +45,8 @@ const ProductCategories = () => {
     }).catch(() => {});
   };
 
-  const params = queryString.parse(window.location.search);
+  const location = useLocation();
+  const params = queryString.parse(location.search);
 
   const { searchTerm = '', visibleOnSite: visibleOnSiteQuery = '', category = '' } = params as IFiltersForm;
   const isSearchTerm = searchTerm || visibleOnSiteQuery || category;
@@ -108,51 +109,44 @@ const ProductCategories = () => {
             {subcategories?.length ? (
               <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId="droppable">
-                  {(providedDroppable: DroppableProvided) => {
-                    return (
-                      <Box
-                        {...providedDroppable.droppableProps}
-                        ref={providedDroppable.innerRef}
-                      >
-                        <StyledTable headCells={headSliderCells}>
-                          {items.map(({ title, visibleOnSite, id, printType }, index) => (
-                            <Draggable
-                              key={id}
-                              draggableId={id}
-                              index={index}
-                            >
-                              {(providedDraggable, snapshot) => {
-                                return (
-                                  <StyledDraggableRow
-                                    ref={providedDraggable.innerRef}
-                                    data-snapshot={snapshot}
-                                    {...providedDraggable.draggableProps}
-                                    isDraggingOver={!!snapshot.draggingOver}
-                                    gridTemplateColumns="auto 282px 138px 140px 150px"
-                                  >
-                                    <TableCell>
-                                      <RowTitle title={title} path={`/products/product-categories/edit/${id}`} />
-                                    </TableCell>
-                                    <TableCell width="282px">{printTypeName(printType)}</TableCell>
-                                    <TableCell width="138px">{visibleOnSite ? 'Yes' : 'No'}</TableCell>
-                                    <TableCell width="140px">
-                                      <DndBtn providedDraggable={providedDraggable} />
-                                    </TableCell>
-                                    <TableCell width="150px">
-                                      <DeleteBtn
-                                        deleteAction={() => deleteAction(id)}
-                                        questionText="Are you sure you want to delete this subcategory ?"
-                                      />
-                                    </TableCell>
-                                  </StyledDraggableRow>
-                                );
-                              }}
-                            </Draggable>
-                          ))}
-                        </StyledTable>
-                      </Box>
-                    );
-                  }}
+                  {(providedDroppable: DroppableProvided) => (
+                    <StyledTable headCells={headSliderCells} providedDroppable={providedDroppable}>
+                      {items.map(({ title, visibleOnSite, id, printType }, index) => (
+                        <Draggable
+                          key={id}
+                          draggableId={id}
+                          index={index}
+                        >
+                          {(providedDraggable, snapshot) => {
+                            return (
+                              <StyledDraggableRow
+                                ref={providedDraggable.innerRef}
+                                data-snapshot={snapshot}
+                                {...providedDraggable.draggableProps}
+                                isDraggingOver={!!snapshot.draggingOver}
+                                gridTemplateColumns="auto 282px 138px 140px 150px"
+                              >
+                                <TableCell>
+                                  <RowTitle title={title} path={`/products/product-categories/edit/${id}`} />
+                                </TableCell>
+                                <TableCell width="282px">{printTypeName(printType)}</TableCell>
+                                <TableCell width="138px">{visibleOnSite ? 'Yes' : 'No'}</TableCell>
+                                <TableCell width="140px">
+                                  <DndBtn providedDraggable={providedDraggable} />
+                                </TableCell>
+                                <TableCell width="150px">
+                                  <DeleteBtn
+                                    deleteAction={() => deleteAction(id)}
+                                    questionText="Are you sure you want to delete this subcategory ?"
+                                  />
+                                </TableCell>
+                              </StyledDraggableRow>
+                            );
+                          }}
+                        </Draggable>
+                      ))}
+                    </StyledTable>
+                  ) }
                 </Droppable>
               </DragDropContext>
             ) : (
