@@ -71,7 +71,7 @@ const AttributeCategories = () => {
         <DndContainer reordingData={reordingData}>
           <StyledTable headCells={headSliderCells}>
             {attributeCategories.map(({ name, id }, index) => (
-              <ReusableDragRow id={id} index={index} gridTemplateColumns="auto 260px">
+              <ReusableDragRow key={id} id={id} index={index} gridTemplateColumns="auto 260px">
                 {({ providedDraggable }) => (
                   <>
                     <TableCell>

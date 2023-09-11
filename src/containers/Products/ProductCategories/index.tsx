@@ -27,7 +27,8 @@ import { nestedDragSort } from '@containers/common/Table/components/DndContainer
 import DndContainer from '@containers/common/Table/components/DndContainer';
 import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
 import { ISubcategoriesSearchInfo } from '@features/subcategories/types';
-import { Box, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 import { headSliderCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -79,7 +80,6 @@ const ProductCategories = () => {
     }).catch(() => fetchData());
   };
 
-  console.log('subcategories***', subcategories);
   if (isLoading || categoryLoading) {
     return <Loader />;
   }
@@ -92,7 +92,6 @@ const ProductCategories = () => {
         path={PAGE_ROUTES.ADD_PRODUCT_CATEGORIES}
         isShowBtn={!!categories.length}
       />
-
       {
         categories.length ? (
           <>
@@ -146,7 +145,6 @@ const ProductCategories = () => {
           />
         )
       }
-
     </>
   );
 };

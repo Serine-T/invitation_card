@@ -18,9 +18,12 @@ import { nestedDragSort } from '@containers/common/Table/components/DndContainer
 import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
 import { useLocation } from 'react-router-dom';
 import { setAttributes } from '@features/attributes/slice';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 import { IFiltersForm } from './components/SearchSection/helpers';
 import SearchSection from './components/SearchSection';
+import { headSliderCells } from './helpers';
 
 const Attribute = () => {
   const dispatch = useAppDispatch();
@@ -58,24 +61,27 @@ const Attribute = () => {
       <PageTitle title="Attributes" btnName="Add Attribute" path={PAGE_ROUTES.ADD_ATTRIBUTE} />
       { (searchTerm || !!attributesList.length) && <SearchSection /> }
       {attributesList.length ? attributesList.map(({ id: attributeId, name: attributeName, attributes }) => (
-        <DndContainer reordingData={reordingData} key={attributeId}>
-          <StyledTable headCells={[{ label: attributeName }, { label: 'ACTIONS' }]}>
-            {attributes.map(({ name, id, nickname }, index) => (
-              <ReusableDragRow key={id} id={id} index={index} gridTemplateColumns="auto 260px">
-                {({ providedDraggable }) => (
-                  <>
-                    <TableCell>
-                      <RowTitle title={`${name} / ${nickname}`} path={`/products/attributes/edit/${id}`} />
-                    </TableCell>
-                    <TableCell width="260px">
-                      <DndBtn providedDraggable={providedDraggable} />
-                    </TableCell>
-                  </>
-                )}
-              </ReusableDragRow>
-            ))}
-          </StyledTable>
-        </DndContainer>
+        <Box key={attributeId}>
+          <Typography variant="h5" mb="16px">{attributeName}</Typography>
+          <DndContainer reordingData={reordingData}>
+            <StyledTable headCells={headSliderCells}>
+              {attributes.map(({ name, id, nickname }, index) => (
+                <ReusableDragRow key={id} id={id} index={index} gridTemplateColumns="auto 260px">
+                  {({ providedDraggable }) => (
+                    <>
+                      <TableCell>
+                        <RowTitle title={`${name} / ${nickname}`} path={`/products/attributes/edit/${id}`} />
+                      </TableCell>
+                      <TableCell width="260px">
+                        <DndBtn providedDraggable={providedDraggable} />
+                      </TableCell>
+                    </>
+                  )}
+                </ReusableDragRow>
+              ))}
+            </StyledTable>
+          </DndContainer>
+        </Box>
       ))
         : (
           <EmptyState

@@ -14,24 +14,22 @@ interface IReusableDragRow {
   }) => ReactNode;
 }
 
-const ReusableDragRow = ({ id, index, gridTemplateColumns, children }:IReusableDragRow) => {
-  return (
-    <Draggable key={id} draggableId={id} index={index}>
-      {(providedDraggable, snapshot) => {
-        return (
-          <StyledDraggableRow
-            ref={providedDraggable.innerRef}
-            data-snapshot={snapshot}
-            {...providedDraggable.draggableProps}
-            isDraggingOver={!!snapshot.draggingOver}
-            gridTemplateColumns={gridTemplateColumns}
-          >
-            {children({ providedDraggable, snapshot })}
-          </StyledDraggableRow>
-        );
-      }}
-    </Draggable>
-  );
-};
+const ReusableDragRow = ({ id, index, gridTemplateColumns, children }:IReusableDragRow) => (
+  <Draggable draggableId={id} index={index}>
+    {(providedDraggable, snapshot) => {
+      return (
+        <StyledDraggableRow
+          ref={providedDraggable.innerRef}
+          data-snapshot={snapshot}
+          {...providedDraggable.draggableProps}
+          isDraggingOver={!!snapshot.draggingOver}
+          gridTemplateColumns={gridTemplateColumns}
+        >
+          {children({ providedDraggable, snapshot })}
+        </StyledDraggableRow>
+      );
+    }}
+  </Draggable>
+);
 
 export default memo(ReusableDragRow);
