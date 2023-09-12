@@ -22,6 +22,8 @@ enum PAGE_ROUTES {
   PROCUREMENT_REPORT = '/orders/procurement-report',
   SEND_A_FILE = '/orders/send-a-file',
   PRODUCTS_PRODUCTS = '/products/products',
+  ADD_PRODUCTS = '/products/products/add',
+  EDIT_PRODUCTS = '/products/products/edit/:id',
   PRODUCT_CATEGORIES = '/products/product-categories',
   ADD_PRODUCT_CATEGORIES = '/products/product-categories/add',
   EDIT_PRODUCT_CATEGORIES = '/products/product-categories/edit/:id',

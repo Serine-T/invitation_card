@@ -9,6 +9,7 @@ import attributeCategoriesReducer from '@features/attributeCategories/slice';
 import attributesReducer from '@features/attributes/slice';
 import templateCategoriesReducer from '@features/templateCategories/slice';
 import templatesReducer from '@features/templates/slice';
+import productsReducer from '@features/products/slice';
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     attributes: attributesReducer,
     templateCategories: templateCategoriesReducer,
     templates: templatesReducer,
+    products: productsReducer,
   },
 });
 
