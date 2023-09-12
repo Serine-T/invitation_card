@@ -31,6 +31,7 @@ const SearchSection = () => {
     formState: { errors },
   } = methods;
 
+  // TODO: search section
   const onSubmit = (data: IFiltersForm) => {
     const queryParams = constructQueryString({ ...data });
 
