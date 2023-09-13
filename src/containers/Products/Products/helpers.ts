@@ -1,9 +1,6 @@
 export const headCells = [
   {
-    label: 'SUBCATEGORY',
-  },
-  {
-    label: 'PRINT CATEGORY',
+    label: 'PRODUCT NAME',
   },
   {
     label: 'VISIBLE ON SITE',

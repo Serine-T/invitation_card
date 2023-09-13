@@ -5,7 +5,8 @@ import { AxiosData, IReorderPayload } from '@utils/types';
 import { constructQueryString } from '@utils/helpers';
 
 import {
-  IAddSubcategoriesPayload, ISearchSubcategories, ISubcategoriesInfo, ISubcategoriesSearchInfo,
+  IAddSubcategoriesPayload, ISearchSubcategories,
+  ISubcategoriesByCategoryId, ISubcategoriesInfo, ISubcategoriesSearchInfo,
 } from './types';
 
 const prefix = '/sub-categories';
@@ -118,6 +119,22 @@ export const searchSubcategories = createAsyncThunk<ISubcategoriesSearchInfo[], 
       const { data } = await http.get<ISubcategoriesSearchInfo[]>(
         `${prefix}/search?${queryParams}`,
       );
+
+      return data;
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);
+export const getSubcategoriesByCategoryId = createAsyncThunk<ISubcategoriesByCategoryId[], string, {
+  rejectValue: AxiosData;
+}>(
+  'subcategories/getSubcategories',
+  async (id, thunkAPI) => {
+    try {
+      const { data } = await http.get<ISubcategoriesByCategoryId[]>(`${prefix}/category/${id}`);
 
       return data;
     } catch (error) {

@@ -13,11 +13,11 @@ const initialState: IState = {
   data: [],
 };
 
-const subcategoriesSlice = createSlice({
-  name: 'subcategories',
+const productsSlice = createSlice({
+  name: 'products',
   initialState,
   reducers: {
-    setSubcategories: (state, { payload }) => {
+    setProducts: (state, { payload }) => {
       state.data = payload;
     },
   },
@@ -96,6 +96,6 @@ const subcategoriesSlice = createSlice({
 });
 
 export const {
-  setSubcategories,
-} = subcategoriesSlice.actions;
-export default subcategoriesSlice.reducer;
+  setProducts,
+} = productsSlice.actions;
+export default productsSlice.reducer;

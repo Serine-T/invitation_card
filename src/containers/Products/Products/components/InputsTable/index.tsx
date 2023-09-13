@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,28 +12,28 @@ import ReusableFields from '@containers/common/ReusableFields';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { selectCategories } from '@features/categories/selectors';
 import { getOptionsArray } from '@utils/helpers';
-import { addSubcategory, editSubcategory } from '@features/subcategories/actions';
 import { useNavigate } from 'react-router-dom';
 import { selectSubcategories } from '@features/subcategories/selectors';
-import { ISubcategoriesInfo } from '@features/subcategories/types';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
+import { addProduct, editProduct } from '@features/products/actions';
+import { IProductsPayload } from '@features/products/types';
+import { getSubcategoriesByCategoryId } from '@features/subcategories/actions';
+import { ISubcategoriesByCategoryId } from '@features/subcategories/types';
 
 import {
-  AddSubcategorySchema,
-  IAddSubcategoryForm,
-  defaultInkInEstimatorValues,
+  AddDataSchema,
+  IAddDataForm,
   defaultValues,
-  formattedData,
   formattingPayload,
   inputsRows1,
   inputsRows2,
-  printTypeValues,
 } from './helpers';
-import StaticShipping from './StaticShipping';
 import SEO from './SEO';
+import ProductDescription from './ProductDescription';
+import GrandFormatOptions from './GrandFormatOptions';
 
 interface IInputsTable{
-  editData?: ISubcategoriesInfo;
+  editData?: IProductsPayload;
 }
 
 const InputsTable = ({ editData }: IInputsTable) => {
@@ -41,29 +41,65 @@ const InputsTable = ({ editData }: IInputsTable) => {
   const dispatch = useAppDispatch();
   const { data: categories } = useAppSelector(selectCategories);
   const { actionLoading } = useAppSelector(selectSubcategories);
-  const categoriesList = getOptionsArray(categories);
+  const filteredList = categories.filter((item) => item.subCategory.length);
 
-  const methods = useForm<IAddSubcategoryForm>({
-    resolver: yupResolver(AddSubcategorySchema as any), // TODO: add typing
-    defaultValues: editData ? formattedData(editData) : defaultValues,
+  const categoriesList = getOptionsArray(filteredList);
+
+  const [subcategoriesList, setSubcategoriesList] = useState<ISubcategoriesByCategoryId[]>([]);
+  const methods = useForm<IAddDataForm>({
+    resolver: yupResolver(AddDataSchema as any), // TODO: add typing
+    defaultValues: editData || defaultValues,
   });
 
   const {
     handleSubmit,
-    setError,
+    setValue,
+    watch,
+    formState: { errors },
   } = methods;
 
-  const onSubmit = (data: IAddSubcategoryForm) => {
+  const { categoryId, subCategoryId, isGrandFormat } = watch();
+
+  console.log('errors***', errors);
+
+  useEffect(() => {
+    if (!categoryId) {
+      setSubcategoriesList([]);
+      setValue('subCategoryId', '');
+
+      return;
+    }
+
+    dispatch(getSubcategoriesByCategoryId(categoryId))
+      .unwrap()
+      .then((data) => {
+        setSubcategoriesList(data);
+        setValue('subCategoryId', '');
+      });
+  }, [categoryId, dispatch, setValue]);
+
+  useEffect(() => {
+    const currentSubcategory = subcategoriesList.find((item) => item.id === subCategoryId);
+
+    setValue('isGrandFormat', !!currentSubcategory?.useGrandFormatSQFtTemplate);
+    if (!currentSubcategory?.useGrandFormatSQFtTemplate) {
+      setValue('grandFormatOptions', null);
+    }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subCategoryId]);
+
+  const onSubmit = (data: IAddDataForm) => {
     const payload = formattingPayload(data);
 
-    dispatch(editData ? editSubcategory(payload) : addSubcategory(payload)).unwrap().then(() => {
+    dispatch(editData ? editProduct(payload) : addProduct(payload)).unwrap().then(() => {
       navigate(PAGE_ROUTES.PRODUCTS);
     }).catch((e) => {
       if (e.message === 'Subcategory with the provided title already exists in this category!') {
-        setError('title', { message: e.message });
+        // setError('title', { message: e.message });
       // eslint-disable-next-line max-len
       } else if (e.message === 'You have already chose the banners in the category, please disable one of them to proceed.') {
-        setError('displayAsCardInHeader', { message: e.message });
+        // setError('displayAsCardInHeader', { message: e.message });
       } else {
         navigate(PAGE_ROUTES.PRODUCTS);
       }
@@ -81,6 +117,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
           component="form"
         >
           <StyledTable tableTitle="SUBCATEGORY" colSpan={2}>
+
             {inputsRows1.map((item) => {
               const { label, isRequired } = item;
 
@@ -95,19 +132,16 @@ const InputsTable = ({ editData }: IInputsTable) => {
                       selectList={[{
                         field: 'categoryId',
                         options: categoriesList,
-                      }, {
-                        field: 'printType',
-                        options: printTypeValues,
-                      }, {
-                        field: 'defaultInkInEstimator',
-                        options: defaultInkInEstimatorValues,
+                      },
+                      {
+                        field: 'subCategoryId',
+                        options: getOptionsArray(subcategoriesList),
                       }]}
                     />
                   </TableCell>
                 </StyledTableRow>
               );
             })}
-            <StaticShipping />
 
             {inputsRows2.map((item) => {
               const { label, isRequired } = item;
@@ -125,6 +159,13 @@ const InputsTable = ({ editData }: IInputsTable) => {
             })}
           </StyledTable>
           <SEO />
+
+          <ProductDescription />
+          {isGrandFormat && (
+            <>
+              <GrandFormatOptions />
+            </>
+          )}
           <SubmitBtn actionLoading={actionLoading} />
         </StyledStack>
       </FormProvider>

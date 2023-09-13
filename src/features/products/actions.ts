@@ -42,13 +42,13 @@ export const getAllProducts = createAsyncThunk<IProductsInfo[], void, {
   },
 );
 
-export const getProductById = createAsyncThunk<IProductsInfo, string, {
+export const getProductById = createAsyncThunk<IProductsPayload, string, {
   rejectValue: AxiosData;
 }>(
   'products/getProduct',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<IProductsInfo>(`${prefix}/${id}`);
+      const { data } = await http.get<IProductsPayload>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {

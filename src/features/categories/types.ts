@@ -1,3 +1,5 @@
+import { IAddSubcategoriesPayload } from '@features/subcategories/types';
+
 export interface IState {
   isLoading: boolean;
   actionLoading: boolean;
@@ -11,7 +13,6 @@ export interface IAddCategoryPayload {
   description: string;
   displayInHeader?: boolean;
 }
-
 export interface ICategories {
   id: string;
   created: string;
@@ -21,6 +22,7 @@ export interface ICategories {
   description: string;
   sort: number;
   displayInHeader: boolean;
+  subCategory: IAddSubcategoriesPayload[];
 }
 
 export interface ISearchCategories {

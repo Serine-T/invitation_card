@@ -12,13 +12,17 @@ const AddProduct = () => {
   const dispatch = useAppDispatch();
 
   useMount(() => {
-    dispatch(getAllCategories());
+    dispatch(getAllCategories()).unwrap().then((data) => {
+      console.log('daaataa', data);
+    }).catch((e) => {
+      console.log('e****', e);
+    });
   });
-  if (!categories.length && isLoading) {
+  if ((!categories.length && isLoading)) {
     return <Loader />;
   }
 
-  return categories.length ? (
+  return (categories.length) ? (
     <InputsTable />
   ) : (<EmptyState text="You don’t have any categories, please add new to proceed" />);
 };

@@ -1,88 +1,56 @@
+import { GrandFormatOptions } from '@features/products/types';
 import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
-import { intagerValidation, textWidthValidation } from '@utils/schemas';
-import { DefaultInkInEstimator, PrintType, StaticShippingFacility } from '@features/subcategories/enums';
-import { selectDefaultValue } from '@containers/common/Select/helpers';
-import { IAddSubcategoriesPayload, ISubcategoriesInfo } from '@features/subcategories/types';
 
-type StaticShippingFacilityType = {
-    [StaticShippingFacility.ARIZONA]: boolean;
-    [StaticShippingFacility.CALIFORNIA]: boolean;
-    [StaticShippingFacility.FLORIDA]: boolean;
-    [StaticShippingFacility.MICHIGAN]: boolean;
-    [StaticShippingFacility.NEW_JERSEY]: boolean;
-    [StaticShippingFacility.NEW_YORK]: boolean;
-    [StaticShippingFacility.NORTH_CAROLINA]: boolean;
-    [StaticShippingFacility.OHIO]: boolean;
-    [StaticShippingFacility.TEXAS]: boolean;
-    [StaticShippingFacility.UPSTATE_NEW_YORK]: boolean;
-    [StaticShippingFacility.WISCONSIN]: boolean;
-  }
-export interface IAddSubcategoryForm {
+export interface IAddDataForm {
   id?: string;
-  title: string;
-  description: string;
-  photo: string;
-  categoryId: string | string;
-  printType: PrintType | string;
-  isNew: boolean;
-  isSale: boolean;
-  useGrandFormatSQFtTemplate: boolean;
-  defaultInkInEstimator: DefaultInkInEstimator | string;
-  visibleOnSite: boolean;
-  displayAsCardInHeader: boolean;
-  categoryDiscountOffMSRP: string;
-  metaTagTitle: string;
-  metaTagDescription: string;
-  metaTagKeywords: string;
-  staticShippingFacilityAll: boolean;
-  staticShippingFacility: StaticShippingFacilityType;
+  name: string;
+  description?: string;
+  productSKU: string;
+  subCategoryId: string;
+  categoryId?: string;
+  weight?: number | string | null;
+  visibleOnSite?: boolean;
+  showInSpotlight?: boolean;
+  isDiscountable?: boolean;
+  quarterhouseProductCode?: string;
+  fouroverProdCode?: string;
+  fouroverTurnaroundCode?: string;
+  grandFormatOptions: GrandFormatOptions | null;
+  isGrandFormat?: boolean;
 }
 
-const defaultStaticShippingFacility = {
-  [StaticShippingFacility.ARIZONA]: false,
-  [StaticShippingFacility.CALIFORNIA]: false,
-  [StaticShippingFacility.FLORIDA]: false,
-  [StaticShippingFacility.MICHIGAN]: false,
-  [StaticShippingFacility.NEW_JERSEY]: false,
-  [StaticShippingFacility.NEW_YORK]: false,
-  [StaticShippingFacility.NORTH_CAROLINA]: false,
-  [StaticShippingFacility.OHIO]: false,
-  [StaticShippingFacility.TEXAS]: false,
-  [StaticShippingFacility.UPSTATE_NEW_YORK]: false,
-  [StaticShippingFacility.WISCONSIN]: false,
-};
-
 export const defaultValues = {
-  title: '',
+  name: '',
   description: '',
-  photo: '',
-  categoryId: selectDefaultValue,
-  printType: selectDefaultValue,
-  defaultInkInEstimator: selectDefaultValue,
+  productSKU: '',
+  categoryId: '',
+  subCategoryId: '',
+  weight: null,
   visibleOnSite: false,
-  displayAsCardInHeader: false,
-  staticShippingFacilityAll: false,
-  useGrandFormatSQFtTemplate: false,
-  isNew: false,
-  isSale: false,
-  categoryDiscountOffMSRP: '',
-  staticShippingFacility: { ...defaultStaticShippingFacility },
-  metaTagTitle: '',
-  metaTagDescription: '',
-  metaTagKeywords: '',
+  showInSpotlight: false,
+  isDiscountable: false,
+  quarterhouseProductCode: '',
+  fouroverProdCode: '',
+  fouroverTurnaroundCode: '',
+  isGrandFormat: false,
+  grandFormatOptions: null,
 };
 
-export const AddSubcategorySchema = yup.object().shape({
-  title: yup.string().required('Title is required'),
-  description: yup.string().required('Description is required').max(500, 'The maximum length is 500 characters'),
-  photo: yup.string().required('Photo is required'),
+export const AddDataSchema = yup.object().shape({
+  name: yup.string().required('Product name is required'),
+  productSKU: yup.string().required('Product SKU is required'),
+  subCategoryId: yup.string().required('Subcategory is required'),
   categoryId: yup.string().required('Category is required'),
-  printType: yup.string()
-    .required('Print type is required'),
-  metaTagDescription: textWidthValidation,
-  metaTagTitle: textWidthValidation,
-  categoryDiscountOffMSRP: intagerValidation.nullable(),
+  grandFormatOptions: yup.object({
+    unitDisplay: yup.string().required('Unit display is required'),
+    widthFrom: yup.string().required('Width from is required'),
+    widthTo: yup.string().required('Width to is required'),
+    heightFrom: yup.string().required('Height from is required'),
+    heightTo: yup.string().required('Height to is required'),
+    maxHeight: yup.string().required('Max height is required'),
+    maxWidth: yup.string().required('Max width is required'),
+  }).nullable(),
 });
 
 export const inputsRows1: ValidFieldNames[] = [
@@ -93,171 +61,64 @@ export const inputsRows1: ValidFieldNames[] = [
     isRequired: true,
   },
   {
-    label: 'Print Type',
-    field: 'printType',
+    label: 'Subcategory',
+    field: 'subCategoryId',
     type: InputTypes.select,
     isRequired: true,
   },
   {
-    label: 'Use Grand Format SQ. Ft. Template',
-    field: 'useGrandFormatSQFtTemplate',
-    type: InputTypes.checkbox,
-  },
-  {
-    label: 'Mark as New',
-    field: 'isNew',
-    type: InputTypes.checkbox,
-  },
-  {
-    label: 'Mark as Sale',
-    field: 'isSale',
-    type: InputTypes.checkbox,
-  },
-  {
-    label: 'Category Discount off MSRP(%)',
-    field: 'categoryDiscountOffMSRP',
-    type: InputTypes.text,
-  },
-  {
-    label: 'Default Ink in Estimator',
-    field: 'defaultInkInEstimator',
-    type: InputTypes.select,
-  },
-];
-export const inputsRows2: ValidFieldNames[] = [
-  {
-    label: 'Photo',
-    field: 'photo',
-    type: InputTypes.image,
-    isRequired: true,
-  },
-  {
-    label: 'Title',
-    field: 'title',
+    label: 'Product SKU',
+    field: 'productSKU',
     type: InputTypes.text,
     isRequired: true,
   },
   {
-    label: 'Description',
-    field: 'description',
-    type: InputTypes.textarea,
+    label: 'Product Name',
+    field: 'name',
+    type: InputTypes.text,
     isRequired: true,
   },
   {
-    label: 'Visible On Site',
+    label: 'Product Weight (1)',
+    field: 'weight',
+    type: InputTypes.text,
+  },
+  {
+    label: 'Visible on Site',
     field: 'visibleOnSite',
     type: InputTypes.checkbox,
   },
   {
-    label: 'Display as Card in Header',
-    field: 'displayAsCardInHeader',
+    label: 'Show In Spotlight',
+    field: 'showInSpotlight',
+    type: InputTypes.checkbox,
+  },
+  {
+    label: 'Can Be Discounted with Promo Codes',
+    field: 'isDiscountable',
     type: InputTypes.checkbox,
   },
 ];
+export const inputsRows2: ValidFieldNames[] = [
+  {
+    label: 'Quarterhouse Product Code',
+    field: 'quarterhouseProductCode',
+    type: InputTypes.text,
+  },
+  {
+    label: '4over Prod Code',
+    field: 'fouroverProdCode',
+    type: InputTypes.text,
+  },
+  {
+    label: '4over Turnaround Code',
+    field: 'fouroverTurnaroundCode',
+    type: InputTypes.text,
+  },
+];
 
-export const printTypeNames: { [key in PrintType]: string } = {
-  [PrintType.OFFSET_PRODUCTS]: 'Offset production',
-  [PrintType.GRAND_FORMAT_PRODUCTS]: 'Grand format products',
-  [PrintType.PROMO_PRODUCTS]: 'Promo products',
-};
+export const formattingPayload = (data: IAddDataForm) => {
+  const { weight } = data;
 
-export const printTypeName = (name: PrintType | null) => {
-  return name && printTypeNames[name];
-};
-
-export const printTypeValues = Object.entries(printTypeNames).map(([key, optionName]) => ({
-  value: key as PrintType,
-  optionName,
-}));
-
-export const defaultInkInEstimatorValues = Object.values(DefaultInkInEstimator).map((v) => ({
-  value: v,
-  optionName: v,
-}));
-
-export const formattingPayload = (data: IAddSubcategoryForm) => {
-  const {
-    id,
-    staticShippingFacility,
-    title,
-    description,
-    photo,
-    categoryId,
-    printType,
-    isNew,
-    isSale,
-    useGrandFormatSQFtTemplate,
-    defaultInkInEstimator,
-    visibleOnSite,
-    displayAsCardInHeader,
-    categoryDiscountOffMSRP,
-    metaTagTitle,
-    metaTagDescription,
-    metaTagKeywords,
-    staticShippingFacilityAll,
-  } = data;
-
-  const payload: IAddSubcategoriesPayload = {
-    id,
-    title,
-    description,
-    photo,
-    categoryId,
-    printType,
-    isNew,
-    isSale,
-    useGrandFormatSQFtTemplate,
-    defaultInkInEstimator: defaultInkInEstimator || null,
-    visibleOnSite,
-    displayAsCardInHeader,
-    categoryDiscountOffMSRP: +categoryDiscountOffMSRP || null,
-    metaTagTitle,
-    metaTagDescription,
-    metaTagKeywords,
-  };
-
-  if (staticShippingFacility) {
-    const facility: IAddSubcategoriesPayload['staticShippingFacility'] = staticShippingFacilityAll
-      ? (Object.keys(staticShippingFacility) as IAddSubcategoriesPayload['staticShippingFacility'])
-      : Object.keys(staticShippingFacility).filter(
-        (item) => staticShippingFacility[item as keyof IAddSubcategoryForm['staticShippingFacility']],
-      ) as IAddSubcategoriesPayload['staticShippingFacility'];
-
-    payload.staticShippingFacility = facility;
-  }
-
-  if (id) {
-    payload.id = id;
-  }
-
-  return payload;
-};
-
-export const formattedShippingFacility = (list: string[]) => {
-  const staticShippingFacility = { ...defaultStaticShippingFacility } as StaticShippingFacilityType;
-  let staticShippingFacilityAll = true;
-
-  (Object.keys(staticShippingFacility) as Array<keyof StaticShippingFacilityType>).forEach((item) => {
-    if (list.includes(item)) {
-      (staticShippingFacility)[item] = true;
-    } else {
-      staticShippingFacility[item] = false;
-      staticShippingFacilityAll = false;
-    }
-  });
-
-  return { staticShippingFacility, staticShippingFacilityAll };
-};
-
-export const formattedData = (data: ISubcategoriesInfo): IAddSubcategoryForm => {
-  const { staticShippingFacility, staticShippingFacilityAll } = formattedShippingFacility(data.staticShippingFacility);
-
-  const newData = {
-    ...data,
-    categoryDiscountOffMSRP: data.categoryDiscountOffMSRP?.toString(),
-    staticShippingFacility,
-    staticShippingFacilityAll,
-  } as IAddSubcategoryForm;
-
-  return newData;
+  return { ...data, weight: weight ? +weight : null };
 };

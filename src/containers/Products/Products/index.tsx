@@ -7,15 +7,8 @@ import StyledTable from '@containers/common/Table';
 import { DropResult } from '@hello-pangea/dnd';
 import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
-import {
-  deleteSubcategory,
-  reorderSubcategories,
-  searchSubcategories,
-} from '@features/subcategories/actions';
 import Loader from '@containers/common/Loader';
-import { selectSubcategories } from '@features/subcategories/selectors';
 import EmptyState from '@containers/common/EmptyState';
-import { setSubcategories } from '@features/subcategories/slice';
 import queryString from 'query-string';
 import useMount from '@customHooks/useMount';
 import { getAllCategories } from '@features/categories/actions';
@@ -26,18 +19,20 @@ import { useLocation } from 'react-router-dom';
 import { nestedDragSort } from '@containers/common/Table/components/DndContainer/helpers';
 import DndContainer from '@containers/common/Table/components/DndContainer';
 import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
-import { ISubcategoriesSearchInfo } from '@features/subcategories/types';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { selectProducts } from '@features/products/selectors';
+import { deleteProduct, getAllProducts, reorderProducts } from '@features/products/actions';
+import { setProducts } from '@features/products/slice';
+import { IProductsSearchInfo } from '@features/products/types';
 
 import { headCells } from './helpers';
 import SearchSection from './components/SearchSection';
 import { IFiltersForm } from './components/SearchSection/helpers';
-import { printTypeName } from './components/InputsTable/helpers';
 
 const Products = () => {
   const dispatch = useAppDispatch();
-  const { data: subcategories, isLoading } = useAppSelector(selectSubcategories);
+  const { data: productsList, isLoading } = useAppSelector(selectProducts);
   const { data: categories, isLoading: categoryLoading } = useAppSelector(selectCategories);
 
   const location = useLocation();
@@ -47,17 +42,19 @@ const Products = () => {
   const isSearchTerm = searchTerm || visibleOnSiteQuery || category;
 
   const fetchData = useCallback(() => {
+    // TODO: should be returned
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const query = {
       searchTerm: searchTerm as string,
       visibleOnSite: visibleOnSiteQuery as string,
       category,
     };
 
-    dispatch(searchSubcategories(query));
+    dispatch(getAllProducts());
   }, [searchTerm, visibleOnSiteQuery, category, dispatch]);
 
   const deleteAction = (id: string) => {
-    dispatch(deleteSubcategory(id)).unwrap().then(() => {
+    dispatch(deleteProduct(id)).unwrap().then(() => {
       fetchData();
     }).catch(() => {});
   };
@@ -73,10 +70,10 @@ const Products = () => {
   });
 
   const reordingData = (result: DropResult) => {
-    const { sortedData, items } = nestedDragSort(result, subcategories as ISubcategoriesSearchInfo[], 'subCategory');
+    const { sortedData, items } = nestedDragSort(result, productsList as IProductsSearchInfo[], 'products');
 
-    dispatch(reorderSubcategories(sortedData)).unwrap().then(() => {
-      dispatch(setSubcategories(items));
+    dispatch(reorderProducts(sortedData)).unwrap().then(() => {
+      dispatch(setProducts(items));
     }).catch(() => fetchData());
   };
 
@@ -95,26 +92,25 @@ const Products = () => {
       {
         categories.length ? (
           <>
-            {(isSearchTerm || !!subcategories?.length) && <SearchSection />}
-            {subcategories?.length ? (subcategories as ISubcategoriesSearchInfo[]).map(({
-              id: catId, subCategory, title: catTitle }) => (
+            {(isSearchTerm || !!productsList?.length) && <SearchSection />}
+            {productsList?.length ? (productsList as IProductsSearchInfo[]).map(({
+              id: catId, products, title: parentTitle }) => (
                 <Box key={catId}>
-                  <Typography variant="h5" mb="16px">{catTitle}</Typography>
+                  <Typography variant="h5" mb="16px">{parentTitle}</Typography>
                   <DndContainer reordingData={reordingData}>
                     <StyledTable headCells={headCells}>
-                      {subCategory.map(({ title, visibleOnSite, id, printType }, index) => (
+                      {products.map(({ name, visibleOnSite, id }, index) => (
                         <ReusableDragRow
                           key={id}
                           id={id}
                           index={index}
-                          gridTemplateColumns="auto 282px 138px 140px 150px"
+                          gridTemplateColumns="auto 138px 140px 150px"
                         >
                           {({ providedDraggable }) => (
                             < >
                               <TableCell>
-                                <RowTitle title={title} path={`/products/products/edit/${id}`} />
+                                <RowTitle title={name} path={`/products/products/edit/${id}`} />
                               </TableCell>
-                              <TableCell width="282px">{printTypeName(printType)}</TableCell>
                               <TableCell width="138px">{visibleOnSite ? 'Yes' : 'No'}</TableCell>
                               <TableCell width="140px">
                                 <DndBtn providedDraggable={providedDraggable} />

@@ -7,24 +7,34 @@ export interface IState {
   errorMessage: null | string;
 }
 
+export interface GrandFormatDiscount {
+  quantity: number;
+  discountPercent: number;
+}
+export interface GrandFormatOptions {
+  unitDisplay: string;
+  widthFrom: string;
+  widthTo: string;
+  heightFrom: string;
+  heightTo: string;
+  maxHeight: string;
+  maxWidth: string;
+  grandFormatDiscounts: GrandFormatDiscount[];
+}
 export interface IProductsPayload {
   id?: string;
-  title: string;
-  description: string;
-  photo: string;
-  categoryId: string | string;
-  printType: PrintType | string;
-  isNew: boolean;
-  isSale: boolean;
-  useGrandFormatSQFtTemplate: boolean;
-  defaultInkInEstimator: DefaultInkInEstimator | string | null;
-  visibleOnSite: boolean;
-  displayAsCardInHeader: boolean;
-  categoryDiscountOffMSRP: number | null;
-  metaTagTitle: string;
-  metaTagDescription: string;
-  metaTagKeywords: string;
-  staticShippingFacility?: StaticShippingFacility[];
+  name: string;
+  description?: string;
+  productSKU: string;
+  subCategoryId: string;
+  weight?: number | string | null;
+  visibleOnSite?: boolean;
+  showInSpotlight?: boolean;
+  isDiscountable?: boolean;
+  quarterhouseProductCode?: string;
+  fouroverProdCode?: string;
+  fouroverTurnaroundCode?: string;
+  grandFormatOptions?: GrandFormatOptions | null ;
 }
 
 export interface IProductsInfo {
@@ -59,14 +69,21 @@ export interface ISearchProducts {
 
 export interface Product {
   id: string;
-  title: string;
+  name: string;
+  description: string;
+  productSKU: string;
   sort: number;
+  weight: number;
   visibleOnSite: boolean;
-  printType: PrintType | null;
+  showInSpotlight: boolean;
+  isDiscountable: boolean;
+  quarterhouseProductCode: string;
+  fouroverProdCode: string;
+  fouroverTurnaroundCode: string;
 }
 
 export interface IProductsSearchInfo {
   id: string;
   title: string;
-  subCategory: Product[];
+  products: Product[];
 }
