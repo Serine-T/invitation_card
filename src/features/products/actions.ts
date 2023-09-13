@@ -5,19 +5,18 @@ import { AxiosData, IReorderPayload } from '@utils/types';
 import { constructQueryString } from '@utils/helpers';
 
 import {
-  IAddSubcategoriesPayload, ISearchSubcategories,
-  ISubcategoriesByCategoryId, ISubcategoriesInfo, ISubcategoriesSearchInfo,
+  IProductsPayload, ISearchProducts, IProductsInfo, IProductsSearchInfo,
 } from './types';
 
-const prefix = '/sub-categories';
+const prefix = '/products';
 
-export const addSubcategory = createAsyncThunk<void, IAddSubcategoriesPayload, {
+export const addProduct = createAsyncThunk<void, IProductsPayload, {
   rejectValue: AxiosData;
 }>(
-  'subcategories/add',
+  'products/add',
   async (body, thunkAPI) => {
     try {
-      await http.post<IAddSubcategoriesPayload>(prefix, body);
+      await http.post<IProductsPayload>(prefix, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -26,13 +25,13 @@ export const addSubcategory = createAsyncThunk<void, IAddSubcategoriesPayload, {
   },
 );
 
-export const getAllSubcategories = createAsyncThunk<ISubcategoriesInfo[], void, {
+export const getAllProducts = createAsyncThunk<IProductsInfo[], void, {
   rejectValue: AxiosData;
 }>(
-  'subcategories/all',
+  'products/all',
   async (_, thunkAPI) => {
     try {
-      const { data } = await http.get<ISubcategoriesInfo[]>(prefix);
+      const { data } = await http.get<IProductsInfo[]>(prefix);
 
       return data;
     } catch (error) {
@@ -43,13 +42,13 @@ export const getAllSubcategories = createAsyncThunk<ISubcategoriesInfo[], void, 
   },
 );
 
-export const getSubcategoryById = createAsyncThunk<ISubcategoriesInfo, string, {
+export const getProductById = createAsyncThunk<IProductsPayload, string, {
   rejectValue: AxiosData;
 }>(
-  'subcategories/get-subcategory',
+  'products/getProduct',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<ISubcategoriesInfo>(`${prefix}/${id}`);
+      const { data } = await http.get<IProductsPayload>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {
@@ -60,13 +59,13 @@ export const getSubcategoryById = createAsyncThunk<ISubcategoriesInfo, string, {
   },
 );
 
-export const editSubcategory = createAsyncThunk<void, IAddSubcategoriesPayload, {
+export const editProduct = createAsyncThunk<void, IProductsPayload, {
   rejectValue: AxiosData;
 }>(
-  'subcategories/edit',
+  'products/edit',
   async (body, thunkAPI) => {
     try {
-      await http.patch<IAddSubcategoriesPayload>(`${prefix}/${body.id}`, body);
+      await http.patch<IProductsPayload>(`${prefix}/${body.id}`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -75,10 +74,10 @@ export const editSubcategory = createAsyncThunk<void, IAddSubcategoriesPayload, 
   },
 );
 
-export const deleteSubcategory = createAsyncThunk<void, string, {
+export const deleteProduct = createAsyncThunk<void, string, {
   rejectValue: AxiosData;
 }>(
-  'subcategories/delete',
+  'products/delete',
   async (id, thunkAPI) => {
     try {
       await http.delete(`${prefix}/${id}`);
@@ -89,10 +88,10 @@ export const deleteSubcategory = createAsyncThunk<void, string, {
     }
   },
 );
-export const reorderSubcategories = createAsyncThunk<void, IReorderPayload, {
+export const reorderProducts = createAsyncThunk<void, IReorderPayload, {
   rejectValue: AxiosData;
 }>(
-  'subcategories/reorder',
+  'products/reorder',
   async (body, thunkAPI) => {
     try {
       await http.patch<IReorderPayload>(`${prefix}/reorder`, body);
@@ -103,10 +102,10 @@ export const reorderSubcategories = createAsyncThunk<void, IReorderPayload, {
     }
   },
 );
-export const searchSubcategories = createAsyncThunk<ISubcategoriesSearchInfo[], ISearchSubcategories, {
+export const searchProducts = createAsyncThunk<IProductsSearchInfo[], ISearchProducts, {
   rejectValue: AxiosData;
 }>(
-  'subcategories/search',
+  'products/search',
   async (searchingData, thunkAPI) => {
     try {
       const { searchTerm, visibleOnSite, category } = searchingData;
@@ -116,25 +115,9 @@ export const searchSubcategories = createAsyncThunk<ISubcategoriesSearchInfo[], 
         category,
       });
 
-      const { data } = await http.get<ISubcategoriesSearchInfo[]>(
+      const { data } = await http.get<IProductsSearchInfo[]>(
         `${prefix}/search?${queryParams}`,
       );
-
-      return data;
-    } catch (error) {
-      const errorInfo = customErrorHandling(error);
-
-      return thunkAPI.rejectWithValue(errorInfo);
-    }
-  },
-);
-export const getSubcategoriesByCategoryId = createAsyncThunk<ISubcategoriesByCategoryId[], string, {
-  rejectValue: AxiosData;
-}>(
-  'subcategories/getSubcategories',
-  async (id, thunkAPI) => {
-    try {
-      const { data } = await http.get<ISubcategoriesByCategoryId[]>(`${prefix}/category/${id}`);
 
       return data;
     } catch (error) {

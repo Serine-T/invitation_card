@@ -70,3 +70,21 @@ export interface ISubcategoriesSearchInfo {
   title: string;
   subCategory: SubCategory[];
 }
+
+export interface ISubcategoriesByCategoryId {
+  id: string;
+  title: string;
+  description: string;
+  photo: string;
+  categoryDiscountOffMSRP: number;
+  defaultInkInEstimator: string;
+  staticShippingFacility: string[];
+  useGrandFormatSQFtTemplate: boolean;
+  visibleOnSite: boolean;
+  displayAsCardInHeader: boolean;
+  isNew: boolean;
+  isSale: boolean;
+  printType: string;
+  categoryId: string;
+  sort: number;
+}

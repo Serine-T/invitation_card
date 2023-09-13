@@ -11,9 +11,11 @@ import MenuCategories from '@containers/Products/MenuCategories';
 import AddMenuCategory from '@containers/Products/MenuCategories/AddMenuCategory';
 import EditMenuCategory from '@containers/Products/MenuCategories/EditMenuCategory';
 import ProductCategories from '@containers/Products/ProductCategories';
-import AddProductCategory from '@containers/Products/ProductCategories/AddProductCategory';
-import EditProductCategory from '@containers/Products/ProductCategories/EditProductCategory';
+import AddProductCategory from '@containers/Products/ProductCategories/AddComponent';
+import EditProductCategory from '@containers/Products/ProductCategories/EditComponent';
 import Products from '@containers/Products/Products';
+import AddProduct from '@containers/Products/Products/AddComponent';
+import EditProduct from '@containers/Products/Products/EditComponent';
 import TemplateCategories from '@containers/Products/TemplateCategories';
 import Templates from '@containers/Products/Templates';
 import PAGE_ROUTES from '@routes/routingEnum';
@@ -26,7 +28,14 @@ const ProductsRoutes = {
   path: PAGE_ROUTES.PRODUCTS,
   children: [
     { element: <Navigate to={PAGE_ROUTES.PRODUCTS_PRODUCTS} />, index: true },
-    { path: PAGE_ROUTES.PRODUCTS_PRODUCTS, element: <Products /> },
+    {
+      path: PAGE_ROUTES.PRODUCTS_PRODUCTS,
+      children: [
+        { element: <Products />, index: true },
+        { path: PAGE_ROUTES.ADD_PRODUCTS, element: <AddProduct /> },
+        { path: PAGE_ROUTES.EDIT_PRODUCTS, element: <EditProduct /> },
+      ],
+    },
     {
       path: PAGE_ROUTES.PRODUCT_CATEGORIES,
       children: [
