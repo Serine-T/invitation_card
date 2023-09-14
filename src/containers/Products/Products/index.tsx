@@ -99,7 +99,9 @@ const Products = () => {
                   <Typography variant="h5" mb="16px">{parentTitle}</Typography>
                   <DndContainer reordingData={reordingData}>
                     <StyledTable headCells={headCells}>
-                      {products.map(({ name, visibleOnSite, id }, index) => (
+                      {products.map(({
+                        name, quarterhouseProductCode, visibleOnSite, id, productSKU, fouroverProdCode, showInSpotlight,
+                      }, index) => (
                         <ReusableDragRow
                           key={id}
                           id={id}
@@ -108,10 +110,14 @@ const Products = () => {
                         >
                           {({ providedDraggable }) => (
                             < >
-                              <TableCell>
+                              <TableCell>{productSKU}</TableCell>
+                              <TableCell width="80px">{ quarterhouseProductCode}</TableCell>
+                              <TableCell width="152px">{fouroverProdCode}</TableCell>
+                              <TableCell width="192px">
                                 <RowTitle title={name} path={`/products/products/edit/${id}`} />
                               </TableCell>
-                              <TableCell width="138px">{visibleOnSite ? 'Yes' : 'No'}</TableCell>
+                              <TableCell width="76px">{visibleOnSite ? 'Yes' : 'No'}</TableCell>
+                              <TableCell width="96px">{showInSpotlight ? 'Yes' : 'No'}</TableCell>
                               <TableCell width="140px">
                                 <DndBtn providedDraggable={providedDraggable} />
                               </TableCell>
