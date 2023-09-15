@@ -24,8 +24,6 @@ const GrandFormatDiscounts = () => {
 
   const options = grandFormatOptions?.grandFormatDiscounts || [];
 
-  console.log('waaa', watch());
-
   const [inputList, setInputList] = useState<any[]>(options);
   const handleAddInput = () => {
     const newInput = { quantity: null, discountPercent: null };

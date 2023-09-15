@@ -34,8 +34,6 @@ export const getAllProducts = createAsyncThunk<IProductsInfo[], void, {
     try {
       const { data: { data } } = await http.get<AxiosResponse<IProductsInfo[]>>(prefix);
 
-      console.log('dddd****', data);
-
       return data;
     } catch (error) {
       const errorInfo = customErrorHandling(error);
