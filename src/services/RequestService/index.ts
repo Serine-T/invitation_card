@@ -73,10 +73,11 @@ class RequestService {
 
           if (refreshTokenItem) {
             try {
-              const { data } = await http.post<IRefreshTokenPayload, AxiosResponse<ISignInResponseType>>(
-                'auth/refreshToken',
-                { refreshToken: refreshTokenItem },
-              );
+              const { data: { data } } = await http.post<IRefreshTokenPayload,
+                AxiosResponse<AxiosResponse<ISignInResponseType>>>(
+                  'auth/refreshToken',
+                  { refreshToken: refreshTokenItem },
+                );
 
               const { accessToken } = data;
 
