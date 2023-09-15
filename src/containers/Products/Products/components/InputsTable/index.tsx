@@ -30,10 +30,10 @@ import {
   inputsRows1,
   inputsRows2,
 } from './helpers';
-import SEO from './SEO';
-import ProductDescription from './ProductDescription';
-import GrandFormatOptions from './GrandFormatOptions';
-import GrandFormatDiscounts from './GrandFormatDiscounts';
+import SEO from './components/SEO';
+import ProductDescription from './components/ProductDescription';
+import GrandFormatOptions from './components/GrandFormatOptions';
+import GrandFormatDiscounts from './components/GrandFormatDiscounts';
 
 interface IInputsTable{
   editData?: IProductsPayload;

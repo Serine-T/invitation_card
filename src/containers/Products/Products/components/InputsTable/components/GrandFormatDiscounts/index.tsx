@@ -1,14 +1,14 @@
 import { memo, useState } from 'react';
 
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import Box from '@mui/material/Box';
 import { useFormContext } from 'react-hook-form';
 import Input from '@containers/common/Input';
 import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import { StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
-import { TableCell } from '@mui/material';
+import { Stack, TableCell } from '@mui/material';
 import StyledTypography from '@containers/common/StyledTypography';
+import MinusIcon from '@containers/common/Icons/MinusIcon';
 
 import { inputsFields } from './helpers';
 
@@ -72,18 +72,18 @@ const GrandFormatDiscounts = () => {
                     {label}
                   </StyledTableCell>
                   <TableCell>
-                    <Input
-                      width="120px"
-                      {...register(`grandFormatOptions.grandFormatDiscounts.${index}.${field}`)}
-                      placeholder={placeholder}
-                      errorMessage={(errors as any)
-                        ?.grandFormatOptions?.grandFormatDiscounts?.[index]?.[field]?.message}
-                    />
-                    { idx === 0 && (
-                    <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-                      <RemoveCircleOutlineIcon onClick={() => handleRemoveInput(index)} />
-                    </Box>
-                    )}
+                    <Stack direction="row" justifyContent="space-between">
+                      <Input
+                        width="275px"
+                        {...register(`grandFormatOptions.grandFormatDiscounts.${index}.${field}`)}
+                        placeholder={placeholder}
+                        errorMessage={(errors as any)
+                          ?.grandFormatOptions?.grandFormatDiscounts?.[index]?.[field]?.message}
+                      />
+                      {index !== 0 && idx === 0 && (
+                        <MinusIcon onClick={() => handleRemoveInput(index)} />
+                      )}
+                    </Stack>
                   </TableCell>
                 </StyledTableRow>
               ))}
