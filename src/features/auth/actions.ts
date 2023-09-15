@@ -20,7 +20,7 @@ export const signIn = createAsyncThunk<void, ISignInPayload, {
   'auth/signIn',
   async (body, thunkAPI) => {
     try {
-      const { data } = await http.post<ISignInPayload, AxiosResponse<ISignInResponseType>>(
+      const { data: { data } } = await http.post<ISignInPayload, AxiosResponse<AxiosResponse<ISignInResponseType>>>(
         `${prefix}/login`,
         body,
       );
