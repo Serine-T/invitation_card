@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData } from '@utils/types';
+import { AxiosResponse } from 'axios';
 
 import {
   IAddUserPayload, IUserInfo,
@@ -30,7 +31,7 @@ export const getAllUsers = createAsyncThunk<IUserInfo[], void, {
   'users/all',
   async (_, thunkAPI) => {
     try {
-      const { data } = await http.get<IUserInfo[]>(prefix);
+      const { data: { data } } = await http.get<AxiosResponse<IUserInfo[]>>(prefix);
 
       return data;
     } catch (error) {
@@ -47,7 +48,7 @@ export const getUserById = createAsyncThunk<IUserInfo, string, {
   'users/get-user',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<IUserInfo>(`${prefix}/${id}`);
+      const { data: { data } } = await http.get<AxiosResponse<IUserInfo>>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {

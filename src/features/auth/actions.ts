@@ -79,7 +79,7 @@ export const confirmEmail = createAsyncThunk<void, string, {
   'auth/confirmEmail',
   async (token, thunkAPI) => {
     try {
-      const { data } = await http.get<ISignInResponseType>(
+      const { data: { data } } = await http.get<AxiosResponse<ISignInResponseType>>(
         `${prefix}/confirm-email/${token}`,
       );
 

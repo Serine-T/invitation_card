@@ -77,6 +77,8 @@ const Products = () => {
     }).catch(() => fetchData());
   };
 
+  console.log('productsList***', productsList, categories);
+
   if (isLoading || categoryLoading) {
     return <Loader />;
   }
