@@ -37,6 +37,22 @@ export const defaultValues = {
   grandFormatOptions: null,
 };
 
+export const defaultGrandFormatValues = {
+  unitDisplay: '',
+  widthFrom: '',
+  widthTo: '',
+  heightFrom: '',
+  heightTo: '',
+  maxHeight: '',
+  maxWidth: '',
+  grandFormatDiscounts: [
+    {
+      quantity: null,
+      discountPercent: null,
+    },
+  ],
+};
+
 export const AddDataSchema = yup.object().shape({
   name: yup.string().required('Product name is required'),
   productSKU: yup.string().required('Product SKU is required'),
@@ -50,6 +66,12 @@ export const AddDataSchema = yup.object().shape({
     heightTo: yup.string().required('Height to is required'),
     maxHeight: yup.string().required('Max height is required'),
     maxWidth: yup.string().required('Max width is required'),
+    grandFormatDiscounts: yup.array().of(
+      yup.object({
+        quantity: yup.string().required('Quantity is required'),
+        discountPercent: yup.string().required('Discount percent is required'),
+      }),
+    ),
   }).nullable(),
 });
 
@@ -78,11 +100,9 @@ export const inputsRows1: ValidFieldNames[] = [
     type: InputTypes.text,
     isRequired: true,
   },
-  {
-    label: 'Product Weight (1)',
-    field: 'weight',
-    type: InputTypes.text,
-  },
+
+];
+export const inputsRows2: ValidFieldNames[] = [
   {
     label: 'Visible on Site',
     field: 'visibleOnSite',
@@ -98,8 +118,6 @@ export const inputsRows1: ValidFieldNames[] = [
     field: 'isDiscountable',
     type: InputTypes.checkbox,
   },
-];
-export const inputsRows2: ValidFieldNames[] = [
   {
     label: 'Quarterhouse Product Code',
     field: 'quarterhouseProductCode',

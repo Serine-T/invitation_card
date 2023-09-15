@@ -102,7 +102,7 @@ const ProductCategories = () => {
                   <Typography variant="h5" mb="16px">{catTitle}</Typography>
                   <DndContainer reordingData={reordingData}>
                     <StyledTable headCells={headCells}>
-                      {subCategory.map(({ title, visibleOnSite, id, printType }, index) => (
+                      {subCategory?.map(({ title, visibleOnSite, id, printType }, index) => (
                         <ReusableDragRow
                           key={id}
                           id={id}

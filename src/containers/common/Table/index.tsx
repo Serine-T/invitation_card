@@ -3,6 +3,7 @@ import { ReactNode, memo } from 'react';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
+import { Stack, Typography } from '@mui/material';
 
 import { StyledMuiTable, StyledPagination, StyledTableContainer, StyledTableRow } from './styled';
 import { ITableHeadCell } from './helpers';
@@ -13,10 +14,11 @@ interface IStyledTable {
   tableTitle?: string;
   colSpan?: number;
   hasPagination?: boolean;
+  btn?: ReactNode | null;
  }
 
 const StyledTable = ({
-  headCells, children, tableTitle, colSpan, hasPagination = false,
+  headCells, children, tableTitle, colSpan, hasPagination = false, btn = null,
 }: IStyledTable) => {
   return (
     <>
@@ -25,7 +27,16 @@ const StyledTable = ({
           <TableHead>
             <StyledTableRow>
               {
-                tableTitle ? <TableCell colSpan={colSpan}>{tableTitle}</TableCell>
+                tableTitle ? (
+                  <TableCell colSpan={colSpan}>
+                    <Stack direction="row" justifyContent="space-between">
+                      <Typography>
+                        {tableTitle}
+                      </Typography>
+                      {btn && btn}
+                    </Stack>
+                  </TableCell>
+                )
                   : (headCells ? headCells.map((props) => {
                     const { label } = props;
 
