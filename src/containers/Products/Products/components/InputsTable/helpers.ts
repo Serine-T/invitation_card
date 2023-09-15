@@ -1,4 +1,6 @@
 import { GrandFormatOptions } from '@features/products/types';
+import { isIntagerRegex, isNumberRegex } from '@utils/regexp';
+import { intagerValidation } from '@utils/schemas';
 import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
 
@@ -37,19 +39,50 @@ export const defaultValues = {
   grandFormatOptions: null,
 };
 
+export const defaultGrandFormatValues = {
+  unitDisplay: '',
+  widthFrom: '',
+  widthTo: '',
+  heightFrom: '',
+  heightTo: '',
+  maxHeight: '',
+  maxWidth: '',
+  grandFormatDiscounts: [
+    {
+      quantity: null,
+      discountPercent: null,
+    },
+  ],
+};
+
 export const AddDataSchema = yup.object().shape({
   name: yup.string().required('Product name is required'),
   productSKU: yup.string().required('Product SKU is required'),
   subCategoryId: yup.string().required('Subcategory is required'),
   categoryId: yup.string().required('Category is required'),
+  weight: intagerValidation.nullable(),
   grandFormatOptions: yup.object({
     unitDisplay: yup.string().required('Unit display is required'),
-    widthFrom: yup.string().required('Width from is required'),
-    widthTo: yup.string().required('Width to is required'),
-    heightFrom: yup.string().required('Height from is required'),
-    heightTo: yup.string().required('Height to is required'),
-    maxHeight: yup.string().required('Max height is required'),
-    maxWidth: yup.string().required('Max width is required'),
+    widthFrom: yup.string().required('Width from is required')
+      .matches(isNumberRegex, 'Number is invalid'),
+    widthTo: yup.string().required('Width to is required')
+      .matches(isNumberRegex, 'Number is invalid'),
+    heightFrom: yup.string().required('Height from is required')
+      .matches(isNumberRegex, 'Number is invalid'),
+    heightTo: yup.string().required('Height to is required')
+      .matches(isNumberRegex, 'Number is invalid'),
+    maxHeight: yup.string().required('Max height is required')
+      .matches(isNumberRegex, 'Number is invalid'),
+    maxWidth: yup.string().required('Max width is required')
+      .matches(isNumberRegex, 'Number is invalid'),
+    grandFormatDiscounts: yup.array().of(
+      yup.object({
+        quantity: yup.string().required('Quantity is required')
+          .matches(isIntagerRegex, 'Intager is invalid'),
+        discountPercent: yup.string().required('Discount Percent is required')
+          .matches(isNumberRegex, 'Number is invalid'),
+      }),
+    ),
   }).nullable(),
 });
 
@@ -78,11 +111,9 @@ export const inputsRows1: ValidFieldNames[] = [
     type: InputTypes.text,
     isRequired: true,
   },
-  {
-    label: 'Product Weight (1)',
-    field: 'weight',
-    type: InputTypes.text,
-  },
+
+];
+export const inputsRows2: ValidFieldNames[] = [
   {
     label: 'Visible on Site',
     field: 'visibleOnSite',
@@ -98,8 +129,6 @@ export const inputsRows1: ValidFieldNames[] = [
     field: 'isDiscountable',
     type: InputTypes.checkbox,
   },
-];
-export const inputsRows2: ValidFieldNames[] = [
   {
     label: 'Quarterhouse Product Code',
     field: 'quarterhouseProductCode',

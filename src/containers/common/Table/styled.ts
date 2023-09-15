@@ -16,9 +16,12 @@ export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
 export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   th: {
     background: theme.palette.grey[700],
-    textTransform: 'uppercase',
     fontWeight: 500,
     fontFamily: FontFamilyNames.DmSansMedium,
+
+    '.MuiTypography-body1': {
+      textTransform: 'uppercase',
+    },
   },
   'td, th': {
     borderRight: `1px solid ${theme.palette.grey[500]}`,

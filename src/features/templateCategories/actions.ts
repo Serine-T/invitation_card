@@ -3,6 +3,7 @@ import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData, IReorderPayload } from '@utils/types';
 import { constructQueryString } from '@utils/helpers';
+import { AxiosResponse } from 'axios';
 
 import {
   IAddTemplateCategoryPayload, ITemplateCategory, ISearchTemplateCategories,
@@ -31,7 +32,7 @@ export const getAllTemplateCategories = createAsyncThunk<ITemplateCategory[], vo
   'templateCategories/all',
   async (_, thunkAPI) => {
     try {
-      const { data } = await http.get<ITemplateCategory[]>(prefix);
+      const { data: { data } } = await http.get<AxiosResponse<ITemplateCategory[]>>(prefix);
 
       return data;
     } catch (error) {
@@ -48,7 +49,7 @@ export const getTemplateCategoryById = createAsyncThunk<ITemplateCategory, strin
   'templateCategories/get-templateCategories',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<ITemplateCategory>(`${prefix}/${id}`);
+      const { data: { data } } = await http.get<AxiosResponse<ITemplateCategory>>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {
@@ -115,7 +116,7 @@ export const searchTemplateCategories = createAsyncThunk<ITemplateCategory[], IS
         searchTerm,
       });
 
-      const { data } = await http.get<ITemplateCategory[]>(
+      const { data: { data } } = await http.get<AxiosResponse<ITemplateCategory[]>>(
         `${prefix}/search?${queryParams}`,
       );
 

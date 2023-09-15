@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData, IReorderPayload } from '@utils/types';
+import { AxiosResponse } from 'axios';
 
 import {
   IAddBestSellerPayload, IBestSellerInfo,
@@ -30,7 +31,7 @@ export const getAllBestSellers = createAsyncThunk<IBestSellerInfo[], void, {
   'bestSellers/all',
   async (_, thunkAPI) => {
     try {
-      const { data } = await http.get<IBestSellerInfo[]>(prefix);
+      const { data: { data } } = await http.get<AxiosResponse<IBestSellerInfo[]>>(prefix);
 
       return data;
     } catch (error) {
@@ -47,7 +48,7 @@ export const getBestSellerById = createAsyncThunk<IBestSellerInfo, string, {
   'bestSellers/get-bestSeller',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<IBestSellerInfo>(`${prefix}/${id}`);
+      const { data: { data } } = await http.get<AxiosResponse<IBestSellerInfo>>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {

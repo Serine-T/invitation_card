@@ -3,6 +3,7 @@ import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData, IReorderPayload } from '@utils/types';
 import { constructQueryString } from '@utils/helpers';
+import { AxiosResponse } from 'axios';
 
 import {
   IAddTemplatePayload, ITemplate, ISearchTemplates,
@@ -31,7 +32,7 @@ export const getAllTemplates = createAsyncThunk<ITemplate[], void, {
   'templates/all',
   async (_, thunkAPI) => {
     try {
-      const { data } = await http.get<ITemplate[]>(prefix);
+      const { data: { data } } = await http.get<AxiosResponse<ITemplate[]>>(prefix);
 
       return data;
     } catch (error) {
@@ -48,7 +49,7 @@ export const getTemplateById = createAsyncThunk<IAddTemplatePayload, string, {
   'templates/get-templates',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<IAddTemplatePayload>(`${prefix}/${id}`);
+      const { data: { data } } = await http.get<AxiosResponse<IAddTemplatePayload>>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {
@@ -115,7 +116,7 @@ export const searchTemplates = createAsyncThunk<ITemplate[], ISearchTemplates, {
         searchTerm,
       });
 
-      const { data } = await http.get<ITemplate[]>(
+      const { data: { data } } = await http.get<AxiosResponse<ITemplate[]>>(
         `${prefix}/search?${queryParams}`,
       );
 

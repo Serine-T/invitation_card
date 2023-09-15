@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData, IReorderPayload } from '@utils/types';
+import { AxiosResponse } from 'axios';
 
 import {
   IAddBannerPayload, IBannerInfo, IBanners,
@@ -30,7 +31,7 @@ export const getAllBanners = createAsyncThunk<IBanners, void, {
   'banners/all',
   async (_, thunkAPI) => {
     try {
-      const { data } = await http.get<IBanners>(prefix);
+      const { data: { data } } = await http.get<AxiosResponse<IBanners>>(prefix);
 
       return data;
     } catch (error) {
@@ -47,7 +48,7 @@ export const getBannerById = createAsyncThunk<IBannerInfo, string, {
   'banners/get-banner',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<IBannerInfo>(`${prefix}/${id}`);
+      const { data: { data } } = await http.get<AxiosResponse<IBannerInfo>>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {

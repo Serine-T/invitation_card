@@ -49,7 +49,7 @@ export const textWidthValidation = yup.string().optional().test(
 );
 export const intagerValidation = yup.string().optional().test(
   'valid-intager',
-  'Number is not intager',
+  'Intager is invalid',
   (value: string | undefined) => {
     if (!value) {
       return true;

@@ -3,6 +3,7 @@ import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData, IReorderPayload } from '@utils/types';
 import { constructQueryString } from '@utils/helpers';
+import { AxiosResponse } from 'axios';
 
 import {
   IAddAttributePayload, IAttribute, ISearchAttributes,
@@ -16,7 +17,7 @@ export const getAllAttributes = createAsyncThunk<IAttribute[], void, {
   'attributes/all',
   async (_, thunkAPI) => {
     try {
-      const { data } = await http.get<IAttribute[]>(prefix);
+      const { data: { data } } = await http.get<AxiosResponse<IAttribute[]>>(prefix);
 
       return data;
     } catch (error) {
@@ -48,7 +49,7 @@ export const getAttributeById = createAsyncThunk<IAddAttributePayload, string, {
   'attributes/get-attribute',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<IAddAttributePayload>(`${prefix}/${id}`);
+      const { data: { data } } = await http.get<AxiosResponse<IAddAttributePayload>>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {
@@ -115,7 +116,7 @@ export const searchAttributes = createAsyncThunk<IAttribute[], ISearchAttributes
         searchTerm,
       });
 
-      const { data } = await http.get<IAttribute[]>(
+      const { data: { data } } = await http.get<AxiosResponse<IAttribute[]>>(
         `${prefix}/search?${queryParams}`,
       );
 

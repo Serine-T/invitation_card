@@ -3,6 +3,7 @@ import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData, IReorderPayload } from '@utils/types';
 import { constructQueryString } from '@utils/helpers';
+import { AxiosResponse } from 'axios';
 
 import {
   IAddAttributeCategoryPayload, IAttributeCategory, ISearchAttributeCategories,
@@ -31,7 +32,7 @@ export const getAllAttributeCategories = createAsyncThunk<IAttributeCategory[], 
   'attributeCategories/all',
   async (_, thunkAPI) => {
     try {
-      const { data } = await http.get<IAttributeCategory[]>(prefix);
+      const { data: { data } } = await http.get<AxiosResponse<IAttributeCategory[]>>(prefix);
 
       return data;
     } catch (error) {
@@ -48,7 +49,7 @@ export const getAttributeCategoryById = createAsyncThunk<IAttributeCategory, str
   'attributeCategories/get-attributeCategories',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<IAttributeCategory>(`${prefix}/${id}`);
+      const { data: { data } } = await http.get<AxiosResponse<IAttributeCategory>>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {
@@ -115,7 +116,7 @@ export const searchAttributeCategories = createAsyncThunk<IAttributeCategory[], 
         searchTerm,
       });
 
-      const { data } = await http.get<IAttributeCategory[]>(
+      const { data: { data } } = await http.get<AxiosResponse<IAttributeCategory[]>>(
         `${prefix}/search?${queryParams}`,
       );
 

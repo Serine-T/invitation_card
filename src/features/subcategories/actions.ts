@@ -3,6 +3,7 @@ import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData, IReorderPayload } from '@utils/types';
 import { constructQueryString } from '@utils/helpers';
+import { AxiosResponse } from 'axios';
 
 import {
   IAddSubcategoriesPayload, ISearchSubcategories,
@@ -32,7 +33,7 @@ export const getAllSubcategories = createAsyncThunk<ISubcategoriesInfo[], void, 
   'subcategories/all',
   async (_, thunkAPI) => {
     try {
-      const { data } = await http.get<ISubcategoriesInfo[]>(prefix);
+      const { data: { data } } = await http.get<AxiosResponse<ISubcategoriesInfo[]>>(prefix);
 
       return data;
     } catch (error) {
@@ -49,7 +50,7 @@ export const getSubcategoryById = createAsyncThunk<ISubcategoriesInfo, string, {
   'subcategories/get-subcategory',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<ISubcategoriesInfo>(`${prefix}/${id}`);
+      const { data: { data } } = await http.get<AxiosResponse<ISubcategoriesInfo>>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {
@@ -116,7 +117,7 @@ export const searchSubcategories = createAsyncThunk<ISubcategoriesSearchInfo[], 
         category,
       });
 
-      const { data } = await http.get<ISubcategoriesSearchInfo[]>(
+      const { data: { data } } = await http.get<AxiosResponse<ISubcategoriesSearchInfo[]>>(
         `${prefix}/search?${queryParams}`,
       );
 
@@ -134,7 +135,9 @@ export const getSubcategoriesByCategoryId = createAsyncThunk<ISubcategoriesByCat
   'subcategories/getSubcategories',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<ISubcategoriesByCategoryId[]>(`${prefix}/category/${id}`);
+      const { data: { data } } = await http.get<AxiosResponse<ISubcategoriesByCategoryId[]>>(
+        `${prefix}/category/${id}`,
+      );
 
       return data;
     } catch (error) {

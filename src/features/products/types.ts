@@ -8,8 +8,8 @@ export interface IState {
 }
 
 export interface GrandFormatDiscount {
-  quantity: number;
-  discountPercent: number;
+  quantity: number | null;
+  discountPercent: number | null;
 }
 export interface GrandFormatOptions {
   unitDisplay: string;

@@ -19,18 +19,21 @@ import { addProduct, editProduct } from '@features/products/actions';
 import { IProductsPayload } from '@features/products/types';
 import { getSubcategoriesByCategoryId } from '@features/subcategories/actions';
 import { ISubcategoriesByCategoryId } from '@features/subcategories/types';
+import Input from '@containers/common/Input';
 
 import {
   AddDataSchema,
   IAddDataForm,
+  defaultGrandFormatValues,
   defaultValues,
   formattingPayload,
   inputsRows1,
   inputsRows2,
 } from './helpers';
-import SEO from './SEO';
-import ProductDescription from './ProductDescription';
-import GrandFormatOptions from './GrandFormatOptions';
+import SEO from './components/SEO';
+import ProductDescription from './components/ProductDescription';
+import GrandFormatOptions from './components/GrandFormatOptions';
+import GrandFormatDiscounts from './components/GrandFormatDiscounts';
 
 interface IInputsTable{
   editData?: IProductsPayload;
@@ -55,12 +58,11 @@ const InputsTable = ({ editData }: IInputsTable) => {
     handleSubmit,
     setValue,
     watch,
+    register,
     formState: { errors },
   } = methods;
 
   const { categoryId, subCategoryId, isGrandFormat } = watch();
-
-  console.log('errors***', errors);
 
   useEffect(() => {
     if (!categoryId) {
@@ -82,9 +84,12 @@ const InputsTable = ({ editData }: IInputsTable) => {
     const currentSubcategory = subcategoriesList.find((item) => item.id === subCategoryId);
 
     setValue('isGrandFormat', !!currentSubcategory?.useGrandFormatSQFtTemplate);
-    if (!currentSubcategory?.useGrandFormatSQFtTemplate) {
-      setValue('grandFormatOptions', null);
-    }
+
+    setValue(
+      'grandFormatOptions',
+      !currentSubcategory?.useGrandFormatSQFtTemplate ? null
+        : defaultGrandFormatValues,
+    );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subCategoryId]);
@@ -111,6 +116,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
       title={editData ? 'Edit Product' : 'Add Product'}
       path={PAGE_ROUTES.PRODUCTS}
     >
+
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}
@@ -142,6 +148,19 @@ const InputsTable = ({ editData }: IInputsTable) => {
                 </StyledTableRow>
               );
             })}
+            <StyledTableRow>
+              <StyledTableCell>
+                Product Weight (1):
+              </StyledTableCell>
+              <TableCell>
+                <Input
+                  width="120px"
+                  placeholder="Product Weight"
+                  {...register('weight')}
+                  errorMessage={errors?.weight?.message as string}
+                />
+              </TableCell>
+            </StyledTableRow>
 
             {inputsRows2.map((item) => {
               const { label, isRequired } = item;
@@ -164,6 +183,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
           {isGrandFormat && (
             <>
               <GrandFormatOptions />
+              <GrandFormatDiscounts />
             </>
           )}
           <SubmitBtn actionLoading={actionLoading} />

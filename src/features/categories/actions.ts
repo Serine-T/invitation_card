@@ -3,6 +3,7 @@ import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData, IReorderPayload } from '@utils/types';
 import { constructQueryString } from '@utils/helpers';
+import { AxiosResponse } from 'axios';
 
 import {
   IAddCategoryPayload, ICategories, ISearchCategories,
@@ -31,7 +32,7 @@ export const getAllCategories = createAsyncThunk<ICategories[], void, {
   'categories/all',
   async (_, thunkAPI) => {
     try {
-      const { data } = await http.get<ICategories[]>(prefix);
+      const { data: { data } } = await http.get<AxiosResponse<ICategories[]>>(prefix);
 
       return data;
     } catch (error) {
@@ -48,7 +49,7 @@ export const getCategoryById = createAsyncThunk<ICategories, string, {
   'categories/get-category',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<ICategories>(`${prefix}/${id}`);
+      const { data: { data } } = await http.get<AxiosResponse<ICategories>>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {
@@ -116,7 +117,7 @@ export const searchCategories = createAsyncThunk<ICategories[], ISearchCategorie
         displayInHeader,
       });
 
-      const { data } = await http.get<ICategories[]>(
+      const { data: { data } } = await http.get<AxiosResponse<ICategories[]>>(
         `${prefix}/search?${queryParams}`,
       );
 

@@ -3,6 +3,7 @@ import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData, IReorderPayload } from '@utils/types';
 import { constructQueryString } from '@utils/helpers';
+import { AxiosResponse } from 'axios';
 
 import {
   IProductsPayload, ISearchProducts, IProductsInfo, IProductsSearchInfo,
@@ -31,7 +32,7 @@ export const getAllProducts = createAsyncThunk<IProductsInfo[], void, {
   'products/all',
   async (_, thunkAPI) => {
     try {
-      const { data } = await http.get<IProductsInfo[]>(prefix);
+      const { data: { data } } = await http.get<AxiosResponse<IProductsInfo[]>>(prefix);
 
       return data;
     } catch (error) {
@@ -48,7 +49,7 @@ export const getProductById = createAsyncThunk<IProductsPayload, string, {
   'products/getProduct',
   async (id, thunkAPI) => {
     try {
-      const { data } = await http.get<IProductsPayload>(`${prefix}/${id}`);
+      const { data: { data } } = await http.get<AxiosResponse<IProductsPayload>>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {
@@ -115,7 +116,7 @@ export const searchProducts = createAsyncThunk<IProductsSearchInfo[], ISearchPro
         category,
       });
 
-      const { data } = await http.get<IProductsSearchInfo[]>(
+      const { data: { data } } = await http.get<AxiosResponse<IProductsSearchInfo[]>>(
         `${prefix}/search?${queryParams}`,
       );
 
