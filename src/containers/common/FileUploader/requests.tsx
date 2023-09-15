@@ -1,6 +1,6 @@
 import { http } from '@services/RequestService';
 import { AWS_S3_PREFIX } from '@utils/constants';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export interface IUploadFileProps {
   file: File;
@@ -29,7 +29,7 @@ export const getUploadUrl = async ({ fileName } : {fileName: string}) => {
 
   const name = fileName.substring(0, idx);
   const extension = fileName.substring(idx + 1);
-  const { data } = await http.get<ICreateAWSLinkResponse>(
+  const { data: { data } } = await http.get<AxiosResponse<ICreateAWSLinkResponse>>(
     `${AWS_S3_PREFIX}?extension=${extension}&name=${name}`,
   );
 
