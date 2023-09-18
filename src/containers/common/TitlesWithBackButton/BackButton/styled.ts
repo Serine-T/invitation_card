@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 import { FontFamilyNames } from '@customTypes/global/theme/fonts';
 
-import { StyledTextButton } from '../Button/styled';
+import { StyledTextButton } from '../../Button/styled';
 
 export const StyledBackBox = styled(StyledTextButton)(({ theme }) => ({
   display: 'flex',

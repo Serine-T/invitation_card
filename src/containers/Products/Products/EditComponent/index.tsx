@@ -12,7 +12,7 @@ import { IProductsPayload } from '@features/products/types';
 import { getProductById } from '@features/products/actions';
 import { selectProducts } from '@features/products/selectors';
 
-import InputsTable from '../components/InputsTable';
+import InputsTable from '../components/Tabs';
 
 const EditProduct = () => {
   const dispatch = useAppDispatch();

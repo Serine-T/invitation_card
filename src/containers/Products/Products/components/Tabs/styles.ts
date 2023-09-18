@@ -4,15 +4,16 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
 export const StyledDivider = styled(Box)(({ theme }) => ({
-  position: 'relative',
+  marginBottom: '40px',
 
   '&::after': {
     content: '""',
     position: 'absolute',
-    width: 'calc(100% + 230px)',
+    width: 'calc(100% + 220px)',
     height: '1px',
     background: theme.palette.divider,
-    left: '-230px',
+    left: '-220px',
+
     [theme.breakpoints.down('lg')]: {
       width: '100%',
       left: 0,
@@ -20,12 +21,18 @@ export const StyledDivider = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyledTabs = styled(Tabs)(() => ({
+export const StyledTabs = styled(Tabs)(({ theme }) => ({
   '.MuiTabs-flexContainer': {
     justifyContent: 'space-between',
+
+    [theme.breakpoints.down('lg')]: {
+      justifyContent: 'flex-start',
+      flexWrap: 'wrap',
+    },
   },
 }));
 
-export const StyledTab = styled(Tab)(() => ({
+export const StyledTab = styled(Tab)(({ theme }) => ({
   textTransform: 'capitalize',
+  color: theme.palette.grey[600],
 }));

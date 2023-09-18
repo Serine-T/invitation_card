@@ -6,7 +6,6 @@ import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
-import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
@@ -30,10 +29,10 @@ import {
   inputsRows1,
   inputsRows2,
 } from './helpers';
-import SEO from './components/SEO';
-import ProductDescription from './components/ProductDescription';
-import GrandFormatOptions from './components/GrandFormatOptions';
-import GrandFormatDiscounts from './components/GrandFormatDiscounts';
+import SEO from './SEO';
+import ProductDescription from './ProductDescription';
+import GrandFormatOptions from './GrandFormatOptions';
+import GrandFormatDiscounts from './GrandFormatDiscounts';
 
 interface IInputsTable{
   editData?: IProductsPayload;
@@ -112,83 +111,78 @@ const InputsTable = ({ editData }: IInputsTable) => {
   };
 
   return (
-    <TitlesWithBackButton
-      title={editData ? 'Edit Product' : 'Add Product'}
-      path="PRODUCTS"
-    >
-      <FormProvider {...methods}>
-        <StyledStack
-          onSubmit={handleSubmit(onSubmit)}
-          component="form"
-        >
-          <StyledTable tableTitle="SUBCATEGORY" colSpan={2}>
+    <FormProvider {...methods}>
+      <StyledStack
+        onSubmit={handleSubmit(onSubmit)}
+        component="form"
+      >
+        <StyledTable tableTitle="BASIC INFO" colSpan={2}>
 
-            {inputsRows1.map((item) => {
-              const { label, isRequired } = item;
+          {inputsRows1.map((item) => {
+            const { label, isRequired } = item;
 
-              return (
-                <StyledTableRow key={label}>
-                  <StyledTableCell>
-                    {`${label}: ${isRequired ? '*' : ''}`}
-                  </StyledTableCell>
-                  <TableCell>
-                    <ReusableFields
-                      {...item}
-                      selectList={[{
-                        field: 'categoryId',
-                        options: categoriesList,
-                      },
-                      {
-                        field: 'subCategoryId',
-                        options: getOptionsArray(subcategoriesList),
-                      }]}
-                    />
-                  </TableCell>
-                </StyledTableRow>
-              );
-            })}
-            <StyledTableRow>
-              <StyledTableCell>
-                Product Weight (1):
-              </StyledTableCell>
-              <TableCell>
-                <Input
-                  width="120px"
-                  placeholder="Product Weight"
-                  {...register('weight')}
-                  errorMessage={errors?.weight?.message as string}
-                />
-              </TableCell>
-            </StyledTableRow>
+            return (
+              <StyledTableRow key={label}>
+                <StyledTableCell>
+                  {`${label}: ${isRequired ? '*' : ''}`}
+                </StyledTableCell>
+                <TableCell>
+                  <ReusableFields
+                    {...item}
+                    selectList={[{
+                      field: 'categoryId',
+                      options: categoriesList,
+                    },
+                    {
+                      field: 'subCategoryId',
+                      options: getOptionsArray(subcategoriesList),
+                    }]}
+                  />
+                </TableCell>
+              </StyledTableRow>
+            );
+          })}
+          <StyledTableRow>
+            <StyledTableCell>
+              Product Weight (1):
+            </StyledTableCell>
+            <TableCell>
+              <Input
+                width="120px"
+                placeholder="Product Weight"
+                {...register('weight')}
+                errorMessage={errors?.weight?.message as string}
+              />
+            </TableCell>
+          </StyledTableRow>
 
-            {inputsRows2.map((item) => {
-              const { label, isRequired } = item;
+          {inputsRows2.map((item) => {
+            const { label, isRequired } = item;
 
-              return (
-                <StyledTableRow key={label}>
-                  <StyledTableCell>
-                    {`${label}: ${isRequired ? '*' : ''}`}
-                  </StyledTableCell>
-                  <TableCell>
-                    <ReusableFields {...item} />
-                  </TableCell>
-                </StyledTableRow>
-              );
-            })}
-          </StyledTable>
-          <SEO />
+            return (
+              <StyledTableRow key={label}>
+                <StyledTableCell>
+                  {`${label}: ${isRequired ? '*' : ''}`}
+                </StyledTableCell>
+                <TableCell>
+                  <ReusableFields {...item} />
+                </TableCell>
+              </StyledTableRow>
+            );
+          })}
+        </StyledTable>
+        <SEO />
 
-          <ProductDescription />
-          {isGrandFormat && (
-            <>
-              <GrandFormatOptions />
-              <GrandFormatDiscounts />
-            </>
-          )}
-          <SubmitBtn actionLoading={actionLoading} />
-        </StyledStack>
-      </FormProvider>
-    </TitlesWithBackButton>
+        <ProductDescription />
+        {isGrandFormat && (
+        <>
+          <GrandFormatOptions />
+          <GrandFormatDiscounts />
+        </>
+        )}
+        <SubmitBtn actionLoading={actionLoading} />
+      </StyledStack>
+    </FormProvider>
   );
 };
 

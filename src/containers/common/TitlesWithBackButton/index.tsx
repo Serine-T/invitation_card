@@ -1,6 +1,6 @@
 import { ReactNode, memo } from 'react';
 
-import BackButton from '@containers/common/BackButton';
+import BackButton from '@containers/common/TitlesWithBackButton/BackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import Typography from '@mui/material/Typography';
 
@@ -16,7 +16,7 @@ const TitlesWithBackButton = ({ title, children, path }:ITitlesWithBackButton) =
   return (
     <StyledContainer>
       <StyledBox>
-        <BackButton path={PAGE_ROUTES[path]} />
+        <BackButton path={path} />
       </StyledBox>
       <ContentBox>
         <Typography variant="h2" mb="40px">{title}</Typography>
