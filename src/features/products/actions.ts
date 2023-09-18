@@ -66,7 +66,7 @@ export const editProduct = createAsyncThunk<void, IProductsPayload, {
   'products/edit',
   async (body, thunkAPI) => {
     try {
-      await http.patch<IProductsPayload>(`${prefix}/${body.id}`, body);
+      await http.put<IProductsPayload>(`${prefix}/${body.id}`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

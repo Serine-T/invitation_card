@@ -9,7 +9,7 @@ import {
   IAddAttributeCategoryPayload, IAttributeCategory, ISearchAttributeCategories,
 } from './types';
 
-const prefix = '/attributeCategory';
+const prefix = '/attribute-categories';
 
 export const addAttributeCategory = createAsyncThunk<void, IAddAttributeCategoryPayload, {
   rejectValue: AxiosData;
