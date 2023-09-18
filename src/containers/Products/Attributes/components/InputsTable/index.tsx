@@ -72,7 +72,7 @@ const InputsTable = ({ attributesData }: IInputsTable) => {
   return (
     <TitlesWithBackButton
       title={attributesData ? 'Edit Attribute' : 'Add Attribute'}
-      path={PAGE_ROUTES.ATTRIBUTES}
+      path="ATTRIBUTES"
     >
       <FormProvider {...methods}>
         <StyledStack

@@ -59,7 +59,7 @@ const InputsTable = ({ bestSellerData }: IInputsTable) => {
   };
 
   return (
-    <TitlesWithBackButton title={bestSellerData ? 'Edit Section' : 'Add Section'} path={PAGE_ROUTES.BEST_SELLER}>
+    <TitlesWithBackButton title={bestSellerData ? 'Edit Section' : 'Add Section'} path="BEST_SELLER">
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}

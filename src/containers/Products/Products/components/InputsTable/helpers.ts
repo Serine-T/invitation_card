@@ -151,3 +151,22 @@ export const formattingPayload = (data: IAddDataForm) => {
 
   return { ...data, weight: weight ? +weight : null };
 };
+
+export const tabsOptions = [
+  {
+    option: 'basicInfo',
+    label: 'Basic Info',
+  },
+  {
+    option: 'productQuantities',
+    label: 'Product Quantities',
+  },
+  {
+    option: 'addAttributes',
+    label: 'Add Attributes',
+  },
+  {
+    option: 'setPrices',
+    label: 'Set prices',
+  },
+];

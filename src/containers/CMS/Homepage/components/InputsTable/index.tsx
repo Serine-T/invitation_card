@@ -61,7 +61,7 @@ const InputsTable = ({ bannersData }: IInputsTable) => {
   };
 
   return (
-    <TitlesWithBackButton title={bannersData ? 'Edit Banner' : 'Add Banner'} path={PAGE_ROUTES.HOMEPAGE}>
+    <TitlesWithBackButton title={bannersData ? 'Edit Banner' : 'Add Banner'} path="HOMEPAGE">
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}

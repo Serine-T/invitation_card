@@ -75,8 +75,6 @@ const Products = () => {
     }).catch(() => fetchData());
   };
 
-  console.log('productsList***', productsList, categories);
-
   if (isLoading || categoryLoading) {
     return <Loader />;
   }
@@ -106,12 +104,14 @@ const Products = () => {
                           key={id}
                           id={id}
                           index={index}
-                          gridTemplateColumns="auto 138px 140px 150px"
+                          gridTemplateColumns="auto 100px 152px 192px 76px 96px 140px 150px"
                         >
                           {({ providedDraggable }) => (
                             < >
-                              <TableCell>{productSKU}</TableCell>
-                              <TableCell width="80px">{ quarterhouseProductCode}</TableCell>
+                              <TableCell>
+                                <RowTitle title={productSKU} path={`/products/products/edit/${id}`} />
+                              </TableCell>
+                              <TableCell width="100px">{ quarterhouseProductCode}</TableCell>
                               <TableCell width="152px">{fouroverProdCode}</TableCell>
                               <TableCell width="192px">
                                 <RowTitle title={name} path={`/products/products/edit/${id}`} />

@@ -70,7 +70,7 @@ const InputsTable = ({ templatesData }: IInputsTable) => {
   return (
     <TitlesWithBackButton
       title={templatesData ? 'Edit Template' : 'Add Template'}
-      path={PAGE_ROUTES.TEMPLATES}
+      path="TEMPLATES"
     >
       <FormProvider {...methods}>
         <StyledStack

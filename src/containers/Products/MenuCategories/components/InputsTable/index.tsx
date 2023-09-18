@@ -54,7 +54,7 @@ const InputsTable = ({ categoriesData }: IInputsTable) => {
   };
 
   return (
-    <TitlesWithBackButton title={categoriesData ? 'Edit Category' : 'Add Category'} path={PAGE_ROUTES.MENU_CATEGORIES}>
+    <TitlesWithBackButton title={categoriesData ? 'Edit Category' : 'Add Category'} path="MENU_CATEGORIES">
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}

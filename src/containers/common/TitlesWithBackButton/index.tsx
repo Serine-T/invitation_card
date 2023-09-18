@@ -9,14 +9,14 @@ import { ContentBox, StyledBox, StyledContainer } from './styles';
 interface ITitlesWithBackButton {
   title: string;
   children: ReactNode;
-  path: PAGE_ROUTES;
+  path: keyof typeof PAGE_ROUTES;
 }
 
 const TitlesWithBackButton = ({ title, children, path }:ITitlesWithBackButton) => {
   return (
     <StyledContainer>
       <StyledBox>
-        <BackButton path={path} />
+        <BackButton path={PAGE_ROUTES[path]} />
       </StyledBox>
       <ContentBox>
         <Typography variant="h2" mb="40px">{title}</Typography>

@@ -17,7 +17,7 @@ import {
   reorderTemplates, searchTemplates,
 } from '@features/templates/actions';
 import { selectTemplates } from '@features/templates/selectors';
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import RowTitle from '@containers/common/Table/components/RowTitle';
 import { nestedDragSort } from '@containers/common/Table/components/DndContainer/helpers';
 import DndContainer from '@containers/common/Table/components/DndContainer';

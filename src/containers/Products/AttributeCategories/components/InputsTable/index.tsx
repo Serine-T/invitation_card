@@ -56,7 +56,7 @@ const InputsTable = ({ attributeCategoriesData }: IInputsTable) => {
   return (
     <TitlesWithBackButton
       title={attributeCategoriesData ? 'Edit Attribute Category' : 'Add Attribute Category'}
-      path={PAGE_ROUTES.ATTRIBUTE_CATEGORIES}
+      path="ATTRIBUTE_CATEGORIES"
     >
       <FormProvider {...methods}>
         <StyledStack
