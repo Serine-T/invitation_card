@@ -5,7 +5,7 @@ import EmptyState from '@containers/common/EmptyState';
 import useMount from '@customHooks/useMount';
 import { getAllCategories } from '@features/categories/actions';
 
-import InputsTable from '../components/Tabs';
+import InputsTable from '../..';
 
 const AddProduct = () => {
   const { isLoading, data: categories } = useAppSelector(selectCategories);

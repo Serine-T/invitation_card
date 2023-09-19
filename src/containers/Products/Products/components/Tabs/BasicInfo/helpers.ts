@@ -1,9 +1,22 @@
-import { GrandFormatOptions } from '@features/products/types';
 import { isIntagerRegex, isNumberRegex } from '@utils/regexp';
 import { intagerValidation } from '@utils/schemas';
 import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
 
+export interface GrandFormatDiscount {
+  quantity: number | null;
+  discountPercent: number | null;
+}
+export interface GrandFormatOptions {
+  unitDisplay: string;
+  widthFrom: number| null;
+  widthTo: number | null;
+  heightFrom: number | null;
+  heightTo: number | null;
+  maxHeight: number | null;
+  maxWidth: number | null;
+  grandFormatDiscounts: GrandFormatDiscount[];
+}
 export interface IAddDataForm {
   id?: string;
   name: string;
@@ -41,12 +54,12 @@ export const defaultValues = {
 
 export const defaultGrandFormatValues = {
   unitDisplay: '',
-  widthFrom: '',
-  widthTo: '',
-  heightFrom: '',
-  heightTo: '',
-  maxHeight: '',
-  maxWidth: '',
+  widthFrom: null,
+  widthTo: null,
+  heightFrom: null,
+  heightTo: null,
+  maxHeight: null,
+  maxWidth: null,
   grandFormatDiscounts: [
     {
       quantity: null,
@@ -63,23 +76,23 @@ export const AddDataSchema = yup.object().shape({
   weight: intagerValidation.nullable(),
   grandFormatOptions: yup.object({
     unitDisplay: yup.string().required('Unit display is required'),
-    widthFrom: yup.string().required('Width from is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    widthTo: yup.string().required('Width to is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    heightFrom: yup.string().required('Height from is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    heightTo: yup.string().required('Height to is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    maxHeight: yup.string().required('Max height is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    maxWidth: yup.string().required('Max width is required')
-      .matches(isNumberRegex, 'Number is invalid'),
+    widthFrom: yup.number().typeError('Number is invalid').required('Width from is required')
+      .positive('Number is not positive'),
+    widthTo: yup.number().typeError('Number is invalid').required('Width to is required')
+      .positive('Number is not positive'),
+    heightFrom: yup.number().typeError('Number is invalid').required('Height from is required')
+      .positive('Number is not positive'),
+    heightTo: yup.number().typeError('Number is invalid').required('Height to is required')
+      .positive('Number is not positive'),
+    maxHeight: yup.number().typeError('Number is invalid').required('Max height is required')
+      .positive('Number is not positive'),
+    maxWidth: yup.number().typeError('Number is invalid').required('Max width is required')
+      .positive('Number is not positive'),
     grandFormatDiscounts: yup.array().of(
       yup.object({
         quantity: yup.string().required('Quantity is required')
           .matches(isIntagerRegex, 'Intager is invalid'),
-        discountPercent: yup.string().required('Discount Percent is required')
+        discountPercent: yup.string().required('Discount percent is required')
           .matches(isNumberRegex, 'Number is invalid'),
       }),
     ),
@@ -111,8 +124,8 @@ export const inputsRows1: ValidFieldNames[] = [
     type: InputTypes.text,
     isRequired: true,
   },
-
 ];
+
 export const inputsRows2: ValidFieldNames[] = [
   {
     label: 'Visible on Site',
@@ -146,8 +159,31 @@ export const inputsRows2: ValidFieldNames[] = [
   },
 ];
 
-export const formattingPayload = (data: IAddDataForm) => {
-  const { weight } = data;
+export const transformValuesToNumbers = (values: GrandFormatOptions) => {
+  const { widthFrom, widthTo, heightFrom, heightTo, maxHeight, maxWidth, grandFormatDiscounts } = values;
+  const transformedValues = {
+    ...values,
+    widthFrom: widthFrom ? +widthFrom : null,
+    widthTo: widthTo ? +widthTo : null,
+    heightFrom: heightFrom ? +heightFrom : null,
+    heightTo: heightTo ? +heightTo : null,
+    maxHeight: maxHeight ? +maxHeight : null,
+    maxWidth: maxWidth ? +maxWidth : null,
+    grandFormatDiscounts: grandFormatDiscounts.map(({ quantity, discountPercent }) => ({
+      quantity,
+      discountPercent,
+    })),
+  };
 
-  return { ...data, weight: weight ? +weight : null };
+  return transformedValues;
+};
+
+export const formattingPayload = (data: IAddDataForm) => {
+  const { weight, grandFormatOptions } = data;
+
+  return {
+    ...data,
+    weight: weight ? +weight : null,
+    grandFormatOptions: grandFormatOptions ? transformValuesToNumbers(grandFormatOptions) : null,
+  };
 };

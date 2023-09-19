@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,14 +16,11 @@ import { selectSubcategories } from '@features/subcategories/selectors';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 import { addProduct, editProduct } from '@features/products/actions';
 import { IProductsPayload } from '@features/products/types';
-import { getSubcategoriesByCategoryId } from '@features/subcategories/actions';
-import { ISubcategoriesByCategoryId } from '@features/subcategories/types';
 import Input from '@containers/common/Input';
 
 import {
   AddDataSchema,
   IAddDataForm,
-  defaultGrandFormatValues,
   defaultValues,
   formattingPayload,
   inputsRows1,
@@ -42,7 +39,6 @@ const InputsTable = ({ editData }: IInputsTable) => {
 
   const categoriesList = getOptionsArray(filteredList);
 
-  const [subcategoriesList, setSubcategoriesList] = useState<ISubcategoriesByCategoryId[]>([]);
   const methods = useForm<IAddDataForm>({
     resolver: yupResolver(AddDataSchema as any), // TODO: add typing
     defaultValues: editData || defaultValues,
@@ -50,43 +46,9 @@ const InputsTable = ({ editData }: IInputsTable) => {
 
   const {
     handleSubmit,
-    setValue,
-    watch,
     register,
     formState: { errors },
   } = methods;
-
-  const { categoryId, subCategoryId } = watch();
-
-  useEffect(() => {
-    if (!categoryId) {
-      setSubcategoriesList([]);
-      setValue('subCategoryId', '');
-
-      return;
-    }
-
-    dispatch(getSubcategoriesByCategoryId(categoryId))
-      .unwrap()
-      .then((data) => {
-        setSubcategoriesList(data);
-        setValue('subCategoryId', '');
-      });
-  }, [categoryId, dispatch, setValue]);
-
-  useEffect(() => {
-    const currentSubcategory = subcategoriesList.find((item) => item.id === subCategoryId);
-
-    setValue('isGrandFormat', !!currentSubcategory?.useGrandFormatSQFtTemplate);
-
-    setValue(
-      'grandFormatOptions',
-      !currentSubcategory?.useGrandFormatSQFtTemplate ? null
-        : defaultGrandFormatValues,
-    );
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subCategoryId]);
 
   const onSubmit = (data: IAddDataForm) => {
     const payload = formattingPayload(data);
@@ -127,10 +89,6 @@ const InputsTable = ({ editData }: IInputsTable) => {
                     selectList={[{
                       field: 'categoryId',
                       options: categoriesList,
-                    },
-                    {
-                      field: 'subCategoryId',
-                      options: getOptionsArray(subcategoriesList),
                     }]}
                   />
                 </TableCell>

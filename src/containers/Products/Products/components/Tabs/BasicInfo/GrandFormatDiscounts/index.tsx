@@ -61,33 +61,28 @@ const GrandFormatDiscounts = () => {
           </StyledTypography>
       )}
       >
-        {!!inputList.length && inputList.map((_, index) => {
-          return (
-            <>
-              {inputsFields.map(({ label, field, placeholder }, idx) => (
-                <StyledTableRow key={label}>
-                  <StyledTableCell>
-                    {label}
-                  </StyledTableCell>
-                  <TableCell>
-                    <Stack direction="row" justifyContent="space-between">
-                      <Input
-                        width="275px"
-                        {...register(`grandFormatOptions.grandFormatDiscounts.${index}.${field}`)}
-                        placeholder={placeholder}
-                        errorMessage={(errors as any)
-                          ?.grandFormatOptions?.grandFormatDiscounts?.[index]?.[field]?.message}
-                      />
-                      {index !== 0 && idx === 0 && (
-                        <MinusIcon onClick={() => handleRemoveInput(index)} />
-                      )}
-                    </Stack>
-                  </TableCell>
-                </StyledTableRow>
-              ))}
-            </>
-          );
-        })}
+        {!!inputList.length && inputList.map((_, index) => (
+          inputsFields.map(({ label, field, placeholder }, idx) => (
+            <StyledTableRow key={label}>
+              <StyledTableCell>
+                {label}
+              </StyledTableCell>
+              <TableCell>
+                <Stack direction="row" justifyContent="space-between">
+                  <Input
+                    width="275px"
+                    {...register(`grandFormatOptions.grandFormatDiscounts.${index}.${field}`)}
+                    placeholder={placeholder}
+                    errorMessage={(errors as any)
+                      ?.grandFormatOptions?.grandFormatDiscounts?.[index]?.[field]?.message}
+                  />
+                  {index !== 0 && idx === 0 && (
+                  <MinusIcon onClick={() => handleRemoveInput(index)} />
+                  )}
+                </Stack>
+              </TableCell>
+            </StyledTableRow>
+          ))))}
       </StyledTable>
     </Box>
   );

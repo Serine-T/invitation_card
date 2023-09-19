@@ -1,11 +1,9 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
-import { StyledTableRow } from '@containers/common/Table/styled';
-import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
@@ -19,6 +17,8 @@ import { IProductsPayload } from '@features/products/types';
 import { getSubcategoriesByCategoryId } from '@features/subcategories/actions';
 import { ISubcategoriesByCategoryId } from '@features/subcategories/types';
 import Input from '@containers/common/Input';
+import SEO from '@containers/Products/ProductCategories/components/InputsTable/SEO';
+import RowComponent from '@containers/common/Table/components/RowComponent';
 
 import {
   AddDataSchema,
@@ -29,7 +29,7 @@ import {
   inputsRows1,
   inputsRows2,
 } from './helpers';
-import SEO from './SEO';
+// import SEO from './SEO';
 import ProductDescription from './ProductDescription';
 import GrandFormatOptions from './GrandFormatOptions';
 import GrandFormatDiscounts from './GrandFormatDiscounts';
@@ -62,6 +62,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
   } = methods;
 
   const { categoryId, subCategoryId, isGrandFormat } = watch();
+  const mountedRef = useRef(false);
 
   useEffect(() => {
     if (!categoryId) {
@@ -75,11 +76,21 @@ const InputsTable = ({ editData }: IInputsTable) => {
       .unwrap()
       .then((data) => {
         setSubcategoriesList(data);
-        setValue('subCategoryId', '');
+
+        if (!mountedRef.current) {
+          mountedRef.current = true;
+        } else {
+          setValue('subCategoryId', '');
+        }
       });
-  }, [categoryId, dispatch, setValue]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoryId]);
 
   useEffect(() => {
+    if (!mountedRef.current) {
+      return;
+    }
+
     const currentSubcategory = subcategoriesList.find((item) => item.id === subCategoryId);
 
     setValue('isGrandFormat', !!currentSubcategory?.useGrandFormatSQFtTemplate);
@@ -122,52 +133,38 @@ const InputsTable = ({ editData }: IInputsTable) => {
             const { label, isRequired } = item;
 
             return (
-              <StyledTableRow key={label}>
-                <StyledTableCell>
-                  {`${label}: ${isRequired ? '*' : ''}`}
-                </StyledTableCell>
-                <TableCell>
-                  <ReusableFields
-                    {...item}
-                    selectList={[{
-                      field: 'categoryId',
-                      options: categoriesList,
-                    },
-                    {
-                      field: 'subCategoryId',
-                      options: getOptionsArray(subcategoriesList),
-                    }]}
-                  />
-                </TableCell>
-              </StyledTableRow>
+              <RowComponent key={label} label={label} isRequired={isRequired}>
+                <ReusableFields
+                  {...item}
+                  selectList={[{
+                    field: 'categoryId',
+                    options: categoriesList,
+                  },
+                  {
+                    field: 'subCategoryId',
+                    options: getOptionsArray(subcategoriesList),
+                  }]}
+                />
+              </RowComponent>
             );
           })}
-          <StyledTableRow>
-            <StyledTableCell>
-              Product Weight (1):
-            </StyledTableCell>
-            <TableCell>
-              <Input
-                width="120px"
-                placeholder="Product Weight"
-                {...register('weight')}
-                errorMessage={errors?.weight?.message as string}
-              />
-            </TableCell>
-          </StyledTableRow>
+
+          <RowComponent label="Product Weight (1):">
+            <Input
+              width="120px"
+              placeholder="Product Weight"
+              {...register('weight')}
+              errorMessage={errors?.weight?.message as string}
+            />
+          </RowComponent>
 
           {inputsRows2.map((item) => {
             const { label, isRequired } = item;
 
             return (
-              <StyledTableRow key={label}>
-                <StyledTableCell>
-                  {`${label}: ${isRequired ? '*' : ''}`}
-                </StyledTableCell>
-                <TableCell>
-                  <ReusableFields {...item} />
-                </TableCell>
-              </StyledTableRow>
+              <RowComponent key={label} label={label} isRequired={isRequired}>
+                <ReusableFields {...item} />
+              </RowComponent>
             );
           })}
         </StyledTable>

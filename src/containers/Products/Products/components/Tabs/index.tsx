@@ -42,7 +42,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
           </StyledDivider>
         </StyledStack>
         <>
-          {createElement(tabsOptions[value].component)}
+          {createElement(tabsOptions[value].component, { editData })}
         </>
       </TitlesWithBackButton>
     </>

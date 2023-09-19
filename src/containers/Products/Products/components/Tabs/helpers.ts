@@ -1,7 +1,7 @@
-import AddAttributes from './TabsContainers/AddAttributes';
-import BasicInfo from './TabsContainers/BasicInfo';
-import ProductQuantity from './TabsContainers/ProductQuantity';
-import SetPrices from './TabsContainers/SetPrices';
+import AddAttributes from './AddAttributes';
+import BasicInfo from './BasicInfo';
+import ProductQuantity from './ProductQuantity';
+import SetPrices from './SetPrices';
 
 export const tabsOptions = [
   {

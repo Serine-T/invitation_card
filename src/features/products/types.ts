@@ -13,12 +13,12 @@ export interface GrandFormatDiscount {
 }
 export interface GrandFormatOptions {
   unitDisplay: string;
-  widthFrom: string;
-  widthTo: string;
-  heightFrom: string;
-  heightTo: string;
-  maxHeight: string;
-  maxWidth: string;
+  widthFrom: number | null;
+  widthTo: number | null;
+  heightFrom: number | null;
+  heightTo: number | null;
+  maxHeight: number | null;
+  maxWidth: number | null;
   grandFormatDiscounts: GrandFormatDiscount[];
 }
 export interface IProductsPayload {
