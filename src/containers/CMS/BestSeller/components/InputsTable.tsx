@@ -2,10 +2,8 @@ import { memo } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
-import { StyledTableRow } from '@containers/common/Table/styled';
-import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { IBestSellerInfo } from '@features/bestSellers/types';
@@ -17,6 +15,7 @@ import { selectBestSellers } from '@features/bestSellers/selectors';
 import { selectSubcategories } from '@features/subcategories/selectors';
 import { getOptionsArray } from '@utils/helpers';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
+import RowComponent from '@containers/common/Table/components/RowComponent';
 
 import {
   AddBestSellerSchema,
@@ -66,30 +65,21 @@ const InputsTable = ({ bestSellerData }: IInputsTable) => {
           component="form"
         >
           <StyledTable tableTitle="SECTION" colSpan={2}>
-            {inputsRows.map((item) => {
-              const { label, isRequired } = item;
-
-              return (
-                <StyledTableRow key={label}>
-                  <StyledTableCell>
-                    {`${label}: ${isRequired ? '*' : ''}`}
-                  </StyledTableCell>
-                  <TableCell>
-                    <ReusableFields
-                      {...item}
-                      selectList={[
-                        {
-                          field: 'subCategory',
-                          options: subcategoriesList,
-                        }, {
-                          field: 'product',
-                          options: [],
-                        }]}
-                    />
-                  </TableCell>
-                </StyledTableRow>
-              );
-            })}
+            {inputsRows.map((item) => (
+              <RowComponent key={item.label} {...item}>
+                <ReusableFields
+                  {...item}
+                  selectList={[
+                    {
+                      field: 'subCategory',
+                      options: subcategoriesList,
+                    }, {
+                      field: 'product',
+                      options: [],
+                    }]}
+                />
+              </RowComponent>
+            ))}
           </StyledTable>
           <SubmitBtn actionLoading={actionLoading} />
         </StyledStack>

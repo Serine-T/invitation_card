@@ -2,10 +2,8 @@ import { memo } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
-import { StyledTableRow } from '@containers/common/Table/styled';
-import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
@@ -17,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { selectSubcategories } from '@features/subcategories/selectors';
 import { ISubcategoriesInfo } from '@features/subcategories/types';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
+import RowComponent from '@containers/common/Table/components/RowComponent';
 
 import {
   AddSubcategorySchema,
@@ -81,48 +80,31 @@ const InputsTable = ({ subcategoriesData }: IInputsTable) => {
           component="form"
         >
           <StyledTable tableTitle="SUBCATEGORY" colSpan={2}>
-            {inputsRows1.map((item) => {
-              const { label, isRequired } = item;
 
-              return (
-                <StyledTableRow key={label}>
-                  <StyledTableCell>
-                    {`${label}: ${isRequired ? '*' : ''}`}
-                  </StyledTableCell>
-                  <TableCell>
-                    <ReusableFields
-                      {...item}
-                      selectList={[{
-                        field: 'categoryId',
-                        options: categoriesList,
-                      }, {
-                        field: 'printType',
-                        options: printTypeValues,
-                      }, {
-                        field: 'defaultInkInEstimator',
-                        options: defaultInkInEstimatorValues,
-                      }]}
-                    />
-                  </TableCell>
-                </StyledTableRow>
-              );
-            })}
+            {inputsRows1.map((item) => (
+              <RowComponent key={item.label} {...item}>
+                <ReusableFields
+                  {...item}
+                  selectList={[{
+                    field: 'categoryId',
+                    options: categoriesList,
+                  }, {
+                    field: 'printType',
+                    options: printTypeValues,
+                  }, {
+                    field: 'defaultInkInEstimator',
+                    options: defaultInkInEstimatorValues,
+                  }]}
+                />
+              </RowComponent>
+            ))}
             <StaticShipping />
 
-            {inputsRows2.map((item) => {
-              const { label, isRequired } = item;
-
-              return (
-                <StyledTableRow key={label}>
-                  <StyledTableCell>
-                    {`${label}: ${isRequired ? '*' : ''}`}
-                  </StyledTableCell>
-                  <TableCell>
-                    <ReusableFields {...item} />
-                  </TableCell>
-                </StyledTableRow>
-              );
-            })}
+            {inputsRows2.map((item) => (
+              <RowComponent key={item.label} {...item}>
+                <ReusableFields {...item} />
+              </RowComponent>
+            ))}
           </StyledTable>
           <SEO />
           <SubmitBtn actionLoading={actionLoading} />
