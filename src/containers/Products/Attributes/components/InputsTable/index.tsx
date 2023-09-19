@@ -90,7 +90,7 @@ const InputsTable = ({ attributesData }: IInputsTable) => {
                 />
               </RowComponent>
             ))}
-            <RowComponent label="Default Price:">
+            <RowComponent label="Default Price">
               <Stack direction="row" alignItems="center" gap="8px">
                 <Typography>$</Typography>
                 <Input
@@ -102,7 +102,7 @@ const InputsTable = ({ attributesData }: IInputsTable) => {
                 />
               </Stack>
             </RowComponent>
-            <RowComponent label="4over Code:">
+            <RowComponent label="4over Code">
               <Input
                 type="text"
                 placeholder="4over Code"

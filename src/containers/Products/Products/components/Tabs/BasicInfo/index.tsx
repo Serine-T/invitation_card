@@ -149,7 +149,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
             );
           })}
 
-          <RowComponent label="Product Weight (1):">
+          <RowComponent label="Product Weight (1)">
             <Input
               width="120px"
               placeholder="Product Weight"

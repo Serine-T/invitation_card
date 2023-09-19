@@ -20,7 +20,7 @@ const GrandFormatOptions = () => {
   return (
     <Box mt="24px">
       <StyledTable tableTitle="GRAND FORMAT PRODUCT OPTIONS" colSpan={2}>
-        <RowComponent label="Unit Display (Not used now):">
+        <RowComponent label="Unit Display (Not used now)">
           <Select
             width="140px"
             name="grandFormatOptions.unitDisplay"
@@ -76,7 +76,7 @@ const GrandFormatOptions = () => {
             </Stack>
           </TableCell>
         </StyledTableRow>
-        <RowComponent label=" Max Size Limit in INCHES:">
+        <RowComponent label=" Max Size Limit in INCHES">
           <Stack direction="row" alignItems="center" gap="8px">
             <Input
               width="95px"
