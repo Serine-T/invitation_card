@@ -29,7 +29,6 @@ import {
   inputsRows1,
   inputsRows2,
 } from './helpers';
-// import SEO from './SEO';
 import ProductDescription from './ProductDescription';
 import GrandFormatOptions from './GrandFormatOptions';
 import GrandFormatDiscounts from './GrandFormatDiscounts';
@@ -59,9 +58,10 @@ const InputsTable = ({ editData }: IInputsTable) => {
     watch,
     register,
     formState: { errors },
+    setError,
   } = methods;
 
-  const { categoryId, subCategoryId, isGrandFormat } = watch();
+  const { categoryId, subCategoryId, grandFormatOptions } = watch();
   const mountedRef = useRef(false);
 
   useEffect(() => {
@@ -93,8 +93,6 @@ const InputsTable = ({ editData }: IInputsTable) => {
 
     const currentSubcategory = subcategoriesList.find((item) => item.id === subCategoryId);
 
-    setValue('isGrandFormat', !!currentSubcategory?.useGrandFormatSQFtTemplate);
-
     setValue(
       'grandFormatOptions',
       !currentSubcategory?.useGrandFormatSQFtTemplate ? null
@@ -107,18 +105,17 @@ const InputsTable = ({ editData }: IInputsTable) => {
   const onSubmit = (data: IAddDataForm) => {
     const payload = formattingPayload(data);
 
-    dispatch(editData ? editProduct(payload) : addProduct(payload)).unwrap().then(() => {
-      navigate(PAGE_ROUTES.PRODUCTS);
-    }).catch((e) => {
-      if (e.message === 'Subcategory with the provided title already exists in this category!') {
-        // setError('title', { message: e.message });
-      // eslint-disable-next-line max-len
-      } else if (e.message === 'You have already chose the banners in the category, please disable one of them to proceed.') {
-        // setError('displayAsCardInHeader', { message: e.message });
-      } else {
+    if (payload) {
+      dispatch(editData ? editProduct(payload) : addProduct(payload)).unwrap().then(() => {
         navigate(PAGE_ROUTES.PRODUCTS);
-      }
-    });
+      }).catch((e) => {
+        if (e.message === 'Product with provided name already exists in this sub category!') {
+          setError('name', { message: e.message });
+        } else {
+          navigate(PAGE_ROUTES.PRODUCTS);
+        }
+      });
+    }
   };
 
   return (
@@ -129,25 +126,21 @@ const InputsTable = ({ editData }: IInputsTable) => {
       >
         <StyledTable tableTitle="BASIC INFO" colSpan={2}>
 
-          {inputsRows1.map((item) => {
-            const { label, isRequired } = item;
-
-            return (
-              <RowComponent key={label} label={label} isRequired={isRequired}>
-                <ReusableFields
-                  {...item}
-                  selectList={[{
-                    field: 'categoryId',
-                    options: categoriesList,
-                  },
-                  {
-                    field: 'subCategoryId',
-                    options: getOptionsArray(subcategoriesList),
-                  }]}
-                />
-              </RowComponent>
-            );
-          })}
+          {inputsRows1.map((item) => (
+            <RowComponent key={item.label} {...item}>
+              <ReusableFields
+                {...item}
+                selectList={[{
+                  field: 'categoryId',
+                  options: categoriesList,
+                },
+                {
+                  field: 'subCategoryId',
+                  options: getOptionsArray(subcategoriesList),
+                }]}
+              />
+            </RowComponent>
+          ))}
 
           <RowComponent label="Product Weight (1)">
             <Input
@@ -158,20 +151,16 @@ const InputsTable = ({ editData }: IInputsTable) => {
             />
           </RowComponent>
 
-          {inputsRows2.map((item) => {
-            const { label, isRequired } = item;
-
-            return (
-              <RowComponent key={label} label={label} isRequired={isRequired}>
-                <ReusableFields {...item} />
-              </RowComponent>
-            );
-          })}
+          {inputsRows2.map((item) => (
+            <RowComponent key={item.label} {...item}>
+              <ReusableFields {...item} />
+            </RowComponent>
+          ))}
         </StyledTable>
         <SEO />
 
         <ProductDescription />
-        {isGrandFormat && (
+        {grandFormatOptions && (
         <>
           <GrandFormatOptions />
           <GrandFormatDiscounts />

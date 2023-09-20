@@ -1,22 +1,10 @@
-import { isIntagerRegex, isNumberRegex } from '@utils/regexp';
-import { intagerValidation, numberValidation } from '@utils/schemas';
+import { numberValidation } from '@utils/schemas';
 import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
+import { GrandFormatOptions } from '@features/products/types';
 
-export interface GrandFormatDiscount {
-  quantity: number | null;
-  discountPercent: number | null;
-}
-export interface GrandFormatOptions {
-  unitDisplay: string;
-  widthFrom: number| null;
-  widthTo: number | null;
-  heightFrom: number | null;
-  heightTo: number | null;
-  maxHeight: number | null;
-  maxWidth: number | null;
-  grandFormatDiscounts: GrandFormatDiscount[];
-}
+import { GrandFormatOptionsSchema } from './GrandFormatOptions/helpers';
+
 export interface IAddDataForm {
   id?: string;
   name: string;
@@ -32,7 +20,6 @@ export interface IAddDataForm {
   fouroverProdCode?: string;
   fouroverTurnaroundCode?: string;
   grandFormatOptions: GrandFormatOptions | null;
-  isGrandFormat?: boolean;
 }
 
 export const defaultValues = {
@@ -60,11 +47,10 @@ export const defaultGrandFormatValues = {
   heightTo: null,
   maxHeight: null,
   maxWidth: null,
-  grandFormatDiscounts: [
-    {
-      quantity: null,
-      discountPercent: null,
-    },
+  grandFormatDiscounts: [{
+    quantity: null,
+    discountPercent: null,
+  },
   ],
 };
 
@@ -74,29 +60,7 @@ export const AddDataSchema = yup.object().shape({
   subCategoryId: yup.string().required('Subcategory is required'),
   categoryId: yup.string().required('Category is required'),
   weight: numberValidation.nullable(),
-  grandFormatOptions: yup.object({
-    unitDisplay: yup.string().required('Unit display is required'),
-    widthFrom: yup.number().typeError('Number is invalid').required('Width from is required')
-      .positive('Number is not positive'),
-    widthTo: yup.number().typeError('Number is invalid').required('Width to is required')
-      .positive('Number is not positive'),
-    heightFrom: yup.number().typeError('Number is invalid').required('Height from is required')
-      .positive('Number is not positive'),
-    heightTo: yup.number().typeError('Number is invalid').required('Height to is required')
-      .positive('Number is not positive'),
-    maxHeight: yup.number().typeError('Number is invalid').required('Max height is required')
-      .positive('Number is not positive'),
-    maxWidth: yup.number().typeError('Number is invalid').required('Max width is required')
-      .positive('Number is not positive'),
-    grandFormatDiscounts: yup.array().of(
-      yup.object({
-        quantity: yup.string().required('Quantity is required')
-          .matches(isIntagerRegex, 'Intager is invalid'),
-        discountPercent: yup.string().required('Discount percent is required')
-          .matches(isNumberRegex, 'Number is invalid'),
-      }),
-    ),
-  }).nullable(),
+  grandFormatOptions: GrandFormatOptionsSchema,
 });
 
 export const inputsRows1: ValidFieldNames[] = [
@@ -170,8 +134,8 @@ export const transformValuesToNumbers = (values: GrandFormatOptions) => {
     maxHeight: maxHeight ? +maxHeight : null,
     maxWidth: maxWidth ? +maxWidth : null,
     grandFormatDiscounts: grandFormatDiscounts.map(({ quantity, discountPercent }) => ({
-      quantity,
-      discountPercent,
+      quantity: quantity ? +quantity : null,
+      discountPercent: discountPercent ? +discountPercent : null,
     })),
   };
 
@@ -180,10 +144,22 @@ export const transformValuesToNumbers = (values: GrandFormatOptions) => {
 
 export const formattingPayload = (data: IAddDataForm) => {
   const { weight, grandFormatOptions } = data;
-
-  return {
+  const payload = {
     ...data,
     weight: weight ? +weight : null,
-    grandFormatOptions: grandFormatOptions ? transformValuesToNumbers(grandFormatOptions) : null,
   };
+
+  if (grandFormatOptions) {
+    const grandFormatOptionsData = transformValuesToNumbers(grandFormatOptions);
+    const { heightFrom, heightTo, widthFrom, widthTo } = grandFormatOptionsData;
+
+    if ((heightFrom && heightTo && heightFrom > heightTo)
+      || (widthFrom && widthTo && widthFrom > widthTo)) {
+      return null;
+    }
+
+    payload.grandFormatOptions = grandFormatOptionsData;
+  }
+
+  return payload;
 };

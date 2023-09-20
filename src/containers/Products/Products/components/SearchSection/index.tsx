@@ -45,7 +45,7 @@ const SearchSection = () => {
       category: data.category,
     });
 
-    navigate(`${PAGE_ROUTES.PRODUCT_CATEGORIES}?${queryParams}`);
+    navigate(`${PAGE_ROUTES.PRODUCTS}?${queryParams}`);
   };
 
   return (
@@ -66,13 +66,6 @@ const SearchSection = () => {
             />
             <Select
               label="Category"
-              width="200px"
-              name="category"
-              errorMessage={errors?.category?.message}
-              options={categoriesList}
-            />
-            <Select
-              label="SKU"
               width="200px"
               name="category"
               errorMessage={errors?.category?.message}

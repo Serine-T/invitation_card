@@ -15,6 +15,7 @@ export interface IBaseInputProps extends InputBaseProps {
   width?: string;
   errorMessage?: string;
   marginBottom?: number;
+  showError?: boolean;
 }
 
 const BaseInput = forwardRef((props: IBaseInputProps, ref) => {
@@ -26,6 +27,7 @@ const BaseInput = forwardRef((props: IBaseInputProps, ref) => {
     width,
     marginBottom,
     errorMessage,
+    showError = true,
     ...restProps
   } = props;
 
@@ -44,7 +46,7 @@ const BaseInput = forwardRef((props: IBaseInputProps, ref) => {
           {...restProps}
         />
       </StyledFormControl>
-      {!!errorMessage && (
+      {showError && !!errorMessage && (
         <ErrorMessage message={errorMessage} />
       )}
     </StyledInputBox>

@@ -11,11 +11,14 @@ import Select from '@containers/common/Select';
 import { useFormContext } from 'react-hook-form';
 import Input from '@containers/common/Input';
 import RowComponent from '@containers/common/Table/components/RowComponent';
+import ErrorMessage from '@containers/common/ErrorMessage';
 
-import { unitDisplayList } from './helpers';
+import { unitDisplayList, valCases } from './helpers';
 
 const GrandFormatOptions = () => {
-  const { formState: { errors }, register } = useFormContext();
+  const { formState: { errors, isSubmitted }, register, watch } = useFormContext();
+
+  const { grandFormatOptions: { widthFrom, widthTo, heightFrom, heightTo } } = watch();
 
   return (
     <Box mt="24px">
@@ -37,7 +40,6 @@ const GrandFormatOptions = () => {
               <Typography>Width</Typography>
               <Input
                 width="95px"
-                type="text"
                 placeholder="Width from"
                 {...register('grandFormatOptions.widthFrom')}
                 errorMessage={(errors as any)?.grandFormatOptions?.widthFrom?.message}
@@ -45,12 +47,16 @@ const GrandFormatOptions = () => {
               <Typography>--</Typography>
               <Input
                 width="95px"
-                type="text"
                 placeholder="Width to"
                 {...register('grandFormatOptions.widthTo')}
                 errorMessage={(errors as any)?.grandFormatOptions?.widthTo?.message}
               />
             </Stack>
+            {isSubmitted && widthFrom && widthTo && (+widthFrom > +widthTo) && (
+            <Box mt="6px">
+              <ErrorMessage mt="16px" message={valCases.isGreaterThanWidth} />
+            </Box>
+            )}
           </TableCell>
         </StyledTableRow>
 
@@ -60,7 +66,6 @@ const GrandFormatOptions = () => {
               <Typography>Height</Typography>
               <Input
                 width="95px"
-                type="text"
                 placeholder="Height from"
                 {...register('grandFormatOptions.heightFrom')}
                 errorMessage={(errors as any)?.grandFormatOptions?.heightFrom?.message}
@@ -68,31 +73,34 @@ const GrandFormatOptions = () => {
               <Typography>--</Typography>
               <Input
                 width="95px"
-                type="text"
                 placeholder="Height to"
                 {...register('grandFormatOptions.heightTo')}
                 errorMessage={(errors as any)?.grandFormatOptions?.heightTo?.message}
               />
             </Stack>
+            {isSubmitted && heightFrom && heightTo && (+heightFrom > +heightTo) && (
+              <Box mt="6px">
+                <ErrorMessage message={valCases.isGreaterThanHeight} />
+              </Box>
+
+            )}
           </TableCell>
         </StyledTableRow>
         <RowComponent label=" Max Size Limit in INCHES">
           <Stack direction="row" alignItems="center" gap="8px">
             <Input
               width="95px"
-              type="text"
               placeholder="Max width"
               {...register('grandFormatOptions.maxWidth')}
-              errorMessage={(errors as any)?.grandFormatOptions?.maxHeight?.message}
+              errorMessage={(errors as any)?.grandFormatOptions?.maxWidth?.message}
             />
             <Typography>in</Typography>
             <Typography>x</Typography>
             <Input
               width="95px"
-              type="text"
               placeholder="Max height"
               {...register('grandFormatOptions.maxHeight')}
-              errorMessage={(errors as any)?.grandFormatOptions?.maxWidth?.message}
+              errorMessage={(errors as any)?.grandFormatOptions?.maxHeight?.message}
             />
             <Typography>in</Typography>
           </Stack>
