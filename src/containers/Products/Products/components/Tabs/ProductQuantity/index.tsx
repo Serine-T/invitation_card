@@ -54,7 +54,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
     const payload = formattingPayload(data);
 
     dispatch(editData ? editProduct(payload) : addProduct(payload)).unwrap().then(() => {
-      navigate(PAGE_ROUTES.PRODUCTS);
+      navigate(PAGE_ROUTES.PRODUCTS_PRODUCTS);
     }).catch((e) => {
       if (e.message === 'Subcategory with the provided title already exists in this category!') {
         // setError('title', { message: e.message });
@@ -62,7 +62,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
       } else if (e.message === 'You have already chose the banners in the category, please disable one of them to proceed.') {
         // setError('displayAsCardInHeader', { message: e.message });
       } else {
-        navigate(PAGE_ROUTES.PRODUCTS);
+        navigate(PAGE_ROUTES.PRODUCTS_PRODUCTS);
       }
     });
   };

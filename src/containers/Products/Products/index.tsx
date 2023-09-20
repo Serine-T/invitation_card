@@ -11,8 +11,6 @@ import Loader from '@containers/common/Loader';
 import EmptyState from '@containers/common/EmptyState';
 import queryString from 'query-string';
 import useMount from '@customHooks/useMount';
-import { getAllCategories } from '@features/categories/actions';
-import { selectCategories } from '@features/categories/selectors';
 import PageTitle from '@containers/common/PageTitle';
 import RowTitle from '@containers/common/Table/components/RowTitle';
 import { useLocation } from 'react-router-dom';
@@ -25,6 +23,8 @@ import { selectProducts } from '@features/products/selectors';
 import { deleteProduct, searchProducts, reorderProducts } from '@features/products/actions';
 import { setProducts } from '@features/products/slice';
 import { IProductsSearchInfo } from '@features/products/types';
+import { selectSubcategories } from '@features/subcategories/selectors';
+import { getAllSubcategories } from '@features/subcategories/actions';
 
 import { headCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -33,23 +33,28 @@ import { IFiltersForm } from './components/SearchSection/helpers';
 const Products = () => {
   const dispatch = useAppDispatch();
   const { data: productsList, isLoading } = useAppSelector(selectProducts);
-  const { data: categories, isLoading: categoryLoading } = useAppSelector(selectCategories);
+  const { data: subcategories, isLoading: subcategoryLoading } = useAppSelector(selectSubcategories);
 
   const location = useLocation();
   const params = queryString.parse(location.search);
 
-  const { searchTerm = '', visibleOnSite: visibleOnSiteQuery = '', category = '' } = params as IFiltersForm;
-  const isSearchTerm = searchTerm || visibleOnSiteQuery || category;
-  const query = {
-    searchTerm: searchTerm as string,
-    visibleOnSite: visibleOnSiteQuery as string,
-    category,
-  };
+  const {
+    searchTerm = '', visibleOnSite: visibleOnSiteQuery = '', subCategoryId = '',
+    showInSpotlight: showInSpotlightQuery = '',
+  } = params as IFiltersForm;
+
+  const isSearchTerm = searchTerm || visibleOnSiteQuery || subCategoryId || showInSpotlightQuery;
 
   const fetchData = useCallback(() => {
+    const query = {
+      searchTerm,
+      visibleOnSite: visibleOnSiteQuery,
+      subCategoryId,
+      showInSpotlight: showInSpotlightQuery,
+    };
+
     dispatch(searchProducts(query));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSearchTerm, dispatch]);
+  }, [searchTerm, visibleOnSiteQuery, subCategoryId, showInSpotlightQuery, dispatch]);
 
   const deleteAction = (id: string) => {
     dispatch(deleteProduct(id)).unwrap().then(() => {
@@ -60,11 +65,11 @@ const Products = () => {
   useEffect(
     () => fetchData(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isSearchTerm],
+    [searchTerm, visibleOnSiteQuery, subCategoryId, showInSpotlightQuery],
   );
 
   useMount(() => {
-    dispatch(getAllCategories());
+    dispatch(getAllSubcategories());
   });
 
   const reordingData = (result: DropResult) => {
@@ -75,7 +80,7 @@ const Products = () => {
     }).catch(() => fetchData());
   };
 
-  if (isLoading || categoryLoading) {
+  if (isLoading || subcategoryLoading) {
     return <Loader />;
   }
 
@@ -85,10 +90,10 @@ const Products = () => {
         title="Products"
         btnName="Add Product"
         path={PAGE_ROUTES.ADD_PRODUCTS}
-        isShowBtn={!!categories.length}
+        isShowBtn={!!subcategories.length}
       />
       {
-        categories.length ? (
+        subcategories.length ? (
           <>
             {(isSearchTerm || !!productsList?.length) && <SearchSection />}
             {productsList?.length ? (productsList as IProductsSearchInfo[]).map(({
@@ -143,7 +148,7 @@ const Products = () => {
           </>
         ) : (
           <EmptyState
-            text="You don’t have any categories, please add new to proceed"
+            text="You don’t have any subcategories, please add new to proceed"
           />
         )
       }

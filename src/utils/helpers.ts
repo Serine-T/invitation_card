@@ -53,3 +53,13 @@ export const constructQueryString = (filters: Filters): string => {
     .filter(Boolean)
     .join('&');
 };
+
+export const searchDefaultValue = (filters: Filters) => {
+  for (const key in filters) {
+    if (filters[key] === undefined) {
+      filters[key] = '';
+    }
+  }
+
+  return filters;
+};

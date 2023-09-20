@@ -107,12 +107,12 @@ const InputsTable = ({ editData }: IInputsTable) => {
 
     if (payload) {
       dispatch(editData ? editProduct(payload) : addProduct(payload)).unwrap().then(() => {
-        navigate(PAGE_ROUTES.PRODUCTS);
+        navigate(PAGE_ROUTES.PRODUCTS_PRODUCTS);
       }).catch((e) => {
         if (e.message === 'Product with provided name already exists in this sub category!') {
           setError('name', { message: e.message });
         } else {
-          navigate(PAGE_ROUTES.PRODUCTS);
+          navigate(PAGE_ROUTES.PRODUCTS_PRODUCTS);
         }
       });
     }

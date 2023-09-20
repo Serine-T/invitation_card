@@ -64,7 +64,8 @@ export interface IProductsInfo {
 export interface ISearchProducts {
   searchTerm?: string;
   visibleOnSite?: string;
-  category?:string;
+  subCategoryId?: string;
+  showInSpotlight?: string;
 }
 
 export interface Product {
