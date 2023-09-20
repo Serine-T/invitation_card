@@ -7,14 +7,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { StyledSearchRows } from '@containers/common/StyledSearchContainer/styled';
 import Select from '@containers/common/Select';
 import Stack from '@mui/material/Stack';
-import Button from '@containers/common/Button';
-import StyledTypography from '@containers/common/StyledTypography';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import { constructQueryString, getOptionsArray } from '@utils/helpers';
 import { useAppSelector } from '@features/app/hooks';
 import { selectCategories } from '@features/categories/selectors';
+import SearchBtn from '@containers/common/SearchSection/SearchBtn';
 
 import { FiltersSchema, IFiltersForm, visibilityOptions } from './helpers';
 
@@ -36,7 +35,6 @@ const SearchSection = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
   } = methods;
 
   const onSubmit = (data: IFiltersForm) => {
@@ -47,10 +45,6 @@ const SearchSection = () => {
     });
 
     navigate(`${PAGE_ROUTES.PRODUCT_CATEGORIES}?${queryParams}`);
-  };
-
-  const handleReset = () => {
-    navigate(`${PAGE_ROUTES.PRODUCT_CATEGORIES}`);
   };
 
   return (
@@ -67,33 +61,21 @@ const SearchSection = () => {
               width="200px"
               label="Search"
               placeholder="Search"
-              errorMessage={errors?.searchTerm?.message}
             />
             <Select
               label="Category"
               width="200px"
               name="category"
-              errorMessage={errors?.category?.message}
               options={categoriesList}
             />
             <Select
               label="Visible on site"
               width="200px"
               name="visibleOnSite"
-              errorMessage={errors?.visibleOnSite?.message}
               options={visibilityOptions}
             />
           </StyledSearchRows>
-          <Stack direction="row" gap="16px" alignItems="center">
-            <Button width="120px" type="submit">Search</Button>
-            <StyledTypography
-              onClick={handleReset}
-              color="grey"
-              variant="body3"
-            >
-              Reset Filters
-            </StyledTypography>
-          </Stack>
+          <SearchBtn path={PAGE_ROUTES.PRODUCT_CATEGORIES} />
         </Stack>
       </FormProvider>
     </StyledSearchSection>

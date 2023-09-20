@@ -5,7 +5,7 @@ import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import { StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
 import ReusableFields from '@containers/common/ReusableFields';
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 
 import { seoFields } from './helpers';
 

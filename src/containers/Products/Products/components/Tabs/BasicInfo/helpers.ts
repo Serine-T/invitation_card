@@ -1,8 +1,9 @@
-import { GrandFormatOptions } from '@features/products/types';
-import { isIntagerRegex, isNumberRegex } from '@utils/regexp';
-import { intagerValidation } from '@utils/schemas';
+import { numberValidation } from '@utils/schemas';
 import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
+import { GrandFormatOptions } from '@features/products/types';
+
+import { GrandFormatOptionsSchema } from './GrandFormatOptions/helpers';
 
 export interface IAddDataForm {
   id?: string;
@@ -19,7 +20,6 @@ export interface IAddDataForm {
   fouroverProdCode?: string;
   fouroverTurnaroundCode?: string;
   grandFormatOptions: GrandFormatOptions | null;
-  isGrandFormat?: boolean;
 }
 
 export const defaultValues = {
@@ -41,17 +41,16 @@ export const defaultValues = {
 
 export const defaultGrandFormatValues = {
   unitDisplay: '',
-  widthFrom: '',
-  widthTo: '',
-  heightFrom: '',
-  heightTo: '',
-  maxHeight: '',
-  maxWidth: '',
-  grandFormatDiscounts: [
-    {
-      quantity: null,
-      discountPercent: null,
-    },
+  widthFrom: null,
+  widthTo: null,
+  heightFrom: null,
+  heightTo: null,
+  maxHeight: null,
+  maxWidth: null,
+  grandFormatDiscounts: [{
+    quantity: null,
+    discountPercent: null,
+  },
   ],
 };
 
@@ -60,30 +59,8 @@ export const AddDataSchema = yup.object().shape({
   productSKU: yup.string().required('Product SKU is required'),
   subCategoryId: yup.string().required('Subcategory is required'),
   categoryId: yup.string().required('Category is required'),
-  weight: intagerValidation.nullable(),
-  grandFormatOptions: yup.object({
-    unitDisplay: yup.string().required('Unit display is required'),
-    widthFrom: yup.string().required('Width from is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    widthTo: yup.string().required('Width to is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    heightFrom: yup.string().required('Height from is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    heightTo: yup.string().required('Height to is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    maxHeight: yup.string().required('Max height is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    maxWidth: yup.string().required('Max width is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    grandFormatDiscounts: yup.array().of(
-      yup.object({
-        quantity: yup.string().required('Quantity is required')
-          .matches(isIntagerRegex, 'Intager is invalid'),
-        discountPercent: yup.string().required('Discount Percent is required')
-          .matches(isNumberRegex, 'Number is invalid'),
-      }),
-    ),
-  }).nullable(),
+  weight: numberValidation.nullable(),
+  grandFormatOptions: GrandFormatOptionsSchema,
 });
 
 export const inputsRows1: ValidFieldNames[] = [
@@ -111,8 +88,8 @@ export const inputsRows1: ValidFieldNames[] = [
     type: InputTypes.text,
     isRequired: true,
   },
-
 ];
+
 export const inputsRows2: ValidFieldNames[] = [
   {
     label: 'Visible on Site',
@@ -146,8 +123,43 @@ export const inputsRows2: ValidFieldNames[] = [
   },
 ];
 
-export const formattingPayload = (data: IAddDataForm) => {
-  const { weight } = data;
+export const transformValuesToNumbers = (values: GrandFormatOptions) => {
+  const { widthFrom, widthTo, heightFrom, heightTo, maxHeight, maxWidth, grandFormatDiscounts } = values;
+  const transformedValues = {
+    ...values,
+    widthFrom: widthFrom ? +widthFrom : null,
+    widthTo: widthTo ? +widthTo : null,
+    heightFrom: heightFrom ? +heightFrom : null,
+    heightTo: heightTo ? +heightTo : null,
+    maxHeight: maxHeight ? +maxHeight : null,
+    maxWidth: maxWidth ? +maxWidth : null,
+    grandFormatDiscounts: grandFormatDiscounts.map(({ quantity, discountPercent }) => ({
+      quantity: quantity ? +quantity : null,
+      discountPercent: discountPercent ? +discountPercent : null,
+    })),
+  };
 
-  return { ...data, weight: weight ? +weight : null };
+  return transformedValues;
+};
+
+export const formattingPayload = (data: IAddDataForm) => {
+  const { weight, grandFormatOptions } = data;
+  const payload = {
+    ...data,
+    weight: weight ? +weight : null,
+  };
+
+  if (grandFormatOptions) {
+    const grandFormatOptionsData = transformValuesToNumbers(grandFormatOptions);
+    const { heightFrom, heightTo, widthFrom, widthTo } = grandFormatOptionsData;
+
+    if ((heightFrom && heightTo && heightFrom > heightTo)
+      || (widthFrom && widthTo && widthFrom > widthTo)) {
+      return null;
+    }
+
+    payload.grandFormatOptions = grandFormatOptionsData;
+  }
+
+  return payload;
 };

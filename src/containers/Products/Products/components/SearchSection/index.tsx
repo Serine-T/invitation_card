@@ -12,40 +12,41 @@ import { useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import { constructQueryString, getOptionsArray } from '@utils/helpers';
 import { useAppSelector } from '@features/app/hooks';
-import { selectCategories } from '@features/categories/selectors';
 import SearchBtn from '@containers/common/SearchSection/SearchBtn';
+import { selectSubcategories } from '@features/subcategories/selectors';
 
 import { FiltersSchema, IFiltersForm, visibilityOptions } from './helpers';
 
 const SearchSection = () => {
   const navigate = useNavigate();
   const params = queryString.parse(window.location.search);
-  const { searchTerm = '', visibleOnSite = '', category = '' } = params;
-  const { data: categories } = useAppSelector(selectCategories);
-  const categoriesList = getOptionsArray(categories);
+  const { searchTerm = '', visibleOnSite = '', subCategoryId = '', showInSpotlight = '' } = params;
+  const { data: subcategories } = useAppSelector(selectSubcategories);
+  const categoriesList = getOptionsArray(subcategories);
   const methods = useForm<IFiltersForm>({
     resolver: yupResolver(FiltersSchema),
     defaultValues: {
       searchTerm: searchTerm as string,
       visibleOnSite: visibleOnSite as string,
-      category: category as string,
+      subCategoryId: subCategoryId as string,
+      showInSpotlight: showInSpotlight as string,
     },
   });
 
   const {
     handleSubmit,
     register,
-    formState: { errors },
   } = methods;
 
   const onSubmit = (data: IFiltersForm) => {
     const queryParams = constructQueryString({
       searchTerm: data.searchTerm,
       visibleOnSite: data.visibleOnSite,
-      category: data.category,
+      subCategoryId: data.subCategoryId,
+      showInSpotlight: data.showInSpotlight,
     });
 
-    navigate(`${PAGE_ROUTES.PRODUCT_CATEGORIES}?${queryParams}`);
+    navigate(`${PAGE_ROUTES.PRODUCTS_PRODUCTS}?${queryParams}`);
   };
 
   return (
@@ -62,38 +63,27 @@ const SearchSection = () => {
               width="200px"
               label="Search"
               placeholder="Search"
-              errorMessage={errors?.searchTerm?.message}
             />
             <Select
               label="Category"
               width="200px"
-              name="category"
-              errorMessage={errors?.category?.message}
-              options={categoriesList}
-            />
-            <Select
-              label="SKU"
-              width="200px"
-              name="category"
-              errorMessage={errors?.category?.message}
+              name="subCategoryId"
               options={categoriesList}
             />
             <Select
               label="Visible on site"
               width="200px"
               name="visibleOnSite"
-              errorMessage={errors?.visibleOnSite?.message}
               options={visibilityOptions}
             />
             <Select
               label="Spot Light"
               width="200px"
-              name="visibleOnSite"
-              errorMessage={errors?.visibleOnSite?.message}
+              name="showInSpotlight"
               options={visibilityOptions}
             />
           </StyledSearchRows>
-          <SearchBtn path={PAGE_ROUTES.PRODUCTS} />
+          <SearchBtn path={PAGE_ROUTES.PRODUCTS_PRODUCTS} />
         </Stack>
       </FormProvider>
     </StyledSearchSection>

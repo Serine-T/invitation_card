@@ -2,10 +2,8 @@ import { memo } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
-import { StyledTableRow } from '@containers/common/Table/styled';
-import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
@@ -20,6 +18,7 @@ import Input from '@containers/common/Input';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
+import RowComponent from '@containers/common/Table/components/RowComponent';
 
 import {
   AddDataSchema,
@@ -72,7 +71,7 @@ const InputsTable = ({ attributesData }: IInputsTable) => {
   return (
     <TitlesWithBackButton
       title={attributesData ? 'Edit Attribute' : 'Add Attribute'}
-      path={PAGE_ROUTES.ATTRIBUTES}
+      path="ATTRIBUTES"
     >
       <FormProvider {...methods}>
         <StyledStack
@@ -80,53 +79,37 @@ const InputsTable = ({ attributesData }: IInputsTable) => {
           component="form"
         >
           <StyledTable tableTitle="ATTRIBUTE" colSpan={2}>
-            {inputsRows.map((item) => {
-              const { label, isRequired } = item;
-
-              return (
-                <StyledTableRow key={label}>
-                  <StyledTableCell>
-                    {`${label}: ${isRequired ? '*' : ''}`}
-                  </StyledTableCell>
-                  <TableCell>
-                    <ReusableFields
-                      {...item}
-                      selectList={[{
-                        field: 'attributeCategory',
-                        options: categoriesList,
-                      }]}
-                    />
-                  </TableCell>
-                </StyledTableRow>
-              );
-            })}
-            <StyledTableRow>
-              <StyledTableCell>Default Price:</StyledTableCell>
-              <TableCell>
-                <Stack direction="row" alignItems="center" gap="8px">
-                  <Typography>$</Typography>
-                  <Input
-                    width="80px"
-                    type="text"
-                    placeholder="00.00"
-                    {...register('defaultPrice')}
-                    errorMessage={errors?.defaultPrice?.message as string}
-                  />
-                </Stack>
-
-              </TableCell>
-            </StyledTableRow>
-            <StyledTableRow>
-              <StyledTableCell>4over Code:</StyledTableCell>
-              <TableCell>
-                <Input
-                  type="text"
-                  placeholder="4over Code"
-                  {...register('fouroverCode')}
-                  errorMessage={errors?.fouroverCode?.message as string}
+            {inputsRows.map((item) => (
+              <RowComponent key={item.label} {...item}>
+                <ReusableFields
+                  {...item}
+                  selectList={[{
+                    field: 'attributeCategory',
+                    options: categoriesList,
+                  }]}
                 />
-              </TableCell>
-            </StyledTableRow>
+              </RowComponent>
+            ))}
+            <RowComponent label="Default Price">
+              <Stack direction="row" alignItems="center" gap="8px">
+                <Typography>$</Typography>
+                <Input
+                  width="80px"
+                  type="text"
+                  placeholder="00.00"
+                  {...register('defaultPrice')}
+                  errorMessage={errors?.defaultPrice?.message as string}
+                />
+              </Stack>
+            </RowComponent>
+            <RowComponent label="4over Code">
+              <Input
+                type="text"
+                placeholder="4over Code"
+                {...register('fouroverCode')}
+                errorMessage={errors?.fouroverCode?.message as string}
+              />
+            </RowComponent>
           </StyledTable>
           <SubmitBtn actionLoading={actionLoading} />
         </StyledStack>

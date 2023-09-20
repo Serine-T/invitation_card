@@ -109,12 +109,12 @@ export const searchProducts = createAsyncThunk<IProductsSearchInfo[], ISearchPro
   'products/search',
   async (searchingData, thunkAPI) => {
     try {
-      const { searchTerm, visibleOnSite, category } = searchingData;
+      const { searchTerm, visibleOnSite, subCategoryId, showInSpotlight } = searchingData;
       const queryParams = constructQueryString({
         searchTerm,
         visibleOnSite,
-        category,
-      });
+        subCategoryId,
+        showInSpotlight });
 
       const { data: { data } } = await http.get<AxiosResponse<IProductsSearchInfo[]>>(
         `${prefix}/search?${queryParams}`,

@@ -1,6 +1,6 @@
 import { ReactNode, memo } from 'react';
 
-import BackButton from '@containers/common/BackButton';
+import BackButton from '@containers/common/TitlesWithBackButton/BackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import Typography from '@mui/material/Typography';
 
@@ -9,7 +9,7 @@ import { ContentBox, StyledBox, StyledContainer } from './styles';
 interface ITitlesWithBackButton {
   title: string;
   children: ReactNode;
-  path: PAGE_ROUTES;
+  path: keyof typeof PAGE_ROUTES;
 }
 
 const TitlesWithBackButton = ({ title, children, path }:ITitlesWithBackButton) => {

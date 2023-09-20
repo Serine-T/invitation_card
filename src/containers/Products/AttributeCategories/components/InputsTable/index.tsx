@@ -2,10 +2,8 @@ import { memo } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
-import { StyledTableRow } from '@containers/common/Table/styled';
-import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
@@ -15,6 +13,7 @@ import { IAttributeCategory } from '@features/attributeCategories/types';
 import { selectAttributeCategories } from '@features/attributeCategories/selectors';
 import { addAttributeCategory, editAttributeCategory } from '@features/attributeCategories/actions';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
+import RowComponent from '@containers/common/Table/components/RowComponent';
 
 import {
   AddDataSchema,
@@ -56,7 +55,7 @@ const InputsTable = ({ attributeCategoriesData }: IInputsTable) => {
   return (
     <TitlesWithBackButton
       title={attributeCategoriesData ? 'Edit Attribute Category' : 'Add Attribute Category'}
-      path={PAGE_ROUTES.ATTRIBUTE_CATEGORIES}
+      path="ATTRIBUTE_CATEGORIES"
     >
       <FormProvider {...methods}>
         <StyledStack
@@ -64,18 +63,11 @@ const InputsTable = ({ attributeCategoriesData }: IInputsTable) => {
           component="form"
         >
           <StyledTable tableTitle="ATTRIBUTE CATEGORY" colSpan={2}>
-            {inputsRows.map((item) => {
-              const { label } = item;
-
-              return (
-                <StyledTableRow key={label}>
-                  <StyledTableCell>{`${label}:`}</StyledTableCell>
-                  <TableCell>
-                    <ReusableFields {...item} />
-                  </TableCell>
-                </StyledTableRow>
-              );
-            })}
+            {inputsRows.map((item) => (
+              <RowComponent key={item.label} {...item}>
+                <ReusableFields {...item} />
+              </RowComponent>
+            ))}
           </StyledTable>
           <SubmitBtn actionLoading={actionLoading} />
         </StyledStack>

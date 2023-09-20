@@ -2,10 +2,8 @@ import { memo } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
-import { StyledTableRow } from '@containers/common/Table/styled';
-import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
@@ -15,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { selectBanners } from '@features/banners/selectors';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
+import RowComponent from '@containers/common/Table/components/RowComponent';
 
 import {
   AddBannerSchema,
@@ -61,7 +60,7 @@ const InputsTable = ({ bannersData }: IInputsTable) => {
   };
 
   return (
-    <TitlesWithBackButton title={bannersData ? 'Edit Banner' : 'Add Banner'} path={PAGE_ROUTES.HOMEPAGE}>
+    <TitlesWithBackButton title={bannersData ? 'Edit Banner' : 'Add Banner'} path="HOMEPAGE">
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}
@@ -69,18 +68,13 @@ const InputsTable = ({ bannersData }: IInputsTable) => {
         >
           <StyledTable tableTitle="BANNER" colSpan={2}>
             {inputsRows.map((item) => {
-              const { field, label, isRequired } = item;
+              const { field } = item;
 
               return (
                 (field !== 'category' || !bannersData) ? (
-                  <StyledTableRow key={label}>
-                    <StyledTableCell>
-                      {`${label}: ${isRequired ? '*' : ''}`}
-                    </StyledTableCell>
-                    <TableCell>
-                      <ReusableFields {...item} selectList={[{ field, options: bannersTypeList }]} />
-                    </TableCell>
-                  </StyledTableRow>
+                  <RowComponent key={item.label} {...item}>
+                    <ReusableFields {...item} selectList={[{ field, options: bannersTypeList }]} />
+                  </RowComponent>
                 ) : null
               );
             })}

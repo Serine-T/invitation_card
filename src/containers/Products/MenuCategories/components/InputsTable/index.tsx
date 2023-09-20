@@ -2,10 +2,8 @@ import { memo } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
-import { StyledTableRow } from '@containers/common/Table/styled';
-import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
@@ -15,6 +13,7 @@ import { addCategory, editCategory } from '@features/categories/actions';
 import { ICategories } from '@features/categories/types';
 import { selectCategories } from '@features/categories/selectors';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
+import RowComponent from '@containers/common/Table/components/RowComponent';
 
 import {
   AddDataSchema,
@@ -54,25 +53,18 @@ const InputsTable = ({ categoriesData }: IInputsTable) => {
   };
 
   return (
-    <TitlesWithBackButton title={categoriesData ? 'Edit Category' : 'Add Category'} path={PAGE_ROUTES.MENU_CATEGORIES}>
+    <TitlesWithBackButton title={categoriesData ? 'Edit Category' : 'Add Category'} path="MENU_CATEGORIES">
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}
           component="form"
         >
           <StyledTable tableTitle="CATEGORY" colSpan={2}>
-            {inputsRows.map((item) => {
-              const { label } = item;
-
-              return (
-                <StyledTableRow key={label}>
-                  <StyledTableCell>{`${label}:`}</StyledTableCell>
-                  <TableCell>
-                    <ReusableFields {...item} />
-                  </TableCell>
-                </StyledTableRow>
-              );
-            })}
+            {inputsRows.map((item) => (
+              <RowComponent key={item.label} {...item}>
+                <ReusableFields {...item} />
+              </RowComponent>
+            ))}
           </StyledTable>
           <SubmitBtn actionLoading={actionLoading} />
         </StyledStack>

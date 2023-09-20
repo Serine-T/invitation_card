@@ -12,7 +12,7 @@ import { IProductsPayload } from '@features/products/types';
 import { getProductById } from '@features/products/actions';
 import { selectProducts } from '@features/products/selectors';
 
-import InputsTable from '../components/InputsTable';
+import InputsTable from '../..';
 
 const EditProduct = () => {
   const dispatch = useAppDispatch();
@@ -26,9 +26,8 @@ const EditProduct = () => {
   useMount(() => {
     dispatch(getProductById(id as string)).unwrap().then((data) => {
       setProductsData(data);
+      dispatch(getAllCategories());
     }).catch(() => navigate(PAGE_ROUTES.PRODUCTS));
-
-    dispatch(getAllCategories());
   });
 
   if (isLoading || categoriesLoading) {

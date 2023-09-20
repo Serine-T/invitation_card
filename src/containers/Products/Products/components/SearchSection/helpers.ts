@@ -3,7 +3,8 @@ import * as yup from 'yup';
 export interface IFiltersForm {
   searchTerm?: string;
   visibleOnSite?: string;
-  category?:string;
+  subCategoryId?: string;
+  showInSpotlight?: string;
 }
 
 export const FiltersSchema = yup.object().shape({

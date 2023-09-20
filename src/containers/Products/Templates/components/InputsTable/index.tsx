@@ -2,10 +2,8 @@ import { memo } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
-import { StyledTableRow } from '@containers/common/Table/styled';
-import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
 import ReusableFields from '@containers/common/ReusableFields';
@@ -18,6 +16,7 @@ import { selectSubcategories } from '@features/subcategories/selectors';
 import { getOptionsArray } from '@utils/helpers';
 import { selectTemplateCategories } from '@features/templateCategories/selectors';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
+import RowComponent from '@containers/common/Table/components/RowComponent';
 
 import {
   AddDataSchema,
@@ -70,7 +69,7 @@ const InputsTable = ({ templatesData }: IInputsTable) => {
   return (
     <TitlesWithBackButton
       title={templatesData ? 'Edit Template' : 'Add Template'}
-      path={PAGE_ROUTES.TEMPLATES}
+      path="TEMPLATES"
     >
       <FormProvider {...methods}>
         <StyledStack
@@ -78,30 +77,21 @@ const InputsTable = ({ templatesData }: IInputsTable) => {
           component="form"
         >
           <StyledTable tableTitle="TEMPLATE" colSpan={2}>
-            {inputsRows.map((item) => {
-              const { label, isRequired } = item;
-
-              return (
-                <StyledTableRow key={label}>
-                  <StyledTableCell>
-                    {`${label}: ${isRequired ? '*' : ''}`}
-                  </StyledTableCell>
-                  <TableCell>
-                    <ReusableFields
-                      {...item}
-                      selectList={[{
-                        field: 'subCategoryId',
-                        options: subcategoriesList,
-                      }, {
-                        field: 'templateCategoryId',
-                        options: templateCategoriesList,
-                      }]}
-                      fileList={['photo']}
-                    />
-                  </TableCell>
-                </StyledTableRow>
-              );
-            })}
+            {inputsRows.map((item) => (
+              <RowComponent key={item.label} {...item}>
+                <ReusableFields
+                  {...item}
+                  selectList={[{
+                    field: 'subCategoryId',
+                    options: subcategoriesList,
+                  }, {
+                    field: 'templateCategoryId',
+                    options: templateCategoriesList,
+                  }]}
+                  fileList={['photo']}
+                />
+              </RowComponent>
+            ))}
           </StyledTable>
           <SubmitBtn actionLoading={actionLoading} />
         </StyledStack>
