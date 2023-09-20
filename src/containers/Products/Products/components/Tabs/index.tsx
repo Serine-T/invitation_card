@@ -25,27 +25,23 @@ const InputsTable = ({ editData }: IInputsTable) => {
   };
 
   return (
-    <>
-      <TitlesWithBackButton
-        title={editData ? 'Edit Product' : 'Add Product'}
-        path="PRODUCTS"
-      >
-        <StyledStack>
-          <StyledDivider>
-            <StyledTabs value={value} onChange={handleChange}>
-              {
+    <TitlesWithBackButton
+      title={editData ? 'Edit Product' : 'Add Product'}
+      path="PRODUCTS"
+    >
+      <StyledStack>
+        <StyledDivider>
+          <StyledTabs value={value} onChange={handleChange}>
+            {
                 tabsOptions.map(({ label }) => (
                   <StyledTab key={label} label={label} disableRipple />
                 ))
             }
-            </StyledTabs>
-          </StyledDivider>
-        </StyledStack>
-        <>
-          {createElement(tabsOptions[value].component, { editData })}
-        </>
-      </TitlesWithBackButton>
-    </>
+          </StyledTabs>
+        </StyledDivider>
+      </StyledStack>
+      {createElement(tabsOptions[value].component, { editData })}
+    </TitlesWithBackButton>
   );
 };
 
