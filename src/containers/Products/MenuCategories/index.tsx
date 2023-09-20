@@ -44,7 +44,7 @@ const MenuCategories = () => {
   useEffect(
     () => fetchData(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isSearchTerm, searchTerm, displayInHeaderQuery],
+    [searchTerm, displayInHeaderQuery],
   );
 
   const deleteAction = (id: string) => {
