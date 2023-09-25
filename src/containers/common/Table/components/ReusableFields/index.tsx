@@ -3,12 +3,12 @@ import { memo } from 'react';
 import { InputTypes, ValidFieldNames } from '@utils/types';
 import { useFormContext } from 'react-hook-form';
 
-import Input from '../Input';
-import Textarea from '../Textarea';
-import Checkbox from '../Checkbox';
-import ImageUpload from '../FileUploader';
-import ColorPickerInput from '../ColorPickerInput';
-import Select from '../Select';
+import Input from '../../../Input';
+import Textarea from '../../../Textarea';
+import Checkbox from '../../../Checkbox';
+import ImageUpload from '../../../FileUploader';
+import ColorPickerInput from '../../../ColorPickerInput';
+import Select from '../../../Select';
 import { ISelectList } from './helpers';
 
 interface IReusableFields extends ValidFieldNames{
@@ -24,7 +24,7 @@ function ReusableFields({ field, type, label, selectList, fileList }: IReusableF
       <Input
         type={field === 'password' ? 'password' : 'text'}
         placeholder={label}
-        {...register(field as string)}
+        {...register(field)}
         errorMessage={errors?.[field]?.message as string}
         inputProps={
           { autoComplete: 'new-password' }
@@ -38,7 +38,7 @@ function ReusableFields({ field, type, label, selectList, fileList }: IReusableF
       <Textarea
         errorMessage={errors?.[field]?.message as string}
         placeholder={label}
-        {...register(field as string)}
+        {...register(field)}
       />
     );
   }
@@ -52,7 +52,7 @@ function ReusableFields({ field, type, label, selectList, fileList }: IReusableF
 
     return (
       <ImageUpload
-        name={field as string}
+        name={field}
         errorMessage={errors?.[field]?.message as string}
         isFile={isFile}
       />

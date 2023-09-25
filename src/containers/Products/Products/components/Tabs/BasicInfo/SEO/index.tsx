@@ -4,7 +4,7 @@ import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import { StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
-import ReusableFields from '@containers/common/ReusableFields';
+import ReusableFields from '@containers/common/Table/components/ReusableFields';
 import Box from '@mui/material/Box';
 
 import { seoFields } from './helpers';

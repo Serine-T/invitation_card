@@ -7,7 +7,7 @@ import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
 import PAGE_ROUTES from '@routes/routingEnum';
-import ReusableFields from '@containers/common/ReusableFields';
+import ReusableFields from '@containers/common/Table/components/ReusableFields';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { selectCategories } from '@features/categories/selectors';
 import { getOptionsArray } from '@utils/helpers';

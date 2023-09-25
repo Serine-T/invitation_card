@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import StyledTable from '@containers/common/Table';
 import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import PAGE_ROUTES from '@routes/routingEnum';
-import ReusableFields from '@containers/common/ReusableFields';
+import ReusableFields from '@containers/common/Table/components/ReusableFields';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { selectCategories } from '@features/categories/selectors';
 import { getOptionsArray } from '@utils/helpers';
@@ -19,6 +19,7 @@ import { ISubcategoriesByCategoryId } from '@features/subcategories/types';
 import Input from '@containers/common/Input';
 import SEO from '@containers/Products/ProductCategories/components/InputsTable/SEO';
 import RowComponent from '@containers/common/Table/components/RowComponent';
+import InputAfterText from '@containers/common/Table/components/InputAfterText';
 
 import {
   AddDataSchema,
@@ -124,7 +125,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
         onSubmit={handleSubmit(onSubmit)}
         component="form"
       >
-        <StyledTable tableTitle="BASIC INFO" colSpan={2}>
+        <StyledTable tableTitle="BASIC PRODUCT INFO" colSpan={2}>
 
           {inputsRows1.map((item) => (
             <RowComponent key={item.label} {...item}>
@@ -147,7 +148,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
               width="120px"
               placeholder="Product Weight"
               {...register('weight')}
-              errorMessage={errors?.weight?.message as string}
+              errorMessage={errors?.weight?.message}
             />
           </RowComponent>
 
@@ -156,7 +157,18 @@ const InputsTable = ({ editData }: IInputsTable) => {
               <ReusableFields {...item} />
             </RowComponent>
           ))}
+
+          <RowComponent label="4over Turnaround Code">
+            <InputAfterText label="(i.e. 224, 223, etc)">
+              <Input
+                placeholder="4over Turnaround Code"
+                {...register('fouroverTurnaroundCode')}
+                errorMessage={errors?.fouroverTurnaroundCode?.message}
+              />
+            </InputAfterText>
+          </RowComponent>
         </StyledTable>
+        {/* TODO: Delete SEO component in this folder if not used */}
         <SEO />
 
         <ProductDescription />

@@ -10,7 +10,7 @@ import { IBestSellerInfo } from '@features/bestSellers/types';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { addBestSeller, editBestSeller } from '@features/bestSellers/actions';
-import ReusableFields from '@containers/common/ReusableFields';
+import ReusableFields from '@containers/common/Table/components/ReusableFields';
 import { selectBestSellers } from '@features/bestSellers/selectors';
 import { selectSubcategories } from '@features/subcategories/selectors';
 import { getOptionsArray } from '@utils/helpers';

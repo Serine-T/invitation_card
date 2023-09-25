@@ -12,12 +12,9 @@ const AddProduct = () => {
   const dispatch = useAppDispatch();
 
   useMount(() => {
-    dispatch(getAllCategories()).unwrap().then((data) => {
-      console.log('daaataa', data);
-    }).catch((e) => {
-      console.log('e****', e);
-    });
+    dispatch(getAllCategories()).unwrap().then(() => { }).catch(() => {});
   });
+
   if ((!categories.length && isLoading)) {
     return <Loader />;
   }

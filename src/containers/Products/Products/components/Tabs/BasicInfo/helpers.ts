@@ -1,4 +1,4 @@
-import { numberValidation } from '@utils/schemas';
+import { numberValidation, textWidthValidation } from '@utils/schemas';
 import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
 import { GrandFormatOptions } from '@features/products/types';
@@ -61,6 +61,8 @@ export const AddDataSchema = yup.object().shape({
   categoryId: yup.string().required('Category is required'),
   weight: numberValidation.nullable(),
   grandFormatOptions: GrandFormatOptionsSchema,
+  metaTagDescription: textWidthValidation,
+  metaTagTitle: textWidthValidation,
 });
 
 export const inputsRows1: ValidFieldNames[] = [
@@ -114,11 +116,6 @@ export const inputsRows2: ValidFieldNames[] = [
   {
     label: '4over Prod Code',
     field: 'fouroverProdCode',
-    type: InputTypes.text,
-  },
-  {
-    label: '4over Turnaround Code',
-    field: 'fouroverTurnaroundCode',
     type: InputTypes.text,
   },
 ];

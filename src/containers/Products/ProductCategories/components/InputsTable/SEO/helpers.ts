@@ -11,9 +11,4 @@ export const seoFields: ValidFieldNames[] = [
     field: 'metaTagDescription',
     type: InputTypes.text,
   },
-  {
-    label: 'Meta Tag Keywords',
-    field: 'metaTagKeywords',
-    type: InputTypes.textarea,
-  },
 ];

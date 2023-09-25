@@ -6,7 +6,7 @@ import StyledTable from '@containers/common/Table';
 import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import PAGE_ROUTES from '@routes/routingEnum';
-import ReusableFields from '@containers/common/ReusableFields';
+import ReusableFields from '@containers/common/Table/components/ReusableFields';
 import { IBannerInfo } from '@features/banners/types';
 import { addBanner, editBanner } from '@features/banners/actions';
 import { useNavigate } from 'react-router-dom';

@@ -33,6 +33,7 @@ export const StyledTabs = styled(Tabs)(({ theme }) => ({
 }));
 
 export const StyledTab = styled(Tab)(({ theme }) => ({
+  width: '165px',
   textTransform: 'capitalize',
   color: theme.palette.grey[600],
 }));

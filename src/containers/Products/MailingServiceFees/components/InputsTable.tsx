@@ -14,7 +14,7 @@ import PAGE_ROUTES from '@routes/routingEnum';
 import { IUserInfo } from '@features/users/types';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import { selectUsers } from '@features/users/selectors';
-import ReusableFields from '@containers/common/ReusableFields';
+import ReusableFields from '@containers/common/Table/components/ReusableFields';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 
 import {
