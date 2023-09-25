@@ -57,16 +57,14 @@ const Templates = () => {
 
   const { data: templatesList, isLoading } = useAppSelector(selectTemplates);
 
-  const reordingData = useCallback((result: DropResult) => {
+  const reordingData = (result: DropResult) => {
     const { sortedData, items } = nestedDragSort(result, templatesList, 'templates');
 
     if (sortedData) {
-      dispatch(reorderTemplates(sortedData)).unwrap().then(() => setTemplates(items))
+      dispatch(reorderTemplates(sortedData)).unwrap().then(() => dispatch(setTemplates(items)))
         .catch(() => fetchData());
     }
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  };
 
   if (isLoading) {
     return <Loader />;

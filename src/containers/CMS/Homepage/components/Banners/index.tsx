@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 
 import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
 import TableCell from '@mui/material/TableCell';
@@ -34,16 +34,15 @@ const Banners = ({ isSlider }: IBannersProps) => {
 
   const { banners, sliders, isLoading } = useAppSelector(selectBanners);
 
-  const items = isSlider ? [...sliders] : [...banners];
+  const data = isSlider ? [...sliders] : [...banners];
 
-  const reordingData = useCallback((result: DropResult) => {
-    const { sortedData } = dragSort(result, items);
+  const reordingData = (result: DropResult) => {
+    const { sortedData, items } = dragSort(result, data);
 
     dispatch(reorderBanners(sortedData)).unwrap().then(() => {
       dispatch(isSlider ? setSilders(items) : setBanners(items));
     }).catch(() => dispatch(getAllBanners()));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSlider, items]);
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -52,7 +51,7 @@ const Banners = ({ isSlider }: IBannersProps) => {
   return (
     <DndContainer reordingData={reordingData}>
       <StyledTable headCells={isSlider ? headSliderCells : headBannerCells}>
-        {items.map(({ title, displayOnSite, id = '' }, index) => (
+        {data.map(({ title, displayOnSite, id = '' }, index) => (
           <ReusableDragRow key={id} id={id} index={index} gridTemplateColumns="auto 173px  140px 150px">
             {({ providedDraggable }) => (
               <>

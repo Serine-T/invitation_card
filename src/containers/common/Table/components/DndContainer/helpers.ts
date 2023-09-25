@@ -7,7 +7,7 @@ interface IDraggableItem {
 
 export const nestedDragSort = <T extends IDraggableItem>(
   result: DropResult, data: T[], listName: keyof T) => {
-  const items = data.map((item) => ({ ...item, listName: [...item[listName]] })) as any[];
+  const items = data.map((item) => ({ ...item, [listName]: [...item[listName]] })) as any[];
   const { destination, draggableId } = result;
 
   const draggableItem = items.find((item) => item[listName].find((i: IDraggableItem) => i.id === draggableId));
@@ -33,16 +33,10 @@ export const dragSort = (result: DropResult, data: any) => {
   if (destination) {
     const [removed] = items.splice(result.source.index, 1);
 
-    console.log('kokrforf', items);
-
     items.splice(destination.index, 0, removed);
-
-    console.log('after', items);
 
     return { sortedData: getReorderedArray(items), items };
   }
-
-  console.log('ellll');
 
   return { sortedData: { orders: [] }, items };
 };
