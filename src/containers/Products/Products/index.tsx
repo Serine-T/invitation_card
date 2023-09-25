@@ -75,9 +75,8 @@ const Products = () => {
   const reordingData = (result: DropResult) => {
     const { sortedData, items } = nestedDragSort(result, productsList as IProductsSearchInfo[], 'products');
 
-    dispatch(reorderProducts(sortedData)).unwrap().then(() => {
-      dispatch(setProducts(items));
-    }).catch(() => fetchData());
+    dispatch(reorderProducts(sortedData)).unwrap().then(() => dispatch(setProducts(items)))
+      .catch(() => fetchData());
   };
 
   if (isLoading || subcategoryLoading) {

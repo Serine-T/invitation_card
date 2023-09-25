@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 
 import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
 import TableCell from '@mui/material/TableCell';
@@ -38,14 +38,13 @@ const BestSeller = () => {
     dispatch(getAllBestSellers());
   });
 
-  const reordingData = useCallback((result: DropResult) => {
+  const reordingData = (result: DropResult) => {
     const { sortedData, items } = dragSort(result, bestSellers);
 
     dispatch(reorderBestSellers(sortedData)).unwrap().then(() => {
       dispatch(setBestSellers(items));
     }).catch(() => dispatch(getAllBestSellers()));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bestSellers]);
+  };
 
   if (isLoading || subcategoriesLoading) {
     return <Loader />;
