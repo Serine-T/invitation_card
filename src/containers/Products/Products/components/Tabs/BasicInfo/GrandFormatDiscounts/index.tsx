@@ -76,7 +76,7 @@ const GrandFormatDiscounts = () => {
                     errorMessage={(errors as any)
                       ?.grandFormatOptions?.grandFormatDiscounts?.[index]?.[field]?.message}
                   />
-                  {index !== 0 && idx === 0 && (
+                  {inputList.length > 1 && idx === 0 && (
                   <MinusIcon onClick={() => handleRemoveInput(index)} />
                   )}
                 </Stack>
