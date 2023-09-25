@@ -125,7 +125,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
         onSubmit={handleSubmit(onSubmit)}
         component="form"
       >
-        <StyledTable tableTitle="BASIC INFO" colSpan={2}>
+        <StyledTable tableTitle="BASIC PRODUCT INFO" colSpan={2}>
 
           {inputsRows1.map((item) => (
             <RowComponent key={item.label} {...item}>

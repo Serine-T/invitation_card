@@ -17,10 +17,10 @@ const SEO = () => {
       <StyledTable tableTitle="SEARCH ENGINE OPTIMIZATION" colSpan={2}>
 
         {seoFields.map((item) => {
-          const { field } = item;
+          const { field, label } = item;
 
           return (
-            <RowComponent label="Meta Tag Description">
+            <RowComponent key={field} label={label}>
               <InputAfterText label="(max 250)">
                 <Input
                   placeholder={field}
