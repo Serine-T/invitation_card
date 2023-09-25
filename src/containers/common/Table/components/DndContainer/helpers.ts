@@ -7,7 +7,7 @@ interface IDraggableItem {
 
 export const nestedDragSort = <T extends IDraggableItem>(
   result: DropResult, data: T[], listName: keyof T) => {
-  const items = data.map((item) => ({ ...item, [listName]: [...item[listName]] })) as any[];
+  const items = data.map((item) => ({ ...item, listName: [...item[listName]] })) as any[];
   const { destination, draggableId } = result;
 
   const draggableItem = items.find((item) => item[listName].find((i: IDraggableItem) => i.id === draggableId));
