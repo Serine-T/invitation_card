@@ -63,7 +63,7 @@ const BestSeller = () => {
         <DndContainer reordingData={reordingData}>
           <StyledTable headCells={headCells}>
             {bestSellers.map(({ title, displayOnSite, id }, index) => (
-              <ReusableDragRow id={id} index={index} gridTemplateColumns="auto 173px  140px 150px">
+              <ReusableDragRow key={id} id={id} index={index} gridTemplateColumns="auto 173px  140px 150px">
                 {({ providedDraggable }) => (
                   <>
                     <TableCell>
