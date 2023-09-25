@@ -65,7 +65,7 @@ const SearchSection = () => {
               placeholder="Search"
             />
             <Select
-              label="Category"
+              label="Subcategory"
               width="200px"
               name="subCategoryId"
               options={categoriesList}
