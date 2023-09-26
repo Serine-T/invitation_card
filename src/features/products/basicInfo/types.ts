@@ -1,5 +1,3 @@
-import { DefaultInkInEstimator, PrintType, StaticShippingFacility } from './enums';
-
 export interface IState {
   isLoading: boolean;
   data: IProductsInfo[] | IProductsSearchInfo[];
@@ -39,26 +37,6 @@ export interface IProductsPayload {
 
 export interface IProductsInfo {
   id: string;
-  created: string;
-  updated: any;
-  deleted: any;
-  title: string;
-  description: string;
-  sort: number;
-  photo: string;
-  categoryDiscountOffMSRP: number;
-  defaultInkInEstimator: DefaultInkInEstimator | null;
-  staticShippingFacility: StaticShippingFacility[];
-  useGrandFormatSQFtTemplate: boolean;
-  visibleOnSite: boolean;
-  displayAsCardInHeader: boolean;
-  isNew: boolean;
-  isSale: boolean;
-  printType: PrintType | null;
-  categoryId: string | null;
-  metaTagTitle: string;
-  metaTagDescription: string;
-  metaTagKeywords: string;
 }
 
 export interface ISearchProducts {

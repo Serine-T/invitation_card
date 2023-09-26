@@ -23,7 +23,7 @@ const SEO = () => {
             <RowComponent key={field} label={label}>
               <InputAfterText label="(max 250)">
                 <Input
-                  placeholder={field}
+                  placeholder={label}
                   {...register(field)}
                   errorMessage={errors?.[field]?.message as string}
                 />

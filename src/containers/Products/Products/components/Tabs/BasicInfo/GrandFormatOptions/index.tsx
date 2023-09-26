@@ -33,7 +33,7 @@ const GrandFormatOptions = () => {
         </RowComponent>
         <StyledTableRow>
           <StyledTableCell rowSpan={2}>
-            Dimension Ranges (in FT for drop down ranges)   Unit Display (Not used now):
+            Dimension Ranges (in FT for drop down ranges):
           </StyledTableCell>
           <TableCell>
             <Stack direction="row" alignItems="center" gap="8px">

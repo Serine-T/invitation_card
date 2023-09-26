@@ -156,9 +156,9 @@ export const inputsRows2: ValidFieldNames[] = [
 ];
 
 export const printTypeNames: { [key in PrintType]: string } = {
-  [PrintType.OFFSET_PRODUCTS]: 'Offset production',
-  [PrintType.GRAND_FORMAT_PRODUCTS]: 'Grand format products',
-  [PrintType.PROMO_PRODUCTS]: 'Promo products',
+  [PrintType.OFFSET_PRODUCTS]: 'Offset Production',
+  [PrintType.GRAND_FORMAT_PRODUCTS]: 'Grand Format Products',
+  [PrintType.PROMO_PRODUCTS]: 'Promo Products',
 };
 
 export const printTypeName = (name: PrintType | null) => {

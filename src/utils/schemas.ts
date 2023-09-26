@@ -76,3 +76,14 @@ export const numberValidation = yup.string().optional().test(
       .isValidSync(value);
   },
 );
+
+export const positiveNumberSchema = yup
+  .number()
+  .typeError('Number is invalid')
+  .positive('Number is not positive');
+
+export const intagerSchema = yup
+  .number()
+  .typeError('Number is invalid')
+  .integer('Intager is invalid')
+  .positive('Number is not positive');

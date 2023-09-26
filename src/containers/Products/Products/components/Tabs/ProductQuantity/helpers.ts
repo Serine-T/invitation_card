@@ -1,4 +1,4 @@
-import { GrandFormatOptions } from '@features/products/types';
+import { GrandFormatOptions } from '@features/products/basicInfo/types';
 import { isIntagerRegex, isNumberRegex } from '@utils/regexp';
 import { intagerValidation } from '@utils/schemas';
 import { InputTypes, ValidFieldNames } from '@utils/types';

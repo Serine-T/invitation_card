@@ -43,7 +43,7 @@ export const getOptionsArray = (
   }));
 };
 
-interface Filters {
+export interface Filters {
   [key: string]: string | undefined;
 }
 

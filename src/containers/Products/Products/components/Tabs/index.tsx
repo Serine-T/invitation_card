@@ -1,6 +1,6 @@
 import { createElement, memo, useState } from 'react';
 
-import { IProductsPayload } from '@features/products/types';
+import { IProductsPayload } from '@features/products/basicInfo/types';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 

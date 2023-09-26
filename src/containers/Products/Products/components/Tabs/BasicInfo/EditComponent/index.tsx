@@ -8,9 +8,9 @@ import PAGE_ROUTES from '@routes/routingEnum';
 import { getAllCategories } from '@features/categories/actions';
 import { selectCategories } from '@features/categories/selectors';
 import EmptyState from '@containers/common/EmptyState';
-import { IProductsPayload } from '@features/products/types';
-import { getProductById } from '@features/products/actions';
-import { selectProducts } from '@features/products/selectors';
+import { IProductsPayload } from '@features/products/basicInfo/types';
+import { getProductById } from '@features/products/basicInfo/actions';
+import { selectProducts } from '@features/products/basicInfo/selectors';
 
 import InputsTable from '../..';
 

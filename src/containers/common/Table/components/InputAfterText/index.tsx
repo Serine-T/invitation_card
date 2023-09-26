@@ -12,7 +12,7 @@ interface IInputAfterText {
 const InputAfterText = ({ children, label }: IInputAfterText) => (
   <StyledBox>
     {children}
-    <Typography>{label}</Typography>
+    <Typography variant="body3">{label}</Typography>
   </StyledBox>
 );
 

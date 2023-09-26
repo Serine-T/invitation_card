@@ -14,8 +14,8 @@ import { getOptionsArray } from '@utils/helpers';
 import { useNavigate } from 'react-router-dom';
 import { selectSubcategories } from '@features/subcategories/selectors';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
-import { addProduct, editProduct } from '@features/products/actions';
-import { IProductsPayload } from '@features/products/types';
+import { addProduct, editProduct } from '@features/products/basicInfo/actions';
+import { IProductsPayload } from '@features/products/basicInfo/types';
 import Input from '@containers/common/Input';
 
 import {
@@ -25,6 +25,7 @@ import {
   formattingPayload,
   inputsRows1,
 } from './helpers';
+import AddComponent from './components/AddComponent';
 
 interface IInputsTable{
   editData?: IProductsPayload;
@@ -68,50 +69,53 @@ const InputsTable = ({ editData }: IInputsTable) => {
   };
 
   return (
-    <FormProvider {...methods}>
-      <StyledStack
-        onSubmit={handleSubmit(onSubmit)}
-        component="form"
-      >
-        <StyledTable tableTitle="BASIC INFO" colSpan={2}>
+    <>
+      <AddComponent />
+      <FormProvider {...methods}>
+        <StyledStack
+          onSubmit={handleSubmit(onSubmit)}
+          component="form"
+        >
+          <StyledTable tableTitle="Quantity" colSpan={2}>
 
-          {inputsRows1.map((item) => {
-            const { label, isRequired } = item;
+            {inputsRows1.map((item) => {
+              const { label, isRequired } = item;
 
-            return (
-              <StyledTableRow key={label}>
-                <StyledTableCell>
-                  {`${label}: ${isRequired ? '*' : ''}`}
-                </StyledTableCell>
-                <TableCell>
-                  <ReusableFields
-                    {...item}
-                    selectList={[{
-                      field: 'categoryId',
-                      options: categoriesList,
-                    }]}
-                  />
-                </TableCell>
-              </StyledTableRow>
-            );
-          })}
-          <StyledTableRow>
-            <StyledTableCell>
-              Product Weight (1):
-            </StyledTableCell>
-            <TableCell>
-              <Input
-                width="120px"
-                placeholder="Product Weight"
-                {...register('weight')}
-                errorMessage={errors?.weight?.message as string}
-              />
-            </TableCell>
-          </StyledTableRow>
-        </StyledTable>
-        <SubmitBtn actionLoading={actionLoading} />
-      </StyledStack>
-    </FormProvider>
+              return (
+                <StyledTableRow key={label}>
+                  <StyledTableCell>
+                    {`${label}: ${isRequired ? '*' : ''}`}
+                  </StyledTableCell>
+                  <TableCell>
+                    <ReusableFields
+                      {...item}
+                      selectList={[{
+                        field: 'categoryId',
+                        options: categoriesList,
+                      }]}
+                    />
+                  </TableCell>
+                </StyledTableRow>
+              );
+            })}
+            <StyledTableRow>
+              <StyledTableCell>
+                Product Weight (1):
+              </StyledTableCell>
+              <TableCell>
+                <Input
+                  width="120px"
+                  placeholder="Product Weight"
+                  {...register('weight')}
+                  errorMessage={errors?.weight?.message as string}
+                />
+              </TableCell>
+            </StyledTableRow>
+          </StyledTable>
+          <SubmitBtn actionLoading={actionLoading} />
+        </StyledStack>
+      </FormProvider>
+    </>
   );
 };
 
