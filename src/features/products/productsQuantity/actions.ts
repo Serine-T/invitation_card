@@ -72,7 +72,7 @@ export const editProductsQuantity = createAsyncThunk<void, IProductsQuantityPayl
   },
 );
 
-export const deleteProductQuantity = createAsyncThunk<void, string, {
+export const deleteProductsQuantity = createAsyncThunk<void, string, {
   rejectValue: AxiosData;
 }>(
   'productsQuantity/delete',
