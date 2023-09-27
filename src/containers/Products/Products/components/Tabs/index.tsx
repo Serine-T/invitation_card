@@ -23,6 +23,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
       title={editData ? 'Edit Product' : 'Add Product'}
       path="PRODUCTS_PRODUCTS"
     >
+      { !!editData && (
       <StyledStack>
         <StyledDivider>
           <StyledTabs value={value} onChange={handleChange}>
@@ -34,6 +35,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
           </StyledTabs>
         </StyledDivider>
       </StyledStack>
+      )}
       {createElement(tabsOptions[value].component, { editData })}
     </TitlesWithBackButton>
   );

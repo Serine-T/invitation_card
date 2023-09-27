@@ -3,7 +3,7 @@ import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
 import { GrandFormatOptions } from '@features/products/basicInfo/types';
 
-import { GrandFormatOptionsSchema } from './GrandFormatOptions/helpers';
+import { GrandFormatOptionsSchema } from './components/GrandFormatOptions/helpers';
 
 export interface IAddDataForm {
   id?: string;
