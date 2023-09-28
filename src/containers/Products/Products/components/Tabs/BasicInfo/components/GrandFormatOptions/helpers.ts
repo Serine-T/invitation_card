@@ -1,4 +1,4 @@
-import { intagerSchema, positiveNumberSchema } from '@utils/schemas';
+import { integerSchema, positiveNumberSchema } from '@utils/schemas';
 import * as yup from 'yup';
 
 export const unitDisplayList = [
@@ -16,7 +16,7 @@ export const valCases = {
 };
 
 const grandFormatDiscountsSchema = yup.object({
-  quantity: intagerSchema.required('Quantity is required'),
+  quantity: integerSchema.required('Quantity is required'),
   discountPercent: positiveNumberSchema.required('Discount percent is required'),
 });
 

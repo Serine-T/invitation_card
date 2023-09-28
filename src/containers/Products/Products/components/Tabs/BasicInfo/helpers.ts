@@ -1,4 +1,4 @@
-import { numberValidation, textWidthValidation } from '@utils/schemas';
+import { numberValidation, createTextWidthValidation } from '@utils/schemas';
 import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
 import { GrandFormatOptions } from '@features/products/basicInfo/types';
@@ -59,8 +59,9 @@ export const AddDataSchema = yup.object().shape({
   categoryId: yup.string().required('Category is required'),
   weight: numberValidation.nullable(),
   grandFormatOptions: GrandFormatOptionsSchema,
-  metaTagDescription: textWidthValidation,
-  metaTagTitle: textWidthValidation,
+  metaTagDescription: createTextWidthValidation(250),
+  metaTagTitle: createTextWidthValidation(250),
+  description: createTextWidthValidation(500),
 });
 
 export const inputsRows1: ValidFieldNames[] = [

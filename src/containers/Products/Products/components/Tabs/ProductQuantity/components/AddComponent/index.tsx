@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import TableCell from '@mui/material/TableCell';
 import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
-import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -15,13 +15,7 @@ import { IProductsPayload } from '@features/products/basicInfo/types';
 import Input from '@containers/common/Input';
 import { addProductsQuantity, editProductsQuantity } from '@features/products/productsQuantity/actions';
 
-import {
-  AddDataSchema,
-  IAddDataForm,
-  defaultValues,
-  formattingPayload,
-  headCells,
-} from './helpers';
+import { AddDataSchema, IAddDataForm, defaultValues, formattingPayload } from './helpers';
 
 interface IAddComponent{
   editData?: IProductsPayload;
@@ -68,20 +62,13 @@ const AddComponent = ({ editData }: IAddComponent) => {
         component="form"
         mb="32px"
       >
-        <StyledTable headCells={headCells}>
+        <StyledTable tableTitle="Quantity">
           <StyledTableRow>
-            <StyledTableCell>
+            <TableCell>
               <Input
                 placeholder="Quantity"
                 {...register('quantity')}
                 errorMessage={errors?.quantity?.message}
-              />
-            </StyledTableCell>
-            <TableCell>
-              <Input
-                placeholder="Base price"
-                {...register('basePrice')}
-                errorMessage={errors?.basePrice?.message}
               />
             </TableCell>
           </StyledTableRow>

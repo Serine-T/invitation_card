@@ -7,12 +7,10 @@ export interface IState {
 
 export interface IProductsQuantityInfo {
   id?: string;
-
 }
 
 export interface IProductsQuantityPayload {
   id?: string;
   quantity: number | null;
-  basePrice: number | null;
   productId: string;
 }
