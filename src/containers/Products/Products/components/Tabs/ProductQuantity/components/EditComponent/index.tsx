@@ -37,8 +37,6 @@ const EditComponent = ({ editData }: IEditComponent) => {
   const { id } = useParams();
   const { actionLoading } = useAppSelector(selectSubcategories);
 
-  console.log('iiiddd****', id);
-
   const methods = useForm<IAddDataForm>({
     resolver: yupResolver(AddDataSchema as any), // TODO: add typing
     defaultValues: { ...editData, productId: id } || defaultValues,
