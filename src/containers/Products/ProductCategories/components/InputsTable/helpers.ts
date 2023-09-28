@@ -1,29 +1,18 @@
-import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
-import { intagerValidation, textWidthValidation } from '@utils/schemas';
+import { integerValidation, textWidthValidation } from '@utils/schemas';
 import { DefaultInkInEstimator, PrintType, StaticShippingFacility } from '@features/subcategories/enums';
 import { selectDefaultValue } from '@containers/common/Select/helpers';
 import { IAddSubcategoriesPayload, ISubcategoriesInfo } from '@features/subcategories/types';
 
 type StaticShippingFacilityType = {
-    [StaticShippingFacility.ARIZONA]: boolean;
-    [StaticShippingFacility.CALIFORNIA]: boolean;
-    [StaticShippingFacility.FLORIDA]: boolean;
-    [StaticShippingFacility.MICHIGAN]: boolean;
-    [StaticShippingFacility.NEW_JERSEY]: boolean;
-    [StaticShippingFacility.NEW_YORK]: boolean;
-    [StaticShippingFacility.NORTH_CAROLINA]: boolean;
-    [StaticShippingFacility.OHIO]: boolean;
-    [StaticShippingFacility.TEXAS]: boolean;
-    [StaticShippingFacility.UPSTATE_NEW_YORK]: boolean;
-    [StaticShippingFacility.WISCONSIN]: boolean;
-  }
+  [key in StaticShippingFacility]: boolean;
+};
 export interface IAddSubcategoryForm {
   id?: string;
   title: string;
   description: string;
   photo: string;
-  categoryId: string | string;
+  categoryId: string;
   printType: PrintType | string;
   isNew: boolean;
   isSale: boolean;
@@ -84,83 +73,8 @@ export const AddSubcategorySchema = yup.object().shape({
     .required('Print type is required'),
   metaTagDescription: textWidthValidation,
   metaTagTitle: textWidthValidation,
-  categoryDiscountOffMSRP: intagerValidation.nullable(),
+  categoryDiscountOffMSRP: integerValidation.nullable(),
 });
-
-export const inputsRows1: ValidFieldNames[] = [
-  {
-    label: 'Category',
-    field: 'categoryId',
-    type: InputTypes.select,
-    isRequired: true,
-  },
-  {
-    label: 'Print Type',
-    field: 'printType',
-    type: InputTypes.select,
-    isRequired: true,
-  },
-  {
-    label: 'Use Grand Format SQ. Ft. Template',
-    field: 'useGrandFormatSQFtTemplate',
-    type: InputTypes.checkbox,
-  },
-  {
-    label: 'Mark as New',
-    field: 'isNew',
-    type: InputTypes.checkbox,
-  },
-  {
-    label: 'Mark as Sale',
-    field: 'isSale',
-    type: InputTypes.checkbox,
-  },
-  {
-    label: 'Show In Spotlight',
-    field: 'showInSpotlight',
-    type: InputTypes.checkbox,
-  },
-  {
-    label: 'Category Discount off MSRP(%)',
-    field: 'categoryDiscountOffMSRP',
-    type: InputTypes.text,
-  },
-  {
-    label: 'Default Ink in Estimator',
-    field: 'defaultInkInEstimator',
-    type: InputTypes.select,
-  },
-];
-export const inputsRows2: ValidFieldNames[] = [
-  {
-    label: 'Photo',
-    field: 'photo',
-    type: InputTypes.image,
-    isRequired: true,
-  },
-  {
-    label: 'Title',
-    field: 'title',
-    type: InputTypes.text,
-    isRequired: true,
-  },
-  {
-    label: 'Description',
-    field: 'description',
-    type: InputTypes.textarea,
-    isRequired: true,
-  },
-  {
-    label: 'Visible On Site',
-    field: 'visibleOnSite',
-    type: InputTypes.checkbox,
-  },
-  {
-    label: 'Display as Card in Header',
-    field: 'displayAsCardInHeader',
-    type: InputTypes.checkbox,
-  },
-];
 
 export const printTypeNames: { [key in PrintType]: string } = {
   [PrintType.OFFSET_PRODUCTS]: 'Offset Production',
@@ -243,17 +157,15 @@ export const formattingPayload = (data: IAddSubcategoryForm) => {
 };
 
 export const formattedShippingFacility = (list: string[]) => {
-  const staticShippingFacility = { ...defaultStaticShippingFacility } as StaticShippingFacilityType;
-  let staticShippingFacilityAll = true;
+  const initialFacility = { ...defaultStaticShippingFacility } as StaticShippingFacilityType;
 
-  (Object.keys(staticShippingFacility) as Array<keyof StaticShippingFacilityType>).forEach((item) => {
-    if (list.includes(item)) {
-      (staticShippingFacility)[item] = true;
-    } else {
-      staticShippingFacility[item] = false;
-      staticShippingFacilityAll = false;
-    }
-  });
+  const staticShippingFacility = Object.keys(initialFacility).reduce((acc, item) => {
+    acc[item as keyof StaticShippingFacilityType] = list.includes(item);
+
+    return acc;
+  }, initialFacility);
+
+  const staticShippingFacilityAll = Object.values(staticShippingFacility).every(Boolean);
 
   return { staticShippingFacility, staticShippingFacilityAll };
 };

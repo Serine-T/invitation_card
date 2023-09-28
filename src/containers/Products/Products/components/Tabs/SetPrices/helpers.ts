@@ -1,6 +1,6 @@
 import { GrandFormatOptions } from '@features/products/basicInfo/types';
 import { isIntagerRegex, isNumberRegex } from '@utils/regexp';
-import { intagerValidation } from '@utils/schemas';
+import { integerValidation } from '@utils/schemas';
 import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
 
@@ -60,7 +60,7 @@ export const AddDataSchema = yup.object().shape({
   productSKU: yup.string().required('Product SKU is required'),
   subCategoryId: yup.string().required('Subcategory is required'),
   categoryId: yup.string().required('Category is required'),
-  weight: intagerValidation.nullable(),
+  weight: integerValidation.nullable(),
   grandFormatOptions: yup.object({
     unitDisplay: yup.string().required('Unit display is required'),
     widthFrom: yup.string().required('Width from is required')

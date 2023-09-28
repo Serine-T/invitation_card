@@ -47,7 +47,7 @@ export const textWidthValidation = yup.string().optional().test(
     return yup.string().max(250).isValidSync(value);
   },
 );
-export const intagerValidation = yup.string().optional().test(
+export const integerValidation = yup.string().optional().test(
   'valid-intager',
   'Intager is invalid',
   (value: string | undefined) => {
