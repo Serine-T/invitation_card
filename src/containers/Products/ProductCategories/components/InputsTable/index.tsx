@@ -22,7 +22,7 @@ import { AddSubcategorySchema, IAddSubcategoryForm, defaultInkInEstimatorValues,
 } from './helpers';
 import StaticShipping from './StaticShipping';
 import SEO from './SEO';
-import { inputsRows1, inputsRows2 } from './tableFields';
+import { inputsRows1, inputsRows2 } from './tableData';
 
 interface IInputsTable{
   subcategoriesData?: ISubcategoriesInfo;
