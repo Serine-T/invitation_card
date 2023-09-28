@@ -14,7 +14,6 @@ export interface IAddDataForm {
   categoryId?: string;
   weight?: number | string | null;
   visibleOnSite?: boolean;
-  showInSpotlight?: boolean;
   isDiscountable?: boolean;
   quarterhouseProductCode?: string;
   fouroverProdCode?: string;
@@ -30,7 +29,6 @@ export const defaultValues = {
   subCategoryId: '',
   weight: null,
   visibleOnSite: false,
-  showInSpotlight: false,
   isDiscountable: false,
   quarterhouseProductCode: '',
   fouroverProdCode: '',
@@ -99,11 +97,6 @@ export const inputsRows2: ValidFieldNames[] = [
     type: InputTypes.checkbox,
   },
   {
-    label: 'Show In Spotlight',
-    field: 'showInSpotlight',
-    type: InputTypes.checkbox,
-  },
-  {
     label: 'Can Be Discounted with Promo Codes',
     field: 'isDiscountable',
     type: InputTypes.checkbox,
@@ -122,7 +115,8 @@ export const inputsRows2: ValidFieldNames[] = [
 
 export const transformValuesToNumbers = (values: GrandFormatOptions) => {
   const { widthFrom, widthTo, heightFrom, heightTo, maxHeight, maxWidth, grandFormatDiscounts } = values;
-  const transformedValues = {
+
+  return {
     ...values,
     widthFrom: widthFrom ? +widthFrom : null,
     widthTo: widthTo ? +widthTo : null,
@@ -135,8 +129,6 @@ export const transformValuesToNumbers = (values: GrandFormatOptions) => {
       discountPercent: discountPercent ? +discountPercent : null,
     })),
   };
-
-  return transformedValues;
 };
 
 export const formattingPayload = (data: IAddDataForm) => {

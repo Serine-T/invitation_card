@@ -15,9 +15,6 @@ export const headCells = [
     label: 'VISIBLE',
   },
   {
-    label: 'SPOTLIGHT',
-  },
-  {
     label: 'ACTIONS',
     colSpan: 2,
   },

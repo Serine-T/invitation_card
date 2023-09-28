@@ -112,6 +112,8 @@ const InputsTable = ({ editData }: IInputsTable) => {
       }).catch((e) => {
         if (e.message === 'Product with provided name already exists in this sub category!') {
           setError('name', { message: e.message });
+        } else if (e.message === 'Product with provided product SKU already exists!') {
+          setError('productSKU', { message: e.message });
         } else {
           navigate(PAGE_ROUTES.PRODUCTS_PRODUCTS);
         }

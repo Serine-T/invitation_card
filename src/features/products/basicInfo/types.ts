@@ -27,7 +27,6 @@ export interface IProductsPayload {
   subCategoryId: string;
   weight?: number | string | null;
   visibleOnSite?: boolean;
-  showInSpotlight?: boolean;
   isDiscountable?: boolean;
   quarterhouseProductCode?: string;
   fouroverProdCode?: string;
@@ -43,7 +42,6 @@ export interface ISearchProducts {
   searchTerm?: string;
   visibleOnSite?: string;
   subCategoryId?: string;
-  showInSpotlight?: string;
 }
 
 export interface Product {
@@ -54,7 +52,6 @@ export interface Product {
   sort: number;
   weight: number;
   visibleOnSite: boolean;
-  showInSpotlight: boolean;
   isDiscountable: boolean;
   quarterhouseProductCode: string;
   fouroverProdCode: string;

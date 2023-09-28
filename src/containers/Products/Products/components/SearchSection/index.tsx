@@ -20,7 +20,7 @@ import { FiltersSchema, IFiltersForm, visibilityOptions } from './helpers';
 const SearchSection = () => {
   const navigate = useNavigate();
   const params = queryString.parse(window.location.search);
-  const { searchTerm = '', visibleOnSite = '', subCategoryId = '', showInSpotlight = '' } = params;
+  const { searchTerm = '', visibleOnSite = '', subCategoryId = '' } = params;
   const { data: subcategories } = useAppSelector(selectSubcategories);
   const categoriesList = getOptionsArray(subcategories);
   const methods = useForm<IFiltersForm>({
@@ -29,7 +29,6 @@ const SearchSection = () => {
       searchTerm: searchTerm as string,
       visibleOnSite: visibleOnSite as string,
       subCategoryId: subCategoryId as string,
-      showInSpotlight: showInSpotlight as string,
     },
   });
 
@@ -43,7 +42,6 @@ const SearchSection = () => {
       searchTerm: data.searchTerm,
       visibleOnSite: data.visibleOnSite,
       subCategoryId: data.subCategoryId,
-      showInSpotlight: data.showInSpotlight,
     });
 
     navigate(`${PAGE_ROUTES.PRODUCTS_PRODUCTS}?${queryParams}`);
@@ -74,12 +72,6 @@ const SearchSection = () => {
               label="Visible on site"
               width="200px"
               name="visibleOnSite"
-              options={visibilityOptions}
-            />
-            <Select
-              label="Spot Light"
-              width="200px"
-              name="showInSpotlight"
               options={visibilityOptions}
             />
           </StyledSearchRows>
