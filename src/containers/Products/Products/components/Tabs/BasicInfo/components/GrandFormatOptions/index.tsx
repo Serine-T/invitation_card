@@ -43,12 +43,14 @@ const GrandFormatOptions = () => {
                 placeholder="Width from"
                 {...register('grandFormatOptions.widthFrom')}
                 errorMessage={(errors as any)?.grandFormatOptions?.widthFrom?.message}
+                showError={isGreaterThanWidth}
               />
               <TextStack />
               <StyledInput
                 placeholder="Width to"
                 {...register('grandFormatOptions.widthTo')}
                 errorMessage={(errors as any)?.grandFormatOptions?.widthTo?.message}
+                showError={isGreaterThanWidth}
               />
             </FromToStack>
             {isGreaterThanWidth && <FromToErrorMessage message={valCases.isGreaterThanWidth} />}
@@ -62,12 +64,14 @@ const GrandFormatOptions = () => {
                 placeholder="Height from"
                 {...register('grandFormatOptions.heightFrom')}
                 errorMessage={(errors as any)?.grandFormatOptions?.heightFrom?.message}
+                showError={isGreaterThanHeight}
               />
               <TextStack />
               <StyledInput
                 placeholder="Height to"
                 {...register('grandFormatOptions.heightTo')}
                 errorMessage={(errors as any)?.grandFormatOptions?.heightTo?.message}
+                showError={isGreaterThanHeight}
               />
             </FromToStack>
             {isGreaterThanHeight && <FromToErrorMessage message={valCases.isGreaterThanHeight} />}

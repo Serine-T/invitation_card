@@ -18,39 +18,35 @@ export interface IBaseInputProps extends InputBaseProps {
   showError?: boolean;
 }
 
-const BaseInput = forwardRef((props: IBaseInputProps, ref) => {
-  const {
-    id,
-    label,
-    inputProps,
-    sx,
-    width,
-    marginBottom,
-    errorMessage,
-    showError = true,
-    ...restProps
-  } = props;
-
-  return (
-    <StyledInputBox marginBottom={marginBottom} errorMessage={!!errorMessage}>
-      {label && (
-        <StyledInputLabel shrink htmlFor={id}>
-          {label}
-        </StyledInputLabel>
-      )}
-      <StyledFormControl width={width} variant="standard" error={!!errorMessage}>
-        <StyledBaseInput
-          inputRef={ref}
-          inputProps={inputProps}
-          sx={sx}
-          {...restProps}
-        />
-      </StyledFormControl>
-      {showError && !!errorMessage && (
-        <ErrorMessage message={errorMessage} />
-      )}
-    </StyledInputBox>
-  );
-});
+const BaseInput = forwardRef(({
+  id,
+  label,
+  inputProps,
+  sx,
+  width,
+  marginBottom,
+  errorMessage,
+  showError,
+  ...restProps
+}: IBaseInputProps, ref) => (
+  <StyledInputBox marginBottom={marginBottom} errorMessage={!!errorMessage}>
+    {label && (
+    <StyledInputLabel shrink htmlFor={id}>
+      {label}
+    </StyledInputLabel>
+    )}
+    <StyledFormControl width={width} variant="standard" error={!!errorMessage || showError}>
+      <StyledBaseInput
+        inputRef={ref}
+        inputProps={inputProps}
+        sx={sx}
+        {...restProps}
+      />
+    </StyledFormControl>
+    {!!errorMessage && (
+    <ErrorMessage message={errorMessage} />
+    )}
+  </StyledInputBox>
+));
 
 export default memo(BaseInput);

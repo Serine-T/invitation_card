@@ -39,22 +39,20 @@ const Products = () => {
   const params = queryString.parse(location.search);
 
   const {
-    searchTerm = '', visibleOnSite: visibleOnSiteQuery = '', subCategoryId = '',
-    showInSpotlight: showInSpotlightQuery = '',
-  } = params as IFiltersForm;
+    searchTerm = '', visibleOnSite: visibleOnSiteQuery = '', subCategoryId = '' } = params as IFiltersForm;
 
-  const isSearchTerm = searchTerm || visibleOnSiteQuery || subCategoryId || showInSpotlightQuery;
+  const isSearchTerm = searchTerm || visibleOnSiteQuery || subCategoryId;
 
   const fetchData = useCallback(() => {
     const query = {
       searchTerm,
       visibleOnSite: visibleOnSiteQuery,
       subCategoryId,
-      showInSpotlight: showInSpotlightQuery,
     };
 
     dispatch(searchProducts(query));
-  }, [searchTerm, visibleOnSiteQuery, subCategoryId, showInSpotlightQuery, dispatch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm, visibleOnSiteQuery, subCategoryId]);
 
   const deleteAction = (id: string) => {
     dispatch(deleteProduct(id)).unwrap().then(() => {
@@ -65,7 +63,7 @@ const Products = () => {
   useEffect(
     () => fetchData(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [searchTerm, visibleOnSiteQuery, subCategoryId, showInSpotlightQuery],
+    [searchTerm, visibleOnSiteQuery, subCategoryId],
   );
 
   useMount(() => {
@@ -102,13 +100,13 @@ const Products = () => {
                   <DndContainer reordingData={reordingData}>
                     <StyledTable headCells={headCells}>
                       {products.map(({
-                        name, quarterhouseProductCode, visibleOnSite, id, productSKU, fouroverProdCode, showInSpotlight,
+                        name, quarterhouseProductCode, visibleOnSite, id, productSKU, fouroverProdCode,
                       }, index) => (
                         <ReusableDragRow
                           key={id}
                           id={id}
                           index={index}
-                          gridTemplateColumns="auto 100px 152px 192px 76px 96px 140px 150px"
+                          gridTemplateColumns="auto 100px 152px 192px 76px 140px 150px"
                         >
                           {({ providedDraggable }) => (
                             < >
@@ -121,7 +119,6 @@ const Products = () => {
                                 <RowTitle title={name} path={`/products/products/edit/${id}`} />
                               </TableCell>
                               <TableCell width="76px">{visibleOnSite ? 'Yes' : 'No'}</TableCell>
-                              <TableCell width="96px">{showInSpotlight ? 'Yes' : 'No'}</TableCell>
                               <TableCell width="140px">
                                 <DndBtn providedDraggable={providedDraggable} />
                               </TableCell>

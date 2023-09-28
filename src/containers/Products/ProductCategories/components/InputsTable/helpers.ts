@@ -30,6 +30,7 @@ export interface IAddSubcategoryForm {
   useGrandFormatSQFtTemplate: boolean;
   defaultInkInEstimator: DefaultInkInEstimator | string;
   visibleOnSite: boolean;
+  showInSpotlight: boolean;
   displayAsCardInHeader: boolean;
   categoryDiscountOffMSRP: string;
   metaTagTitle: string;
@@ -66,6 +67,7 @@ export const defaultValues = {
   useGrandFormatSQFtTemplate: false,
   isNew: false,
   isSale: false,
+  showInSpotlight: false,
   categoryDiscountOffMSRP: '',
   staticShippingFacility: { ...defaultStaticShippingFacility },
   metaTagTitle: '',
@@ -111,6 +113,11 @@ export const inputsRows1: ValidFieldNames[] = [
   {
     label: 'Mark as Sale',
     field: 'isSale',
+    type: InputTypes.checkbox,
+  },
+  {
+    label: 'Show In Spotlight',
+    field: 'showInSpotlight',
     type: InputTypes.checkbox,
   },
   {
@@ -195,6 +202,7 @@ export const formattingPayload = (data: IAddSubcategoryForm) => {
     metaTagDescription,
     metaTagKeywords,
     staticShippingFacilityAll,
+    showInSpotlight,
   } = data;
 
   const payload: IAddSubcategoriesPayload = {
@@ -214,6 +222,7 @@ export const formattingPayload = (data: IAddSubcategoryForm) => {
     metaTagTitle,
     metaTagDescription,
     metaTagKeywords,
+    showInSpotlight,
   };
 
   if (staticShippingFacility) {

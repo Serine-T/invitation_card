@@ -17,16 +17,8 @@ import { ISubcategoriesInfo } from '@features/subcategories/types';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 import RowComponent from '@containers/common/Table/components/RowComponent';
 
-import {
-  AddSubcategorySchema,
-  IAddSubcategoryForm,
-  defaultInkInEstimatorValues,
-  defaultValues,
-  formattedData,
-  formattingPayload,
-  inputsRows1,
-  inputsRows2,
-  printTypeValues,
+import { AddSubcategorySchema, IAddSubcategoryForm, defaultInkInEstimatorValues,
+  defaultValues, formattedData, formattingPayload, inputsRows1, inputsRows2, printTypeValues,
 } from './helpers';
 import StaticShipping from './StaticShipping';
 import SEO from './SEO';
@@ -47,10 +39,7 @@ const InputsTable = ({ subcategoriesData }: IInputsTable) => {
     defaultValues: subcategoriesData ? formattedData(subcategoriesData) : defaultValues,
   });
 
-  const {
-    handleSubmit,
-    setError,
-  } = methods;
+  const { handleSubmit, setError } = methods;
 
   const onSubmit = (data: IAddSubcategoryForm) => {
     const payload = formattingPayload(data);

@@ -19,6 +19,7 @@ export interface IAddSubcategoriesPayload {
   useGrandFormatSQFtTemplate: boolean;
   defaultInkInEstimator: DefaultInkInEstimator | string | null;
   visibleOnSite: boolean;
+  showInSpotlight: boolean;
   displayAsCardInHeader: boolean;
   categoryDiscountOffMSRP: number | null;
   metaTagTitle: string;
@@ -44,6 +45,7 @@ export interface ISubcategoriesInfo {
   displayAsCardInHeader: boolean;
   isNew: boolean;
   isSale: boolean;
+  showInSpotlight: boolean;
   printType: PrintType | null;
   categoryId: string | null;
   metaTagTitle: string;

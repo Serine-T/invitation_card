@@ -4,7 +4,6 @@ export interface IFiltersForm {
   searchTerm?: string;
   visibleOnSite?: string;
   subCategoryId?: string;
-  showInSpotlight?: string;
 }
 
 export const FiltersSchema = yup.object().shape({
