@@ -132,7 +132,7 @@ const ImageUpload = ({ name, errorMessage, isFile = false }: IImageUpload) => {
         ) : (
           <StyledEmptyContainer error={!!errorMessage}>
             <Typography variant="body3">Drag and drop files or </Typography>
-            <StyledTypography variant="body3" color="blue" m="0 16px 0 4px">
+            <StyledTypography variant="body3" color="blue" m="0 16px 0 4px" underLine>
               Browse
             </StyledTypography>
             <UploadIcon />

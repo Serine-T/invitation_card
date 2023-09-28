@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData, IReorderPayload } from '@utils/types';
-import { constructQueryString } from '@utils/helpers';
+import { Filters, constructQueryString } from '@utils/helpers';
 import { AxiosResponse } from 'axios';
 
 import {
@@ -109,12 +109,7 @@ export const searchProducts = createAsyncThunk<IProductsSearchInfo[], ISearchPro
   'products/search',
   async (searchingData, thunkAPI) => {
     try {
-      const { searchTerm, visibleOnSite, subCategoryId, showInSpotlight } = searchingData;
-      const queryParams = constructQueryString({
-        searchTerm,
-        visibleOnSite,
-        subCategoryId,
-        showInSpotlight });
+      const queryParams = constructQueryString(searchingData as Filters);
 
       const { data: { data } } = await http.get<AxiosResponse<IProductsSearchInfo[]>>(
         `${prefix}/search?${queryParams}`,

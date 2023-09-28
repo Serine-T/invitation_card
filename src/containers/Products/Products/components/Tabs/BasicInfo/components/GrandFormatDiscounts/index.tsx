@@ -13,12 +13,7 @@ import MinusIcon from '@containers/common/Icons/MinusIcon';
 import { inputsFields } from './helpers';
 
 const GrandFormatDiscounts = () => {
-  const {
-    register,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useFormContext();
+  const { register, setValue, watch, formState: { errors } } = useFormContext();
 
   const { grandFormatOptions = {} } = watch();
 
@@ -56,6 +51,7 @@ const GrandFormatDiscounts = () => {
             color="blue"
             cursor="pointer"
             onClick={handleAddInput}
+            underLine
           >
             Add more +
           </StyledTypography>
@@ -73,11 +69,13 @@ const GrandFormatDiscounts = () => {
                     width="275px"
                     {...register(`grandFormatOptions.grandFormatDiscounts.${index}.${field}`)}
                     placeholder={placeholder}
-                    errorMessage={(errors as any)
-                      ?.grandFormatOptions?.grandFormatDiscounts?.[index]?.[field]?.message}
+                    errorMessage={(errors as any)?.grandFormatOptions?.grandFormatDiscounts?.[index]?.[field]?.message}
                   />
                   {inputList.length > 1 && idx === 0 && (
-                  <MinusIcon onClick={() => handleRemoveInput(index)} />
+                  <MinusIcon
+                    cursor="pointer"
+                    onClick={() => handleRemoveInput(index)}
+                  />
                   )}
                 </Stack>
               </TableCell>

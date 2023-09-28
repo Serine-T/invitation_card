@@ -19,10 +19,10 @@ import DndContainer from '@containers/common/Table/components/DndContainer';
 import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { selectProducts } from '@features/products/selectors';
-import { deleteProduct, searchProducts, reorderProducts } from '@features/products/actions';
-import { setProducts } from '@features/products/slice';
-import { IProductsSearchInfo } from '@features/products/types';
+import { selectProducts } from '@features/products/basicInfo/selectors';
+import { deleteProduct, searchProducts, reorderProducts } from '@features/products/basicInfo/actions';
+import { setProducts } from '@features/products/basicInfo/slice';
+import { IProductsSearchInfo } from '@features/products/basicInfo/types';
 import { selectSubcategories } from '@features/subcategories/selectors';
 import { getAllSubcategories } from '@features/subcategories/actions';
 

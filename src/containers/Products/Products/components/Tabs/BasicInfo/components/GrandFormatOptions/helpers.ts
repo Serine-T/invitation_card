@@ -1,3 +1,4 @@
+import { intagerSchema, positiveNumberSchema } from '@utils/schemas';
 import * as yup from 'yup';
 
 export const unitDisplayList = [
@@ -13,17 +14,6 @@ export const valCases = {
   isGreaterThanWidth: 'Width from is greater than Width to',
   isGreaterThanHeight: 'Height from is greater than Height to',
 };
-
-const positiveNumberSchema = yup
-  .number()
-  .typeError('Number is invalid')
-  .positive('Number is not positive');
-
-const intagerSchema = yup
-  .number()
-  .typeError('Number is invalid')
-  .integer('Intager is invalid')
-  .positive('Number is not positive');
 
 const grandFormatDiscountsSchema = yup.object({
   quantity: intagerSchema.required('Quantity is required'),

@@ -80,7 +80,6 @@ const InputsTable = ({ subcategoriesData }: IInputsTable) => {
           component="form"
         >
           <StyledTable tableTitle="SUBCATEGORY" colSpan={2}>
-
             {inputsRows1.map((item) => (
               <RowComponent key={item.label} {...item}>
                 <ReusableFields

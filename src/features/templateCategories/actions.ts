@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { http } from '@services/RequestService';
 import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData, IReorderPayload } from '@utils/types';
-import { constructQueryString } from '@utils/helpers';
+import { Filters, constructQueryString } from '@utils/helpers';
 import { AxiosResponse } from 'axios';
 
 import {
@@ -111,10 +111,7 @@ export const searchTemplateCategories = createAsyncThunk<ITemplateCategory[], IS
   'templateCategories/search',
   async (searchingData, thunkAPI) => {
     try {
-      const { searchTerm } = searchingData;
-      const queryParams = constructQueryString({
-        searchTerm,
-      });
+      const queryParams = constructQueryString(searchingData as Filters);
 
       const { data: { data } } = await http.get<AxiosResponse<ITemplateCategory[]>>(
         `${prefix}/search?${queryParams}`,

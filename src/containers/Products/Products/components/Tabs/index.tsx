@@ -1,6 +1,6 @@
 import { createElement, memo, useState } from 'react';
 
-import { IProductsPayload } from '@features/products/types';
+import { IProductsPayload } from '@features/products/basicInfo/types';
 import TitlesWithBackButton from '@containers/common/TitlesWithBackButton';
 import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 
@@ -23,6 +23,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
       title={editData ? 'Edit Product' : 'Add Product'}
       path="PRODUCTS_PRODUCTS"
     >
+      { !!editData && (
       <StyledStack>
         <StyledDivider>
           <StyledTabs value={value} onChange={handleChange}>
@@ -34,6 +35,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
           </StyledTabs>
         </StyledDivider>
       </StyledStack>
+      )}
       {createElement(tabsOptions[value].component, { editData })}
     </TitlesWithBackButton>
   );

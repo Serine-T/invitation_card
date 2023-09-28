@@ -7,41 +7,41 @@ import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
 import PAGE_ROUTES from '@routes/routingEnum';
-import ReusableFields from '@containers/common/Table/components/ReusableFields';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
-import { selectCategories } from '@features/categories/selectors';
-import { getOptionsArray } from '@utils/helpers';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { selectSubcategories } from '@features/subcategories/selectors';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
-import { addProduct, editProduct } from '@features/products/basicInfo/actions';
 import { IProductsPayload } from '@features/products/basicInfo/types';
 import Input from '@containers/common/Input';
+import {
+  addProductsQuantity,
+  deleteProductsQuantity, editProductsQuantity,
+} from '@features/products/productsQuantity/actions';
+import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 
 import {
   AddDataSchema,
   IAddDataForm,
   defaultValues,
   formattingPayload,
-  inputsRows1,
+  headCells,
 } from './helpers';
 
-interface IInputsTable{
+interface IEditComponent{
   editData?: IProductsPayload;
 }
 
-const InputsTable = ({ editData }: IInputsTable) => {
+const EditComponent = ({ editData }: IEditComponent) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { data: categories } = useAppSelector(selectCategories);
+  const { id } = useParams();
   const { actionLoading } = useAppSelector(selectSubcategories);
-  const filteredList = categories.filter((item) => item.subCategory.length);
 
-  const categoriesList = getOptionsArray(filteredList);
+  console.log('iiiddd****', id);
 
   const methods = useForm<IAddDataForm>({
     resolver: yupResolver(AddDataSchema as any), // TODO: add typing
-    defaultValues: editData || defaultValues,
+    defaultValues: { ...editData, productId: id } || defaultValues,
   });
 
   const {
@@ -50,11 +50,18 @@ const InputsTable = ({ editData }: IInputsTable) => {
     formState: { errors },
   } = methods;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const deleteAction = (quantityId: string) => {
+    dispatch(deleteProductsQuantity(quantityId)).unwrap().then(() => {
+      // fetchData();
+    }).catch(() => {});
+  };
+
   const onSubmit = (data: IAddDataForm) => {
     const payload = formattingPayload(data);
 
-    dispatch(editData ? editProduct(payload) : addProduct(payload)).unwrap().then(() => {
-      navigate(PAGE_ROUTES.PRODUCTS);
+    dispatch(editData ? editProductsQuantity(payload) : addProductsQuantity(payload)).unwrap().then(() => {
+      navigate(PAGE_ROUTES.PRODUCTS_PRODUCTS);
     }).catch((e) => {
       if (e.message === 'Subcategory with the provided title already exists in this category!') {
         // setError('title', { message: e.message });
@@ -62,7 +69,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
       } else if (e.message === 'You have already chose the banners in the category, please disable one of them to proceed.') {
         // setError('displayAsCardInHeader', { message: e.message });
       } else {
-        navigate(PAGE_ROUTES.PRODUCTS);
+        navigate(PAGE_ROUTES.PRODUCTS_PRODUCTS);
       }
     });
   };
@@ -72,39 +79,28 @@ const InputsTable = ({ editData }: IInputsTable) => {
       <StyledStack
         onSubmit={handleSubmit(onSubmit)}
         component="form"
+        mb="32px"
       >
-        <StyledTable tableTitle="BASIC INFO" colSpan={2}>
-
-          {inputsRows1.map((item) => {
-            const { label, isRequired } = item;
-
-            return (
-              <StyledTableRow key={label}>
-                <StyledTableCell>
-                  {`${label}: ${isRequired ? '*' : ''}`}
-                </StyledTableCell>
-                <TableCell>
-                  <ReusableFields
-                    {...item}
-                    selectList={[{
-                      field: 'categoryId',
-                      options: categoriesList,
-                    }]}
-                  />
-                </TableCell>
-              </StyledTableRow>
-            );
-          })}
+        <StyledTable headCells={headCells}>
           <StyledTableRow>
             <StyledTableCell>
-              Product Weight (1):
+              <Input
+                placeholder="Quantity"
+                {...register('quantity')}
+                errorMessage={errors?.quantity?.message}
+              />
             </StyledTableCell>
             <TableCell>
               <Input
-                width="120px"
-                placeholder="Product Weight"
-                {...register('weight')}
-                errorMessage={errors?.weight?.message as string}
+                placeholder="Base price"
+                {...register('basePrice')}
+                errorMessage={errors?.basePrice?.message}
+              />
+            </TableCell>
+            <TableCell width="150px">
+              <DeleteBtn
+                deleteAction={() => deleteAction('ll')}
+                questionText="Are you sure you want to delete this product ?"
               />
             </TableCell>
           </StyledTableRow>
@@ -115,4 +111,4 @@ const InputsTable = ({ editData }: IInputsTable) => {
   );
 };
 
-export default memo(InputsTable);
+export default memo(EditComponent);

@@ -12,8 +12,8 @@ import { getOptionsArray } from '@utils/helpers';
 import { useNavigate } from 'react-router-dom';
 import { selectSubcategories } from '@features/subcategories/selectors';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
-import { addProduct, editProduct } from '@features/products/actions';
-import { IProductsPayload } from '@features/products/types';
+import { addProduct, editProduct } from '@features/products/basicInfo/actions';
+import { IProductsPayload } from '@features/products/basicInfo/types';
 import { getSubcategoriesByCategoryId } from '@features/subcategories/actions';
 import { ISubcategoriesByCategoryId } from '@features/subcategories/types';
 import Input from '@containers/common/Input';
@@ -30,9 +30,9 @@ import {
   inputsRows1,
   inputsRows2,
 } from './helpers';
-import ProductDescription from './ProductDescription';
-import GrandFormatOptions from './GrandFormatOptions';
-import GrandFormatDiscounts from './GrandFormatDiscounts';
+import ProductDescription from './components/ProductDescription';
+import GrandFormatOptions from './components/GrandFormatOptions';
+import GrandFormatDiscounts from './components/GrandFormatDiscounts';
 
 interface IInputsTable{
   editData?: IProductsPayload;
