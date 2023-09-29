@@ -8,7 +8,7 @@ interface IFromToErrorMessage {
 }
 
 const FromToErrorMessage = ({ message }: IFromToErrorMessage) => (
-  <Box mt="6px">
+  <Box mt="6px" ml="50">
     <ErrorMessage message={message} />
   </Box>
 );

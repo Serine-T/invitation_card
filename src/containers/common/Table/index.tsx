@@ -4,7 +4,8 @@ import { TableProps } from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
-import { Stack, Typography } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 import { StyledMuiTable, StyledPagination, StyledTableContainer, StyledTableRow } from './styled';
 import { ITableHeadCell } from './helpers';

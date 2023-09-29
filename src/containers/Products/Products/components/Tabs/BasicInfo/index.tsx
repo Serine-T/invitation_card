@@ -53,14 +53,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
     defaultValues: editData || defaultValues,
   });
 
-  const {
-    handleSubmit,
-    setValue,
-    watch,
-    register,
-    formState: { errors },
-    setError,
-  } = methods;
+  const { handleSubmit, setValue, watch, register, formState: { errors }, setError } = methods;
 
   const { categoryId, subCategoryId, grandFormatOptions } = watch();
   const mountedRef = useRef(false);
@@ -128,7 +121,6 @@ const InputsTable = ({ editData }: IInputsTable) => {
         component="form"
       >
         <StyledTable tableTitle="BASIC PRODUCT INFO" colSpan={2}>
-
           {inputsRows1.map((item) => (
             <RowComponent key={item.label} {...item}>
               <ReusableFields
@@ -170,9 +162,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
             </InputAfterText>
           </RowComponent>
         </StyledTable>
-        {/* TODO: Delete SEO component in this folder if not used */}
         <SEO />
-
         <ProductDescription />
         {grandFormatOptions && (
         <>

@@ -3,29 +3,32 @@ import { memo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import TableCell from '@mui/material/TableCell';
-import StyledTable from '@containers/common/Table';
-import { StyledTableRow } from '@containers/common/Table/styled';
-import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledMuiTable, StyledTableContainer, StyledTableRow } from '@containers/common/Table/styled';
+import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
 import { selectSubcategories } from '@features/subcategories/selectors';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 import { IProductsPayload } from '@features/products/basicInfo/types';
-import Input from '@containers/common/Input';
 import {
   addProductsQuantity,
   deleteProductsQuantity, editProductsQuantity,
 } from '@features/products/productsQuantity/actions';
-import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
+import TableHead from '@mui/material/TableHead';
+import TableBody from '@mui/material/TableBody';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import AddTextBtn from '@containers/common/Table/components/AddTextBtn';
 
 import {
   AddDataSchema,
   IAddDataForm,
   defaultValues,
   formattingPayload,
-  headCells,
 } from './helpers';
+import { fakeData } from './fakeData';
+import QuantityRow from './components/QuantityRow';
 
 interface IEditComponent{
   editData?: IProductsPayload;
@@ -44,8 +47,8 @@ const EditComponent = ({ editData }: IEditComponent) => {
 
   const {
     handleSubmit,
-    register,
-    formState: { errors },
+    // register,
+    // formState: { errors },
   } = methods;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -72,6 +75,8 @@ const EditComponent = ({ editData }: IEditComponent) => {
     });
   };
 
+  const handleAddInput = () => {};
+
   return (
     <FormProvider {...methods}>
       <StyledStack
@@ -79,30 +84,30 @@ const EditComponent = ({ editData }: IEditComponent) => {
         component="form"
         mb="32px"
       >
-        <StyledTable headCells={headCells}>
-          <StyledTableRow>
-            <StyledTableCell>
-              <Input
-                placeholder="Quantity"
-                {...register('quantity')}
-                errorMessage={errors?.quantity?.message}
-              />
-            </StyledTableCell>
-            <TableCell>
-              <Input
-                placeholder="Base price"
-                {...register('basePrice')}
-                errorMessage={errors?.basePrice?.message}
-              />
-            </TableCell>
-            <TableCell width="150px">
-              <DeleteBtn
-                deleteAction={() => deleteAction('ll')}
-                questionText="Are you sure you want to delete this product ?"
-              />
-            </TableCell>
-          </StyledTableRow>
-        </StyledTable>
+        {
+          fakeData.map((item) => (
+            <StyledTableContainer key={item.quantityId} sx={{ marginBottom: '16px' }}>
+              <StyledMuiTable>
+                <TableHead>
+                  <StyledTableRow>
+                    <TableCell>Quantity</TableCell>
+                    <TableCell>
+                      <Stack direction="row" justifyContent="space-between">
+                        <Typography>INK & turn around</Typography>
+                        <AddTextBtn text="+Add new Ink" handleAdd={handleAddInput} />
+                      </Stack>
+                    </TableCell>
+                    <TableCell>Actions</TableCell>
+                  </StyledTableRow>
+                </TableHead>
+                <TableBody>
+                  <QuantityRow {...item} />
+                </TableBody>
+              </StyledMuiTable>
+            </StyledTableContainer>
+          ))
+        }
+
         <SubmitBtn actionLoading={actionLoading} />
       </StyledStack>
     </FormProvider>

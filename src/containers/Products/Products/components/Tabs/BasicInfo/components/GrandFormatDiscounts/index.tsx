@@ -6,9 +6,10 @@ import Input from '@containers/common/Input';
 import StyledTable from '@containers/common/Table';
 import { StyledTableRow } from '@containers/common/Table/styled';
 import { StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
-import { Stack, TableCell } from '@mui/material';
-import StyledTypography from '@containers/common/StyledTypography';
+import Stack from '@mui/material/Stack';
+import TableCell from '@mui/material/TableCell';
 import MinusIcon from '@containers/common/Icons/MinusIcon';
+import AddTextBtn from '@containers/common/Table/components/AddTextBtn';
 
 import { inputsFields } from './helpers';
 
@@ -45,17 +46,7 @@ const GrandFormatDiscounts = () => {
       <StyledTable
         tableTitle="GRAND FORMAT VOLUME PRICING DISCOUNTS"
         colSpan={2}
-        btn={(
-          <StyledTypography
-            variant="body3"
-            color="blue"
-            cursor="pointer"
-            onClick={handleAddInput}
-            underLine
-          >
-            Add more +
-          </StyledTypography>
-      )}
+        btn={<AddTextBtn text="+Add more" handleAdd={handleAddInput} />}
       >
         {!!inputList.length && inputList.map((_, index) => (
           inputsFields.map(({ label, field, placeholder }, idx) => (
