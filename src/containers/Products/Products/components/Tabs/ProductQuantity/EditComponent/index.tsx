@@ -8,18 +8,19 @@ import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
-import { selectSubcategories } from '@features/subcategories/selectors';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 import { IProductsPayload } from '@features/products/basicInfo/types';
 import {
   addProductsQuantity,
-  deleteProductsQuantity, editProductsQuantity,
+  deleteProductsQuantity, editProductsQuantity, getAllProductsQuantities,
 } from '@features/products/productsQuantity/actions';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import AddTextBtn from '@containers/common/Table/components/AddTextBtn';
+import useMount from '@customHooks/useMount';
+import { selectProductsQuantities } from '@features/products/productsQuantity/selectors';
 
 import {
   AddDataSchema,
@@ -38,7 +39,7 @@ const EditComponent = ({ editData }: IEditComponent) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const { actionLoading } = useAppSelector(selectSubcategories);
+  const { actionLoading, data: productQuantities } = useAppSelector(selectProductsQuantities);
 
   const methods = useForm<IAddDataForm>({
     resolver: yupResolver(AddDataSchema as any), // TODO: add typing
@@ -50,6 +51,12 @@ const EditComponent = ({ editData }: IEditComponent) => {
     // register,
     // formState: { errors },
   } = methods;
+
+  useMount(() => {
+    dispatch(getAllProductsQuantities(id as string)).unwrap().then((data) => {
+      console.log('dddd', data);
+    }).catch(() => {});
+  });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const deleteAction = (quantityId: string) => {

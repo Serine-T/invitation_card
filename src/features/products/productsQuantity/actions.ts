@@ -23,13 +23,13 @@ export const addProductsQuantity = createAsyncThunk<void, IProductsQuantityPaylo
   },
 );
 
-export const getAllProductsQuantities = createAsyncThunk<IProductsQuantityInfo[], void, {
+export const getAllProductsQuantities = createAsyncThunk<IProductsQuantityInfo[], string, {
   rejectValue: AxiosData;
 }>(
   'productsQuantity/all',
-  async (_, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
-      const { data: { data } } = await http.get<AxiosResponse<IProductsQuantityInfo[]>>(prefix);
+      const { data: { data } } = await http.get<AxiosResponse<IProductsQuantityInfo[]>>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {
