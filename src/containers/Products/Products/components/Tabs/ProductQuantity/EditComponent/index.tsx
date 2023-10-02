@@ -90,10 +90,10 @@ const EditComponent = ({ editData }: IEditComponent) => {
               <StyledMuiTable>
                 <TableHead>
                   <StyledTableRow>
-                    <TableCell>Quantity</TableCell>
+                    <TableCell>QUANTITY</TableCell>
                     <TableCell>
                       <Stack direction="row" justifyContent="space-between">
-                        <Typography>INK & turn around</Typography>
+                        <Typography>INK & TURN AROUND</Typography>
                         <AddTextBtn text="+Add new Ink" handleAdd={handleAddInput} />
                       </Stack>
                     </TableCell>
