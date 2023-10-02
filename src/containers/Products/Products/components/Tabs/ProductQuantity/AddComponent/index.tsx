@@ -35,6 +35,8 @@ const AddComponent = ({ editData }: IAddComponent) => {
   const {
     handleSubmit,
     register,
+    setValue,
+    setError,
     formState: { errors },
   } = methods;
 
@@ -42,13 +44,10 @@ const AddComponent = ({ editData }: IAddComponent) => {
     const payload = formattingPayload(data);
 
     dispatch(editData ? editProductsQuantity(payload) : addProductsQuantity(payload)).unwrap().then(() => {
-      navigate(PAGE_ROUTES.PRODUCTS_PRODUCTS);
+      setValue('quantity', null);
     }).catch((e) => {
       if (e.message === 'Subcategory with the provided title already exists in this category!') {
-        // setError('title', { message: e.message });
-      // eslint-disable-next-line max-len
-      } else if (e.message === 'You have already chose the banners in the category, please disable one of them to proceed.') {
-        // setError('displayAsCardInHeader', { message: e.message });
+        setError('quantity', { message: e.message });
       } else {
         navigate(PAGE_ROUTES.PRODUCTS_PRODUCTS);
       }
