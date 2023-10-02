@@ -123,9 +123,12 @@ const ImageUpload = ({ name, errorMessage, isFile = false }: IImageUpload) => {
             </StyledTitleBox>
 
             <Box>
-              <StyledTypography cursor="pointer" onClick={handleDeleteImg}>
-                <CloseIcon fontSize="inherit" color="inherit" />
-              </StyledTypography>
+              <CloseIcon
+                fontSize="inherit"
+                color="inherit"
+                cursor="pointer"
+                onClick={handleDeleteImg}
+              />
             </Box>
 
           </StyledUploadContainer>
