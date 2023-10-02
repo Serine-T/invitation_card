@@ -1,4 +1,4 @@
-import { intagerSchema, positiveNumberSchema } from '@utils/schemas';
+import { integerSchema, positiveNumberSchema } from '@utils/schemas';
 import * as yup from 'yup';
 
 export interface IAddDataForm {
@@ -15,7 +15,7 @@ export const defaultValues = {
 };
 
 export const AddDataSchema = yup.object().shape({
-  quantity: intagerSchema.required('Quantity is required'),
+  quantity: integerSchema.required('Quantity is required'),
   basePrice: positiveNumberSchema.required('Base price is required'),
 });
 

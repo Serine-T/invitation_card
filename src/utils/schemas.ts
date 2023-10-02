@@ -36,17 +36,20 @@ export const validateOptionalURL = yup.string().optional().test(
   },
 );
 
-export const textWidthValidation = yup.string().optional().test(
-  'text-length-validation',
-  'The maximum length is 250 characters',
-  (value: string | undefined) => {
-    if (!value) {
-      return true;
-    }
+export const createTextWidthValidation = (maxLength: number) => {
+  return yup.string().optional().test(
+    'text-length-validation',
+    `The maximum length is ${maxLength} characters`,
+    (value: string | undefined) => {
+      if (!value) {
+        return true;
+      }
 
-    return yup.string().max(250).isValidSync(value);
-  },
-);
+      return yup.string().max(maxLength).isValidSync(value);
+    },
+  );
+};
+
 export const integerValidation = yup.string().optional().test(
   'valid-intager',
   'Intager is invalid',
@@ -82,7 +85,7 @@ export const positiveNumberSchema = yup
   .typeError('Number is invalid')
   .positive('Number is not positive');
 
-export const intagerSchema = yup
+export const integerSchema = yup
   .number()
   .typeError('Number is invalid')
   .integer('Intager is invalid')

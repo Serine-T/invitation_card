@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { integerValidation, textWidthValidation } from '@utils/schemas';
+import { integerValidation, createTextWidthValidation } from '@utils/schemas';
 import { DefaultInkInEstimator, PrintType, StaticShippingFacility } from '@features/subcategories/enums';
 import { selectDefaultValue } from '@containers/common/Select/helpers';
 import { IAddSubcategoriesPayload, ISubcategoriesInfo } from '@features/subcategories/types';
@@ -71,8 +71,8 @@ export const AddSubcategorySchema = yup.object().shape({
   categoryId: yup.string().required('Category is required'),
   printType: yup.string()
     .required('Print type is required'),
-  metaTagDescription: textWidthValidation,
-  metaTagTitle: textWidthValidation,
+  metaTagDescription: createTextWidthValidation(250),
+  metaTagTitle: createTextWidthValidation(250),
   categoryDiscountOffMSRP: integerValidation.nullable(),
 });
 

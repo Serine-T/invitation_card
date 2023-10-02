@@ -2,29 +2,25 @@ import { memo } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import TableCell from '@mui/material/TableCell';
-import StyledTable from '@containers/common/Table';
-import { StyledTableRow } from '@containers/common/Table/styled';
-import { StyledStack, StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
+import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import PAGE_ROUTES from '@routes/routingEnum';
-import ReusableFields from '@containers/common/Table/components/ReusableFields';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
-import { selectCategories } from '@features/categories/selectors';
-import { getOptionsArray } from '@utils/helpers';
 import { useNavigate } from 'react-router-dom';
 import { selectSubcategories } from '@features/subcategories/selectors';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 import { addProduct, editProduct } from '@features/products/basicInfo/actions';
 import { IProductsPayload } from '@features/products/basicInfo/types';
-import Input from '@containers/common/Input';
+import Typography from '@mui/material/Typography';
 
 import {
   AddDataSchema,
   IAddDataForm,
   defaultValues,
   formattingPayload,
-  inputsRows1,
 } from './helpers';
+import SearchSection from './components/SearchSection';
+import AttributesContainer from './components/AttributesContainer';
+import { StyledDivider } from './styles';
 
 interface IInputsTable{
   editData?: IProductsPayload;
@@ -33,11 +29,7 @@ interface IInputsTable{
 const InputsTable = ({ editData }: IInputsTable) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { data: categories } = useAppSelector(selectCategories);
   const { actionLoading } = useAppSelector(selectSubcategories);
-  const filteredList = categories.filter((item) => item.subCategory.length);
-
-  const categoriesList = getOptionsArray(filteredList);
 
   const methods = useForm<IAddDataForm>({
     resolver: yupResolver(AddDataSchema as any), // TODO: add typing
@@ -46,8 +38,7 @@ const InputsTable = ({ editData }: IInputsTable) => {
 
   const {
     handleSubmit,
-    register,
-    formState: { errors },
+
   } = methods;
 
   const onSubmit = (data: IAddDataForm) => {
@@ -68,50 +59,51 @@ const InputsTable = ({ editData }: IInputsTable) => {
   };
 
   return (
-    <FormProvider {...methods}>
-      <StyledStack
-        onSubmit={handleSubmit(onSubmit)}
-        component="form"
-      >
-        <StyledTable tableTitle="BASIC INFO" colSpan={2}>
-
-          {inputsRows1.map((item) => {
-            const { label, isRequired } = item;
-
-            return (
-              <StyledTableRow key={label}>
-                <StyledTableCell>
-                  {`${label}: ${isRequired ? '*' : ''}`}
-                </StyledTableCell>
-                <TableCell>
-                  <ReusableFields
-                    {...item}
-                    selectList={[{
-                      field: 'categoryId',
-                      options: categoriesList,
-                    }]}
-                  />
-                </TableCell>
-              </StyledTableRow>
-            );
-          })}
-          <StyledTableRow>
-            <StyledTableCell>
-              Product Weight (1):
-            </StyledTableCell>
-            <TableCell>
-              <Input
-                width="120px"
-                placeholder="Product Weight"
-                {...register('weight')}
-                errorMessage={errors?.weight?.message as string}
-              />
-            </TableCell>
-          </StyledTableRow>
-        </StyledTable>
-        <SubmitBtn actionLoading={actionLoading} />
-      </StyledStack>
-    </FormProvider>
+    <>
+      <SearchSection />
+      <StyledDivider />
+      <FormProvider {...methods}>
+        <StyledStack
+          onSubmit={handleSubmit(onSubmit)}
+          component="form"
+        >
+          <Typography variant="h9">Assigned attributes</Typography>
+          <AttributesContainer
+            sectionTitle="Stock"
+            data={[
+              { title: 'Out-Scrimt' },
+              { title: 'In-Vinyl' },
+            ]}
+            btn
+          />
+          <AttributesContainer
+            sectionTitle="Finish/Coating"
+            data={[
+              { title: 'Out-Scrimt' },
+              { title: 'In-Vinyl' },
+            ]}
+            btn
+          />
+          <StyledDivider />
+          <Typography variant="h9">All attributes</Typography>
+          <AttributesContainer
+            sectionTitle="Stock"
+            data={[
+              { title: 'Out-Scrimt' },
+              { title: 'In-Vinyl' },
+            ]}
+          />
+          <AttributesContainer
+            sectionTitle="Finish/Coating"
+            data={[
+              { title: 'Out-Scrimt' },
+              { title: 'In-Vinyl' },
+            ]}
+          />
+          <SubmitBtn actionLoading={actionLoading} />
+        </StyledStack>
+      </FormProvider>
+    </>
   );
 };
 

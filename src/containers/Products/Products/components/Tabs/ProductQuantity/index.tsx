@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
-import AddComponent from './components/AddComponent';
-import EditComponent from './components/EditComponent';
+import AddComponent from './AddComponent';
+import EditComponent from './EditComponent';
 
 const InputsTable = () => {
   return (
