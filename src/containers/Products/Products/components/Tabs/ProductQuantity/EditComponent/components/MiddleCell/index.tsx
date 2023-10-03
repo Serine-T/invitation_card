@@ -1,66 +1,63 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
 import Select from '@containers/common/Select';
 import AddTextBtn from '@containers/common/Table/components/AddTextBtn';
 import { useFormContext } from 'react-hook-form';
+import { useAppSelector } from '@features/app/hooks';
+import { selectAttributes } from '@features/attributes/selectors';
+import { getOptionsArray } from '@utils/helpers';
 
 import { StyledCloseIcon, StyledMiddleCell } from './styles';
 import { StyledStack } from '../../styles';
+import TurnAround from '../TurnAround';
 
 interface IMiddleCell{
-  inkId: any;
-  turnArounds: any; // TODO: change typing
-  idx: number;
+  tableIdx: number;
+  rowIdx:number;
 }
 
-const MiddleCell = ({ inkId, turnArounds, idx }: IMiddleCell) => {
+const MiddleCell = ({ rowIdx, tableIdx }: IMiddleCell) => {
   const { setValue, watch } = useFormContext();
+  const { inksAttributes } = useAppSelector(selectAttributes);
+  const { quantityAttributes } = watch();
+  const { attributes } = quantityAttributes[tableIdx];
+  const { turnAroundIds } = attributes[rowIdx];
 
-  console.log('waaa', watch());
+  const inksOptions = getOptionsArray(inksAttributes, 'name');
 
-  const [inputList, setInputList] = useState<any[]>(turnArounds);
   const handleAddInput = () => {
-    const newInput = { quantity: null, discountPercent: null };
-
-    setValue('grandFormatOptions.grandFormatDiscounts', [...turnArounds, newInput]);
-
-    setInputList([...inputList, newInput]);
+    setValue(
+      `quantityAttributes[${tableIdx}].attributes[${rowIdx}].turnAroundIds`,
+      [...turnAroundIds, ''],
+    );
   };
 
-  const handleRemoveInput = () => {
-    const values = [...inputList] as any[][];
+  const handleRemoveInk = () => {
+    const newAttributes = attributes.filter((_: any, i: number) => i !== rowIdx);
 
-    values.splice(idx, 1);
-    setInputList(values);
-
-    const copyFormValues = [...turnArounds];
-
-    copyFormValues.splice(idx, 1);
-    setValue('grandFormatOptions.grandFormatDiscounts', copyFormValues);
+    setValue(`quantityAttributes[${tableIdx}].attributes`, newAttributes);
   };
 
   return (
-    <StyledMiddleCell key={inkId}>
+    <StyledMiddleCell>
       <StyledStack direction="row">
-        <StyledCloseIcon />
+        <StyledCloseIcon onClick={handleRemoveInk} />
         <Select
           width="75px"
-          name="inkId"
-          options={[]}
+          name={`quantityAttributes[${tableIdx}].attributes[${rowIdx}].inkId`}
+          options={inksOptions}
         />
         <AddTextBtn text="+Add Turn Around" handleAdd={handleAddInput} />
       </StyledStack>
 
-      {inputList.map((i: any) => (
-        <StyledStack key={i} direction="row">
-          <StyledCloseIcon onClick={handleRemoveInput} />
-          <Select
-            key={i}
-            width="240px"
-            name="subCategoryId"
-            options={[]}
-          />
-        </StyledStack>
+      {turnAroundIds.map((_: any, turnAroundIdx: number) => (
+        <TurnAround
+          // eslint-disable-next-line react/no-array-index-key
+          key={turnAroundIdx}
+          rowIdx={rowIdx}
+          tableIdx={tableIdx}
+          turnAroundIdx={turnAroundIdx}
+        />
       ))}
     </StyledMiddleCell>
   );

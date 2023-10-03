@@ -6,7 +6,7 @@ import { AxiosResponse } from 'axios';
 
 import { IProductsQuantityInfo, IProductsQuantityPayload } from './types';
 
-const prefix = '/products/product-quantity';
+const prefix = '/products/product-quantities';
 
 export const addProductsQuantity = createAsyncThunk<void, IProductsQuantityPayload, {
   rejectValue: AxiosData;
@@ -23,13 +23,13 @@ export const addProductsQuantity = createAsyncThunk<void, IProductsQuantityPaylo
   },
 );
 
-export const getAllProductsQuantities = createAsyncThunk<IProductsQuantityInfo[], void, {
+export const getAllProductsQuantities = createAsyncThunk<IProductsQuantityInfo[], string, {
   rejectValue: AxiosData;
 }>(
   'productsQuantity/all',
-  async (_, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
-      const { data: { data } } = await http.get<AxiosResponse<IProductsQuantityInfo[]>>(prefix);
+      const { data: { data } } = await http.get<AxiosResponse<IProductsQuantityInfo[]>>(`${prefix}/${id}`);
 
       return data;
     } catch (error) {
@@ -79,6 +79,20 @@ export const deleteProductsQuantity = createAsyncThunk<void, string, {
   async (id, thunkAPI) => {
     try {
       await http.delete(`${prefix}/${id}`);
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);
+export const addProductsQuantityAttributes = createAsyncThunk<void, {body:IProductsQuantityPayload; id: string}, {
+  rejectValue: AxiosData;
+}>(
+  'productsQuantity/addProductsQuantityAttributes',
+  async ({ body, id }, thunkAPI) => {
+    try {
+      await http.put<IProductsQuantityPayload>(`${prefix}/attributes/${id}`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

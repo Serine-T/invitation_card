@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { Dispatch, SetStateAction, memo } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,17 +11,16 @@ import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
 import { selectSubcategories } from '@features/subcategories/selectors';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
-import { IProductsPayload } from '@features/products/basicInfo/types';
 import Input from '@containers/common/Input';
-import { addProductsQuantity, editProductsQuantity } from '@features/products/productsQuantity/actions';
+import { addProductsQuantity } from '@features/products/productsQuantity/actions';
 
 import { AddDataSchema, IAddDataForm, defaultValues, formattingPayload } from './helpers';
 
-interface IAddComponent{
-  editData?: IProductsPayload;
+interface IAddComponent {
+  setIsQuantityAdded: Dispatch<SetStateAction<boolean>>;
 }
 
-const AddComponent = ({ editData }: IAddComponent) => {
+const AddComponent = ({ setIsQuantityAdded }:IAddComponent) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -29,26 +28,20 @@ const AddComponent = ({ editData }: IAddComponent) => {
 
   const methods = useForm<IAddDataForm>({
     resolver: yupResolver(AddDataSchema as any), // TODO: add typing
-    defaultValues: { ...editData, productId: id } || defaultValues,
+    defaultValues: { ...defaultValues, productId: id },
   });
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = methods;
+  const { handleSubmit, register, setError, setValue, formState: { errors } } = methods;
 
   const onSubmit = (data: IAddDataForm) => {
     const payload = formattingPayload(data);
 
-    dispatch(editData ? editProductsQuantity(payload) : addProductsQuantity(payload)).unwrap().then(() => {
-      navigate(PAGE_ROUTES.PRODUCTS_PRODUCTS);
+    dispatch(addProductsQuantity(payload)).unwrap().then(() => {
+      setValue('quantity', null);
+      setIsQuantityAdded(true);
     }).catch((e) => {
-      if (e.message === 'Subcategory with the provided title already exists in this category!') {
-        // setError('title', { message: e.message });
-      // eslint-disable-next-line max-len
-      } else if (e.message === 'You have already chose the banners in the category, please disable one of them to proceed.') {
-        // setError('displayAsCardInHeader', { message: e.message });
+      if (e.message === 'Product with specified quality already exists!') {
+        setError('quantity', { message: e.message });
       } else {
         navigate(PAGE_ROUTES.PRODUCTS_PRODUCTS);
       }

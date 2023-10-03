@@ -3,6 +3,8 @@ export interface IState {
   actionLoading: boolean;
   data: IAttribute[];
   errorMessage: string | null;
+  inksAttributes: IAttribute[];
+  turnAroundsAttributes: IAttribute[];
 }
 
 export interface IAddAttributePayload {

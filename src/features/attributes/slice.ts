@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { IState } from './types';
 import {
-  addAttribute, editAttribute, getAllAttributes, getAttributeById, searchAttributes,
+  addAttribute, editAttribute, getAllAttributes, getAttributeByCategoryName, getAttributeById, searchAttributes,
 } from './actions';
 
 const initialState: IState = {
@@ -10,6 +10,8 @@ const initialState: IState = {
   actionLoading: false,
   data: [],
   errorMessage: null,
+  inksAttributes: [],
+  turnAroundsAttributes: [],
 };
 
 const attributesSlice = createSlice({
@@ -70,6 +72,26 @@ const attributesSlice = createSlice({
       state.errorMessage = null;
     });
     builder.addCase(searchAttributes.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.errorMessage = payload.message;
+    });
+
+    builder.addCase(getAttributeByCategoryName.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getAttributeByCategoryName.fulfilled, (state, { payload }) => {
+      const { name, data } = payload;
+
+      if (name === 'Turn Around') {
+        state.turnAroundsAttributes = data;
+      } else {
+        state.inksAttributes = data;
+      }
+
+      state.isLoading = false;
+      state.errorMessage = null;
+    });
+    builder.addCase(getAttributeByCategoryName.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.errorMessage = payload.message;
     });
