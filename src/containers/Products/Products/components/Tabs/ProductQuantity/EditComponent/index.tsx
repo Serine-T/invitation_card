@@ -1,88 +1,47 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import TableCell from '@mui/material/TableCell';
-import { StyledMuiTable, StyledTableContainer, StyledTableRow } from '@containers/common/Table/styled';
 import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
-import PAGE_ROUTES from '@routes/routingEnum';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
-import { IProductsPayload } from '@features/products/basicInfo/types';
 import {
-  addProductsQuantity,
-  deleteProductsQuantity, editProductsQuantity, getAllProductsQuantities,
+  addProductsQuantityAttributes,
 } from '@features/products/productsQuantity/actions';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import AddTextBtn from '@containers/common/Table/components/AddTextBtn';
-import useMount from '@customHooks/useMount';
 import { selectProductsQuantities } from '@features/products/productsQuantity/selectors';
 
-import {
-  AddDataSchema,
-  IAddDataForm,
-  defaultValues,
-  formattingPayload,
-} from './helpers';
-import { fakeData } from './fakeData';
-import QuantityRow from './components/QuantityRow';
+import { AddDataSchema, IAddDataForm, formattingPayload } from './helpers';
+import QuantityTable from './components/QuantityTable';
 
-interface IEditComponent{
-  editData?: IProductsPayload;
-}
-
-const EditComponent = ({ editData }: IEditComponent) => {
-  const navigate = useNavigate();
+const EditComponent = () => {
   const dispatch = useAppDispatch();
-  const { id } = useParams();
   const { actionLoading, data: productQuantities } = useAppSelector(selectProductsQuantities);
+  const { id } = useParams();
 
-  const methods = useForm<IAddDataForm>({
+  const methods = useForm<IAddDataForm>({ // TODO: productQuantity
     resolver: yupResolver(AddDataSchema as any), // TODO: add typing
-    defaultValues: { ...editData, productId: id } || defaultValues,
+    defaultValues: { quantityAttributes: productQuantities },
   });
 
-  const {
-    handleSubmit,
-    // register,
-    // formState: { errors },
-  } = methods;
+  const { handleSubmit, watch, setValue } = methods;
 
-  useMount(() => {
-    dispatch(getAllProductsQuantities(id as string)).unwrap().then((data) => {
-      console.log('dddd', data);
-    }).catch(() => {});
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const deleteAction = (quantityId: string) => {
-    dispatch(deleteProductsQuantity(quantityId)).unwrap().then(() => {
-      // fetchData();
-    }).catch(() => {});
-  };
+  useEffect(() => {
+    setValue('quantityAttributes', productQuantities);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productQuantities]);
 
   const onSubmit = (data: IAddDataForm) => {
-    const payload = formattingPayload(data);
+    const payload = formattingPayload(data as any); // TODO: productQuantity
 
-    dispatch(editData ? editProductsQuantity(payload) : addProductsQuantity(payload)).unwrap().then(() => {
-      navigate(PAGE_ROUTES.PRODUCTS_PRODUCTS);
-    }).catch((e) => {
-      if (e.message === 'Subcategory with the provided title already exists in this category!') {
-        // setError('title', { message: e.message });
-      // eslint-disable-next-line max-len
-      } else if (e.message === 'You have already chose the banners in the category, please disable one of them to proceed.') {
-        // setError('displayAsCardInHeader', { message: e.message });
-      } else {
-        navigate(PAGE_ROUTES.PRODUCTS_PRODUCTS);
-      }
-    });
+    dispatch(addProductsQuantityAttributes({
+      body: payload as any,
+      id: id as string,
+    })).unwrap().then(() => { // TODO: productQuantity any
+    }).catch(() => { });
   };
 
-  const handleAddInput = () => {};
+  const { quantityAttributes } = watch();
 
   return (
     <FormProvider {...methods}>
@@ -92,29 +51,11 @@ const EditComponent = ({ editData }: IEditComponent) => {
         mb="32px"
       >
         {
-          fakeData.map((item) => (
-            <StyledTableContainer key={item.quantityId} sx={{ marginBottom: '16px' }}>
-              <StyledMuiTable>
-                <TableHead>
-                  <StyledTableRow>
-                    <TableCell>QUANTITY</TableCell>
-                    <TableCell>
-                      <Stack direction="row" justifyContent="space-between">
-                        <Typography>INK & TURN AROUND</Typography>
-                        <AddTextBtn text="+Add new Ink" handleAdd={handleAddInput} />
-                      </Stack>
-                    </TableCell>
-                    <TableCell>Actions</TableCell>
-                  </StyledTableRow>
-                </TableHead>
-                <TableBody>
-                  <QuantityRow {...item} />
-                </TableBody>
-              </StyledMuiTable>
-            </StyledTableContainer>
+          quantityAttributes.map((_: any, idx: number) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <QuantityTable key={idx} idx={idx} />
           ))
         }
-
         <SubmitBtn actionLoading={actionLoading} />
       </StyledStack>
     </FormProvider>

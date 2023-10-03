@@ -1,26 +1,30 @@
-import { integerSchema, positiveNumberSchema } from '@utils/schemas';
 import * as yup from 'yup';
 
 export interface IAddDataForm {
-  id?: string;
-  quantity: number | null;
-  basePrice: number | null;
-  productId: string;
+  quantityAttributes: any; // TODO: productQuantity
 }
 
-export const defaultValues = {
-  quantity: null,
-  basePrice: null,
-  productId: '',
-};
-
 export const AddDataSchema = yup.object().shape({
-  quantity: integerSchema.required('Quantity is required'),
-  basePrice: positiveNumberSchema.required('Base price is required'),
+  // quantity: integerSchema.required('Quantity is required'),
+  // basePrice: positiveNumberSchema.required('Base price is required'),
 });
 
 export const formattingPayload = (data: IAddDataForm) => {
-  return { ...data };
+  console.log('daaatttta', data);
+
+  const { quantityAttributes } = data;
+
+  const newQuantityAttributes = quantityAttributes.map((item: any) => {
+    item.attributes = item.attributes.map((attribute: any) => {
+      attribute.turnAroundIds = attribute?.turnAroundIds?.map((turnaround: any) => turnaround?.turnAroundId);
+
+      return attribute;
+    });
+
+    return item;
+  });
+
+  return { quantityAttributes: newQuantityAttributes };
 };
 
 export const headCells = [

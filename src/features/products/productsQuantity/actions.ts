@@ -6,7 +6,7 @@ import { AxiosResponse } from 'axios';
 
 import { IProductsQuantityInfo, IProductsQuantityPayload } from './types';
 
-const prefix = '/products/product-quantity';
+const prefix = '/products/product-quantities';
 
 export const addProductsQuantity = createAsyncThunk<void, IProductsQuantityPayload, {
   rejectValue: AxiosData;
@@ -79,6 +79,20 @@ export const deleteProductsQuantity = createAsyncThunk<void, string, {
   async (id, thunkAPI) => {
     try {
       await http.delete(`${prefix}/${id}`);
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);
+export const addProductsQuantityAttributes = createAsyncThunk<void, {body:IProductsQuantityPayload; id: string}, {
+  rejectValue: AxiosData;
+}>(
+  'productsQuantity/addProductsQuantityAttributes',
+  async ({ body, id }, thunkAPI) => {
+    try {
+      await http.put<IProductsQuantityPayload>(`${prefix}/attributes/${id}`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

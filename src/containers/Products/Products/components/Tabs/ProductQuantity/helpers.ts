@@ -1,6 +1,4 @@
 import { GrandFormatOptions } from '@features/products/basicInfo/types';
-import { isIntagerRegex, isNumberRegex } from '@utils/regexp';
-import { integerValidation } from '@utils/schemas';
 import { InputTypes, ValidFieldNames } from '@utils/types';
 import * as yup from 'yup';
 
@@ -56,34 +54,7 @@ export const defaultGrandFormatValues = {
 };
 
 export const AddDataSchema = yup.object().shape({
-  name: yup.string().required('Product name is required'),
-  productSKU: yup.string().required('Product SKU is required'),
-  subCategoryId: yup.string().required('Subcategory is required'),
-  categoryId: yup.string().required('Category is required'),
-  weight: integerValidation.nullable(),
-  grandFormatOptions: yup.object({
-    unitDisplay: yup.string().required('Unit display is required'),
-    widthFrom: yup.string().required('Width from is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    widthTo: yup.string().required('Width to is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    heightFrom: yup.string().required('Height from is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    heightTo: yup.string().required('Height to is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    maxHeight: yup.string().required('Max height is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    maxWidth: yup.string().required('Max width is required')
-      .matches(isNumberRegex, 'Number is invalid'),
-    grandFormatDiscounts: yup.array().of(
-      yup.object({
-        quantity: yup.string().required('Quantity is required')
-          .matches(isIntagerRegex, 'Intager is invalid'),
-        discountPercent: yup.string().required('Discount Percent is required')
-          .matches(isNumberRegex, 'Number is invalid'),
-      }),
-    ),
-  }).nullable(),
+
 });
 
 export const inputsRows1: ValidFieldNames[] = [
