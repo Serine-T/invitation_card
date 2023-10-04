@@ -16,7 +16,7 @@ interface ITurnAround{
 }
 
 const TurnAround = ({ rowIdx, tableIdx, turnAroundIdx }: ITurnAround) => {
-  const { setValue, watch } = useFormContext();
+  const { setValue, watch, formState: { errors } } = useFormContext();
   const quantityAttributes = watch('quantityAttributes');
   const { turnAroundsAttributes } = useAppSelector(selectAttributes);
 
@@ -37,6 +37,8 @@ const TurnAround = ({ rowIdx, tableIdx, turnAroundIdx }: ITurnAround) => {
         width="240px"
         name={`quantityAttributes[${tableIdx}].attributes[${rowIdx}].turnAroundIds[${turnAroundIdx}].turnAroundId`}
         options={turnAroundsOptions}
+        errorMessage={(errors as any)?.quantityAttributes?.[
+          tableIdx]?.attributes?.[rowIdx]?.turnAroundIds?.[turnAroundIdx]?.turnAroundId?.message}
       />
     </StyledStack>
   );

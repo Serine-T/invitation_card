@@ -17,7 +17,7 @@ interface IMiddleCell{
 }
 
 const MiddleCell = ({ rowIdx, tableIdx }: IMiddleCell) => {
-  const { setValue, watch } = useFormContext();
+  const { setValue, watch, formState: { errors } } = useFormContext();
   const { inksAttributes } = useAppSelector(selectAttributes);
   const { quantityAttributes } = watch();
   const { attributes } = quantityAttributes[tableIdx];
@@ -25,10 +25,13 @@ const MiddleCell = ({ rowIdx, tableIdx }: IMiddleCell) => {
 
   const inksOptions = getOptionsArray(inksAttributes, 'name');
 
+  // TODO: delete after testing
+  console.log('14444', watch(`quantityAttributes[${tableIdx}].attributes[${rowIdx}].inkId`));
+
   const handleAddInput = () => {
     setValue(
       `quantityAttributes[${tableIdx}].attributes[${rowIdx}].turnAroundIds`,
-      [...turnAroundIds, ''],
+      [...turnAroundIds, { turnAroundId: '' }],
     );
   };
 
@@ -43,9 +46,10 @@ const MiddleCell = ({ rowIdx, tableIdx }: IMiddleCell) => {
       <StyledStack direction="row">
         <StyledCloseIcon onClick={handleRemoveInk} />
         <Select
-          width="75px"
+          width="128px"
           name={`quantityAttributes[${tableIdx}].attributes[${rowIdx}].inkId`}
           options={inksOptions}
+          errorMessage={(errors as any)?.quantityAttributes?.[tableIdx]?.attributes[rowIdx]?.inkId?.message}
         />
         <AddTextBtn text="+Add Turn Around" handleAdd={handleAddInput} />
       </StyledStack>

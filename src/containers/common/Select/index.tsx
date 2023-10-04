@@ -56,6 +56,7 @@ const Select = ({
           value={watch(name)}
           onChange={handleSelectChange}
           {...restProps}
+          displayEmpty
         >
           {optionsList.map(({ optionName, value }) => (
             <MenuItem key={value} value={value}>

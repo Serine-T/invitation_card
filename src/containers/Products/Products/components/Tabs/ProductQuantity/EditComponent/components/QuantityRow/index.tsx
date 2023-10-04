@@ -17,11 +17,7 @@ const QuantityRow = ({ tableIdx }: IQuantityRow) => {
   const { attributes, quantityName, quantityId } = quantityAttributes[tableIdx];
 
   const handleDelete = () => {
-    console.log('quantityAttributes', quantityAttributes, quantityId);
-
     const newData = quantityAttributes.filter((item: any) => item.quantityId !== quantityId);
-
-    console.log('nnnnewww ', newData);
 
     setValue('quantityAttributes', newData);
   };
