@@ -2,8 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { IState } from './types';
 import {
-  addProductsQuantity,
-  editProductsQuantity, getAllProductsQuantities, getProductsQuantityById,
+  addProductsQuantity, getAllProductsQuantities, getProductsQuantityById,
 } from './actions';
 
 const initialState: IState = {
@@ -43,17 +42,6 @@ const productsQuantitiesSlice = createSlice({
     });
     builder.addCase(getProductsQuantityById.rejected, (state) => {
       state.isLoading = false;
-    });
-
-    builder.addCase(editProductsQuantity.pending, (state) => {
-      state.actionLoading = true;
-    });
-    builder.addCase(editProductsQuantity.fulfilled, (state) => {
-      state.actionLoading = false;
-      state.errorMessage = null;
-    });
-    builder.addCase(editProductsQuantity.rejected, (state) => {
-      state.actionLoading = false;
     });
 
     builder.addCase(addProductsQuantity.pending, (state) => {

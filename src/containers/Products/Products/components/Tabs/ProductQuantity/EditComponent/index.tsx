@@ -6,9 +6,7 @@ import { StyledStack } from '@containers/common/StyledAddEditTables/styled';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
 import { useParams } from 'react-router-dom';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
-import {
-  addProductsQuantityAttributes,
-} from '@features/products/productsQuantity/actions';
+import { addProductsQuantityAttributes } from '@features/products/productsQuantity/actions';
 import { selectProductsQuantities } from '@features/products/productsQuantity/selectors';
 
 import { AddDataSchema, IAddDataForm, formattingPayload } from './helpers';
@@ -19,8 +17,8 @@ const EditComponent = () => {
   const { actionLoading, data: productQuantities } = useAppSelector(selectProductsQuantities);
   const { id } = useParams();
 
-  const methods = useForm<IAddDataForm>({ // TODO: productQuantity
-    resolver: yupResolver(AddDataSchema as any), // TODO: add typing
+  const methods = useForm<IAddDataForm>({
+    resolver: yupResolver(AddDataSchema as any),
     defaultValues: { quantityAttributes: productQuantities },
   });
 
@@ -32,12 +30,9 @@ const EditComponent = () => {
   }, [productQuantities]);
 
   const onSubmit = (data: IAddDataForm) => {
-    const payload = formattingPayload(data as any); // TODO: productQuantity
+    const payload = formattingPayload(data);
 
-    dispatch(addProductsQuantityAttributes({
-      body: payload as any,
-      id: id as string,
-    })).unwrap().then(() => { // TODO: productQuantity any
+    dispatch(addProductsQuantityAttributes({ body: payload, id: id as string })).unwrap().then(() => {
     }).catch(() => { });
   };
 

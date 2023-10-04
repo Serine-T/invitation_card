@@ -17,7 +17,7 @@ interface IMiddleCell{
 }
 
 const MiddleCell = ({ rowIdx, tableIdx }: IMiddleCell) => {
-  const { setValue, watch } = useFormContext();
+  const { setValue, watch, formState: { errors } } = useFormContext();
   const { inksAttributes } = useAppSelector(selectAttributes);
   const { quantityAttributes } = watch();
   const { attributes } = quantityAttributes[tableIdx];
@@ -28,7 +28,7 @@ const MiddleCell = ({ rowIdx, tableIdx }: IMiddleCell) => {
   const handleAddInput = () => {
     setValue(
       `quantityAttributes[${tableIdx}].attributes[${rowIdx}].turnAroundIds`,
-      [...turnAroundIds, ''],
+      [...turnAroundIds, { turnAroundId: '' }],
     );
   };
 
@@ -46,6 +46,7 @@ const MiddleCell = ({ rowIdx, tableIdx }: IMiddleCell) => {
           width="75px"
           name={`quantityAttributes[${tableIdx}].attributes[${rowIdx}].inkId`}
           options={inksOptions}
+          errorMessage={(errors as any)?.quantityAttributes?.[tableIdx]?.attributes[rowIdx]?.inkId?.message}
         />
         <AddTextBtn text="+Add Turn Around" handleAdd={handleAddInput} />
       </StyledStack>

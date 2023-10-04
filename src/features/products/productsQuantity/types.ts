@@ -1,12 +1,26 @@
 export interface IState {
   isLoading: boolean;
-  data: IProductsQuantityInfo[];
+  data: QuantityAttribute[];
   actionLoading: boolean;
   errorMessage: null | string;
 }
 
 export interface IProductsQuantityInfo {
-  id?: string;
+  quantityAttributes: QuantityAttribute[];
+}
+
+export interface QuantityAttribute {
+  quantityId: string;
+  attributes: Attribute[];
+}
+
+export interface TurnAroundId {
+  turnAroundId: string;
+  id: string;
+}
+export interface Attribute {
+  inkId: string;
+  turnAroundIds: string[] | TurnAroundId[];
 }
 
 export interface IProductsQuantityPayload {
