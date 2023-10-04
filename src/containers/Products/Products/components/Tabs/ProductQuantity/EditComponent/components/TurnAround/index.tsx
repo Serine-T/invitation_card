@@ -21,11 +21,11 @@ const TurnAround = ({ rowIdx, tableIdx, turnAroundIdx }: ITurnAround) => {
   const { turnAroundsAttributes } = useAppSelector(selectAttributes);
 
   const currentAttribute = quantityAttributes[tableIdx].attributes[rowIdx];
-  const { turnAroundIds, turnAroundIds: [{ turnAroundId }] } = currentAttribute;
+  const { turnAroundIds } = currentAttribute;
   const turnAroundsOptions = getOptionsArray(turnAroundsAttributes, 'name');
 
   const handleRemoveTurnAround = () => {
-    const newTurnArounds = turnAroundIds.filter((item: any) => item.turnAroundId !== turnAroundId);
+    const newTurnArounds = turnAroundIds.filter((_: any, i: number) => i !== turnAroundIdx);
 
     setValue(`quantityAttributes[${tableIdx}].attributes[${rowIdx}].turnAroundIds`, newTurnArounds);
   };
