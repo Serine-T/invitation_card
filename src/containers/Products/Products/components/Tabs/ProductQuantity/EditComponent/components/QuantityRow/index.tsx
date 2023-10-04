@@ -36,7 +36,14 @@ const QuantityRow = ({ tableIdx }: IQuantityRow) => {
         ))}
       </TableCell>
       <TableCell>
-        <StyledTypography cursor="pointer" onClick={handleDelete}>Delete</StyledTypography>
+        <StyledTypography
+          color="blue"
+          variant="body3"
+          cursor="pointer"
+          onClick={handleDelete}
+        >
+          Delete
+        </StyledTypography>
       </TableCell>
     </StyledTableRow>
   );
