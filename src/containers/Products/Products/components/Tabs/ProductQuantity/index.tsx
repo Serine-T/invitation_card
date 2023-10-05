@@ -32,7 +32,7 @@ const InputsTable = () => {
 
   return (
     <>
-      <AddComponent setIsQuantityAdded={setIsQuantityAdded} />
+      <AddComponent setIsQuantityAdded={setIsQuantityAdded} isQuantityAdded={isQuantityAdded} />
       { !!productQuantities.length && <EditComponent />}
     </>
   );
