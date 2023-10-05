@@ -18,9 +18,10 @@ import { AddDataSchema, IAddDataForm, defaultValues, formattingPayload } from '.
 
 interface IAddComponent {
   setIsQuantityAdded: Dispatch<SetStateAction<boolean>>;
+  isQuantityAdded: boolean;
 }
 
-const AddComponent = ({ setIsQuantityAdded }:IAddComponent) => {
+const AddComponent = ({ setIsQuantityAdded, isQuantityAdded }:IAddComponent) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -38,7 +39,7 @@ const AddComponent = ({ setIsQuantityAdded }:IAddComponent) => {
 
     dispatch(addProductsQuantity(payload)).unwrap().then(() => {
       setValue('quantity', null);
-      setIsQuantityAdded(true);
+      setIsQuantityAdded(!isQuantityAdded);
     }).catch((e) => {
       if (e.message === 'Product with specified quality already exists!') {
         setError('quantity', { message: e.message });
