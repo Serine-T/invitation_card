@@ -11,6 +11,7 @@ import { selectAttributeCategories } from '@features/attributeCategories/selecto
 import { addProductsAttributes } from '@features/products/productsAttributes/actions';
 import { useParams } from 'react-router-dom';
 import { selectProductsAttributes } from '@features/products/productsAttributes/selectors';
+import EmptyState from '@containers/common/EmptyState';
 
 import {
   AddDataSchema,
@@ -55,14 +56,16 @@ const InputsTable = () => {
         >
           <Typography variant="h9">Assigned attributes</Typography>
 
-          {attributesList.map(({ id, name }, attrCategoryIdx) => (
+          {/* TODO: Implement empty state logic */}
+
+          {attributesList.length ? attributesList.map(({ id, name }, attrCategoryIdx) => (
             <AttributesContainer
               key={id}
               sectionTitle={name}
               attrCategoryIdx={attrCategoryIdx}
               btn
             />
-          ))}
+          )) : <EmptyState text="You don’t have any assigned attributes, please add new to proceed" />}
           <StyledDivider />
           <Typography variant="h9">All attributes</Typography>
           {attributesList.map(({ id, name }, attrCategoryIdx) => (

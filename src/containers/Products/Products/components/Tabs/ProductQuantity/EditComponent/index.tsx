@@ -39,6 +39,7 @@ const EditComponent = () => {
   const { quantityAttributes } = watch();
 
   return (
+    !!quantityAttributes.length && (
     <FormProvider {...methods}>
       <StyledStack
         onSubmit={handleSubmit(onSubmit)}
@@ -54,6 +55,7 @@ const EditComponent = () => {
         <SubmitBtn actionLoading={actionLoading} />
       </StyledStack>
     </FormProvider>
+    )
   );
 };
 
