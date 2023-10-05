@@ -42,8 +42,8 @@ const SearchSection = () => {
   return (
     <>
       <Typography variant="h9">Assign Product Attributes</Typography>
-      <StyledTypography variant="h9" color="grey">
-        A-Frame (Signicade® Deluxe) 24x36 A-Frame Replacement Prints Only(1 Front & 1 Back) Frame Not Included
+      <StyledTypography variant="h9" color="grey" maxWidth="550px">
+        A-Frame (Signicade® Deluxe) 24x36 A-Frame Replacement Prints Only (1 Front & 1 Back) Frame Not Included
       </StyledTypography>
       <FormProvider {...methods}>
         <Stack
