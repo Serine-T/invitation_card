@@ -10,7 +10,7 @@ import PageTitle from '@containers/common/PageTitle';
 import EmptyState from '@containers/common/EmptyState';
 import queryString from 'query-string';
 import {
-  getAllAttributeCategories, reorderAttributeCategories, searchAttributeCategories,
+  reorderAttributeCategories, searchAttributeCategories,
 } from '@features/attributeCategories/actions';
 import { selectAttributeCategories } from '@features/attributeCategories/selectors';
 import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
@@ -36,7 +36,7 @@ const AttributeCategories = () => {
       searchTerm: searchTerm as string,
     };
 
-    searchTerm ? dispatch(searchAttributeCategories(query)) : dispatch(getAllAttributeCategories());
+    dispatch(searchAttributeCategories(query));
   }, [searchTerm, dispatch]);
 
   useEffect(
@@ -52,7 +52,7 @@ const AttributeCategories = () => {
 
     dispatch(reorderAttributeCategories(sortedData)).unwrap().then(() => {
       dispatch(setAttributeCategories(items));
-    }).catch(() => dispatch(getAllAttributeCategories()));
+    }).catch(() => fetchData());
   };
 
   if (isLoading) {

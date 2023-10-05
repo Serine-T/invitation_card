@@ -1,3 +1,5 @@
+import { Attribute } from '@features/attributes/types';
+
 export interface IState {
   isLoading: boolean;
   actionLoading: boolean;
@@ -19,6 +21,7 @@ export interface IAttributeCategory {
   name: string;
   description: string;
   sort: number;
+  attributes: Attribute[];
 }
 
 export interface ISearchAttributeCategories {

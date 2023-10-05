@@ -4,6 +4,7 @@ import { IState } from './types';
 import {
   addAttributeCategory,
   editAttributeCategory, getAllAttributeCategories,
+  getAllAttributeCategoriesProducts,
   getAttributeCategoryById, searchAttributeCategories,
 } from './actions';
 
@@ -75,6 +76,17 @@ const attributeCategoriesSlice = createSlice({
     builder.addCase(searchAttributeCategories.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.errorMessage = payload.message;
+    });
+
+    builder.addCase(getAllAttributeCategoriesProducts.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getAllAttributeCategoriesProducts.fulfilled, (state, { payload }) => {
+      state.data = payload;
+      state.isLoading = false;
+    });
+    builder.addCase(getAllAttributeCategoriesProducts.rejected, (state) => {
+      state.isLoading = false;
     });
   },
 });

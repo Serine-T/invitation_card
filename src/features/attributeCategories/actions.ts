@@ -125,3 +125,19 @@ export const searchAttributeCategories = createAsyncThunk<IAttributeCategory[], 
     }
   },
 );
+export const getAllAttributeCategoriesProducts = createAsyncThunk<IAttributeCategory[], void, {
+  rejectValue: AxiosData;
+}>(
+  'attributeCategories/allProducts',
+  async (_, thunkAPI) => {
+    try {
+      const { data: { data } } = await http.get<AxiosResponse<IAttributeCategory[]>>(`${prefix}/product`);
+
+      return data;
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);
