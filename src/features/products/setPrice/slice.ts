@@ -14,7 +14,7 @@ const productsSetPriceSlice = createSlice({
   name: 'productsSetPrice',
   initialState,
   reducers: {
-    setProducts: (state, { payload }) => {
+    setProductsPrices: (state, { payload }) => {
       state.data = payload;
     },
   },
@@ -45,7 +45,5 @@ const productsSetPriceSlice = createSlice({
   },
 });
 
-export const {
-  setProducts,
-} = productsSetPriceSlice.actions;
+export const { setProductsPrices } = productsSetPriceSlice.actions;
 export default productsSetPriceSlice.reducer;

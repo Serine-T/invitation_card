@@ -17,7 +17,7 @@ const MiddleCell = ({ tableIdx, rowIdx }: IMiddleCell) => {
 
   return (
     <Stack gap="10px">
-      { attributes.map(({ name }: any, attrIdx: number) => (
+      { attributes.map(({ nickname }: any, attrIdx: number) => (
       // eslint-disable-next-line react/no-array-index-key
         <Stack key={attrIdx} direction="row" alignItems="center" justifyContent="space-between">
           <Stack direction="row" alignItems="center">
@@ -26,7 +26,7 @@ const MiddleCell = ({ tableIdx, rowIdx }: IMiddleCell) => {
             `productsPrices[${tableIdx}].quantityAttributes[${rowIdx}].attributes[${attrIdx}].isVisible`
 }
             />
-            <Typography variant="body3" mr="16px">{name}</Typography>
+            <Typography variant="body3" mr="16px">{nickname}</Typography>
           </Stack>
 
           <Input

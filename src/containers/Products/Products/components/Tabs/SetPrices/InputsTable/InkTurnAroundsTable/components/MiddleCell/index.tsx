@@ -4,7 +4,7 @@ import { memo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import InkTurnAroundStack from '../InkTurnAroundStack';
-import { StyledMiddleCell } from '../../../../../../ProductQuantity/EditComponent/components/MiddleCell/styles';
+import { StyledMiddleCell } from '../../../../../ProductQuantity/EditComponent/components/MiddleCell/styles';
 
 interface IMiddleCell {
   tableIdx: number;
@@ -18,14 +18,14 @@ const MiddleCell = ({ tableIdx, rowIdx }: IMiddleCell) => {
   return (
     <StyledMiddleCell>
       <InkTurnAroundStack
-        name={ink.name}
+        nickname={ink.nickname}
         field={`productsPrices[${tableIdx}].quantityInk[${rowIdx}].price`}
         errorMessage={(errors as any)?.productsPrices?.[tableIdx]?.quantityInk?.rowIdx?.price?.message as string}
       />
       {quantityInkTurnAround.map(({ turnAround }: any, turnAroundIdx: number) => (
         <InkTurnAroundStack
           key={turnAroundIdx}
-          name={turnAround.name}
+          nickname={turnAround.nickname}
           field={`productsPrices[${tableIdx}].quantityInk[${rowIdx}].quantityInkTurnAround[${turnAroundIdx}].price`}
           errorMessage={(errors as any)?.productsPrices?.[tableIdx]
             ?.quantityInk?.rowIdx?.quantityInkTurnAround?.turnAroundIdx?.price?.message as string}
