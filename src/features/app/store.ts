@@ -12,6 +12,7 @@ import templatesReducer from '@features/templates/slice';
 import productsReducer from '@features/products/basicInfo/slice';
 import productsQuantitiesReducer from '@features/products/productsQuantity/slice';
 import productsAttributesReducer from '@features/products/productsAttributes/slice';
+import productsSetPriceReducer from '@features/products/setPrice/slice';
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     products: productsReducer,
     productsQuantities: productsQuantitiesReducer,
     productsAttributes: productsAttributesReducer,
+    productsSetPrice: productsSetPriceReducer,
   },
 });
 

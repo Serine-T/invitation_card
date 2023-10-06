@@ -19,7 +19,7 @@ const AttributeItem = ({ btn, attributeIdx, attrCategoryIdx }: IAttributeItem) =
 
   const item = attributesList[attrCategoryIdx].attributes[attributeIdx];
 
-  const { name, isSelected } = item;
+  const { nickname, isSelected } = item;
 
   const handleAdding = () => {
     if (!btn) {
@@ -50,7 +50,7 @@ const AttributeItem = ({ btn, attributeIdx, attrCategoryIdx }: IAttributeItem) =
       onClick={handleAdding}
 
     >
-      <Typography variant="body3">{name}</Typography>
+      <Typography variant="body3">{nickname}</Typography>
       {btn && (
         <CloseIcon
           onClick={handleRemove}

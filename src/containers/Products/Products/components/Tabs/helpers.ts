@@ -5,6 +5,10 @@ import SetPrices from './SetPrices';
 
 export const tabsOptions = [
   {
+    component: SetPrices,
+    label: 'Set prices',
+  },
+  {
     component: BasicInfo,
     label: 'Basic Info',
   },
@@ -16,8 +20,5 @@ export const tabsOptions = [
     component: AddAttributes,
     label: 'Add Attributes',
   },
-  {
-    component: SetPrices,
-    label: 'Set prices',
-  },
+
 ];

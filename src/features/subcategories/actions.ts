@@ -142,3 +142,20 @@ export const getSubcategoriesByCategoryId = createAsyncThunk<ISubcategoriesByCat
     }
   },
 );
+
+export const getAllSubcategoriesProducts = createAsyncThunk<ISubcategoriesInfo[], void, {
+  rejectValue: AxiosData;
+}>(
+  'subcategories/allProducts',
+  async (_, thunkAPI) => {
+    try {
+      const { data: { data } } = await http.get<AxiosResponse<ISubcategoriesInfo[]>>(`${prefix}/product`);
+
+      return data;
+    } catch (error) {
+      const errorInfo = customErrorHandling(error);
+
+      return thunkAPI.rejectWithValue(errorInfo);
+    }
+  },
+);

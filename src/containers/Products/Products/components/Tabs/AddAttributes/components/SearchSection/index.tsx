@@ -53,6 +53,7 @@ const SearchSection = () => {
           gap="24px"
           mt="40px"
           alignItems="flex-end"
+          flexWrap="wrap"
         >
           <Input
             {...register('searchTerm')}
