@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import Loader from '@containers/common/Loader';
 import EmptyState from '@containers/common/EmptyState';
 
-import InputsTable from './components/InputsTable';
+import InputsTable from './InputsTable';
 
 const SetPrices = () => {
   const dispatch = useAppDispatch();

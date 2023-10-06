@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 import EmptyState from '@containers/common/EmptyState';
 import Box from '@mui/material/Box';
+import { setProductsPrices } from '@features/products/setPrice/slice';
 
 import { AddDataSchema, IAddDataForm, formattingPayload } from './helpers';
 import InkTurnAroundsTable from './InkTurnAroundsTable';
@@ -32,7 +33,7 @@ const InputsTable = () => {
     const body = formattingPayload(data);
 
     dispatch(addProductsPrices({ body, id: productId as string })).unwrap().then(() => {
-
+      dispatch(setProductsPrices(data.productsPrices));
     }).catch(() => { });
   };
 
