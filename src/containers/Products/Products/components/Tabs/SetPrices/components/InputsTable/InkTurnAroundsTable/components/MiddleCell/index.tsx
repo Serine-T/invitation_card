@@ -13,7 +13,7 @@ interface IMiddleCell {
 
 const MiddleCell = ({ tableIdx, rowIdx }: IMiddleCell) => {
   const { formState: { errors }, watch } = useFormContext();
-  const { ink, quantityInkTurnAround } = watch(`productsPrices.[${tableIdx}].quantityInk.[${rowIdx}]`);
+  const { ink, quantityInkTurnAround } = watch(`productsPrices[${tableIdx}].quantityInk[${rowIdx}]`);
 
   return (
     <StyledMiddleCell>
@@ -26,12 +26,11 @@ const MiddleCell = ({ tableIdx, rowIdx }: IMiddleCell) => {
         <InkTurnAroundStack
           key={turnAroundIdx}
           name={turnAround.name}
-          field={`productsPrices[${tableIdx}].quantityInk[${rowIdx}].quantityInkTurnAround.[${turnAroundIdx}].price`}
+          field={`productsPrices[${tableIdx}].quantityInk[${rowIdx}].quantityInkTurnAround[${turnAroundIdx}].price`}
           errorMessage={(errors as any)?.productsPrices?.[tableIdx]
             ?.quantityInk?.rowIdx?.quantityInkTurnAround?.turnAroundIdx?.price?.message as string}
         />
       ))}
-
     </StyledMiddleCell>
   );
 };

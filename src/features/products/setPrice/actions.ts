@@ -4,17 +4,17 @@ import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData } from '@utils/types';
 import { AxiosResponse } from 'axios';
 
-import { IProductsSetPrice } from './types';
+import { IProductsSetPrice, IProductsSetPricePayload } from './types';
 
 const prefix = '/products/attribute-prices';
 
-export const addProductsPrices = createAsyncThunk<void, {body: IProductsSetPrice[]; id: string}, {
+export const addProductsPrices = createAsyncThunk<void, {body: IProductsSetPricePayload; id: string}, {
   rejectValue: AxiosData;
 }>(
   'productsSetPrices/add',
   async ({ body, id }, thunkAPI) => {
     try {
-      await http.put<IProductsSetPrice[]>(`${prefix}/${id}`, body);
+      await http.put<IProductsSetPricePayload>(`${prefix}/${id}`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 

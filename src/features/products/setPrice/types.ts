@@ -13,6 +13,10 @@ export interface IProductsSetPrice {
   quantityAttributes: any[];
 }
 
+export interface IProductsSetPricePayload {
+  data: IProductsSetPrice[];
+}
+
 export interface QuantityInk {
   id: string;
   price: number;

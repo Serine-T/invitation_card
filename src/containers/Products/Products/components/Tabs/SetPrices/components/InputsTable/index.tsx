@@ -31,8 +31,6 @@ const InputsTable = () => {
   const onSubmit = (data: IAddDataForm) => {
     const body = formattingPayload(data);
 
-    console.log('baayd**', data);
-
     dispatch(addProductsPrices({ body, id: productId as string })).unwrap().then(() => {
 
     }).catch(() => { });

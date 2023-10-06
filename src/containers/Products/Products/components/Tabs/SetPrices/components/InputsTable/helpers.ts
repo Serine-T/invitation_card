@@ -39,5 +39,31 @@ export const inputsRows1: ValidFieldNames[] = [
 ];
 
 export const formattingPayload = (data: IAddDataForm) => {
-  return data.productsPrices;
+  const updatedData = data.productsPrices.map((item) => {
+    return {
+      ...item,
+      basePrice: Number(item.basePrice),
+
+      quantityInk: item.quantityInk.map((inkItem) => {
+        return {
+          ...inkItem,
+          price: Number(inkItem.price),
+          quantityInkTurnAround: inkItem.quantityInkTurnAround.map((turnAroundItem) => ({
+            ...turnAroundItem,
+            price: Number(turnAroundItem.price),
+          })),
+        };
+      }),
+
+      quantityAttributes: item.quantityAttributes.flatMap((attributeGroup) => {
+        return attributeGroup.attributes.map((attr: any) => ({
+          ...attr,
+          price: Number(attr.price),
+          attribute: { name: attr.name },
+        }));
+      }),
+    };
+  });
+
+  return { data: updatedData };
 };

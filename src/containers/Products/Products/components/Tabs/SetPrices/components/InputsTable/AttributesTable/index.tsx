@@ -9,7 +9,7 @@ import { useFormContext } from 'react-hook-form';
 import Typography from '@mui/material/Typography';
 
 import { headCells } from './tableData';
-import MiddleCell from './components/MiddleCell';
+import MiddleCell from './MiddleCell';
 
 interface IAttributesTable {
   tableIdx: number;
@@ -17,7 +17,7 @@ interface IAttributesTable {
 
 const AttributesTable = ({ tableIdx }: IAttributesTable) => {
   const { watch } = useFormContext();
-  const { quantityAttributes } = watch(`productsPrices.${tableIdx}`);
+  const { quantityAttributes } = watch(`productsPrices[${tableIdx}]`);
 
   return (
     <Stack mb="16px">
@@ -29,7 +29,7 @@ const AttributesTable = ({ tableIdx }: IAttributesTable) => {
               <StyledTableCell>
                 <Typography variant="body3" mr="16px">{name}</Typography>
               </StyledTableCell>
-              <TableCell sx={{ padding: '0 !important' }}>
+              <TableCell>
                 <MiddleCell tableIdx={tableIdx} rowIdx={rowIdx} />
               </TableCell>
             </StyledTableRow>

@@ -25,9 +25,6 @@ const MiddleCell = ({ rowIdx, tableIdx }: IMiddleCell) => {
 
   const inksOptions = getOptionsArray(inksAttributes, 'name');
 
-  // TODO: delete after testing
-  console.log('14444', watch(`quantityAttributes[${tableIdx}].attributes[${rowIdx}].inkId`));
-
   const handleAddInput = () => {
     setValue(
       `quantityAttributes[${tableIdx}].attributes[${rowIdx}].turnAroundIds`,

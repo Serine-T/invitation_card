@@ -16,7 +16,7 @@ const InkTurnAroundStack = ({ name, field, errorMessage }: IInkTurnAroundStack) 
   const { register } = useFormContext();
 
   return (
-    <StyledStack direction="row">
+    <StyledStack direction="row" justifyContent="space-between" mr="30px">
       <Typography variant="body3">{name}</Typography>
       <Input
         width="80px"

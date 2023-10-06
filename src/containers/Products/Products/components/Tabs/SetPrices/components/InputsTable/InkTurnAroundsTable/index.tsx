@@ -19,7 +19,7 @@ interface IInkTurnAroundsTable {
 
 const InkTurnAroundsTable = ({ tableIdx }: IInkTurnAroundsTable) => {
   const { register, formState: { errors }, watch } = useFormContext();
-  const { quantity, quantityInk } = watch(`productsPrices.[${tableIdx}]`);
+  const { quantity, quantityInk } = watch(`productsPrices[${tableIdx}]`);
 
   return (
     <Stack mb="16px">
