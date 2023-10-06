@@ -24,7 +24,7 @@ import { deleteProduct, searchProducts, reorderProducts } from '@features/produc
 import { setProducts } from '@features/products/basicInfo/slice';
 import { IProductsSearchInfo } from '@features/products/basicInfo/types';
 import { selectSubcategories } from '@features/subcategories/selectors';
-import { getAllSubcategories } from '@features/subcategories/actions';
+import { getAllSubcategoriesProducts } from '@features/subcategories/actions';
 
 import { headCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -67,7 +67,7 @@ const Products = () => {
   );
 
   useMount(() => {
-    dispatch(getAllSubcategories());
+    dispatch(getAllSubcategoriesProducts());
   });
 
   const reordingData = (result: DropResult) => {
