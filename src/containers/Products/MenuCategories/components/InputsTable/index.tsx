@@ -35,10 +35,7 @@ const InputsTable = ({ categoriesData }: IInputsTable) => {
     defaultValues: categoriesData ?? defaultValues,
   });
 
-  const {
-    handleSubmit,
-    setError,
-  } = methods;
+  const { handleSubmit, setError } = methods;
 
   const onSubmit = (data: IAddDataForm) => {
     dispatch(categoriesData ? editCategory(data) : addCategory(data)).unwrap().then(() => {
@@ -46,6 +43,9 @@ const InputsTable = ({ categoriesData }: IInputsTable) => {
     }).catch((e) => {
       if (e.message === 'Category with the provided title already exists!') {
         setError('title', { message: e.message });
+      // eslint-disable-next-line max-len
+      } else if (e.message === 'You have selected the maximum number of categories for the header. Please deselect one before adding another!') {
+        setError('displayInHeader', { message: e.message });
       } else {
         navigate(PAGE_ROUTES.MENU_CATEGORIES);
       }

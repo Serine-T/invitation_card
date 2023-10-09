@@ -49,7 +49,7 @@ export interface Filters {
 
 export const constructQueryString = (filters: Filters): string => {
   return Object.entries(filters)
-    .map(([key, value]) => value && `${key}=${value}`)
+    .map(([key, value]) => value && `${key}=${key === 'searchTerm' ? encodeURIComponent(value) : value}`)
     .filter(Boolean)
     .join('&');
 };
