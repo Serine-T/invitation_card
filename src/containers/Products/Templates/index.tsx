@@ -13,8 +13,7 @@ import PageTitle from '@containers/common/PageTitle';
 import EmptyState from '@containers/common/EmptyState';
 import queryString from 'query-string';
 import {
-  deleteTemplate,
-  reorderTemplates, searchTemplates,
+  deleteTemplate, reorderTemplates, searchTemplates,
 } from '@features/templates/actions';
 import { selectTemplates } from '@features/templates/selectors';
 import Typography from '@mui/material/Typography';
@@ -24,6 +23,8 @@ import DndContainer from '@containers/common/Table/components/DndContainer';
 import ReusableDragRow from '@containers/common/Table/components/DndContainer/ReusableDragRow';
 import { useLocation } from 'react-router-dom';
 import { setTemplates } from '@features/templates/slice';
+import useMount from '@customHooks/useMount';
+import { getAllTemplateCategories } from '@features/templateCategories/actions';
 
 import { headCells } from './helpers';
 import SearchSection from './components/SearchSection';
@@ -33,20 +34,25 @@ const Templates = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const params = queryString.parse(location.search);
-  const { searchTerm = '' } = params as IFiltersForm;
+  const { searchTerm = '', templateCategory: templateCategoryQuery = '' } = params as IFiltersForm;
   const query = {
     searchTerm: searchTerm as string,
+    templateCategory: templateCategoryQuery as string,
   };
+
+  useMount(() => {
+    dispatch(getAllTemplateCategories());
+  });
 
   const fetchData = useCallback(() => {
     dispatch(searchTemplates(query));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm]);
+  }, [searchTerm, templateCategoryQuery]);
 
   useEffect(
     () => fetchData(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [searchTerm],
+    [searchTerm, templateCategoryQuery],
   );
 
   const deleteAction = (id: string) => {

@@ -8,6 +8,9 @@ import PAGE_ROUTES from '@routes/routingEnum';
 import { getAttributeById } from '@features/attributes/actions';
 import { IAddAttributePayload } from '@features/attributes/types';
 import { selectAttributes } from '@features/attributes/selectors';
+import { getAllAttributeCategories } from '@features/attributeCategories/actions';
+import { selectAttributeCategories } from '@features/attributeCategories/selectors';
+import EmptyState from '@containers/common/EmptyState';
 
 import InputsTable from '../components/InputsTable';
 
@@ -17,22 +20,23 @@ const EditAttribute = () => {
   const { id } = useParams();
   const [attributesData, setAttributesData] = useState<IAddAttributePayload | null>(null);
   const { isLoading } = useAppSelector(selectAttributes);
+  const {
+    isLoading: attributesCategoriesLoding, data: attributeCategories } = useAppSelector(selectAttributeCategories);
 
   useMount(() => {
+    dispatch(getAllAttributeCategories());
     dispatch(getAttributeById(id as string)).unwrap().then((data) => {
       setAttributesData(data);
     }).catch(() => navigate(PAGE_ROUTES.ATTRIBUTES));
   });
 
-  if (isLoading) {
+  if (isLoading || attributesCategoriesLoding) {
     return <Loader />;
   }
 
-  return (
-    <>
-      {attributesData && <InputsTable attributesData={attributesData} />}
-    </>
-  );
+  return (attributeCategories.length && attributesData)
+    ? <InputsTable attributesData={attributesData} />
+    : <EmptyState text="You don’t have any attribute categories, please add new to proceed" />;
 };
 
 export default memo(EditAttribute);
