@@ -20,8 +20,7 @@ const EditAttribute = () => {
   const { id } = useParams();
   const [attributesData, setAttributesData] = useState<IAddAttributePayload | null>(null);
   const { isLoading } = useAppSelector(selectAttributes);
-  const {
-    isLoading: attributesCategoriesLoding, data: attributeCategories } = useAppSelector(selectAttributeCategories);
+  const { isLoading: attrCategoriesLoading, data: attrCategories } = useAppSelector(selectAttributeCategories);
 
   useMount(() => {
     dispatch(getAllAttributeCategories());
@@ -30,11 +29,11 @@ const EditAttribute = () => {
     }).catch(() => navigate(PAGE_ROUTES.ATTRIBUTES));
   });
 
-  if (isLoading || attributesCategoriesLoding) {
+  if (isLoading || attrCategoriesLoading) {
     return <Loader />;
   }
 
-  return (attributeCategories.length && attributesData)
+  return (attrCategories.length && attributesData)
     ? <InputsTable attributesData={attributesData} />
     : <EmptyState text="You don’t have any attribute categories, please add new to proceed" />;
 };
