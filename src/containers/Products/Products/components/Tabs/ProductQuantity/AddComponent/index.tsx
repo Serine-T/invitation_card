@@ -68,8 +68,8 @@ const AddComponent = ({ setIsQuantityAdded, isQuantityAdded }:IAddComponent) => 
             </StyledTableCell>
             <TableCell>
               <Input
-                placeholder="Quantity"
-                {...register('quantity')}
+                placeholder="Base price"
+                {...register('basePrice')}
                 errorMessage={errors?.quantity?.message}
               />
             </TableCell>

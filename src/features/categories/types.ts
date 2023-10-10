@@ -12,6 +12,7 @@ export interface IAddCategoryPayload {
   title: string;
   description: string;
   displayInHeader?: boolean;
+  visibleOnSite?: boolean;
 }
 export interface ICategories {
   id: string;

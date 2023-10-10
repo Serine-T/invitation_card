@@ -37,15 +37,3 @@ export const formattingPayload = (data: IAddDataForm) => {
 
   return { quantityAttributes: newQuantityAttributes };
 };
-
-export const headCells = [
-  {
-    label: 'Quantity',
-  },
-  {
-    label: 'Base Price',
-  },
-  {
-    label: 'Actions',
-  },
-];
