@@ -23,6 +23,7 @@ export interface ICategories {
   description: string;
   sort: number;
   displayInHeader: boolean;
+  visibleOnSite: boolean;
   subCategory: IAddSubcategoriesPayload[];
 }
 

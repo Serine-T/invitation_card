@@ -28,13 +28,13 @@ const MenuCategories = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const params = queryString.parse(location.search);
-  const { searchTerm = '', displayInHeader: displayInHeaderQuery = '' } = params as IFiltersForm;
-  const isSearchTerm = searchTerm || displayInHeaderQuery;
+  const { searchTerm = '', visibleOnSite: visibleOnSiteQuery = '' } = params as IFiltersForm;
+  const isSearchTerm = searchTerm || visibleOnSiteQuery;
 
   const fetchData = useCallback(() => {
     const query = {
       searchTerm: searchTerm as string,
-      displayInHeader: displayInHeaderQuery as string,
+      visibleOnSite: visibleOnSiteQuery as string,
     };
 
     isSearchTerm ? dispatch(searchCategories(query)) : dispatch(getAllCategories());
@@ -44,7 +44,7 @@ const MenuCategories = () => {
   useEffect(
     () => fetchData(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [searchTerm, displayInHeaderQuery],
+    [searchTerm, visibleOnSiteQuery],
   );
 
   const deleteAction = (id: string) => {
@@ -74,14 +74,14 @@ const MenuCategories = () => {
       {categories.length ? (
         <DndContainer reordingData={reordingData}>
           <StyledTable headCells={headCells}>
-            {categories.map(({ title, displayInHeader, id }, index) => (
+            {categories.map(({ title, visibleOnSite, id }, index) => (
               <ReusableDragRow key={id} id={id} index={index} gridTemplateColumns="auto 225px 140px 150px">
                 {({ providedDraggable }) => (
                   <>
                     <TableCell>
                       <RowTitle title={title} path={`/products/menu-categories/edit/${id}`} />
                     </TableCell>
-                    <TableCell width="225px">{displayInHeader ? 'Yes' : 'No'}</TableCell>
+                    <TableCell width="225px">{visibleOnSite ? 'Yes' : 'No'}</TableCell>
                     <TableCell width="140px">
                       <DndBtn providedDraggable={providedDraggable} />
                     </TableCell>

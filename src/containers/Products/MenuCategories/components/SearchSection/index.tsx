@@ -14,21 +14,20 @@ import { constructQueryString } from '@utils/helpers';
 import SearchBtn from '@containers/common/SearchSection/SearchBtn';
 
 import {
-  FiltersSchema, IFiltersForm,
-  visibilityOptions,
+  FiltersSchema, IFiltersForm, visibilityOptions,
 } from './helpers';
 
 const SearchSection = () => {
   const navigate = useNavigate();
   const params = queryString.parse(window.location.search);
 
-  const { searchTerm = '', displayInHeader = '' } = params;
+  const { searchTerm = '', visibleOnSite = '' } = params;
 
   const methods = useForm<IFiltersForm>({
     resolver: yupResolver(FiltersSchema),
     defaultValues: {
       searchTerm: searchTerm as string,
-      displayInHeader: displayInHeader as string,
+      visibleOnSite: visibleOnSite as string,
     },
   });
 
@@ -40,7 +39,7 @@ const SearchSection = () => {
   const onSubmit = (data: IFiltersForm) => {
     const queryParams = constructQueryString({
       searchTerm: data.searchTerm,
-      displayInHeader: data.displayInHeader,
+      visibleOnSite: data.visibleOnSite,
     });
 
     navigate(`${PAGE_ROUTES.MENU_CATEGORIES}?${queryParams}`);
@@ -64,7 +63,7 @@ const SearchSection = () => {
             <Select
               label="Visible on site"
               width="200px"
-              name="displayInHeader"
+              name="visibleOnSite"
               options={visibilityOptions}
             />
           </StyledSearchRows>
