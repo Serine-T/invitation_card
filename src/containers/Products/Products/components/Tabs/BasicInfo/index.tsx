@@ -136,7 +136,13 @@ const InputsTable = ({ editData }: IInputsTable) => {
               />
             </RowComponent>
           ))}
-
+          {/* TODO: keep for testing */}
+          {/* <RowComponent label="Product Weight (1)">
+            <ImageUpload
+              name="test"
+              isMultiple
+            />
+          </RowComponent> */}
           <RowComponent label="Product Weight (1)">
             <Input
               width="120px"

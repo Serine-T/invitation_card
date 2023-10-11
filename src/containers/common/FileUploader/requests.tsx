@@ -2,6 +2,8 @@ import { http } from '@services/RequestService';
 import { AWS_S3_PREFIX } from '@utils/constants';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
+import { getMimeType } from './helpers';
+
 export interface IUploadFileProps {
   file: File;
   url: string;
@@ -14,8 +16,10 @@ export interface ICreateAWSLinkResponse {
 
 export type FileStateType = File | null; // FileList |
 export const uploadFile = async ({ file, url }: IUploadFileProps) => {
+  const mimeType = getMimeType(file.name);
+
   const options: AxiosRequestConfig = {
-    headers: { 'Content-Type': 'application/octet-stream' },
+    headers: { 'Content-Type': mimeType },
     withCredentials: false,
   };
 

@@ -19,9 +19,10 @@ interface IImageUpload {
   name: string;
   errorMessage?: string;
   isFile?: boolean;
+  isMultiple?: boolean;
 }
 
-const ImageUpload = ({ name, errorMessage, isFile = false }: IImageUpload) => {
+const ImageUpload = ({ name, errorMessage, isFile = false, isMultiple = false }: IImageUpload) => {
   const acceptedExtensions = isFile ? fileExtensions : imgExtensions;
   const [loading, setLoading] = useState(false);
   const { setValue, watch } = useFormContext();
@@ -100,6 +101,7 @@ const ImageUpload = ({ name, errorMessage, isFile = false }: IImageUpload) => {
         accept={acceptedExtensions.join(', ')}
         style={{ display: 'none' }}
         onChange={handleChange}
+        multiple={isMultiple}
       />
       {
         uploadedImg ? (
