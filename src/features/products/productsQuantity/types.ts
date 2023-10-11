@@ -1,31 +1,21 @@
 export interface IState {
   isLoading: boolean;
-  data: QuantityAttribute[];
+  data: IProductsQuantityPayload[];
   actionLoading: boolean;
   errorMessage: null | string;
 }
 
 export interface IProductsQuantityInfo {
-  quantityAttributes: QuantityAttribute[];
+  quantities: IProductsQuantityPayload[];
 }
 
 export interface QuantityAttribute {
   quantityId: string;
-  attributes: Attribute[];
-}
-
-export interface TurnAroundId {
-  turnAroundId: string;
-  id: string;
-}
-export interface Attribute {
-  inkId: string;
-  turnAroundIds: string[] | TurnAroundId[];
+  attributes: any[]; // TODO: delete it
 }
 
 export interface IProductsQuantityPayload {
   id?: string;
   quantity: number | null;
-  productId: string;
   basePrice: number | null;
 }

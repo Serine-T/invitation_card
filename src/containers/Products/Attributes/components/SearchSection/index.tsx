@@ -8,7 +8,7 @@ import { StyledSearchRows } from '@containers/common/StyledSearchContainer/style
 import Stack from '@mui/material/Stack';
 import Button from '@containers/common/Button';
 import StyledTypography from '@containers/common/StyledTypography';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { constructQueryString } from '@utils/helpers';
@@ -17,7 +17,8 @@ import { FiltersSchema, IFiltersForm } from './helpers';
 
 const SearchSection = () => {
   const navigate = useNavigate();
-  const params = queryString.parse(window.location.search);
+  const { search } = useLocation();
+  const params = queryString.parse(search);
 
   const { searchTerm = '' } = params;
 

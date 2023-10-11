@@ -21,11 +21,7 @@ import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 import RowComponent from '@containers/common/Table/components/RowComponent';
 
 import {
-  AddDataSchema,
-  IAddDataForm,
-  inputsRows,
-  defaultValues,
-  formattedPayload,
+  AddDataSchema, IAddDataForm, inputsRows, defaultValues, formattedPayload,
 } from './helpers';
 
 interface IInputsTable{

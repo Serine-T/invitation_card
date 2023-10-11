@@ -16,10 +16,7 @@ import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 import RowComponent from '@containers/common/Table/components/RowComponent';
 
 import {
-  AddDataSchema,
-  IAddDataForm,
-  inputsRows,
-  defaultValues,
+  AddDataSchema, IAddDataForm, inputsRows, defaultValues,
 } from './helpers';
 
 interface IInputsTable{
@@ -35,10 +32,7 @@ const InputsTable = ({ attributeCategoriesData }: IInputsTable) => {
     defaultValues: attributeCategoriesData ?? defaultValues,
   });
 
-  const {
-    handleSubmit,
-    setError,
-  } = methods;
+  const { handleSubmit, setError } = methods;
 
   const onSubmit = (data: IAddDataForm) => {
     dispatch(attributeCategoriesData ? editAttributeCategory(data) : addAttributeCategory(data)).unwrap().then(() => {

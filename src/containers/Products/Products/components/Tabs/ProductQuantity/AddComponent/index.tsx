@@ -36,9 +36,9 @@ const AddComponent = ({ setIsQuantityAdded, isQuantityAdded }:IAddComponent) => 
   const { handleSubmit, register, setError, setValue, formState: { errors } } = methods;
 
   const onSubmit = (data: IAddDataForm) => {
-    const payload = formattingPayload(data);
+    const body = formattingPayload(data);
 
-    dispatch(addProductsQuantity(payload)).unwrap().then(() => {
+    dispatch(addProductsQuantity({ id: id as string, body })).unwrap().then(() => {
       setValue('quantity', null);
       setIsQuantityAdded(!isQuantityAdded);
     }).catch((e) => {

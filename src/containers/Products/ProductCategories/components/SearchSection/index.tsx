@@ -8,7 +8,7 @@ import { StyledSearchRows } from '@containers/common/StyledSearchContainer/style
 import Select from '@containers/common/Select';
 import Stack from '@mui/material/Stack';
 import PAGE_ROUTES from '@routes/routingEnum';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import { constructQueryString, getOptionsArray } from '@utils/helpers';
 import { useAppSelector } from '@features/app/hooks';
@@ -19,7 +19,8 @@ import { FiltersSchema, IFiltersForm, visibilityOptions } from './helpers';
 
 const SearchSection = () => {
   const navigate = useNavigate();
-  const params = queryString.parse(window.location.search);
+  const { search } = useLocation();
+  const params = queryString.parse(search);
   const { searchTerm = '', visibleOnSite = '', category = '' } = params;
   const { data: categories } = useAppSelector(selectCategories);
   const categoriesList = getOptionsArray(categories);
