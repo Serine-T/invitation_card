@@ -20,7 +20,6 @@ import Input from '@containers/common/Input';
 import SEO from '@containers/Products/ProductCategories/components/InputsTable/SEO';
 import RowComponent from '@containers/common/Table/components/RowComponent';
 import InputAfterText from '@containers/common/Table/components/InputAfterText';
-import ImageUpload from '@containers/common/FileUploader';
 
 import {
   AddDataSchema,
