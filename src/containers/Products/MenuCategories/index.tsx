@@ -7,7 +7,7 @@ import StyledTable from '@containers/common/Table';
 import DndBtn from '@containers/common/Table/components/TablesActions/DndAction';
 import { DropResult } from '@hello-pangea/dnd';
 import { useAppDispatch, useAppSelector } from '@features/app/hooks';
-import { deleteCategory, getAllCategories, reorderCategories, searchCategories } from '@features/categories/actions';
+import { deleteCategory, reorderCategories, searchCategories } from '@features/categories/actions';
 import { selectCategories } from '@features/categories/selectors';
 import Loader from '@containers/common/Loader';
 import PageTitle from '@containers/common/PageTitle';
@@ -37,9 +37,9 @@ const MenuCategories = () => {
       visibleOnSite: visibleOnSiteQuery as string,
     };
 
-    isSearchTerm ? dispatch(searchCategories(query)) : dispatch(getAllCategories());
+    dispatch(searchCategories(query));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSearchTerm]);
+  }, [visibleOnSiteQuery, searchTerm]);
 
   useEffect(
     () => fetchData(),
@@ -49,7 +49,7 @@ const MenuCategories = () => {
 
   const deleteAction = (id: string) => {
     dispatch(deleteCategory(id)).unwrap().then(() => {
-      dispatch(getAllCategories());
+      fetchData();
     }).catch(() => {});
   };
 
@@ -60,7 +60,7 @@ const MenuCategories = () => {
 
     dispatch(reorderCategories(sortedData)).unwrap().then(() => {
       dispatch(setCategories(items));
-    }).catch(() => dispatch(getAllCategories()));
+    }).catch(() => fetchData());
   };
 
   if (isLoading) {

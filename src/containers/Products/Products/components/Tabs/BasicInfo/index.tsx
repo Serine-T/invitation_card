@@ -20,6 +20,7 @@ import Input from '@containers/common/Input';
 import SEO from '@containers/Products/ProductCategories/components/InputsTable/SEO';
 import RowComponent from '@containers/common/Table/components/RowComponent';
 import InputAfterText from '@containers/common/Table/components/InputAfterText';
+import ImageUpload from '@containers/common/FileUploader';
 
 import {
   AddDataSchema,
@@ -136,7 +137,12 @@ const InputsTable = ({ editData }: IInputsTable) => {
               />
             </RowComponent>
           ))}
-
+          <RowComponent label="Product Weight (1)">
+            <ImageUpload
+              name="test"
+              isMultiple
+            />
+          </RowComponent>
           <RowComponent label="Product Weight (1)">
             <Input
               width="120px"
