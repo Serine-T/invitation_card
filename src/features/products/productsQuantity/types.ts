@@ -27,4 +27,5 @@ export interface IProductsQuantityPayload {
   id?: string;
   quantity: number | null;
   productId: string;
+  basePrice: number | null;
 }

@@ -111,12 +111,12 @@ const Products = () => {
                           {({ providedDraggable }) => (
                             < >
                               <TableCell>
-                                <RowTitle title={productSKU} path={`/products/products/edit/${id}`} />
+                                <RowTitle title={productSKU} path={`/products/products/edit/${id}?tab=0`} />
                               </TableCell>
                               <TableCell width="100px">{ quarterhouseProductCode}</TableCell>
                               <TableCell width="152px">{fouroverProdCode}</TableCell>
                               <TableCell width="192px">
-                                <RowTitle title={name} path={`/products/products/edit/${id}`} />
+                                <RowTitle title={name} path={`/products/products/edit/${id}?tab=0`} />
                               </TableCell>
                               <TableCell width="76px">{visibleOnSite ? 'Yes' : 'No'}</TableCell>
                               <TableCell width="140px">

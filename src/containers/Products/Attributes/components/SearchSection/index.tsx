@@ -13,9 +13,7 @@ import queryString from 'query-string';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { constructQueryString } from '@utils/helpers';
 
-import {
-  FiltersSchema, IFiltersForm,
-} from './helpers';
+import { FiltersSchema, IFiltersForm } from './helpers';
 
 const SearchSection = () => {
   const navigate = useNavigate();
@@ -30,11 +28,7 @@ const SearchSection = () => {
     },
   });
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = methods;
+  const { handleSubmit, register, formState: { errors } } = methods;
 
   const onSubmit = (data: IFiltersForm) => {
     const queryParams = constructQueryString({

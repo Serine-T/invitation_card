@@ -5,12 +5,14 @@ export interface IAddDataForm {
   title: string;
   description: string;
   displayInHeader?: boolean;
+  visibleOnSite?: boolean;
 }
 
 export const defaultValues = {
   title: '',
   description: '',
   displayInHeader: false,
+  visibleOnSite: false,
 };
 
 export const AddDataSchema = yup.object().shape({
@@ -32,6 +34,11 @@ export const inputsRows: ValidFieldNames[] = [
   {
     label: 'Display in Header',
     field: 'displayInHeader',
+    type: InputTypes.checkbox,
+  },
+  {
+    label: 'Visible on Site',
+    field: 'visibleOnSite',
     type: InputTypes.checkbox,
   },
 ];
