@@ -27,12 +27,11 @@ import {
   defaultGrandFormatValues,
   defaultValues,
   formattingPayload,
-  inputsRows1,
-  inputsRows2,
 } from './helpers';
 import ProductDescription from './components/ProductDescription';
 import GrandFormatOptions from './components/GrandFormatOptions';
 import GrandFormatDiscounts from './components/GrandFormatDiscounts';
+import { inputsRows1, inputsRows2 } from './tableData';
 
 interface IInputsTable{
   editData?: IProductsPayload;

@@ -10,7 +10,7 @@ import { editProductsQuantities } from '@features/products/productsQuantity/acti
 import { selectProductsQuantities } from '@features/products/productsQuantity/selectors';
 
 import { AddDataSchema, IAddDataForm, formattingPayload } from './helpers';
-import QuantityTable from './components/QuantityTable';
+import QuantityTable from './QuantityTable';
 
 const EditComponent = () => {
   const dispatch = useAppDispatch();

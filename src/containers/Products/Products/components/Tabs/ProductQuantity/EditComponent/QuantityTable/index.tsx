@@ -6,11 +6,11 @@ import { useFormContext } from 'react-hook-form';
 import { StyledTableCell } from '@containers/common/StyledAddEditTables/styled';
 import Input from '@containers/common/Input';
 import StyledTable from '@containers/common/Table';
-import StyledTypography from '@containers/common/StyledTypography';
 import Typography from '@mui/material/Typography';
 import { useAppDispatch } from '@features/app/hooks';
 import { deleteProductsQuantity, getAllProductsQuantities } from '@features/products/productsQuantity/actions';
 import { useParams } from 'react-router-dom';
+import DeleteBtn from '@containers/common/Table/components/TablesActions/DeleteAction';
 
 import { headCells } from './tableData';
 
@@ -24,7 +24,7 @@ const QuantityTable = ({ idx }: IQuantityTable) => {
   const { id } = useParams();
 
   const { quantity, id: quantityId } = watch(`quantities[${idx}]`);
-  const handleDelete = () => {
+  const deleteAction = () => {
     dispatch(deleteProductsQuantity({ productId: id as string, quantityId })).unwrap().then(() => {
       dispatch(getAllProductsQuantities(id as string)).unwrap().then(() => {}).catch(() => { });
     }).catch(() => {});
@@ -34,7 +34,7 @@ const QuantityTable = ({ idx }: IQuantityTable) => {
     <StyledTable headCells={headCells}>
       <StyledTableRow>
         <StyledTableCell>
-          <Typography>
+          <Typography variant="body3">
             {quantity}
           </Typography>
         </StyledTableCell>
@@ -42,18 +42,14 @@ const QuantityTable = ({ idx }: IQuantityTable) => {
           <Input
             placeholder="Base price"
             {...register(`quantities[${idx}].basePrice`)}
-            errorMessage={errors?.quantity?.message as any}
+            errorMessage={(errors as any)?.quantities?.[idx]?.basePrice?.message}
           />
         </TableCell>
         <TableCell>
-          <StyledTypography
-            color="blue"
-            variant="body3"
-            cursor="pointer"
-            onClick={handleDelete}
-          >
-            Delete
-          </StyledTypography>
+          <DeleteBtn
+            deleteAction={() => deleteAction()}
+            questionText="Are you sure you want to delete this quantity ?"
+          />
         </TableCell>
       </StyledTableRow>
     </StyledTable>

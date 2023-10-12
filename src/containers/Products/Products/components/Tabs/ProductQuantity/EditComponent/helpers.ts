@@ -1,4 +1,5 @@
 import { IProductsQuantityPayload } from '@features/products/productsQuantity/types';
+import { numberValidation } from '@utils/schemas';
 import * as yup from 'yup';
 
 export interface IAddDataForm {
@@ -8,7 +9,7 @@ export interface IAddDataForm {
 export const AddDataSchema = yup.object().shape({
   quantities: yup.array().of(
     yup.object({
-      basePrice: yup.string().required('Base price is required'),
+      basePrice: numberValidation.required('Base price is required'),
     }),
   ),
 });
