@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { StyledSearchRows } from '@containers/common/StyledSearchContainer/styled';
 import Select from '@containers/common/Select';
 import Stack from '@mui/material/Stack';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import PAGE_ROUTES from '@routes/routingEnum';
 import { constructQueryString } from '@utils/helpers';
@@ -19,7 +19,8 @@ import {
 
 const SearchSection = () => {
   const navigate = useNavigate();
-  const params = queryString.parse(window.location.search);
+  const { search } = useLocation();
+  const params = queryString.parse(search);
 
   const { searchTerm = '', visibleOnSite = '' } = params;
 

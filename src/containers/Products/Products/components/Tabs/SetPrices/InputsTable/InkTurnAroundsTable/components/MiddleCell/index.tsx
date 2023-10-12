@@ -2,9 +2,9 @@
 import { memo } from 'react';
 
 import { useFormContext } from 'react-hook-form';
+import { Stack } from '@mui/material';
 
 import InkTurnAroundStack from '../InkTurnAroundStack';
-import { StyledMiddleCell } from '../../../../../ProductQuantity/EditComponent/components/MiddleCell/styles';
 
 interface IMiddleCell {
   tableIdx: number;
@@ -16,7 +16,7 @@ const MiddleCell = ({ tableIdx, rowIdx }: IMiddleCell) => {
   const { ink, quantityInkTurnAround } = watch(`productsPrices[${tableIdx}].quantityInk[${rowIdx}]`);
 
   return (
-    <StyledMiddleCell>
+    <Stack>
       <InkTurnAroundStack
         nickname={ink.nickname}
         field={`productsPrices[${tableIdx}].quantityInk[${rowIdx}].price`}
@@ -31,7 +31,7 @@ const MiddleCell = ({ tableIdx, rowIdx }: IMiddleCell) => {
             ?.quantityInk?.rowIdx?.quantityInkTurnAround?.turnAroundIdx?.price?.message as string}
         />
       ))}
-    </StyledMiddleCell>
+    </Stack>
   );
 };
 

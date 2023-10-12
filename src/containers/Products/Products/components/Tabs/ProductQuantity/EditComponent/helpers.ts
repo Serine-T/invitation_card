@@ -1,39 +1,23 @@
-import { IProductsQuantityInfo } from '@features/products/productsQuantity/types';
+import { IProductsQuantityPayload } from '@features/products/productsQuantity/types';
+import { numberValidation } from '@utils/schemas';
 import * as yup from 'yup';
 
-export interface IAddDataForm extends IProductsQuantityInfo {
-
+export interface IAddDataForm {
+  quantities: IProductsQuantityPayload[];
 }
 
 export const AddDataSchema = yup.object().shape({
-  quantityAttributes: yup.array().of(
+  quantities: yup.array().of(
     yup.object({
-      attributes: yup.array().of(yup.object({
-        inkId: yup.string().required('Ink is required'),
-        turnAroundIds: yup.array().of(
-          yup.object({
-            turnAroundId: yup.string().required('Turn around is required'),
-          }),
-        ),
-      })),
+      basePrice: numberValidation.required('Base price is required'),
     }),
   ),
 });
 
-export const formattingPayload = (data: IAddDataForm) => {
-  const { quantityAttributes } = data;
+export const formattingPayload = ({ quantities }: IAddDataForm) => {
+  const payload = quantities.map((item) => ({
+    ...item, basePrice: item.basePrice ? +item.basePrice : 0,
+  }));
 
-  const newQuantityAttributes = quantityAttributes.map((item) => {
-    return {
-      ...item,
-      attributes: item.attributes.map((attribute) => {
-        return {
-          ...attribute,
-          turnAroundIds: attribute?.turnAroundIds?.map((turnaround: any) => turnaround?.turnAroundId) || [],
-        };
-      }),
-    };
-  });
-
-  return { quantityAttributes: newQuantityAttributes };
+  return { quantities: payload };
 };

@@ -9,11 +9,13 @@ import { constructQueryString } from '@utils/helpers';
 import Typography from '@mui/material/Typography';
 import StyledTypography from '@containers/common/StyledTypography';
 import Button from '@containers/common/Button';
+import { useLocation } from 'react-router-dom';
 
 import { FiltersSchema, IFiltersForm } from './helpers';
 
 const SearchSection = () => {
-  const params = queryString.parse(window.location.search);
+  const { search } = useLocation();
+  const params = queryString.parse(search);
   const { searchTerm = '', visibleOnSite = '', subCategoryId = '' } = params;
   const methods = useForm<IFiltersForm>({
     resolver: yupResolver(FiltersSchema),
