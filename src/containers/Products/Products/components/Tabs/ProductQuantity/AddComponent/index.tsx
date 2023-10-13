@@ -13,6 +13,7 @@ import { selectSubcategories } from '@features/subcategories/selectors';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 import Input from '@containers/common/Input';
 import { addProductsQuantity } from '@features/products/productsQuantity/actions';
+import Typography from '@mui/material/Typography';
 
 import { AddDataSchema, IAddDataForm, defaultValues, formattingPayload } from './helpers';
 import { headCells } from './tableData';
@@ -57,6 +58,7 @@ const AddComponent = ({ setIsQuantityAdded, isQuantityAdded }:IAddComponent) => 
         component="form"
         mb="32px"
       >
+        <Typography variant="h9" mb="16px">Add new</Typography>
         <StyledTable headCells={headCells}>
           <StyledTableRow>
             <StyledTableCell>

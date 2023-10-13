@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
 import { editProductsQuantities } from '@features/products/productsQuantity/actions';
 import { selectProductsQuantities } from '@features/products/productsQuantity/selectors';
+import Typography from '@mui/material/Typography';
 
 import { AddDataSchema, IAddDataForm, formattingPayload } from './helpers';
 import QuantityTable from './QuantityTable';
@@ -40,21 +41,25 @@ const EditComponent = () => {
 
   return (
     !!quantities.length && (
-    <FormProvider {...methods}>
-      <StyledStack
-        onSubmit={handleSubmit(onSubmit)}
-        component="form"
-        mb="32px"
-      >
-        {
+      <>
+        <Typography variant="h9" mb="16px">Edit</Typography>
+        <FormProvider {...methods}>
+          <StyledStack
+            onSubmit={handleSubmit(onSubmit)}
+            component="form"
+            mb="32px"
+          >
+            {
           quantities.map((_: any, idx: number) => (
             // eslint-disable-next-line react/no-array-index-key
             <QuantityTable key={idx} idx={idx} />
           ))
         }
-        <SubmitBtn actionLoading={actionLoading} />
-      </StyledStack>
-    </FormProvider>
+            <SubmitBtn actionLoading={actionLoading} />
+          </StyledStack>
+        </FormProvider>
+      </>
+
     )
   );
 };
