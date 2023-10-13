@@ -20,7 +20,6 @@ import {
   formattingPayload,
 } from './helpers';
 import { StyledDivider } from './styles';
-import SearchSection from '../SearchSection';
 import AttributesContainer from '../AttributesContainer';
 
 const InputsTable = () => {
@@ -47,8 +46,6 @@ const InputsTable = () => {
 
   return (
     <>
-      <SearchSection />
-      <StyledDivider />
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}
