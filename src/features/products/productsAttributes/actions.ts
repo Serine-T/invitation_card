@@ -6,7 +6,7 @@ import { AxiosResponse } from 'axios';
 
 import { IProductsAttribues } from './types';
 
-const prefix = '/products/attributes';
+const prefix = '/products';
 
 export const addProductsAttributes = createAsyncThunk<void, {body: IProductsAttribues; id: string}, {
   rejectValue: AxiosData;
@@ -14,7 +14,7 @@ export const addProductsAttributes = createAsyncThunk<void, {body: IProductsAttr
   'productsAttributes/add',
   async ({ body, id }, thunkAPI) => {
     try {
-      await http.put<IProductsAttribues>(`${prefix}/${id}`, body);
+      await http.put<IProductsAttribues>(`${prefix}/${id}/attributes`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -29,7 +29,7 @@ export const getAllAttributesByProductId = createAsyncThunk<IProductsAttribues, 
   'productsAttributes/all',
   async (id, thunkAPI) => {
     try {
-      const { data: { data } } = await http.get<AxiosResponse<IProductsAttribues>>(`${prefix}/${id}`);
+      const { data: { data } } = await http.get<AxiosResponse<IProductsAttribues>>(`${prefix}/${id}/attributes`);
 
       return data;
     } catch (error) {
