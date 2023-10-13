@@ -12,6 +12,7 @@ const initialState: IState = {
   isLoading: true,
   actionLoading: false,
   data: [],
+  productAttributeCategories: [],
   errorMessage: null,
 };
 
@@ -82,7 +83,7 @@ const attributeCategoriesSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getAllAttributeCategoriesProducts.fulfilled, (state, { payload }) => {
-      state.data = payload;
+      state.productAttributeCategories = payload;
       state.isLoading = false;
     });
     builder.addCase(getAllAttributeCategoriesProducts.rejected, (state) => {
