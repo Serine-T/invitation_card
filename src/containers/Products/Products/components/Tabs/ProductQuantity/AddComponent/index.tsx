@@ -60,7 +60,7 @@ const AddComponent = ({ setIsQuantityAdded, isQuantityAdded }:IAddComponent) => 
       >
         <Typography variant="h9" mb="16px">Add new</Typography>
         <StyledTable headCells={headCells}>
-          <StyledTableRow>
+          <StyledTableRow sx={{ verticalAlign: 'top' }}>
             <StyledTableCell>
               <Input
                 placeholder="Quantity"
