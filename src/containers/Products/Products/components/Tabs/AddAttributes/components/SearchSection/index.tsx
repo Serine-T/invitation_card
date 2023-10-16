@@ -26,10 +26,7 @@ const SearchSection = () => {
     },
   });
 
-  const {
-    handleSubmit,
-    register,
-  } = methods;
+  const { handleSubmit, register } = methods;
 
   const onSubmit = (data: IFiltersForm) => {
     const queryParams = constructQueryString({
