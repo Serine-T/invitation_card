@@ -12,6 +12,7 @@ import StyledTable from '@containers/common/Table';
 
 import { AddDataSchema, IAddDataForm } from './helpers';
 import TableRow from './TableRow';
+import { StyledBox } from './styles';
 
 const InputsTable = () => {
   const dispatch = useAppDispatch();
@@ -50,12 +51,14 @@ const InputsTable = () => {
         onSubmit={handleSubmit(onSubmit)}
         component="form"
       >
-        <StyledTable headCells={headCells}>
-          {productsPricesData.map((_, rowIdx: number) => (
+        <StyledBox>
+          <StyledTable headCells={headCells}>
+            {productsPricesData.map((_, rowIdx: number) => (
             // eslint-disable-next-line react/no-array-index-key
-            <TableRow key={rowIdx} rowIdx={rowIdx} />
-          ))}
-        </StyledTable>
+              <TableRow key={rowIdx} rowIdx={rowIdx} />
+            ))}
+          </StyledTable>
+        </StyledBox>
         <SubmitBtn actionLoading={actionLoading} />
       </StyledStack>
     </FormProvider>
