@@ -4,9 +4,9 @@ import { customErrorHandling } from '@utils/errorHandler';
 import { AxiosData } from '@utils/types';
 import { AxiosResponse } from 'axios';
 
-import { IProductsSetPrice, IProductsSetPricePayload } from './types';
+import { IProductsSetPricePayload } from './types';
 
-const prefix = '/products/attribute-prices';
+const prefix = '/products';
 
 export const addProductsPrices = createAsyncThunk<void, {body: IProductsSetPricePayload; id: string}, {
   rejectValue: AxiosData;
@@ -14,7 +14,7 @@ export const addProductsPrices = createAsyncThunk<void, {body: IProductsSetPrice
   'productsSetPrices/add',
   async ({ body, id }, thunkAPI) => {
     try {
-      await http.put<IProductsSetPricePayload>(`${prefix}/${id}`, body);
+      await http.put<IProductsSetPricePayload>(`${prefix}/${id}/quantities/attributes`, body);
     } catch (error) {
       const errorInfo = customErrorHandling(error);
 
@@ -23,13 +23,14 @@ export const addProductsPrices = createAsyncThunk<void, {body: IProductsSetPrice
   },
 );
 
-export const getAllPricesByProductId = createAsyncThunk<IProductsSetPrice[], string, {
+export const getAllPricesByProductId = createAsyncThunk<IProductsSetPricePayload, string, {
   rejectValue: AxiosData;
 }>(
   'productsSetPrices/all',
   async (id, thunkAPI) => {
     try {
-      const { data: { data } } = await http.get<AxiosResponse<IProductsSetPrice[]>>(`${prefix}/${id}`);
+      const { data: { data } } = await http.get<
+        AxiosResponse<IProductsSetPricePayload>>(`${prefix}/${id}/quantities/attributes`);
 
       return data;
     } catch (error) {

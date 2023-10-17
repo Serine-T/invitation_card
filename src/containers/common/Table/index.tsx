@@ -43,7 +43,11 @@ const StyledTable = ({
                     const { label } = props;
 
                     return (
-                      <TableCell key={label} {...props}>{label}</TableCell>
+                      <TableCell key={label} {...props}>
+                        <Typography textTransform="uppercase">
+                          {label}
+                        </Typography>
+                      </TableCell>
                     );
                   }) : null)
                 }

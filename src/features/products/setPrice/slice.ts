@@ -7,7 +7,7 @@ const initialState: IState = {
   isLoading: true,
   actionLoading: false,
   errorMessage: null,
-  data: [],
+  data: { quantities: [] },
 };
 
 const productsSetPriceSlice = createSlice({
