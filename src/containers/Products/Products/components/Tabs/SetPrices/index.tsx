@@ -24,11 +24,9 @@ const SetPrices = () => {
 
   return (
     quantities.length ? (
-      <>
-        <InputsTable />
-      </>
+      <InputsTable />
     ) : (
-      <EmptyState text="You don’t have any prices, please add new to proceed" />
+      <EmptyState text="Please add attributes & Quantities to proceed" />
     )
   );
 };

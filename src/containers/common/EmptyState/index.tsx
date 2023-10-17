@@ -7,14 +7,12 @@ interface IEmptyState {
   text: string;
 }
 
-const EmptyState = ({ text }: IEmptyState) => {
-  return (
-    <StyledTitleBox>
-      <StyledTypography variant="h6" color="grey">
-        {text}
-      </StyledTypography>
-    </StyledTitleBox>
-  );
-};
+const EmptyState = ({ text }: IEmptyState) => (
+  <StyledTitleBox>
+    <StyledTypography variant="h6" color="grey">
+      {text}
+    </StyledTypography>
+  </StyledTitleBox>
+);
 
 export default memo(EmptyState);

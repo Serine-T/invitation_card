@@ -33,7 +33,7 @@ import { IFiltersForm } from './components/SearchSection/helpers';
 const Products = () => {
   const dispatch = useAppDispatch();
   const { data: productsList, isLoading } = useAppSelector(selectProducts);
-  const { data: subcategories, isLoading: subcategoryLoading } = useAppSelector(selectSubcategories);
+  const { data: subcategoriesProduct, isLoading: subcategoryLoading } = useAppSelector(selectSubcategories);
 
   const location = useLocation();
   const params = queryString.parse(location.search);
@@ -87,10 +87,9 @@ const Products = () => {
         title="Products"
         btnName="Add Product"
         path={PAGE_ROUTES.ADD_PRODUCTS}
-        isShowBtn={!!subcategories.length}
       />
       {
-        subcategories.length ? (
+        subcategoriesProduct.length ? (
           <>
             {(isSearchTerm || !!productsList?.length) && <SearchSection />}
             {productsList?.length ? (productsList as IProductsSearchInfo[]).map(({
@@ -144,7 +143,7 @@ const Products = () => {
           </>
         ) : (
           <EmptyState
-            text="You don’t have any subcategories, please add new to proceed"
+            text="You don’t have any products, please add new to proceed"
           />
         )
       }
