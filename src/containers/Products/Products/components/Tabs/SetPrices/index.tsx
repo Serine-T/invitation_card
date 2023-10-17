@@ -12,19 +12,18 @@ import InputsTable from './InputsTable';
 
 const SetPrices = () => {
   const dispatch = useAppDispatch();
-  const { isLoading, data: productsPrices } = useAppSelector(selectProductsSetPrice);
+  const { isLoading, data: { quantities } } = useAppSelector(selectProductsSetPrice);
   const { id } = useParams();
 
   useMount(() => {
     dispatch(getAllPricesByProductId(id as string));
   });
-
-  if (isLoading && !productsPrices.length) {
+  if (isLoading && !quantities.length) {
     return <Loader />;
   }
 
   return (
-    productsPrices.length ? (
+    quantities.length ? (
       <>
         <InputsTable />
       </>

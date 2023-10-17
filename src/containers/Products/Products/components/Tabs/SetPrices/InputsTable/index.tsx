@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,58 +8,57 @@ import { addProductsPrices } from '@features/products/setPrice/actions';
 import { selectProductsSetPrice } from '@features/products/setPrice/selectors';
 import { useParams } from 'react-router-dom';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
-import EmptyState from '@containers/common/EmptyState';
-import Box from '@mui/material/Box';
-import { setProductsPrices } from '@features/products/setPrice/slice';
+import StyledTable from '@containers/common/Table';
 
-import { AddDataSchema, IAddDataForm, formattingPayload } from './helpers';
-import InkTurnAroundsTable from './InkTurnAroundsTable';
-import AttributesTable from './AttributesTable';
+import { AddDataSchema, IAddDataForm } from './helpers';
+import TableRow from './TableRow';
 
 const InputsTable = () => {
   const dispatch = useAppDispatch();
   const { id: productId } = useParams();
 
-  const { data: productsPrices, actionLoading } = useAppSelector(selectProductsSetPrice);
+  const { data: { quantities }, actionLoading } = useAppSelector(selectProductsSetPrice);
 
   const methods = useForm<IAddDataForm>({
     resolver: yupResolver(AddDataSchema as any), // TODO: add typing
-    defaultValues: { productsPrices },
+    defaultValues: { quantities },
   });
 
-  const { handleSubmit, watch } = methods;
+  const { handleSubmit, watch, reset } = methods;
+
+  useEffect(() => {
+    reset({ quantities });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quantities]);
 
   const onSubmit = (data: IAddDataForm) => {
-    const body = formattingPayload(data);
-
-    dispatch(addProductsPrices({ body, id: productId as string })).unwrap().then(() => {
-      dispatch(setProductsPrices(data.productsPrices));
-    }).catch(() => { });
+    dispatch(addProductsPrices({ body: data, id: productId as string })).unwrap().catch(() => { });
   };
 
-  const productsPricesData = watch('productsPrices');
+  const productsPricesData = watch('quantities');
+  const attributeCategoriesNames = productsPricesData[0].attributeCategories.map((item) => ({
+    label: item.name,
+  }));
+
+  const headCells = [{
+    label: 'QUANTITY',
+  }, ...attributeCategoriesNames];
 
   return (
-    productsPricesData.length ? (
-      <FormProvider {...methods}>
-        <StyledStack
-          onSubmit={handleSubmit(onSubmit)}
-          component="form"
-        >
-          {productsPricesData.map((_, tableIdx) => (
+    <FormProvider {...methods}>
+      <StyledStack
+        onSubmit={handleSubmit(onSubmit)}
+        component="form"
+      >
+        <StyledTable headCells={headCells}>
+          {productsPricesData.map((_, rowIdx: number) => (
             // eslint-disable-next-line react/no-array-index-key
-            <Box key={tableIdx}>
-              <InkTurnAroundsTable tableIdx={tableIdx} />
-              <AttributesTable tableIdx={tableIdx} />
-            </Box>
+            <TableRow key={rowIdx} rowIdx={rowIdx} />
           ))}
-          <SubmitBtn actionLoading={actionLoading} />
-        </StyledStack>
-      </FormProvider>
-    ) : (
-      <EmptyState text="You don’t have any prices, please add new to proceed" />
-    )
-
+        </StyledTable>
+        <SubmitBtn actionLoading={actionLoading} />
+      </StyledStack>
+    </FormProvider>
   );
 };
 

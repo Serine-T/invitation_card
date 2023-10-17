@@ -15,7 +15,7 @@ import InputsTable from './components/InputsTable';
 const AddAttributes = () => {
   const dispatch = useAppDispatch();
   const { isLoading: productAttributesLoading } = useAppSelector(selectProductsAttributes);
-  const { data: attributeCategories, isLoading } = useAppSelector(selectAttributeCategories);
+  const { productAttributeCategories, isLoading } = useAppSelector(selectAttributeCategories);
   const { id } = useParams();
 
   useMount(() => {
@@ -26,13 +26,13 @@ const AddAttributes = () => {
     });
   });
 
-  if ((isLoading && !attributeCategories.length) || productAttributesLoading) {
+  if ((isLoading && !productAttributeCategories.length) || productAttributesLoading) {
     return <Loader />;
   }
 
   return (
     <>
-      {attributeCategories.length ? <InputsTable /> : (
+      {productAttributeCategories.length ? <InputsTable /> : (
         <EmptyState text="You don’t have any attribute categories, please add new to proceed" />
       )}
     </>

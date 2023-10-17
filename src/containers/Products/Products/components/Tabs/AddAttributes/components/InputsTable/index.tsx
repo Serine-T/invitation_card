@@ -21,14 +21,16 @@ import {
 } from './helpers';
 import { StyledDivider } from './styles';
 import AttributesContainer from '../AttributesContainer';
+import SearchSection from '../SearchSection';
 
 const InputsTable = () => {
   const dispatch = useAppDispatch();
   const { id: productId } = useParams();
   const { actionLoading } = useAppSelector(selectSubcategories);
   const { data: productsAttributes } = useAppSelector(selectProductsAttributes);
-  const { data: attributeCategories } = useAppSelector(selectAttributeCategories);
-  const initialState = addingIsSelectedFlag(attributeCategories, productsAttributes);
+  const { productAttributeCategories } = useAppSelector(selectAttributeCategories);
+
+  const initialState = addingIsSelectedFlag(productAttributeCategories, productsAttributes);
 
   const methods = useForm<IAddDataForm>({
     resolver: yupResolver(AddDataSchema as any), // TODO: add typing
@@ -46,6 +48,8 @@ const InputsTable = () => {
 
   return (
     <>
+      <SearchSection />
+      <StyledDivider />
       <FormProvider {...methods}>
         <StyledStack
           onSubmit={handleSubmit(onSubmit)}

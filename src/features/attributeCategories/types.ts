@@ -4,6 +4,7 @@ export interface IState {
   isLoading: boolean;
   actionLoading: boolean;
   data: IAttributeCategory[];
+  productAttributeCategories: IAttributeCategory[];
   errorMessage: string | null;
 }
 

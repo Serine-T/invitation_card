@@ -7,17 +7,13 @@ const initialState: IState = {
   isLoading: true,
   actionLoading: false,
   errorMessage: null,
-  data: [],
+  data: { quantities: [] },
 };
 
 const productsSetPriceSlice = createSlice({
   name: 'productsSetPrice',
   initialState,
-  reducers: {
-    setProductsPrices: (state, { payload }) => {
-      state.data = payload;
-    },
-  },
+  reducers: { },
   extraReducers: (builder) => {
     builder.addCase(getAllPricesByProductId.pending, (state) => {
       state.isLoading = true;
@@ -45,5 +41,4 @@ const productsSetPriceSlice = createSlice({
   },
 });
 
-export const { setProductsPrices } = productsSetPriceSlice.actions;
 export default productsSetPriceSlice.reducer;
