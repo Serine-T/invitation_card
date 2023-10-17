@@ -7,6 +7,7 @@ import { getAllPricesByProductId } from '@features/products/setPrice/actions';
 import { useParams } from 'react-router-dom';
 import Loader from '@containers/common/Loader';
 import EmptyState from '@containers/common/EmptyState';
+import Box from '@mui/material/Box';
 
 import InputsTable from './InputsTable';
 
@@ -26,7 +27,9 @@ const SetPrices = () => {
     quantities.length ? (
       <InputsTable />
     ) : (
-      <EmptyState text="Please add attributes & Quantities to proceed" />
+      <Box maxWidth="750px">
+        <EmptyState text="Please add attributes & Quantities to proceed" />
+      </Box>
     )
   );
 };

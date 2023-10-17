@@ -7,7 +7,7 @@ export const StyledTitleBox = styled(Box)(() => ({
   justifyContent: 'center',
   alignItems: 'center',
   marginBottom: '28px',
-  height: 'calc(100vh - 240px)',
+  height: 'calc(100vh - 320px)',
 
   '.MuiTypography-root': {
     maxWidth: '600px',
