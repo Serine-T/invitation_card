@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,10 +8,9 @@ import { addProductsPrices } from '@features/products/setPrice/actions';
 import { selectProductsSetPrice } from '@features/products/setPrice/selectors';
 import { useParams } from 'react-router-dom';
 import SubmitBtn from '@containers/common/Table/components/SubmitBtn';
-import { setProductsPrices } from '@features/products/setPrice/slice';
 import StyledTable from '@containers/common/Table';
 
-import { AddDataSchema, IAddDataForm, formattingPayload } from './helpers';
+import { AddDataSchema, IAddDataForm } from './helpers';
 import TableRow from './TableRow';
 
 const InputsTable = () => {
@@ -25,14 +24,15 @@ const InputsTable = () => {
     defaultValues: { quantities },
   });
 
-  const { handleSubmit, watch } = methods;
+  const { handleSubmit, watch, reset } = methods;
+
+  useEffect(() => {
+    reset({ quantities });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quantities]);
 
   const onSubmit = (data: IAddDataForm) => {
-    const body = formattingPayload(data);
-
-    dispatch(addProductsPrices({ body, id: productId as string })).unwrap().then(() => {
-      dispatch(setProductsPrices(data));
-    }).catch(() => { });
+    dispatch(addProductsPrices({ body: data, id: productId as string })).unwrap().catch(() => { });
   };
 
   const productsPricesData = watch('quantities');
@@ -55,7 +55,6 @@ const InputsTable = () => {
             // eslint-disable-next-line react/no-array-index-key
             <TableRow key={rowIdx} rowIdx={rowIdx} />
           ))}
-
         </StyledTable>
         <SubmitBtn actionLoading={actionLoading} />
       </StyledStack>

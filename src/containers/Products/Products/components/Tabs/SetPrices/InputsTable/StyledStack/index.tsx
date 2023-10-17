@@ -14,10 +14,8 @@ interface IStyledSTack {
 
 const StyledSTack = ({ rowIdx, attrIdx, attrRowIdx }: IStyledSTack) => {
   const { watch, register, formState: { errors } } = useFormContext();
-
   const { attributes, name: catName } = watch(`quantities[${rowIdx}].attributeCategories[${attrIdx}]`);
-
-  const { nickname, name } = attributes[attrRowIdx];
+  const { nickname } = attributes[attrRowIdx];
   const isTurnAround = catName.toLowerCase() === 'Turn Around'.toLowerCase();
 
   return (
@@ -31,12 +29,12 @@ const StyledSTack = ({ rowIdx, attrIdx, attrRowIdx }: IStyledSTack) => {
         />
         )}
         <Typography>
-          {`${name}/${nickname}`}
+          {nickname}
         </Typography>
-
       </Stack>
 
       <Input
+        width="100px"
         placeholder="Price"
         {...register(`quantities[${rowIdx}].attributeCategories[${attrIdx}].attributes[${attrRowIdx}].price`)}
         errorMessage={(errors as any)

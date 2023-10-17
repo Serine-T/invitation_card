@@ -15,9 +15,6 @@ interface ITableRow {
 
 const TableRow = ({ rowIdx }: ITableRow) => {
   const { watch } = useFormContext();
-
-  console.log('www*', watch(`quantities[${rowIdx}]`));
-
   const { quantity, basePrice, attributeCategories } = watch(`quantities[${rowIdx}]`);
 
   return (
