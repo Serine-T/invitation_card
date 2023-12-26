@@ -8,6 +8,7 @@ interface IStyledTypographyProps extends TypographyProps {
   color?: string;
   underLine?: boolean;
   cursor?: string;
+  isItalic?: boolean;
 }
 
 const StyledTypography: FC<IStyledTypographyProps> = ({
@@ -15,6 +16,7 @@ const StyledTypography: FC<IStyledTypographyProps> = ({
   color,
   underLine,
   cursor,
+  isItalic,
   ...restProps
 }) => (
   <StyledMuiTypography
@@ -22,6 +24,7 @@ const StyledTypography: FC<IStyledTypographyProps> = ({
     color={color}
     underLine={underLine}
     cursor={cursor}
+    isItalic={isItalic}
   >
     {children}
   </StyledMuiTypography>

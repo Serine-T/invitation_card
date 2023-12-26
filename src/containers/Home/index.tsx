@@ -1,20 +1,21 @@
 import { memo } from 'react';
 
-import { useAppSelector } from '@features/app/hooks';
-import { selectAuth } from '@features/auth/selectors';
-import { useNavigate } from 'react-router-dom';
-import PAGE_ROUTES from '@routes/routingEnum';
-import useMount from '@customHooks/useMount';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+
+import MyStepper from './Stepper';
+import Map from './Map';
+import Timer from './Timer';
 
 const Home = () => {
-  const navigate = useNavigate();
-  const { isAuth } = useAppSelector(selectAuth);
-
-  useMount(() => {
-    navigate(isAuth ? PAGE_ROUTES.DASHBOARD : PAGE_ROUTES.SIGN_IN);
-  });
-
-  return <></>;
+  return (
+    <Stack justifyContent="center" alignItems="center">
+      <Typography variant="h2" textTransform="uppercase">Save the date</Typography>
+      <Timer />
+      <MyStepper />
+      <Map />
+    </Stack>
+  );
 };
 
 export default memo(Home);

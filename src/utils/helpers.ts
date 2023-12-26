@@ -18,7 +18,7 @@ export const camelCaseToSensativeCase = (text: string): string => {
 };
 
 // Add leading 0 if number has only one digit
-export const addZeroToOneDigit = (num: number) => {
+export const addZero = (num: number) => {
   return String(num).padStart(2, '0');
 };
 

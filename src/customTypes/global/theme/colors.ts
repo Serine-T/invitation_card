@@ -1,4 +1,5 @@
 export const COLORS = {
+  primary: { dark: '#88AC7D' },
   blue: {
     main: '#1D73E3',
     dark: '#1D73E3',

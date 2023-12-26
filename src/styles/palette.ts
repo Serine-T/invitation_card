@@ -14,7 +14,7 @@ const palette:ExtendedPaletteOptions = {
   },
   primary: {
     contrastText: COLORS.white.main,
-    dark: COLORS.blue.dark,
+    dark: COLORS.primary.dark,
     main: COLORS.blue.main,
     light: COLORS.blue.light,
   },
