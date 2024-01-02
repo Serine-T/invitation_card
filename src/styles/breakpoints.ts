@@ -2,7 +2,7 @@ import { BreakpointsOptions } from '@mui/material';
 
 export const breakpoints: BreakpointsOptions = {
   values: {
-    xs: 0,
+    xs: 400,
     sm: 600,
     md: 900,
     l: 1025, // large

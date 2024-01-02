@@ -16,7 +16,7 @@ const Timer = () => {
   } = useTimer({ expiryTimestamp });
 
   return (
-    <Stack direction="row" width="150px">
+    <Stack direction="row">
       <DateItem date={days} text="Day" />
       <StyledDivider />
       <DateItem date={hours} text="Hour" />
