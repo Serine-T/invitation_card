@@ -9,8 +9,17 @@ export const StyledContainer = styled(Stack)(({ theme }) => ({
   alignItems: 'center',
   marginBottom: '20px',
   [theme.breakpoints.down('xs')]: {
-    marginTop: '-100px',
-    height: '550px',
-    marginBottom: 0,
+    // marginTop: '-100px',
+    // height: '450px',
+    // marginBottom: '-10',
   },
+}));
+
+export const StyledImage = styled('img')(() => ({
+  height: '500px',
+  width: '100%',
+  position: 'absolute',
+  objectFit: 'contain',
+  objectPosition: 'top center',
+  top: 0,
 }));

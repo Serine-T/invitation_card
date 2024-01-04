@@ -11,10 +11,10 @@ interface IDateItem {
 const DateItem = ({ date, text } : IDateItem) => {
   return (
     <Stack alignItems="center" mx="15px">
-      <StyledText variant="h2" color="primary" isItalic>
+      <StyledText variant="h2" isItalic>
         {addZero(date)}
       </StyledText>
-      <StyledText variant="h6" color="primary" isItalic>
+      <StyledText variant="h6" isItalic>
         {text}
         {date !== 0 ? 's' : ''}
       </StyledText>
