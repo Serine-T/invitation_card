@@ -3,8 +3,8 @@ import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 
 export const StyledIconBox = styled(Stack)(({ theme }) => ({
-  width: 120,
-  height: 120,
+  width: 110,
+  height: 110,
   background: theme.palette.primary.dark,
   borderRadius: '50%',
   [theme.breakpoints.down('xs')]: {
@@ -14,8 +14,8 @@ export const StyledIconBox = styled(Stack)(({ theme }) => ({
 }));
 
 export const StyledImage = styled('img')(({ theme }) => ({
-  width: 100,
-  height: 100,
+  width: 90,
+  height: 90,
   borderRadius: '50%',
   marginLeft: '16px',
   marginTop: '6px',

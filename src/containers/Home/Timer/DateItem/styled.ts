@@ -8,7 +8,6 @@ export const StyledDivider = styled(Divider)(({ theme }) => ({
 }));
 
 export const StyledText = styled(StyledTypography)(({ theme }) => ({
-  // color: theme.palette.common.white,
   [theme.breakpoints.down('sm')]: {
     fontSize: '24px',
   },

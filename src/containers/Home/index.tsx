@@ -18,7 +18,9 @@ const Home = () => {
         zIndex: '1',
         overflow: 'auto',
         backgroundImage: `url(${background})`,
-        backgroundPosition: '-150px',
+        // backgroundPosition: '-150px',
+        // backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
       }}
     >
       <Stack justifyContent="center" alignItems="center" zIndex="1000">

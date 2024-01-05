@@ -1,4 +1,4 @@
-import champagne from '@assets/images/champagne.png';
+import cake from '@assets/images/cake.png';
 import hands from '@assets/images/hands.png';
 import dance from '@assets/images/dance.png';
 import camera from '@assets/images/camera.png';
@@ -22,7 +22,7 @@ export const steps = [{
   path: '#restaurant',
 
 }, {
-  icon: () => <Icon src={champagne} />,
+  icon: () => <Icon src={cake} />,
   text: 'Beddy-bye!😴',
   time: '23:00',
 },
