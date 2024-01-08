@@ -4,7 +4,7 @@ import background from '@assets/images/background.png';
 import Stack from '@mui/material/Stack';
 
 import MyStepper from './Stepper';
-// import Map from './Map';
+import Map from './Map';
 import Timer from './Timer';
 import Banner from './Banner';
 
@@ -26,7 +26,7 @@ const Home = () => {
         <Stack alignItems="center">
           <Timer />
           <MyStepper />
-          {/* <Map /> */}
+          <Map />
         </Stack>
       </Stack>
     </Stack>
