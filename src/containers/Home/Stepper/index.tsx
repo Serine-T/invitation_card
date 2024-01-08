@@ -16,7 +16,7 @@ const MyStepper = () => {
               <Stack width="100%">
                 <StyledTypography variant="h6">{time}</StyledTypography>
                 <Typography variant="h9">{text}</Typography>
-                { path && (<StyledLink variant="body3" href={path}>See On Map</StyledLink>)}
+                { path && (<StyledLink variant="body3" href={path} target="_blank">See On Map</StyledLink>)}
               </Stack>
             </StepLabel>
           </Step>
