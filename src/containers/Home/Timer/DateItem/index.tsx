@@ -1,5 +1,5 @@
-import { addZero } from '@utils/helpers';
 import Stack from '@mui/material/Stack';
+import { addZero } from '@utils/helpers';
 
 import { StyledText } from './styled';
 
